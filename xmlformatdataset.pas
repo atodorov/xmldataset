@@ -2,6 +2,11 @@ unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
+
+{///////////////////////////////////////////////////////////////////////////////
+ TXMLFormatDataSet is a rewrite of TFixedFormatDataSet, which will work with XML
+ (c) 2005 - Alexander Todorov, alexx.todorov@gmail.com
+///////////////////////////////////////////////////////////////////////////////}
 interface
 
 uses
@@ -25,14 +30,14 @@ type
 // TXMLFormatDataSet
   TXMLFormatDataSet = class(TDataSet)
   private
-    FSchema             :TStringList;
+    FSchema             :TStringList; // obsolete. must go away
     FFileName           :TFileName;
     FFilterBuffer       :PChar;
     FFileMustExist      :Boolean;
     FReadOnly           :Boolean;
     FLoadfromStream     :Boolean;
     FTrimSpace          :Boolean;
-    procedure SetSchema(const Value: TStringList);
+    procedure SetXML(const Value: TStringList);
     procedure SetFileName(Value : TFileName);
     procedure SetFileMustExist(Value : Boolean);
     procedure SetTrimSpace(Value : Boolean);
@@ -42,7 +47,8 @@ type
     function GetActiveRecBuf(var RecBuf: PChar): Boolean;
     procedure SetFieldPos(var Buffer : PChar; FieldNo : Integer);
   protected
-    FData               :TStringlist;
+    FData               :TStringlist; // obsolete. must be replaced by FXML
+    FXML                :TStringList;
     FCurRec             :Integer;
     FRecBufSize         :Integer;
     FRecordSize         :Integer;
@@ -97,7 +103,7 @@ type
     property FileMustExist: Boolean read FFileMustExist write SetFileMustExist;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property FileName : TFileName read FFileName write SetFileName;
-    property Schema: TStringList read FSchema write SetSchema;
+    property XML : TStringList read FXML write SetXML;
     property TrimSpace: Boolean read FTrimSpace write SetTrimSpace default True;
     property FieldDefs;
     property Active;
@@ -139,8 +145,8 @@ begin
  FFileMustExist  := TRUE;
  FLoadfromStream := False;
  FRecordSize   := 0;
- FTrimSpace     := TRUE;
- FSchema       := TStringList.Create;
+ FTrimSpace    := TRUE;
+ FXML := TStringList.Create;
  FData         := TStringList.Create;  // Load the textfile into a stringlist
  inherited Create(AOwner); // this maybe should go on top
 end;
@@ -148,14 +154,15 @@ end;
 destructor TXMLFormatDataSet.Destroy;
 begin
  FData.Free;
- FSchema.Free;
+ FXML.Free;
  inherited Destroy;
 end;
 
-procedure TXMLFormatDataSet.SetSchema(const Value: TStringList);
+// sets XML data
+procedure TXMLFormatDataSet.SetXML(const Value: TStringList);
 begin
   CheckInactive;
-  FSchema.Assign(Value);
+  FXML.Assign(Value);
 end;
 
 procedure TXMLFormatDataSet.SetFileMustExist(Value : Boolean);
