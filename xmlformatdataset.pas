@@ -142,14 +142,14 @@ begin
  FTrimSpace     := TRUE;
  FSchema       := TStringList.Create;
  FData         := TStringList.Create;  // Load the textfile into a stringlist
- inherited Create(AOwner);
+ inherited Create(AOwner); // this maybe should go on top
 end;
 
 destructor TXMLFormatDataSet.Destroy;
 begin
- inherited Destroy;
  FData.Free;
  FSchema.Free;
+ inherited Destroy;
 end;
 
 procedure TXMLFormatDataSet.SetSchema(const Value: TStringList);
@@ -182,6 +182,7 @@ begin
   FFileName := Value;
 end;
 
+// create field definitions based on current schema
 procedure TXMLFormatDataSet.InternalInitFieldDefs;
 var
   i, len, Maxlen :Integer;
