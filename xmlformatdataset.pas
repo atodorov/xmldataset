@@ -33,13 +33,13 @@ type
 //    FSchema             :TStringList; // obsolete. must go away
     FFileName           :TFileName;
     FFilterBuffer       :PChar;
-    FFileMustExist      :Boolean;
+//    FFileMustExist      :Boolean;
     FReadOnly           :Boolean;
-    FLoadfromStream     :Boolean;
+//    FLoadfromStream     :Boolean;
     FTrimSpace          :Boolean;
-    procedure SetXML(const Value: TStringList);
+    procedure SetXML(const Value: String);
     procedure SetFileName(Value : TFileName);
-    procedure SetFileMustExist(Value : Boolean);
+//**    procedure SetFileMustExist(Value : Boolean);
     procedure SetTrimSpace(Value : Boolean);
     procedure SetReadOnly(Value : Boolean);
     procedure RemoveWhiteLines(List : TStrings; IsFileRecord : Boolean);
@@ -47,7 +47,6 @@ type
     function GetActiveRecBuf(var RecBuf: PChar): Boolean;
     procedure SetFieldPos(var Buffer : PChar; FieldNo : Integer);
   protected
-//    FData               :TStringlist; // obsolete. must be replaced by FXML
     FXML                :TStringList;   // holds bookmarks, no strings N.B.
     FXMLDoc             :TXMLDocument;
     FCurRec             :Integer;
@@ -101,10 +100,10 @@ type
     procedure LoadFromStream(Stream :TStream);
     procedure SavetoStream(Stream :TStream);
   published
-    property FileMustExist: Boolean read FFileMustExist write SetFileMustExist;
+//    property FileMustExist: Boolean read FFileMustExist write SetFileMustExist;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property FileName : TFileName read FFileName write SetFileName;
-//    property XML : TStringList read FXMLDoc.DocumentElement write SetXML;
+//    property XML : String read FXMLDoc.DocumentElement.NodeValue write SetXML;
     property TrimSpace: Boolean read FTrimSpace write SetTrimSpace default True;
     property FieldDefs;
     property Active;
@@ -143,8 +142,8 @@ implementation
 //------------------------------------------------------------------------------
 constructor TXMLFormatDataSet.Create(AOwner : TComponent);
 begin
- FFileMustExist  := TRUE;
- FLoadfromStream := False;
+// FFileMustExist  := TRUE;
+// FLoadfromStream := False;
  FRecordSize   := 0;
  FTrimSpace    := TRUE;
  FXML := TStringList.Create;
@@ -160,17 +159,19 @@ begin
 end;
 
 // sets XML data
-procedure TXMLFormatDataSet.SetXML(const Value: TStringList);
+procedure TXMLFormatDataSet.SetXML(const Value: String);
 begin
   CheckInactive;
-  FXML.Assign(Value);
+  FXMLDoc.DocumentElement.NodeValue := Value;
 end;
 
+(*
 procedure TXMLFormatDataSet.SetFileMustExist(Value : Boolean);
 begin
   CheckInactive;
   FFileMustExist := Value;
 end;
+*)
 
 procedure TXMLFormatDataSet.SetTrimSpace(Value : Boolean);
 begin
@@ -202,7 +203,8 @@ begin
      exit;
   FRecordSize := 0;
   FieldDefs.Clear;
-  for i := 0 to FXML.Count - 1 do // Fabricate Bookmarks
+
+  for i := 0 to FXML.Count - 1 do // Fabricate Bookmarks N.B.
       FXML.Objects[i] := TObject(Pointer(i+1));
 
   for i := 0 to FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs').ChildNodes.Count - 1 do
@@ -307,16 +309,10 @@ var
 begin
   FCurRec := -1;
   FSaveChanges := FALSE;
-  if not Assigned(FData) then
-    FData := TStringList.Create;
-  if (not FileMustExist) and (not FileExists(FileName)) then
-  begin
-    Stream := TFileStream.Create(FileName, fmCreate);
-    Stream.Free;
-  end;
-  if not FLoadfromStream then
-    FData.LoadFromFile(FileName);
-  FRecordSize := MAXSTRLEN;
+  if not Assigned(FXMLDoc) then
+     raise Exception.Create('XML not assigned');
+
+  FRecordSize := MAXSTRLEN;  /// ????
   InternalInitFieldDefs;
   if DefaultFields then
     CreateFields;
@@ -327,15 +323,18 @@ begin
   FRecInfoOfs := FRecordSize + CalcFieldsSize; // Initialize the offset for TRecInfo in the buffer
   FBookmarkOfs := FRecInfoOfs + SizeOf(TRecInfo);
   FRecBufSize := FBookmarkOfs + BookmarkSize;
-  FLastBookmark := FData.Count;
+  FLastBookmark := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
+  // or  FXMLDoc.DocumentElement.FindNode('recorddata').Attributes.GetNamedItem('count').NodeValue;
 end;
 
 procedure TXMLFormatDataSet.InternalClose;
 begin
+(*
   if (not FReadOnly) and (FSaveChanges) then  // Write any edits to disk
-    FData.SaveToFile(FileName);
-  FLoadfromStream := False;
-  FData.Clear;
+    FData.SaveToFile(FileName); // write to interface, or apply updates
+*)
+  FXML.Clear;
+//  FXMLDoc.Active := false;
   BindFields(FALSE);
   if DefaultFields then // Destroy the TField
     DestroyFields;
@@ -346,7 +345,7 @@ end;
 
 function TXMLFormatDataSet.IsCursorOpen: Boolean;
 begin
-  Result := Assigned(FData) and (FRecordSize > 0);
+  Result := Assigned(FXMLDoc) and (FRecordSize > 0);
 end;
 
 procedure TXMLFormatDataSet.InternalHandleException;
@@ -359,6 +358,7 @@ end;
 // Loads Data from a stream.
 procedure TXMLFormatDataSet.LoadFromStream(Stream: TStream);
 begin
+(*
   if Assigned(stream) then
   begin
     Active          := False; //Make sure the Dataset is Closed.
@@ -371,15 +371,18 @@ begin
   end
   else
     raise exception.Create('Invalid Stream Assigned (Load From Stream');
+*)
 end;
 
 // Saves Data as text to a stream.
 procedure TXMLFormatDataSet.SavetoStream(Stream: TStream);
 begin
+(*
   if assigned(stream) then
     FData.SaveToStream(Stream)
   else
     raise exception.Create('Invalid Stream Assigned (Save To Stream');
+*)
 end;
 
 // Record Functions
@@ -407,10 +410,9 @@ begin
   FillChar(Buffer[RecordSize], CalcFieldsSize, 0);
 end;
 
-function TXMLFormatDataSet.GetRecord(Buffer: PChar; GetMode: TGetMode;
-  DoCheck: Boolean): TGetResult;
+function TXMLFormatDataSet.GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
 begin
-  if (FData.Count < 1) then
+  if (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1) then
     Result := grEOF
   else
     Result := TxtGetRecord(Buffer, GetMode);
@@ -421,7 +423,7 @@ begin
     with PRecInfo(Buffer + FRecInfoOfs)^ do
     begin
       BookmarkFlag := bfCurrent;
-      RecordNumber := PtrInt(FData.Objects[FCurRec]);
+      RecordNumber := PtrInt(FXML.Objects[FCurRec]);
     end;
   end
   else
@@ -431,7 +433,7 @@ end;
 
 function TXMLFormatDataSet.GetRecordCount: Longint;
 begin
-  Result := FData.Count;
+  Result := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
 end;
 
 function TXMLFormatDataSet.GetRecNo: Longint;
@@ -446,7 +448,9 @@ end;
 procedure TXMLFormatDataSet.SetRecNo(Value: Integer);
 begin
   CheckBrowseMode;
-  if (Value >= 0) and (Value < FData.Count) and (Value <> RecNo) then
+  if (Value >= 0) and
+     (Value < FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count) and
+     (Value <> RecNo) then
   begin
     DoBeforeScroll;
     FCurRec := Value - 1;
@@ -474,8 +478,7 @@ begin
 end;
 
 function TXMLFormatDataSet.TxtGetRecord(Buffer : PChar; GetMode: TGetMode): TGetResult;
-var
-  Accepted : Boolean;
+var Accepted : Boolean;
 begin
   Result := grOK;
   repeat
@@ -497,7 +500,10 @@ begin
     end;
     if (Result = grOk) then
     begin
-      Move(PChar(StoreToBuf(FData[FCurRec]))^, Buffer[0], FRecordSize);
+//      Move(PChar(StoreToBuf(FData[FCurRec]))^, Buffer[0], FRecordSize);
+      Move(PChar(StoreToBuf(
+           FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue
+           ))^, Buffer[0], FRecordSize);
       if Filtered then
       begin
         Accepted := RecordFilter(Buffer, FCurRec +1);
@@ -655,7 +661,7 @@ end;
 
 procedure TXMLFormatDataSet.InternalLast;
 begin
-  FCurRec := FData.Count;
+  FCurRec := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
 end;
 
 procedure TXMLFormatDataSet.InternalPost;
@@ -666,7 +672,7 @@ begin
   inherited UpdateRecord;
   if (State = dsEdit) then // just update the data in the string list
   begin
-    FData[FCurRec] := BufToStore(ActiveBuffer);
+    FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := BufToStore(ActiveBuffer);
   end
   else
     InternalAddRecord(ActiveBuffer, FALSE);
@@ -674,12 +680,13 @@ end;
 
 procedure TXMLFormatDataSet.InternalEdit;
 begin
-
+// not implemented yet
 end;
 
 procedure TXMLFormatDataSet.InternalDelete;
 begin
   FSaveChanges := TRUE;
+//  FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.
   FData.Delete(FCurRec);
   if FCurRec >= FData.Count then
     Dec(FCurRec);
@@ -778,7 +785,7 @@ begin
 end;
 
 function TXMLFormatDataSet.BufToStore(Buffer: PChar): String;
-begin
+begin // trqbva da gonapravime da vry6ta XML na otdelen zapis
   Result := Copy(Buffer, 1, FRecordSize);
 end;
 
