@@ -2,6 +2,7 @@ unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
+{$DEFINE DEBUGXML}
 
 {///////////////////////////////////////////////////////////////////////////////
  TXMLFormatDataSet is a rewrite of TFixedFormatDataSet, which will work with XML
@@ -30,21 +31,14 @@ type
 // TXMLFormatDataSet
   TXMLFormatDataSet = class(TDataSet)
   private
-//    FSchema             :TStringList; // obsolete. must go away
-    FFileName           :TFileName;
     FFilterBuffer       :PChar;
-//    FFileMustExist      :Boolean;
     FReadOnly           :Boolean;
-//    FLoadfromStream     :Boolean;
     FTrimSpace          :Boolean;
     procedure SetXML(const Value: String);
-    procedure SetFileName(Value : TFileName);
-//**    procedure SetFileMustExist(Value : Boolean);
+    function  GetXML : String;
     procedure SetTrimSpace(Value : Boolean);
     procedure SetReadOnly(Value : Boolean);
-    procedure RemoveWhiteLines(List : TStrings; IsFileRecord : Boolean);
-    procedure LoadFieldScheme(List : TStrings; MaxSize : Integer); // will not be used
-    function GetActiveRecBuf(var RecBuf: PChar): Boolean;
+    function  GetActiveRecBuf(var RecBuf: PChar): Boolean;
     procedure SetFieldPos(var Buffer : PChar; FieldNo : Integer);
   protected
     FXML                :TStringList;   // holds bookmarks, no strings N.B.
@@ -57,7 +51,7 @@ type
     FBookmarkOfs        :Word;
     FSaveChanges        :Boolean;
   protected
-    function AllocRecordBuffer: PChar; override;
+    function  AllocRecordBuffer: PChar; override;
     procedure FreeRecordBuffer(var Buffer: PChar); override;
     procedure InternalAddRecord(Buffer: Pointer; DoAppend: Boolean); override;
     procedure InternalClose; override;
@@ -72,38 +66,32 @@ type
     procedure InternalPost; override;
     procedure InternalEdit; override;
     procedure InternalSetToRecord(Buffer: PChar); override;
-    function IsCursorOpen: Boolean; override;
+    function  IsCursorOpen: Boolean; override;
     procedure GetBookmarkData(Buffer: PChar; Data: Pointer); override;
-    function GetBookmarkFlag(Buffer: PChar): TBookmarkFlag; override;
-    function GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult; override;
-    function GetRecordSize: Word; override;
+    function  GetBookmarkFlag(Buffer: PChar): TBookmarkFlag; override;
+    function  GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult; override;
+    function  GetRecordSize: Word; override;
     procedure SetBookmarkFlag(Buffer: PChar; Value: TBookmarkFlag); override;
     procedure SetBookmarkData(Buffer: PChar; Data: Pointer); override;
     procedure SetFieldData(Field: TField; Buffer: Pointer); override;
     procedure ClearCalcFields(Buffer: PChar); override;
-    function GetRecordCount: Integer; override;
-    function GetRecNo: Integer; override;
+    function  GetRecordCount: Integer; override;
+    function  GetRecNo: Integer; override;
     procedure SetRecNo(Value: Integer); override;
-    function GetCanModify: boolean; override;
-    function TxtGetRecord(Buffer : PChar; GetMode: TGetMode): TGetResult;
-    function RecordFilter(RecBuf: Pointer; ARecNo: Integer): Boolean;
-    function BufToStore(Buffer: PChar): String; virtual;
-    function StoreToBuf(Source: String): String; virtual;
+    function  GetCanModify: boolean; override;
+    function  TxtGetRecord(Buffer : PChar; GetMode: TGetMode): TGetResult;
+    function  RecordFilter(RecBuf: Pointer; ARecNo: Integer): Boolean;
+    function  BufToStore(Buffer: PChar): String; virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor  Destroy; override;
     function  GetFieldData(Field: TField; Buffer: Pointer): Boolean; override;
-    procedure RemoveBlankRecords; dynamic;
-    procedure RemoveExtraColumns; dynamic;
-    procedure SaveFileAs(strFileName : String); dynamic;
+    procedure SaveToFile(strFileName : String); dynamic;
+    procedure LoadFromFile(strFileName : String); dynamic;
     property  CanModify;
-    procedure LoadFromStream(Stream :TStream);
-    procedure SavetoStream(Stream :TStream);
   published
-//    property FileMustExist: Boolean read FFileMustExist write SetFileMustExist;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
-    property FileName : TFileName read FFileName write SetFileName;
-//    property XML : String read FXMLDoc.DocumentElement.NodeValue write SetXML;
+    property XML : String read GetXML write SetXML;
     property TrimSpace: Boolean read FTrimSpace write SetTrimSpace default True;
     property FieldDefs;
     property Active;
@@ -137,13 +125,16 @@ type
 
 implementation
 
+uses XMLRead
+{$IFDEF DEBUGXML}
+, Dialogs
+{$ENDIF}
+;
 //------------------------------------------------------------------------------
 // TXMLFormatDataSet
 //------------------------------------------------------------------------------
 constructor TXMLFormatDataSet.Create(AOwner : TComponent);
 begin
-// FFileMustExist  := TRUE;
-// FLoadfromStream := False;
  FRecordSize   := 0;
  FTrimSpace    := TRUE;
  FXML := TStringList.Create;
@@ -162,16 +153,13 @@ end;
 procedure TXMLFormatDataSet.SetXML(const Value: String);
 begin
   CheckInactive;
-  FXMLDoc.DocumentElement.NodeValue := Value;
+  FXMLDoc.NodeValue := Value;
 end;
 
-(*
-procedure TXMLFormatDataSet.SetFileMustExist(Value : Boolean);
+function TXMLFormatDataSet.GetXML: String;
 begin
-  CheckInactive;
-  FFileMustExist := Value;
+  Result := FXMLDoc.NodeValue;
 end;
-*)
 
 procedure TXMLFormatDataSet.SetTrimSpace(Value : Boolean);
 begin
@@ -183,12 +171,6 @@ procedure TXMLFormatDataSet.SetReadOnly(Value : Boolean);
 begin
   CheckInactive;
   FReadOnly := Value;
-end;
-
-procedure TXMLFormatDataSet.SetFileName(Value : TFileName);
-begin
-  CheckInactive;
-  FFileName := Value;
 end;
 
 // create field definitions based on current scheme
@@ -207,6 +189,10 @@ begin
   for i := 0 to FXML.Count - 1 do // Fabricate Bookmarks N.B.
       FXML.Objects[i] := TObject(Pointer(i+1));
 
+{$IFDEF DEBUGXML}
+    ShowMessage(BoolToStr(FXMLDoc.DocType = nil));
+{$ENDIF}
+
   for i := 0 to FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs').ChildNodes.Count - 1 do
       begin   // Add fields
 // <fielddef name="ID" fieldkind="data" datatype="integer" fieldsize="0" displaylabel="ID" displaywidth="10" fieldindex="0" required="true" readonly="false" />
@@ -216,44 +202,44 @@ begin
         Required := UpperCase(domNode.Attributes.GetNamedItem('required').NodeValue) = 'TRUE';
         FieldSize := StrToInt(domNode.Attributes.GetNamedItem('fieldsize').NodeValue);
 
-        if (UpperCase(FieldType)= '') then ftFieldType := ftUnknown             //<---
-        else if (UpperCase(FieldType)= 'STRING') then ftFieldType := ftString
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftSmallint       //<---
-        else if (UpperCase(FieldType)= 'INTEGER') then ftFieldType := ftInteger
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftWord           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftBoolean        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftFloat          //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftCurrency       //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftBCD            //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftDate           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftTime           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftDateTime       //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftBytes          //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftVarBytes       //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftAutoInc        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftBlob           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftMemo           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftGraphic        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftFmtMemo        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftParadoxOle     //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftDBaseOle       //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftTypedBinary    //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftCursor         //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftFixedChar      //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftWideString     //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftLargeint       //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftADT            //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftArray          //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftReference      //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftDataSet        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftOraBlob        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftOraClob        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftVariant        //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftInterface      //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftIDispatch      //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftGuid           //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftTimeStamp      //<---
-        else if (UpperCase(FieldType)= '') then ftFieldType := ftFMTBcd;        //<---
+        if (UpperCase(FieldType) = '') then ftFieldType := ftUnknown
+        else if (UpperCase(FieldType) = 'STRING') then ftFieldType := ftString
+        else if (UpperCase(FieldType) = 'SMALLINT') then ftFieldType := ftSmallint
+        else if (UpperCase(FieldType) = 'INTEGER') then ftFieldType := ftInteger
+        else if (UpperCase(FieldType) = 'WORD') then ftFieldType := ftWord
+        else if (UpperCase(FieldType) = 'BOOLEAN') then ftFieldType := ftBoolean
+        else if (UpperCase(FieldType) = 'FLOAT') then ftFieldType := ftFloat
+        else if (UpperCase(FieldType) = 'CURRENCY') then ftFieldType := ftCurrency
+        else if (UpperCase(FieldType) = 'BCD') then ftFieldType := ftBCD
+        else if (UpperCase(FieldType) = 'DATE') then ftFieldType := ftDate
+        else if (UpperCase(FieldType) = 'TIME') then ftFieldType := ftTime
+        else if (UpperCase(FieldType) = 'DATETIME') then ftFieldType := ftDateTime
+        else if (UpperCase(FieldType) = 'BYTES') then ftFieldType := ftBytes
+        else if (UpperCase(FieldType) = 'VARBYTES') then ftFieldType := ftVarBytes
+        else if (UpperCase(FieldType) = 'AUTOINC') then ftFieldType := ftAutoInc
+        else if (UpperCase(FieldType) = 'BLOB') then ftFieldType := ftBlob
+        else if (UpperCase(FieldType) = 'MEMO') then ftFieldType := ftMemo
+        else if (UpperCase(FieldType) = 'GRAPHIC') then ftFieldType := ftGraphic
+        else if (UpperCase(FieldType) = 'FMTMEMO') then ftFieldType := ftFmtMemo
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftParadoxOle     //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftDBaseOle       //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftTypedBinary    //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftCursor         //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftFixedChar      //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftWideString     //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftLargeint       //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftADT            //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftArray          //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftReference      //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftDataSet        //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftOraBlob        //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftOraClob        //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftVariant        //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftInterface      //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftIDispatch      //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftGuid           //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftTimeStamp      //<---
+        else if (UpperCase(FieldType) = '') then ftFieldType := ftFMTBcd;        //<---
 
 
         // determine field size
@@ -353,36 +339,6 @@ begin
 {$ifndef fpc}
    Application.HandleException(Self);
 {$endif}
-end;
-
-// Loads Data from a stream.
-procedure TXMLFormatDataSet.LoadFromStream(Stream: TStream);
-begin
-(*
-  if Assigned(stream) then
-  begin
-    Active          := False; //Make sure the Dataset is Closed.
-    Stream.Position := 0;     //Make sure you are at the top of the Stream.
-    FLoadfromStream := True;
-    if not Assigned(FData) then
-     raise Exception.Create('Data buffer unassigned');
-    FData.LoadFromStream(Stream);
-    Active := True;
-  end
-  else
-    raise exception.Create('Invalid Stream Assigned (Load From Stream');
-*)
-end;
-
-// Saves Data as text to a stream.
-procedure TXMLFormatDataSet.SavetoStream(Stream: TStream);
-begin
-(*
-  if assigned(stream) then
-    FData.SaveToStream(Stream)
-  else
-    raise exception.Create('Invalid Stream Assigned (Save To Stream');
-*)
 end;
 
 // Record Functions
@@ -501,9 +457,9 @@ begin
     if (Result = grOk) then
     begin
 //      Move(PChar(StoreToBuf(FData[FCurRec]))^, Buffer[0], FRecordSize);
-      Move(PChar(StoreToBuf(
+      Move(PChar(
            FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue
-           ))^, Buffer[0], FRecordSize);
+           )^, Buffer[0], FRecordSize);
       if Filtered then
       begin
         Accepted := RecordFilter(Buffer, FCurRec +1);
@@ -535,37 +491,6 @@ begin
 end;
 
 // Field Related
-procedure TXMLFormatDataSet.LoadFieldScheme(List : TStrings; MaxSize : Integer);
-var
-  tmpFieldName : string;
-  tmpSchema : TStrings;
-  i : Integer;
-begin
-(*******************************************************************************
-  tmpSchema := TStringList.Create;
-  try       // Load Schema Structure
-    if (Schema.Count > 0) then
-    begin
-      tmpSchema.Assign(Schema);
-      RemoveWhiteLines(tmpSchema, FALSE);
-    end
-    else
-      tmpSchema.Add('Line');
-    for i := 0 to tmpSchema.Count -1 do // Interpret Schema
-    begin
-      tmpFieldName := tmpSchema.Names[i];
-      if (tmpFieldName = '') then
-        tmpFieldName := Format('%s=%d', [tmpSchema[i], MaxSize])
-      else
-        tmpFieldName := tmpSchema[i];
-      List.Add(tmpFieldName);
-    end;
-  finally
-    tmpSchema.Free;
-  end;
-*******************************************************************************)
-end;
-
 function TXMLFormatDataSet.GetFieldData(Field: TField; Buffer: Pointer): Boolean;
 var
   TempPos, RecBuf: PChar;
@@ -670,10 +595,8 @@ var
 begin
   FSaveChanges := TRUE;
   inherited UpdateRecord;
-  if (State = dsEdit) then // just update the data in the string list
-  begin
-    FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := BufToStore(ActiveBuffer);
-  end
+  if (State = dsEdit) then // just update the data in the xml document
+     FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := BufToStore(ActiveBuffer)
   else
     InternalAddRecord(ActiveBuffer, FALSE);
 end;
@@ -686,29 +609,39 @@ end;
 procedure TXMLFormatDataSet.InternalDelete;
 begin
   FSaveChanges := TRUE;
-//  FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.
-  FData.Delete(FCurRec);
-  if FCurRec >= FData.Count then
-    Dec(FCurRec);
+  FXMLDoc.DocumentElement.FindNode('recorddata').RemoveChild
+      (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec]);
+      
+  if FCurRec >= FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count then
+     Dec(FCurRec);
 end;
 
 procedure TXMLFormatDataSet.InternalAddRecord(Buffer: Pointer; DoAppend: Boolean);
+var RefChild, NewChild :TDOMNode;
 begin
-  FSaveChanges := TRUE;
-  Inc(FLastBookmark);
-  if DoAppend then
-    InternalLast;
-  if (FCurRec >=0) then
-    FData.InsertObject(FCurRec, BufToStore(Buffer), TObject(Pointer(FLastBookmark)))
-  else
-    FData.AddObject(BufToStore(Buffer), TObject(Pointer(FLastBookmark)));
+  try
+    FSaveChanges := TRUE;
+    Inc(FLastBookmark);
+    if DoAppend then
+      InternalLast;
+
+    NewChild := TDOMNode.Create(FXMLDoc);
+    NewChild.NodeValue := BufToStore(Buffer);
+
+    RefChild := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FLastBookmark];
+
+    if (FCurRec >=0)
+      then FXMLDoc.DocumentElement.FindNode('recorddata').InsertBefore(NewChild, RefChild)
+      else FXMLDoc.DocumentElement.FindNode('recorddata').AppendChild(NewChild);
+  finally
+    NewChild.Free; // ??????
+  end;
 end;
 
 procedure TXMLFormatDataSet.InternalGotoBookmark(ABookmark: Pointer);
-var
-  Index: Integer;
+var Index: Integer;
 begin
-  Index := FData.IndexOfObject(TObject(PPtrInt(ABookmark)^));
+//  Index := FXMLDoc.DocumentElement.FindNode('recorddata').FieldAddress()      IndexOfObject(TObject(PPtrInt(ABookmark)^));
   if Index <> -1 then
     FCurRec := Index
   else
@@ -741,47 +674,25 @@ begin
   Move(Data^, Buffer[FBookmarkOfs], BookmarkSize);
 end;
 
-procedure TXMLFormatDataSet.RemoveWhiteLines(List : TStrings; IsFileRecord : Boolean);
-var
-  i : integer;
+procedure TXMLFormatDataSet.SaveToFile(strFileName : String);
+var XMLData : TStringList;
 begin
-  for i := List.Count -1 downto 0 do
-  begin
-    if (Trim(List[i]) = '' ) then
-      if IsFileRecord then
-      begin
-        FCurRec := i;
-        InternalDelete;
-      end
-      else
-        List.Delete(i);
+  try
+    XMLData := TStringList.Create;
+    XMLData.Sorted := false;
+    XMLData.Text:= FXMLDoc.NodeValue;
+    XMLData.SaveToFile(strFileName);
+  finally
+    XMLData.Free;
   end;
 end;
 
-procedure TXMLFormatDataSet.RemoveBlankRecords;
+procedure TXMLFormatDataSet.LoadFromFile(strFileName: String);
 begin
-  RemoveWhiteLines(FData, TRUE);
-end;
-
-procedure TXMLFormatDataSet.RemoveExtraColumns;
-var
-  i : Integer;
-begin
-  for i := FData.Count -1 downto 0 do
-    FData[i] := BufToStore(PChar(StoreToBuf(FData[i])));
-  FData.SaveToFile(FileName);
-end;
-
-procedure TXMLFormatDataSet.SaveFileAs(strFileName : String);
-begin
-  FData.SaveToFile(strFileName);
-  FFileName := strFileName;
-  FSaveChanges := FALSE;
-end;
-
-function TXMLFormatDataSet.StoreToBuf(Source: String): String;
-begin
-  Result := Source;
+  ReadXMLFile(FXMLDoc,strFileName);
+{$IFDEF DEBUGXML}
+  ShowMessage(FXMLDoc.NodeValue);
+{$ENDIF}
 end;
 
 function TXMLFormatDataSet.BufToStore(Buffer: PChar): String;
