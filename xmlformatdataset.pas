@@ -2,7 +2,7 @@ unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
 {///////////////////////////////////////////////////////////////////////////////
  TXMLFormatDataSet is a rewrite of TFixedFormatDataSet, which will work with XML
@@ -125,7 +125,7 @@ type
 
 implementation
 
-uses XMLRead
+uses XMLRead, XMLWrite
 {$IFDEF DEBUGXML}
 , Dialogs
 {$ENDIF}
@@ -190,7 +190,7 @@ begin
       FXML.Objects[i] := TObject(Pointer(i+1));
 
 {$IFDEF DEBUGXML}
-    ShowMessage(BoolToStr(FXMLDoc.DocType = nil));
+    ShowMessage(BoolToStr(FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs') = nil));
 {$ENDIF}
 
   for i := 0 to FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs').ChildNodes.Count - 1 do
@@ -368,20 +368,21 @@ end;
 
 function TXMLFormatDataSet.GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
 begin
-  if (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1) then
-    Result := grEOF
-  else
-    Result := TxtGetRecord(Buffer, GetMode);
-  if Result = grOK then
-  begin
-    if (CalcFieldsSize > 0) then
-      GetCalcFields(Buffer);
-    with PRecInfo(Buffer + FRecInfoOfs)^ do
+  if (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1)
+    then Result := grEOF
+    else Result := TxtGetRecord(Buffer, GetMode);
+  if (Result = grOK) then
     begin
-      BookmarkFlag := bfCurrent;
-      RecordNumber := PtrInt(FXML.Objects[FCurRec]);
-    end;
-  end
+      if (CalcFieldsSize > 0) then
+        GetCalcFields(Buffer);
+      with PRecInfo(Buffer + FRecInfoOfs)^ do
+        begin
+          BookmarkFlag := bfCurrent;
+//          RecordNumber := PtrInt(FXML.Objects[FCurRec]);
+          RecordNumber := FCurRec; //
+//           FXMLDoc.DocumentElement.FindNode('recorddata').ActiveNode
+        end;
+    end
   else
     if (Result = grError) and DoCheck then
       DatabaseError('No Records');
@@ -440,26 +441,23 @@ begin
   repeat
     Accepted := TRUE;
     case GetMode of
-      gmNext:
-        if FCurRec >= RecordCount - 1  then
-          Result := grEOF
-        else
-          Inc(FCurRec);
-      gmPrior:
-        if FCurRec <= 0 then
-          Result := grBOF
-        else
-          Dec(FCurRec);
-      gmCurrent:
-        if (FCurRec < 0) or (FCurRec >= RecordCount) then
-          Result := grError;
+      gmNext:    if (FCurRec >= RecordCount - 1)
+                   then Result := grEOF
+                   else inc(FCurRec);
+      gmPrior:   if (FCurRec <= 0)
+                   then Result := grBOF
+                   else dec(FCurRec);
+      gmCurrent: if (FCurRec < 0) or (FCurRec >= RecordCount) then
+                   Result := grError;
     end;
     if (Result = grOk) then
     begin
 //      Move(PChar(StoreToBuf(FData[FCurRec]))^, Buffer[0], FRecordSize);
-      Move(PChar(
-           FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue
-           )^, Buffer[0], FRecordSize);
+      Move(
+           PChar(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue)^,
+           Buffer[0],
+           Length(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue)
+           );
       if Filtered then
       begin
         Accepted := RecordFilter(Buffer, FCurRec +1);
@@ -665,34 +663,23 @@ begin
 end;
 
 procedure TXMLFormatDataSet.GetBookmarkData(Buffer: PChar; Data: Pointer);
-begin
+begin // BookmarkSize = ??
   Move(Buffer[FBookmarkOfs], Data^, BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SetBookmarkData(Buffer: PChar; Data: Pointer);
-begin
+begin // BookmarkSize = ??
   Move(Data^, Buffer[FBookmarkOfs], BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SaveToFile(strFileName : String);
-var XMLData : TStringList;
 begin
-  try
-    XMLData := TStringList.Create;
-    XMLData.Sorted := false;
-    XMLData.Text:= FXMLDoc.NodeValue;
-    XMLData.SaveToFile(strFileName);
-  finally
-    XMLData.Free;
-  end;
+  WriteXML(FXMLDoc,strFileName);
 end;
 
 procedure TXMLFormatDataSet.LoadFromFile(strFileName: String);
 begin
   ReadXMLFile(FXMLDoc,strFileName);
-{$IFDEF DEBUGXML}
-  ShowMessage(FXMLDoc.NodeValue);
-{$ENDIF}
 end;
 
 function TXMLFormatDataSet.BufToStore(Buffer: PChar): String;
