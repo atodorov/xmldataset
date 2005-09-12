@@ -2,7 +2,7 @@ unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
 {///////////////////////////////////////////////////////////////////////////////
  TXMLFormatDataSet is a rewrite of TFixedFormatDataSet, which will work with XML
@@ -34,18 +34,21 @@ type
 
   TXMLBuffer = class (TObject)
   private
-    FXMLNode : TDomNode; // holds the xml value for a single record
-    FBookmarkFlag: TBookmarkFlag;
+    FXMLNode : TDOMNode; // holds the xml value for a single record
+    FBookmarkFlag : TBookmarkFlag;
+    FRecordNumber : PtrInt; // copied from TRecInfo
   protected
     function  CreateFieldFromXML(AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
     function  GetFieldByIndex(i : Integer) : TField; virtual;
     procedure SetFieldByIndex(const i : Integer; const AField : TField); virtual;
   public
-    constructor Create; virtual;
+    constructor Create; virtual; overload;
+    constructor Create(ADOMNode : TDOMNode); virtual; overload;
     destructor  Destroy; override;
     function FieldByName(AFieldName : String) :TField; virtual;
     property BookmarkFlag : TBookmarkFlag read FBookmarkFlag write FBookmarkFlag;
-    property Fields[i : Integer] : TField read GetFieldByIndex write SetFieldByIndex;
+    property Fields[i : Integer] : TField read GetFieldByIndex; // write SetFieldByIndex; // todo: test this
+    property RecordNumber : PtrInt read FRecordNumber write FRecordNumber;
   end;
 
   { TXMLFormatDataSet }
@@ -59,16 +62,11 @@ type
     procedure SetTrimSpace(Value : Boolean);
     procedure SetReadOnly(Value : Boolean);
     function  GetActiveRecBuf(var RecBuf: PChar): Boolean;
-    procedure SetFieldPos(var Buffer : PChar; FieldNo : Integer);
   protected
-//    FXML                :TStringList;   // holds bookmarks, no strings N.B.
     FXMLDoc             :TXMLDocument;
     FCurRec             :Integer;
-//    FRecBufSize         :Integer;
     FRecordSize         :Integer;
     FLastBookmark       :PtrInt;
-//    FRecInfoOfs         :Word;
-//    FBookmarkOfs        :Word;
     FSaveChanges        :Boolean;
   protected
     function  AllocRecordBuffer: PChar; override;
@@ -100,7 +98,7 @@ type
     function  GetRecNo: Integer; override;
     procedure SetRecNo(Value: Integer); override;
     function  GetCanModify: boolean; override;
-    function  TxtGetRecord(Buffer : PChar; GetMode: TGetMode): TGetResult;
+    function  GetRecordFromXML(Buffer : PChar; GetMode: TGetMode): TGetResult;
     function  RecordFilter(RecBuf: Pointer; ARecNo: Integer): Boolean;
     function  BufToStore(Buffer: PChar): String; virtual;
   public
@@ -146,7 +144,9 @@ type
   { helper functions }
   function GetFieldTypeFromString(FieldType : String) : TFieldType;
   function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
-
+  function GetFieldSizeFromXML(FieldNode : TDOMNode; const Size : Integer = 0) : Integer;
+  function FieldAsPointer(AField : TField) : Pointer;
+  
 implementation
 
 uses XMLRead, XMLWrite
@@ -203,44 +203,57 @@ end;
 function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
 begin
     case FieldType of
-     ftUnknown : ;
-     ftString : ;
-     ftSmallint : Result := SizeOf(Byte); //todo: check this
-     ftInteger : Result := SizeOf(Integer);
-     ftWord : Result := SizeOf(Word);
-     ftBoolean : Result := SizeOf(Boolean);
-     ftFloat : Result := SizeOf(Float); //todo: Float, Double, Real ???
-     ftCurrency : ; //Result := SizeOf(Currency);
-     ftBCD : ;
-     ftDate, ftDateTime : Result := SizeOf(TDateTime);
+     ftUnknown           : ;
+     ftString            : ; //todo: Length(Value), Value = what
+     ftSmallint          : Result := SizeOf(Byte); //todo: check this
+     ftInteger           : Result := SizeOf(Integer);
+     ftWord              : Result := SizeOf(Word);
+     ftBoolean           : Result := SizeOf(Boolean);
+     ftFloat             : Result := SizeOf(Double); //todo: Float, Double, Real ???
+     ftCurrency          : Result := SizeOf(Currency);
+     ftBCD               : ;
+     ftDate, ftDateTime  : Result := SizeOf(TDateTime);
      ftTime, ftTimeStamp : Result := SizeOf(TTimeStamp); //todo: TDateTime
-     ftBytes : ;
-     ftVarBytes : ;
-     ftAutoInc : ;
-     ftBlob : ;
-     ftMemo : ;
-     ftGraphic : ;
-     ftFmtMemo : ;
-     ftParadoxOle : ;
-     ftDBaseOle : ;
-     ftTypedBinary : ;
-     ftCursor : ;
-     ftFixedChar : ;
-     ftWideString : ;
-     ftLargeint : ;
-     ftADT : ;
-     ftArray : ;
-     ftReference : ;
-     ftDataSet : ;
-     ftOraBlob : ;
-     ftOraClob : ;
-     ftVariant : ;
-     ftInterface : ;
-     ftIDispatch : ;
-     ftGuid : ;
-     ftFMTBcd : ;
+     ftBytes             : ;
+     ftVarBytes          : ;
+     ftAutoInc           : ;
+     ftBlob              : ;
+     ftMemo              : ;
+     ftGraphic           : ;
+     ftFmtMemo           : ;
+     ftParadoxOle        : ;
+     ftDBaseOle          : ;
+     ftTypedBinary       : ;
+     ftCursor            : ;
+     ftFixedChar         : ;
+     ftWideString        : ;
+     ftLargeint          : ;
+     ftADT               : ;
+     ftArray             : ;
+     ftReference         : ;
+     ftDataSet           : ;
+     ftOraBlob           : ;
+     ftOraClob           : ;
+     ftVariant           : ;
+     ftInterface         : ;
+     ftIDispatch         : ;
+     ftGuid              : ;
+     ftFMTBcd            : ;
      else Result := Size;
    end;
+end;
+
+function GetFieldSizeFromXML(FieldNode : TDOMNode; const Size : Integer = 0) : Integer;
+begin
+   Result := Size;
+   if (FieldNode <> nil) and (FieldNode.Attributes <> nil) and
+      (FieldNode.Attributes.GetNamedItem('size') <> nil) then
+      Result := StrToInt(FieldNode.Attributes.GetNamedItem('size').NodeValue);
+end;
+
+function FieldAsPointer(AField : TField) : Pointer;
+begin
+  Result := nil; // AField.Value;
 end;
 
 //------------------------------------------------------------------------------
@@ -248,16 +261,16 @@ end;
 //------------------------------------------------------------------------------
 constructor TXMLFormatDataSet.Create(AOwner : TComponent);
 begin
- inherited Create(AOwner);
- FRecordSize   := SizeOf(TXMLBuffer);
- FTrimSpace    := TRUE;
- FXMLDoc := TXMLDocument.Create;
+  inherited Create(AOwner);
+  FRecordSize   := SizeOf(TXMLBuffer);
+  FTrimSpace    := TRUE;
+  FXMLDoc := TXMLDocument.Create;
 end;
 
 destructor TXMLFormatDataSet.Destroy;
 begin
- FXMLDoc.Free;
- inherited Destroy;
+  FXMLDoc.Free;
+  inherited Destroy;
 end;
 
 // sets XML data
@@ -311,8 +324,7 @@ begin
           ftFieldType := GetFieldTypeFromString(Trim(domNode.Attributes.GetNamedItem('datatype').NodeValue));
           Required := AnsiUpperCase(domNode.Attributes.GetNamedItem('required').NodeValue) = 'TRUE';
           // determine field size
-          FieldSize := GetFieldSizeByType(domNode.Attributes.GetNamedItem('fieldsize').NodeValue,
-                                          StrToInt(domNode.Attributes.GetNamedItem('fieldsize').NodeValue));
+          FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.Attributes.GetNamedItem('fieldsize').NodeValue));
 
           FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
           Inc(FRecordSize, FieldSize);
@@ -398,15 +410,18 @@ end;
 
 function TXMLFormatDataSet.GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
 begin
-  if (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1)
+  if (FXMLDoc = nil) or (FXMLDoc.DocumentElement = nil) or
+     (FXMLDoc.DocumentElement.FindNode('recorddata') = nil) or
+     (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes = nil) or
+     (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1)
     then Result := grEOF
-    else Result := TxtGetRecord(Buffer, GetMode);
+    else Result := GetRecordFromXML(Buffer, GetMode);
 
   if (Result = grOK) then
     begin
       if (CalcFieldsSize > 0) then
-        GetCalcFields(Buffer);
-      with PRecInfo(Buffer + FRecInfoOfs)^ do
+         GetCalcFields(Buffer);
+      with TXMLBuffer(Pointer(Buffer)^) do
         begin
           BookmarkFlag := bfCurrent;
           RecordNumber := FCurRec;
@@ -428,7 +443,7 @@ var
 begin
   Result := -1;
   if GetActiveRecBuf(BufPtr) then
-    Result := PRecInfo(BufPtr + FRecInfoOfs)^.RecordNumber;
+     Result := TXMLBuffer(Pointer(BufPtr)^).RecordNumber;
 end;
 
 procedure TXMLFormatDataSet.SetRecNo(Value: Integer);
@@ -463,7 +478,8 @@ begin
   Result := RecBuf <> nil;
 end;
 
-function TXMLFormatDataSet.TxtGetRecord(Buffer : PChar; GetMode: TGetMode): TGetResult;
+function TXMLFormatDataSet.GetRecordFromXML(Buffer : PChar; GetMode: TGetMode): TGetResult;
+// return TXMLBuffer object into Buffer
 var Accepted : Boolean;
 begin
   Result := grOK;
@@ -477,24 +493,23 @@ begin
                    then Result := grBOF
                    else dec(FCurRec);
       gmCurrent: if (FCurRec < 0) or (FCurRec >= RecordCount) then
-                   Result := grError;
+                    Result := grError;
     end;
     if (Result = grOk) then
     begin
-//      Move(PChar(StoreToBuf(FData[FCurRec]))^, Buffer[0], FRecordSize);
 {$IFDEF DEBUGXML}
    ShowMessage(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue);
 {$ENDIF}
+//todo: N.B.
         Move(
-           PChar(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue)^,
-           Buffer[0],
-           Length(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue)
+           Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec]))^,
+           Buffer[0],SizeOf(TXMLBuffer)
            );
       if Filtered then
       begin
         Accepted := RecordFilter(Buffer, FCurRec +1);
         if not Accepted and (GetMode = gmCurrent) then
-          Inc(FCurRec);
+           inc(FCurRec);
       end;
     end;
   until Accepted;
@@ -507,7 +522,7 @@ var
 begin                          // Returns true if accepted in the filter
   SaveState := SetTempState(dsFilter);
   FFilterBuffer := RecBuf;
-  PRecInfo(FFilterBuffer + FRecInfoOfs)^.RecordNumber := ARecNo;
+  TXMLBuffer(RecBuf^).RecordNumber := ARecNo;
   Accept := TRUE;
   if Accept and Assigned(OnFilterRecord) then
     OnFilterRecord(Self, Accept);
@@ -522,40 +537,58 @@ end;
 
 // Field Related
 function TXMLFormatDataSet.GetFieldData(Field: TField; Buffer: Pointer): Boolean;
-var
-  TempPos, RecBuf: PChar;
+var RecBuf: PChar;
+    intValue : Integer;
 begin
   Result := GetActiveRecBuf(RecBuf);
-  if Result then
-  begin
-    if Field.FieldNo > 0 then
-    begin
-      TempPos := RecBuf;
-      SetFieldPos(RecBuf, Field.FieldNo);
-      Result := (RecBuf < StrEnd(TempPos));
-    end
-    else
-      if (State in [dsBrowse, dsEdit, dsInsert, dsCalcFields]) then
-      begin
-        Inc(RecBuf, FRecordSize + Field.Offset);
-        Result := Boolean(Byte(RecBuf[0]));
-      end;
-  end;
+
   if Result and (Buffer <> nil) then
-  begin
-    StrLCopy(Buffer, RecBuf, Field.Size);
-    if FTrimSpace then
-    begin
-      TempPos := StrEnd(Buffer);
-      repeat
-        Dec(TempPos);
-        if (TempPos[0] = ' ') then
-          TempPos[0]:= #0
-        else
-          break;
-      until (TempPos = Buffer);
-    end;
-  end;
+     begin
+       case Field.DataType of
+         ftUnknown     : ;
+         ftString      : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsString)^,Field.Size);
+         ftSmallint    : ; //todo: check this
+         ftInteger     : begin intValue := Field.AsInteger; Move(Buffer,intValue,SizeOf(Integer)); end; //Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsInteger)^,SizeOf(Integer));
+         ftWord        : ;
+//         ftBoolean     : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsBoolean)^,SizeOf(Boolean));
+//         ftFloat       : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsFloat)^,SizeOf(Double));
+         ftCurrency    : ;
+         ftBCD         : ;
+//         ftDate, ftTime, ftDateTime, ftTimeStamp : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsDateTime)^,SizeOf(TDateTime));
+         ftBytes       : ;
+         ftVarBytes    : ;
+         ftAutoInc     : ;
+         ftBlob        : ;
+         ftMemo        : ;
+         ftGraphic     : ;
+         ftFmtMemo     : ;
+         ftParadoxOle  : ;
+         ftDBaseOle    : ;
+         ftTypedBinary : ;
+         ftCursor      : ;
+         ftFixedChar   : ;
+         ftWideString  : ;
+         ftLargeint    : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsLongint)^,SizeOf(LongInt));
+         ftADT         : ;
+         ftArray       : ;
+         ftReference   : ;
+         ftDataSet     : ;
+         ftOraBlob     : ;
+         ftOraClob     : ;
+         ftVariant     : ;
+         ftInterface   : ;
+         ftIDispatch   : ;
+         ftGuid        : ;
+         ftFMTBcd      : ;
+//         else Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).Value)^,Field.Size);
+       end;
+
+       if (FTrimSpace) and (Field is TStringField) then
+          begin
+            String(Buffer^) := Trim(String(Buffer^));
+            String(Buffer^)[Length(String(Buffer^))] := #0;
+          end;
+     end;
 end;
 
 procedure TXMLFormatDataSet.SetFieldData(Field: TField; Buffer: Pointer);
@@ -564,15 +597,18 @@ var
   p : Integer;
 begin
   if not (State in [dsEdit, dsInsert]) then
-    DatabaseError('Dataset not in edit or insert mode', Self);
+     DatabaseError('Dataset not in edit or insert mode', Self);
   GetActiveRecBuf(RecBuf);
+  //todo: moze bi sledva ne6to kato GetFieldData
+(*
   if Field.FieldNo > 0 then
   begin
     if State = dsCalcFields then
-      DatabaseError('Dataset not in edit or insert mode', Self);
+       DatabaseError('Dataset not in edit or insert mode', Self);
     if Field.ReadOnly and not (State in [dsSetKey, dsFilter]) then
-      DatabaseErrorFmt('Field ''%s'' cannot be modified', [Field.DisplayName]);
+       DatabaseErrorFmt('Field ''%s'' cannot be modified', [Field.DisplayName]);
     Field.Validate(Buffer);
+
     if Field.FieldKind <> fkInternalCalc then
     begin
       SetFieldPos(RecBuf, Field.FieldNo);
@@ -594,18 +630,7 @@ begin
   end;
   if not (State in [dsCalcFields, dsFilter, dsNewValue]) then
     DataEvent(deFieldChange, Ptrint(Field));
-end;
-
-procedure TXMLFormatDataSet.SetFieldPos(var Buffer : PChar; FieldNo : Integer);
-var
-  i : Integer;
-begin
-  i := 1;
-  while (i < FieldNo) and (i < FieldDefs.Count) do
-  begin
-    Inc(Buffer, FieldDefs.Items[i-1].Size);
-    Inc(i);
-  end;
+*)
 end;
 
 // Navigation / Editing
@@ -616,7 +641,7 @@ end;
 
 procedure TXMLFormatDataSet.InternalLast;
 begin
-  FCurRec := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
+  FCurRec := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count-1;
 end;
 
 procedure TXMLFormatDataSet.InternalPost;
@@ -633,7 +658,7 @@ end;
 
 procedure TXMLFormatDataSet.InternalEdit;
 begin
-// not implemented yet
+  raise Exception.Create('TXMLFormatDataSet.InternalEdit');
 end;
 
 procedure TXMLFormatDataSet.InternalDelete;
@@ -653,7 +678,7 @@ begin
     FSaveChanges := TRUE;
     Inc(FLastBookmark);
     if DoAppend then
-      InternalLast;
+       InternalLast;
 
     NewChild := TDOMNode.Create(FXMLDoc);
     NewChild.NodeValue := BufToStore(Buffer);
@@ -671,7 +696,8 @@ end;
 procedure TXMLFormatDataSet.InternalGotoBookmark(ABookmark: Pointer);
 var Index: Integer;
 begin
-//  Index := FXMLDoc.DocumentElement.FindNode('recorddata').FieldAddress()      IndexOfObject(TObject(PPtrInt(ABookmark)^));
+//  Index := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[Integer(ABookmark^)];
+  Index := Integer(ABookmark^);
   if Index <> -1 then
     FCurRec := Index
   else
@@ -681,27 +707,29 @@ end;
 procedure TXMLFormatDataSet.InternalSetToRecord(Buffer: PChar);
 begin
   if (State <> dsInsert) then
-    InternalGotoBookmark(@PRecInfo(Buffer + FRecInfoOfs)^.RecordNumber);
+     InternalGotoBookmark(@TXMLbuffer(Pointer(Buffer)^).RecordNumber);
 end;
 
 function TXMLFormatDataSet.GetBookmarkFlag(Buffer: PChar): TBookmarkFlag;
 begin
-  Result := PRecInfo(Buffer + FRecInfoOfs)^.BookmarkFlag;
+  Result := TXMLBuffer(Pointer(Buffer)^).BookmarkFlag;
 end;
 
 procedure TXMLFormatDataSet.SetBookmarkFlag(Buffer: PChar; Value: TBookmarkFlag);
 begin
-  PRecInfo(Buffer + FRecInfoOfs)^.BookmarkFlag := Value;
+  TXMLBuffer(Pointer(Buffer)^).BookmarkFlag := Value;
 end;
 
 procedure TXMLFormatDataSet.GetBookmarkData(Buffer: PChar; Data: Pointer);
 begin // BookmarkSize = ??
-  Move(Buffer[FBookmarkOfs], Data^, BookmarkSize);
+  raise Exception.Create('TXMLFormatDataSet.GetBookmarkData');
+//   Move(TXMLBuffer(Pointer(Buffer^)).BookmarkFlag, Data^, BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SetBookmarkData(Buffer: PChar; Data: Pointer);
 begin // BookmarkSize = ??
-  Move(Data^, Buffer[FBookmarkOfs], BookmarkSize);
+  raise Exception.Create('TXMLFormatDataSet.SetBookmarkData');
+//  Move(Data^, TXMLBuffer(Pointer(Buffer^)).BookmarkFlag, BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SaveToFile(strFileName : String);
@@ -715,14 +743,16 @@ begin
 end;
 
 function TXMLFormatDataSet.BufToStore(Buffer: PChar): String;
-begin // trqbva da gonapravime da vry6ta XML na otdelen zapis
+begin //todo: da go napravime da vry6ta XML na otdelen zapis
   Result := Copy(Buffer, 1, FRecordSize);
 end;
 
 { TXMLBuffer }
 
 function TXMLBuffer.CreateFieldFromXML(AFieldNode: TDOMNode): TField;
+//todo: should Owner of fields be property DataSet : TDataSet
 var FieldType : TFieldType;
+    Value : Variant;
 begin
   Result :=nil;
   if (AFieldNode <> nil) then
@@ -731,59 +761,63 @@ begin
             FieldType := GetFieldTypeFromString(AFieldNode.Attributes.GetNamedItem('datatype').NodeValue)
        else FieldType := GetFieldTypeFromString('');
 
+       if (AFieldNode.Attributes.GetNamedItem('value') <> nil) then // simple field
+            Value := AFieldNode.Attributes.GetNamedItem('value').NodeValue
+       else Value := AFieldNode.NodeValue; // CDATA = Blob, String, etc
+       
        // create field according to type
        case FieldType of
-         ftUnknown : Result := TField.Create(nil);
-         ftString : ;
-         ftSmallint : Result := SizeOf(Byte); //todo: check this
-         ftInteger : Result := SizeOf(Integer);
-         ftWord : Result := SizeOf(Word);
-         ftBoolean : Result := SizeOf(Boolean);
-         ftFloat : Result := SizeOf(Float); //todo: Float, Double, Real ???
-         ftCurrency : ; //Result := SizeOf(Currency);
-         ftBCD : ;
-         ftDate, ftDateTime : Result := SizeOf(TDateTime);
-         ftTime, ftTimeStamp : Result := SizeOf(TTimeStamp); //todo: TDateTime
-         ftBytes : ;
-         ftVarBytes : ;
-         ftAutoInc : ;
-         ftBlob : ;
-         ftMemo : ;
-         ftGraphic : ;
-         ftFmtMemo : ;
-         ftParadoxOle : ;
-         ftDBaseOle : ;
-         ftTypedBinary : ;
-         ftCursor : ;
-         ftFixedChar : ;
-         ftWideString : ;
-         ftLargeint : ;
-         ftADT : ;
-         ftArray : ;
-         ftReference : ;
-         ftDataSet : ;
-         ftOraBlob : ;
-         ftOraClob : ;
-         ftVariant : ;
-         ftInterface : ;
-         ftIDispatch : ;
-         ftGuid : ;
-         ftFMTBcd : ;
-         else Result := Size;
+         ftUnknown     : begin Result := TField.Create(nil);       Result.Value := Value; end;
+         ftString      : begin Result := TStringField.Create(nil); Result.AsString := Value; end;
+         ftSmallint    : begin end; //todo: check this
+         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := Value; end;
+         ftWord        : begin end;
+         ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := Value; end;
+         ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := Value; end;//todo: Float, Double, Real ???
+         ftCurrency    : begin end;
+         ftBCD         : begin Result := TBCDField.Create(nil); Result.Value := Value; end;
+         ftDate, ftDateTime  : begin Result := TDateTimeField.Create(nil); Result.AsDateTime := Value; end;
+         ftTime, ftTimeStamp : begin Result := TTimeField.Create(nil);  Result.AsDateTime := Value; end;//todo: TDateTime
+         ftBytes       : begin Result := TBytesField.Create(nil); Result.Value := Value; end; //todo: fix
+         ftVarBytes    : begin Result := TVarBytesField.Create(nil); Result.Value := Value; end; //todo: fix
+         ftAutoInc     : begin Result := TAutoIncField.Create(nil); Result.Value := Value; end; //todo: check
+         ftBlob        : begin Result := TBlobField.Create(nil); Result.Value := Value; end; //todo: fix
+         ftMemo        : begin Result := TMemoField.Create(nil); Result.Value := Value; end; //todo: fix
+         ftGraphic     : begin Result := TGraphicField.Create(nil); Result.Value := Value; end; //todo: fix
+         ftFmtMemo     : begin end;
+         ftParadoxOle  : begin end;
+         ftDBaseOle    : begin end;
+         ftTypedBinary : begin end;
+         ftCursor      : begin end;
+         ftFixedChar   : begin end;
+         ftWideString  : begin end;
+         ftLargeint    : begin Result := TLargeintField.Create(nil); Result.AsLongint := Value; end;
+         ftADT         : begin end;
+         ftArray       : begin end;
+         ftReference   : begin end;
+         ftDataSet     : begin end;
+         ftOraBlob     : begin end;
+         ftOraClob     : begin end;
+         ftVariant     : begin end;
+         ftInterface   : begin end;
+         ftIDispatch   : begin end;
+         ftGuid        : begin end;
+         ftFMTBcd      : begin end;
+         else Result := nil;
        end;
-            Result := TField.Create(nil);
-            if (AFieldNode.Attributes.GetNamedItem('value') <> nil) then// simple field
-               Result.AsString := FieldNode.Attributes.GetNamedItem('value').NodeValue
-            else FreeAndNil(Result);
-               // N.B. NodeValuemai 6te syvpada s CDATA sekciqta
-//            else if (FieldNode.FindField('') ) // string, text or blob field
+       
+(*
+       if (Result <> nil) then
+          Result.DataSet := FParentDataSet;
+*)
+
      end;
 end;
 
 function TXMLBuffer.GetFieldByIndex(i: Integer): TField;
 begin
-  raise Exception.Create('TXMLBuffer.GetFieldByIndex - not implemented');
-//  if Assigned(FXMLNode) then
+//  raise Exception.Create('TXMLBuffer.GetFieldByIndex - not implemented');
+   Result := CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]);
 end;
 
 procedure TXMLBuffer.SetFieldByIndex(const i: Integer; const AField: TField);
@@ -794,6 +828,12 @@ end;
 constructor TXMLBuffer.Create;
 begin
   FXMLNode := TDOMNode.Create(nil);
+end;
+
+constructor TXMLBuffer.Create(ADOMNode: TDOMNode);
+begin
+ Self.Create;
+ FXMLNode := ADOMNode;
 end;
 
 destructor TXMLBuffer.Destroy;
@@ -818,15 +858,8 @@ begin
                (FieldNode.NodeName <> 'field') or
                (AnsiUpperCase(FieldNode.Attributes.GetNamedItem('name').NodeValue) = AFieldName);
 
-      if (FieldNode <> nil) then
-         begin
-            Result := TField.Create(nil);
-            if (FieldNode.Attributes.GetNamedItem('value') <> nil) then// simple field
-               Result.AsString := FieldNode.Attributes.GetNamedItem('value').NodeValue
-            else FreeAndNil(Result);
-               // N.B. NodeValuemai 6te syvpada s CDATA sekciqta
-//            else if (FieldNode.FindField('') ) // string, text or blob field
-         end;
+      Result := CreateFieldFromXML(FieldNode);
+
     except
       on E : Exception do
          Result := nil;
