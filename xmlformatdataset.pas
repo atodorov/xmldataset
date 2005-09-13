@@ -11,11 +11,7 @@ unit XMLFormatDataSet;
 interface
 
 uses
-  Classes, SysUtils, Db, DOM;
-
-const
-  MAXSTRLEN = 250;
-
+  Classes, SysUtils, DB, DOM;
 
 type
 
@@ -36,6 +32,7 @@ type
   private
     FXMLNode : TDOMNode; // holds the xml value for a single record
     FBookmarkFlag : TBookmarkFlag;
+    FFields : TFieldList;
     FRecordNumber : PtrInt; // copied from TRecInfo
   protected
     function  CreateFieldFromXML(AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
@@ -828,6 +825,7 @@ end;
 constructor TXMLBuffer.Create;
 begin
   FXMLNode := TDOMNode.Create(nil);
+  FFields :=TFieldList.Create(nil); // todo: should we have a dataset here
 end;
 
 constructor TXMLBuffer.Create(ADOMNode: TDOMNode);
@@ -839,6 +837,7 @@ end;
 destructor TXMLBuffer.Destroy;
 begin
   FXMLNode.Free;
+  FFields.Free;
   inherited Destroy;
 end;
 
