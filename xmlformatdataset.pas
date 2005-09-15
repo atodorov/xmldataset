@@ -1,4 +1,4 @@
-unit xmlformatdataset;
+unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
@@ -36,17 +36,18 @@ type
     FRecordNumber : PtrInt; // copied from TRecInfo
   protected
     function  CreateFieldFromXML(const AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
-    function  GetFieldByIndex(i : Integer) : TField; virtual;
+    function  GetFieldByIndex(i : Integer) : TField;
     procedure CreateFields; // creates FFields from FXMLNode
+    procedure SetXMLNode(const ANode : TDOMNode); // sets FXMLNode and re-create fields
   public
     constructor Create; virtual; overload;
     constructor Create(ADOMNode : TDOMNode); virtual; overload;
     destructor  Destroy; override;
-    function FieldByName(const AFieldName : String) :TField; virtual;
+    function FieldByName(const AFieldName : String) :TField;
     property BookmarkFlag : TBookmarkFlag read FBookmarkFlag write FBookmarkFlag;
     property Fields[i : Integer] : TField read GetFieldByIndex;
     property RecordNumber : PtrInt read FRecordNumber write FRecordNumber;
-    
+    property XMLNode : TDOMNode read FXMLNode write SetXMLNode;
   end;
 
   { TXMLFormatDataSet }
@@ -66,7 +67,6 @@ type
     FRecordSize         :Integer;
     FLastBookmark       :PtrInt;
     FSaveChanges        :Boolean;
-  protected
     function  AllocRecordBuffer: PChar; override;
     procedure FreeRecordBuffer(var Buffer: PChar); override;
     procedure InternalAddRecord(Buffer: Pointer; DoAppend: Boolean); override;
@@ -98,12 +98,12 @@ type
     function  GetCanModify: boolean; override;
     function  GetRecordFromXML(Buffer : PChar; GetMode: TGetMode): TGetResult;
     function  RecordFilter(RecBuf: Pointer; ARecNo: Integer): Boolean;
-    function  BufToStore(Buffer: PChar): String; virtual;
+    function  BufferToXML(Buffer: PChar): String; virtual; // returns XML value of record in Buffer
   public
     constructor Create(AOwner: TComponent); override;
     destructor  Destroy; override;
-    procedure SaveToFile(strFileName : String); dynamic;
-    procedure LoadFromFile(strFileName : String); dynamic;
+    procedure SaveToFile(strFileName : String); dynamic;   // todo: goes in transport interface
+    procedure LoadFromFile(strFileName : String); dynamic; // this one too
     property  CanModify;
   published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
@@ -495,13 +495,10 @@ begin
     end;
     if (Result = grOk) then
     begin
-{$IFDEF DEBUGXML}
-   ShowMessage(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue);
-{$ENDIF}
 //todo: N.B.
         Move(
            Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec]))^,
-           Buffer[0],SizeOf(TXMLBuffer)
+           Buffer,SizeOf(TXMLBuffer)
            );
       if Filtered then
       begin
@@ -537,18 +534,21 @@ end;
 function TXMLFormatDataSet.GetFieldData(Field: TField; Buffer: Pointer): Boolean;
 var RecBuf: PChar;
     intValue : Integer;
+    BuffField : TField;
 begin
   Result := GetActiveRecBuf(RecBuf);
 
   if Result and (Buffer <> nil) then
-     begin
+     begin // todo: typecasting property to Pointer may not work - check this
+       BuffField := TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName);
        case Field.DataType of
          ftUnknown     : ;
-         ftString      : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsString)^,Field.Size);
+         ftString      : Move(Buffer,Pointer(BuffField.AsString)^,BuffField.Size);
          ftSmallint    : ; //todo: check this
-         ftInteger     : begin intValue := Field.AsInteger; Move(Buffer,intValue,SizeOf(Integer)); end; //Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsInteger)^,SizeOf(Integer));
+         ftInteger     : begin intValue := BuffField.AsInteger; Move(Buffer,intValue,SizeOf(Integer)); end;
          ftWord        : ;
-//         ftBoolean     : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsBoolean)^,SizeOf(Boolean));
+         //todo: N.B. cast Boolean to Byte.
+//         ftBoolean     : Move(Buffer,Pointer(Integer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsBoolean))^,SizeOf(Integer));
 //         ftFloat       : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsFloat)^,SizeOf(Double));
          ftCurrency    : ;
          ftBCD         : ;
@@ -566,7 +566,7 @@ begin
          ftCursor      : ;
          ftFixedChar   : ;
          ftWideString  : ;
-         ftLargeint    : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsLongint)^,SizeOf(LongInt));
+//         ftLargeint    : Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).AsLongint)^,SizeOf(LongInt));
          ftADT         : ;
          ftArray       : ;
          ftReference   : ;
@@ -581,7 +581,7 @@ begin
 //         else Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).Value)^,Field.Size);
        end;
 
-       if (FTrimSpace) and (Field is TStringField) then
+       if (FTrimSpace) and (BuffField is TStringField) then
           begin
             String(Buffer^) := Trim(String(Buffer^));
             String(Buffer^)[Length(String(Buffer^))] := #0;
@@ -649,7 +649,7 @@ begin
   FSaveChanges := TRUE;
   inherited UpdateRecord;
   if (State = dsEdit) then // just update the data in the xml document
-     FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := BufToStore(ActiveBuffer)
+     FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := BufferToXML(ActiveBuffer)
   else
     InternalAddRecord(ActiveBuffer, FALSE);
 end;
@@ -679,15 +679,16 @@ begin
        InternalLast;
 
     NewChild := TDOMNode.Create(FXMLDoc);
-    NewChild.NodeValue := BufToStore(Buffer);
+    NewChild.NodeValue := BufferToXML(Buffer);
 
     RefChild := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FLastBookmark];
 
-    if (FCurRec >=0)
+    if (FCurRec >= 0)
       then FXMLDoc.DocumentElement.FindNode('recorddata').InsertBefore(NewChild, RefChild)
       else FXMLDoc.DocumentElement.FindNode('recorddata').AppendChild(NewChild);
   finally
     NewChild.Free; // ??????
+    RefChild := nil; // clear reference
   end;
 end;
 
@@ -740,9 +741,9 @@ begin
   ReadXMLFile(FXMLDoc,strFileName);
 end;
 
-function TXMLFormatDataSet.BufToStore(Buffer: PChar): String;
-begin //todo: da go napravime da vry6ta XML na otdelen zapis
-  Result := Copy(Buffer, 1, FRecordSize);
+function TXMLFormatDataSet.BufferToXML(Buffer: PChar): String;
+begin
+  Result := TXMLBuffer(Pointer(Buffer)^).XMLNode.NodeValue;
 end;
 
 { TXMLBuffer }
@@ -820,8 +821,24 @@ end;
 procedure TXMLBuffer.CreateFields;
 var i : Integer;
 begin
-  for i := 0 to FXMLNode.ChildNodes.Count-1 do
-      FFields.Add(CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]));
+(* Child node is the <field> element
+<row>
+  <field name="ID" value="0" datatype="integer" />
+  <field name="NAME" size="8" datatype="string">
+    <![CDATA[ Bulgaria ]]>
+  </field>
+</row>
+*)
+  FFields.Clear;
+  if Assigned(FXMLNode) then
+     for i := 0 to FXMLNode.ChildNodes.Count-1 do
+         FFields.Add(CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]));
+end;
+
+procedure TXMLBuffer.SetXMLNode(const ANode: TDOMNode);
+begin
+  FXMLNode := ANode;
+  CreateFields;
 end;
 
 constructor TXMLBuffer.Create;
@@ -834,6 +851,7 @@ constructor TXMLBuffer.Create(ADOMNode: TDOMNode);
 begin
  Self.Create;
  FXMLNode := ADOMNode;
+ CreateFields;
 end;
 
 destructor TXMLBuffer.Destroy;
