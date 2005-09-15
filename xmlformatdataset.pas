@@ -32,7 +32,7 @@ type
   private
     FXMLNode : TDOMNode; // holds the xml value for a single record
     FBookmarkFlag : TBookmarkFlag;
-    FFields : TFieldList;
+    FFields : TFields;
     FRecordNumber : PtrInt; // copied from TRecInfo
   protected
     function  CreateFieldFromXML(AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
