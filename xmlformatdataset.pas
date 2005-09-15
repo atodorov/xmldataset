@@ -346,14 +346,14 @@ begin
   if DefaultFields then
      CreateFields;
   BindFields(TRUE);
-// N.B. kae sa ni bookmarkovete
+//todo: kakvi sa ni bookmarks
   BookmarkSize := SizeOf(Integer);
 (* // mai ne ni trqbva ve4e
   FRecInfoOfs := FRecordSize + CalcFieldsSize; // Initialize the offset for TRecInfo in the buffer
   FBookmarkOfs := FRecInfoOfs + SizeOf(TRecInfo);
   FRecBufSize := FBookmarkOfs + BookmarkSize;
 *)
-// kato izmislime kade sa bookmarks tova 6te se promeni mai
+//todo: kato izmislime kade sa bookmarks tova 6te se promeni mai
   FLastBookmark := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
   // or  FXMLDoc.DocumentElement.FindNode('recorddata').Attributes.GetNamedItem('count').NodeValue;
 end;
@@ -536,8 +536,10 @@ var RecBuf: PChar;
     intValue : Integer;
     BuffField : TField;
 begin
-  Result := GetActiveRecBuf(RecBuf);
-
+//  Result := GetActiveRecBuf(RecBuf);
+  Result := true;
+  RecBuf := ActiveBuffer;
+  
   if Result and (Buffer <> nil) then
      begin // todo: typecasting property to Pointer may not work - check this
        BuffField := TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName);
@@ -721,14 +723,12 @@ end;
 
 procedure TXMLFormatDataSet.GetBookmarkData(Buffer: PChar; Data: Pointer);
 begin // BookmarkSize = ??
-  raise Exception.Create('TXMLFormatDataSet.GetBookmarkData');
-//   Move(TXMLBuffer(Pointer(Buffer^)).BookmarkFlag, Data^, BookmarkSize);
+  Move(TXMLBuffer(Pointer(Buffer)^).BookmarkFlag, Data^, BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SetBookmarkData(Buffer: PChar; Data: Pointer);
 begin // BookmarkSize = ??
-  raise Exception.Create('TXMLFormatDataSet.SetBookmarkData');
-//  Move(Data^, TXMLBuffer(Pointer(Buffer^)).BookmarkFlag, BookmarkSize);
+  Move(Data^, TXMLBuffer(Pointer(Buffer)^).BookmarkFlag, BookmarkSize);
 end;
 
 procedure TXMLFormatDataSet.SaveToFile(strFileName : String);
