@@ -1,4 +1,4 @@
-unit XMLFormatDataSet;
+unit xmlformatdataset;
 
 {$mode objfpc}{$H+}
 
@@ -35,17 +35,18 @@ type
     FFields : TFields;
     FRecordNumber : PtrInt; // copied from TRecInfo
   protected
-    function  CreateFieldFromXML(AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
+    function  CreateFieldFromXML(const AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
     function  GetFieldByIndex(i : Integer) : TField; virtual;
-    procedure SetFieldByIndex(const i : Integer; const AField : TField); virtual;
+    procedure CreateFields; // creates FFields from FXMLNode
   public
     constructor Create; virtual; overload;
     constructor Create(ADOMNode : TDOMNode); virtual; overload;
     destructor  Destroy; override;
-    function FieldByName(AFieldName : String) :TField; virtual;
+    function FieldByName(const AFieldName : String) :TField; virtual;
     property BookmarkFlag : TBookmarkFlag read FBookmarkFlag write FBookmarkFlag;
-    property Fields[i : Integer] : TField read GetFieldByIndex; // write SetFieldByIndex; // todo: test this
+    property Fields[i : Integer] : TField read GetFieldByIndex;
     property RecordNumber : PtrInt read FRecordNumber write FRecordNumber;
+    
   end;
 
   { TXMLFormatDataSet }
@@ -746,7 +747,7 @@ end;
 
 { TXMLBuffer }
 
-function TXMLBuffer.CreateFieldFromXML(AFieldNode: TDOMNode): TField;
+function TXMLBuffer.CreateFieldFromXML(const AFieldNode: TDOMNode): TField;
 //todo: should Owner of fields be property DataSet : TDataSet
 var FieldType : TFieldType;
     Value : Variant;
@@ -813,19 +814,20 @@ end;
 
 function TXMLBuffer.GetFieldByIndex(i: Integer): TField;
 begin
-//  raise Exception.Create('TXMLBuffer.GetFieldByIndex - not implemented');
-   Result := CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]);
+   Result := FFields.Fields[i];
 end;
 
-procedure TXMLBuffer.SetFieldByIndex(const i: Integer; const AField: TField);
+procedure TXMLBuffer.CreateFields;
+var i : Integer;
 begin
-  raise Exception.Create('TXMLBuffer.SetFieldByIndex - not implemented');
+  for i := 0 to FXMLNode.ChildNodes.Count-1 do
+      FFields.Add(CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]));
 end;
 
 constructor TXMLBuffer.Create;
 begin
   FXMLNode := TDOMNode.Create(nil);
-  FFields :=TFieldList.Create(nil); // todo: should we have a dataset here
+  FFields  := TFields.Create(nil); // todo: should we have a dataset here
 end;
 
 constructor TXMLBuffer.Create(ADOMNode: TDOMNode);
@@ -841,28 +843,9 @@ begin
   inherited Destroy;
 end;
 
-function TXMLBuffer.FieldByName(AFieldName: String): TField;
-var FieldNode : TDOMNode;
+function TXMLBuffer.FieldByName(const AFieldName: String): TField;
 begin
-  Result := nil;
-  if Assigned(FXMLNode) then
-    try
-      AFieldName := AnsiUpperCase(AFieldName);
-      FieldNode := FXMLNode.FirstChild;
-      
-      if not (AnsiUpperCase(FieldNode.Attributes.GetNamedItem('name').NodeValue) = AFieldName) then
-         repeat // field not found at FirstChild
-           FieldNode := FXMLNode.NextSibling;
-         until (FieldNode = nil) or
-               (FieldNode.NodeName <> 'field') or
-               (AnsiUpperCase(FieldNode.Attributes.GetNamedItem('name').NodeValue) = AFieldName);
-
-      Result := CreateFieldFromXML(FieldNode);
-
-    except
-      on E : Exception do
-         Result := nil;
-    end;
+  Result := FFields.FieldByName(AFieldName);
 end;
 
 end.
