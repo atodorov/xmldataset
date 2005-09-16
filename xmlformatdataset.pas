@@ -4,14 +4,26 @@ unit XMLFormatDataSet;
 
 //{$DEFINE DEBUGXML}
 
-{///////////////////////////////////////////////////////////////////////////////
- TXMLFormatDataSet is a rewrite of TFixedFormatDataSet, which will work with XML
- (c) 2005 - Alexander Todorov, alexx.todorov@gmail.com
-///////////////////////////////////////////////////////////////////////////////}
+{*******************************************************************************
+ TXMLFormatDataSet.
+ (c) 2005 - Alexander Todorov,
+ e-mail: alexx.todorov@gmail.com
+ 
+ *****************************************************************************
+ *                                                                           *
+ *  See the file COPYING included in this distribution,                      *
+ *  for details about the copyright.                                         *
+ *                                                                           *
+ *  This program is distributed in the hope that it will be useful,          *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+ *                                                                           *
+ *****************************************************************************
+*******************************************************************************}
 interface
 
 uses
-  Classes, SysUtils, DB, DOM;
+  Classes, SysUtils, Variants, DB, DOM;
 
 type
 
@@ -23,7 +35,7 @@ type
     BookmarkFlag: TBookmarkFlag;
   end;
   
-  { TXMLBuffer }
+  { PXMLBuffer }
   PXMLBuffer = ^TXMLBuffer;
   
   { TXMLBuffer }
@@ -199,9 +211,10 @@ end;
 
 function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
 begin
+    Result := Size;
     case FieldType of
      ftUnknown           : ;
-     ftString            : ; //todo: Length(Value), Value = what
+     ftString            : ; //todo: Size = MaxFieldLength. pass this from InternalInitFieldDefs
      ftSmallint          : Result := SizeOf(Byte); //todo: check this
      ftInteger           : Result := SizeOf(Integer);
      ftWord              : Result := SizeOf(Word);
@@ -209,8 +222,7 @@ begin
      ftFloat             : Result := SizeOf(Double); //todo: Float, Double, Real ???
      ftCurrency          : Result := SizeOf(Currency);
      ftBCD               : ;
-     ftDate, ftDateTime  : Result := SizeOf(TDateTime);
-     ftTime, ftTimeStamp : Result := SizeOf(TTimeStamp); //todo: TDateTime
+     ftDate, ftDateTime, ftTime, ftTimeStamp  : Result := SizeOf(TDateTime);
      ftBytes             : ;
      ftVarBytes          : ;
      ftAutoInc           : ;
@@ -236,7 +248,6 @@ begin
      ftIDispatch         : ;
      ftGuid              : ;
      ftFMTBcd            : ;
-     else Result := Size;
    end;
 end;
 
@@ -533,17 +544,24 @@ var RecBuf: PChar;
     boolValue : Boolean;
     dtValue : TDateTime;
     liValue : Longint;
+    strValue : String;
 begin
   Result := GetActiveRecBuf(RecBuf);
   Result := true;
 //  RecBuf := ActiveBuffer;
   
-  if Result and (Buffer <> nil) then
-     begin // todo: typecasting property to Pointer may not work - check this
+  if Result and (RecBuf <> nil) then
+     begin
        BuffField := TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName);
-       case Field.DataType of
+       case BuffField.DataType of
          ftUnknown     : ;
-         ftString      : Move(Buffer,Pointer(BuffField.AsString)^,Length(BuffField.AsString));
+         ftString      :
+            begin
+              if FTrimSpace
+                 then strValue := Trim(BuffField.AsString)
+                 else strValue := BuffField.AsString;
+              Move(Buffer,strValue,Length(strValue));
+            end;
          ftSmallint    : ; //todo: check this
          ftInteger     : begin intValue := BuffField.AsInteger;  Move(Buffer,intValue,SizeOf(Integer));  end;
          ftWord        : ;
@@ -579,12 +597,6 @@ begin
          ftFMTBcd      : ;
 //         else Move(Buffer,Pointer(TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName).Value)^,Field.Size);
        end;
-
-       if (FTrimSpace) and (BuffField is TStringField) then
-          begin
-            String(Buffer^) := Trim(String(Buffer^));
-            String(Buffer^)[Length(String(Buffer^))] := #0;
-          end;
      end;
 end;
 
@@ -746,16 +758,16 @@ begin
        // create field according to type
        case FieldType of
          ftUnknown     : begin Result := TField.Create(nil);       Result.Value := Value; end;
-         ftString      : begin Result := TStringField.Create(nil); Result.AsString := Value; end;
-         ftSmallint    : begin end; //todo: check this
-         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := Value; end;
+         ftString      : begin Result := TStringField.Create(nil); Result.AsString := VarToStr(Value); end;
+//         ftSmallint    : begin varsmallint end; //todo: check this
+         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := VarAsType(Value,varinteger); end;
          ftWord        : begin end;
-         ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := Value; end;
-         ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := Value; end;//todo: Float, Double, Real ???
+         ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := VarAsType(Value,varboolean); end;
+         ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := VarAsType(Value,vardouble); end;
          ftCurrency    : begin end;
-         ftBCD         : begin Result := TBCDField.Create(nil); Result.Value := Value; end;
-         ftDate, ftDateTime  : begin Result := TDateTimeField.Create(nil); Result.AsDateTime := Value; end;
-         ftTime, ftTimeStamp : begin Result := TTimeField.Create(nil);  Result.AsDateTime := Value; end;//todo: TDateTime
+//         ftBCD         : begin Result := TBCDField.Create(nil); Result.Value := VarAsType(Value,varBCD); end;
+         ftDate, ftDateTime, ftTime, ftTimeStamp :
+            begin Result := TDateTimeField.Create(nil); Result.AsDateTime := VarToDateTime(Value); end;
          ftBytes       : begin Result := TBytesField.Create(nil); Result.Value := Value; end; //todo: fix
          ftVarBytes    : begin Result := TVarBytesField.Create(nil); Result.Value := Value; end; //todo: fix
          ftAutoInc     : begin Result := TAutoIncField.Create(nil); Result.Value := Value; end; //todo: check
@@ -769,7 +781,7 @@ begin
          ftCursor      : begin end;
          ftFixedChar   : begin end;
          ftWideString  : begin end;
-         ftLargeint    : begin Result := TLargeintField.Create(nil); Result.AsLongint := Value; end;
+         ftLargeint    : begin Result := TLargeintField.Create(nil); Result.AsLongint := VarAsType(Value,varinteger); end;
          ftADT         : begin end;
          ftArray       : begin end;
          ftReference   : begin end;
@@ -788,7 +800,6 @@ begin
        if (Result <> nil) then
           Result.DataSet := FParentDataSet;
 *)
-
      end;
 end;
 
