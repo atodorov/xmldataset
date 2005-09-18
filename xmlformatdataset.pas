@@ -558,7 +558,7 @@ begin
 //todo: N.B.
         Move(
            Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]))^,
-           Buffer,SizeOf(TXMLBuffer)
+           Buffer^,SizeOf(TXMLBuffer)
            );
       if Filtered then
       begin
@@ -809,9 +809,7 @@ begin
        case FieldType of //todo : synchronize with defs in fields.inc
          ftUnknown     : begin Result := TField.Create(nil);        Result.Value := Value; end;
          ftString      : begin Result := TStringField.Create(nil);  Result.AsString := VarToStr(Value); end;
-//         ftSmallint    : begin Result := TLongIntField.Create(nil); Result.AsInteger := Value; end;
-         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := Value; end;
-         ftWord        : begin end;
+         ftSmallint, ftInteger, ftWord : begin Result := TLongIntField.Create(nil); Result.AsInteger := Value; end;
          ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := Value; end;
          ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := Value; end;
          ftCurrency    : begin end;
