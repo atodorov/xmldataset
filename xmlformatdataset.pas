@@ -25,16 +25,77 @@ interface
 uses
   Classes, SysUtils, Variants, DB, DOM;
 
+const
+
+// XML attribute values constants
+  cYes   = 'yes';
+  cNo    = 'no';
+  cTrue  = 'true';
+  cFalse = 'false';
+  
+// XML node and attribute name constants
+
+// <datapacket version="2.000" destination="" day="28" month="8" year="2005" hour="20" min="57" sec="12" msec="46">
+  cDatapacket            = 'datapacket';
+  cDatapacketVersion     = 'version';
+  cDatapacketDestination = 'destination';
+  cDatapacketDay         = 'day';
+  cDatapacketMonth       = 'month';
+  cDatapacketYear        = 'year';
+  cDatapacketHour        = 'hour';
+  cDatapacketMin         = 'min';
+  cDatapacketSec         = 'sec';
+  cDatapacketMSec        = 'msec';
+  
+// <producer name="alexx" url="" description="written by hand" />
+  cProducer            = 'producer';
+  cProducerName        = 'name';
+  cProducerURL         = 'url';
+  cProducerDescription = 'description';
+  
+// <metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
+  cMetadata           = 'metadata';
+  cMetadataFieldDefs  = 'fielddefs';
+  cMetadataIndexDefs  = 'indexdefs';
+  cMetadataRecordData = 'recorddata';
+  cMetadataChanges    = 'changes';
+
+// <fielddefs count="2">
+  cFieldDefs      = 'fielddefs';
+  cFieldDefsCount = 'count';
+  
+// <fielddef name="ID" fieldkind="data" datatype="integer" fieldsize="0" displaylabel="ID" displaywidth="10" fieldindex="0" required="true" readonly="false"/>
+  cFieldDef             = 'fielddef';
+  cFieldDefName         = 'name';
+  cFieldDefFieldKind    = 'fieldkind';
+  cFieldDefDataType     = 'datatype';
+  cFieldDefFieldSize    = 'fieldsize';
+  cFieldDefDisplayLabel = 'displaylabel';
+  cFieldDefDisplayWidth = 'displaywidth';
+  cFieldDefFieldIndex   = 'fieldindex';
+  cFieldDefRequired     = 'required';
+  cFieldDefReadOnly     = 'readonly';
+
+// <indexdefs count="0" />
+  cIndexDefs      = 'indexdefs';
+  cIndexDefsCount = 'count';
+  
+// <recorddata count="4" />
+  cRecordData      = 'recorddata';
+  cRecordDataCount = 'count';
+  
+// <row>
+  cRow = 'row';
+  
+// <field name="ID" value="0" datatype="integer" />
+  cField         = 'field';
+  cFieldName     = 'name';
+  cFieldValue    = 'value';
+  cFieldDataType = 'datatype';
+  cFieldSize     = 'size';
+
 type
 
-//------------------------------------------------------------------------------
-// TRecInfo
-  PRecInfo = ^TRecInfo;
-  TRecInfo = packed record
-    RecordNumber: PtrInt;
-    BookmarkFlag: TBookmarkFlag;
-  end;
-  
   { PXMLBuffer }
   PXMLBuffer = ^TXMLBuffer;
   
@@ -67,22 +128,21 @@ type
   { TXMLFormatDataSet }
   TXMLFormatDataSet = class(TDataSet)
   private
-    FFilterBuffer       :PChar;
-    FReadOnly           :Boolean;
-    FTrimSpace          :Boolean;
+    FFilterBuffer : PChar;
+    FReadOnly     : Boolean;
+    FTrimSpace    : Boolean;
+    FRecordCount  : Longint;
     procedure SetXML(const Value: String);
     function  GetXML : String;
     procedure SetXMLDoc(const AValue : TXMLDocument);
     procedure SetTrimSpace(Value : Boolean);
     procedure SetReadOnly(Value : Boolean);
     function  GetActiveRecBuf(var RecBuf: PChar): Boolean;
-    procedure SetXMLDocument(const AValue: TXMLDocument);
   protected
     FXMLDoc             :TXMLDocument;
     FCurRec             :Integer;
     FRecordSize         :Integer;
     FLastBookmark       :PtrInt;
-    FSaveChanges        :Boolean;
     function  AllocRecordBuffer: PChar; override;
     procedure FreeRecordBuffer(var Buffer: PChar); override;
     procedure InternalAddRecord(Buffer: Pointer; DoAppend: Boolean); override;
@@ -121,7 +181,7 @@ type
   published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XML : String read GetXML write SetXML;
-    property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDocument;
+    property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
     property TrimSpace: Boolean read FTrimSpace write SetTrimSpace default True;
     property FieldDefs;
     property Active;
@@ -255,14 +315,12 @@ function GetFieldSizeFromXML(FieldNode : TDOMNode; const Size : Integer = 0) : I
 begin
    Result := Size;
    if (FieldNode <> nil) and (FieldNode.Attributes <> nil) and
-      (FieldNode.Attributes.GetNamedItem('size') <> nil) then
-      Result := StrToInt(FieldNode.Attributes.GetNamedItem('size').NodeValue);
+      (FieldNode.Attributes.GetNamedItem(cFieldSize) <> nil) then
+      Result := StrToInt(FieldNode.Attributes.GetNamedItem(cFieldSize).NodeValue);
 end;
 
 
-//------------------------------------------------------------------------------
-// TXMLFormatDataSet
-//------------------------------------------------------------------------------
+{ TXMLFormatDataSet }
 constructor TXMLFormatDataSet.Create(AOwner : TComponent);
 begin
   inherited Create(AOwner);
@@ -324,15 +382,14 @@ begin
       FXML.Objects[i] := TObject(Pointer(i+1));
 *)
   FieldDefs.Clear;
-  for i := 0 to FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs').ChildNodes.Count - 1 do
+  for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
       begin   // Add fields
-// <fielddef name="ID" fieldkind="data" datatype="integer" fieldsize="0" displaylabel="ID" displaywidth="10" fieldindex="0" required="true" readonly="false" />
-        domNode := FXMLDoc.DocumentElement.FindNode('metadata').FindNode('fielddefs').ChildNodes.Item[i];
-        FieldName := Trim(domNode.Attributes.GetNamedItem('name').NodeValue);
-        ftFieldType := GetFieldTypeFromString(Trim(domNode.Attributes.GetNamedItem('datatype').NodeValue));
-        Required := AnsiUpperCase(domNode.Attributes.GetNamedItem('required').NodeValue) = 'TRUE';
+        domNode := FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i];
+        FieldName := Trim(domNode.Attributes.GetNamedItem(cFieldDefName).NodeValue);
+        ftFieldType := GetFieldTypeFromString(Trim(domNode.Attributes.GetNamedItem(cFieldDefDataType).NodeValue));
+        Required := AnsiUpperCase(domNode.Attributes.GetNamedItem(cFieldDefRequired).NodeValue) = 'TRUE';
         // determine field size
-        FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.Attributes.GetNamedItem('fieldsize').NodeValue));
+        FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.Attributes.GetNamedItem(cFieldDefFieldSize).NodeValue));
 
         FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
       end;
@@ -342,7 +399,6 @@ procedure TXMLFormatDataSet.InternalOpen;
 begin
   if (csDesigning in ComponentState) then exit;
   FCurRec := -1;
-  FSaveChanges := FALSE;
   if not Assigned(FXMLDoc) then
      raise Exception.Create('XML not assigned');
 
@@ -350,6 +406,7 @@ begin
   if DefaultFields then
      CreateFields;
   BindFields(TRUE);
+  FRecordCount := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count;
 //todo: kakvi sa ni bookmarks
   BookmarkSize := SizeOf(Integer);
 (* // mai ne ni trqbva ve4e
@@ -358,8 +415,8 @@ begin
   FRecBufSize := FBookmarkOfs + BookmarkSize;
 *)
 //todo: kato izmislime kade sa bookmarks tova 6te se promeni mai
-  FLastBookmark := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
-  // or  FXMLDoc.DocumentElement.FindNode('recorddata').Attributes.GetNamedItem('count').NodeValue;
+  FLastBookmark := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count;
+  // or  FXMLDoc.DocumentElement.FindNode(cRecordData).Attributes.GetNamedItem(cRecordDataCount).NodeValue;
 end;
 
 procedure TXMLFormatDataSet.InternalClose;
@@ -408,9 +465,9 @@ end;
 function TXMLFormatDataSet.GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
 begin
   if (FXMLDoc = nil) or (FXMLDoc.DocumentElement = nil) or
-     (FXMLDoc.DocumentElement.FindNode('recorddata') = nil) or
-     (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes = nil) or
-     (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count < 1)
+     (FXMLDoc.DocumentElement.FindNode(cRecordData) = nil) or
+     (FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes = nil) or
+     (FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count < 1)
     then Result := grEOF
     else Result := GetRecordFromXML(Buffer, GetMode);
     
@@ -423,6 +480,7 @@ begin
         begin
           BookmarkFlag := bfCurrent;
           RecordNumber := FCurRec;
+//          XMLNode := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec];
         end;
     end
   else
@@ -432,7 +490,7 @@ end;
 
 function TXMLFormatDataSet.GetRecordCount: Longint;
 begin
-  Result := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count;
+  Result := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count;
 end;
 
 function TXMLFormatDataSet.GetRecNo: Longint;
@@ -448,7 +506,7 @@ procedure TXMLFormatDataSet.SetRecNo(Value: Integer);
 begin
   CheckBrowseMode;
   if (Value >= 0) and
-     (Value < FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count) and
+     (Value < FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count) and
      (Value <> RecNo) then
   begin
     DoBeforeScroll;
@@ -466,7 +524,9 @@ end;
 function TXMLFormatDataSet.GetActiveRecBuf(var RecBuf: PChar): Boolean;
 begin
   case State of
-    dsBrowse: if IsEmpty then RecBuf := nil else RecBuf := ActiveBuffer;
+    dsBrowse: if IsEmpty
+                 then RecBuf := nil
+                 else RecBuf := ActiveBuffer;
     dsEdit, dsInsert: RecBuf := ActiveBuffer;
     dsCalcFields: RecBuf := CalcBuffer;
     dsFilter: RecBuf := FFilterBuffer;
@@ -474,11 +534,6 @@ begin
     RecBuf := nil;
   end;
   Result := RecBuf <> nil;
-end;
-
-procedure TXMLFormatDataSet.SetXMLDocument(const AValue: TXMLDocument);
-begin
-
 end;
 
 function TXMLFormatDataSet.GetRecordFromXML(Buffer : PChar; GetMode: TGetMode): TGetResult;
@@ -502,7 +557,7 @@ begin
     begin
 //todo: N.B.
         Move(
-           Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec]))^,
+           Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]))^,
            Buffer,SizeOf(TXMLBuffer)
            );
       if Filtered then
@@ -547,9 +602,7 @@ var RecBuf: PChar;
     strValue : String;
 begin
   Result := GetActiveRecBuf(RecBuf);
-  Result := true;
-//  RecBuf := ActiveBuffer;
-  
+
   if Result and (RecBuf <> nil) then
      begin
        BuffField := TXMLBuffer(Pointer(RecBuf)^).FieldByName(Field.FieldName);
@@ -560,16 +613,16 @@ begin
               if FTrimSpace
                  then strValue := Trim(BuffField.AsString)
                  else strValue := BuffField.AsString;
-              Move(Buffer,strValue,Length(strValue));
+              Move(strValue[1],Buffer^,Length(strValue));
             end;
          ftSmallint    : ; //todo: check this
-         ftInteger     : begin intValue := BuffField.AsInteger;  Move(Buffer,intValue,SizeOf(Integer));  end;
+         ftInteger     : begin intValue := BuffField.AsInteger;  Move(intValue,Buffer^,SizeOf(Integer));  end;
          ftWord        : ;
-         ftBoolean     : begin boolValue := BuffField.AsBoolean; Move(Buffer,boolValue,SizeOf(Boolean)); end;
-         ftFloat       : begin dblValue := BuffField.AsFloat;    Move(Buffer,dblValue,SizeOf(Double));   end;
+         ftBoolean     : begin boolValue := BuffField.AsBoolean; Move(boolValue,Buffer^,SizeOf(Boolean)); end;
+         ftFloat       : begin dblValue := BuffField.AsFloat;    Move(dblValue,Buffer^,SizeOf(Double));   end;
          ftCurrency    : ;
          ftBCD         : ;
-         ftDate, ftTime, ftDateTime, ftTimeStamp : begin dtValue := BuffField.AsDateTime; Move(Buffer,dtValue,SizeOf(TDateTime)); end;
+         ftDate, ftTime, ftDateTime, ftTimeStamp : begin dtValue := BuffField.AsDateTime; Move(dtValue,Buffer^,SizeOf(TDateTime)); end;
          ftBytes       : ;
          ftVarBytes    : ;
          ftAutoInc     : ;
@@ -583,7 +636,7 @@ begin
          ftCursor      : ;
          ftFixedChar   : ;
          ftWideString  : ;
-         ftLargeint    : begin liValue := BuffField.AsLongint; Move(Buffer,liValue,SizeOf(Longint)); end;
+         ftLargeint    : begin liValue := BuffField.AsLongint; Move(liValue,Buffer^,SizeOf(Longint)); end;
          ftADT         : ;
          ftArray       : ;
          ftReference   : ;
@@ -650,15 +703,14 @@ end;
 
 procedure TXMLFormatDataSet.InternalLast;
 begin
-  FCurRec := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count-1;
+  FCurRec := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count-1;
 end;
 
 procedure TXMLFormatDataSet.InternalPost;
 begin
-  FSaveChanges := TRUE;
   inherited UpdateRecord;
   if (State = dsEdit) // just update the data in the xml document
-    then FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec].NodeValue := TXMLBuffer(Pointer(ActiveBuffer)^).XMLNode.NodeValue
+    then FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec].NodeValue := TXMLBuffer(Pointer(ActiveBuffer)^).XMLNode.NodeValue
     else InternalAddRecord(ActiveBuffer, FALSE);
 end;
 
@@ -670,11 +722,10 @@ end;
 procedure TXMLFormatDataSet.InternalDelete;
 begin
 //todo: do not delete from XML. mark record as deleted and send to driver
-  FSaveChanges := TRUE;
-  FXMLDoc.DocumentElement.FindNode('recorddata').RemoveChild
-      (FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FCurRec]);
+  FXMLDoc.DocumentElement.FindNode(cRecordData).RemoveChild
+      (FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
       
-  if FCurRec >= FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Count then
+  if FCurRec >= FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count then
      Dec(FCurRec);
 end;
 
@@ -682,7 +733,6 @@ procedure TXMLFormatDataSet.InternalAddRecord(Buffer: Pointer; DoAppend: Boolean
 var RefChild, NewChild :TDOMNode;
 begin
   try
-    FSaveChanges := TRUE;
     Inc(FLastBookmark);
 (*
     if DoAppend then
@@ -691,11 +741,11 @@ begin
     NewChild := TDOMNode.Create(FXMLDoc);
     NewChild.NodeValue := TXMLBuffer(Pointer(Buffer)^).XMLNode.NodeValue;
 
-    RefChild := FXMLDoc.DocumentElement.FindNode('recorddata').ChildNodes.Item[FLastBookmark];
+    RefChild := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FLastBookmark];
 
     if DoAppend
-      then FXMLDoc.DocumentElement.FindNode('recorddata').AppendChild(NewChild)
-      else FXMLDoc.DocumentElement.FindNode('recorddata').InsertBefore(NewChild, RefChild);
+      then FXMLDoc.DocumentElement.FindNode(cRecordData).AppendChild(NewChild)
+      else FXMLDoc.DocumentElement.FindNode(cRecordData).InsertBefore(NewChild, RefChild);
   finally
     NewChild.Free; // ??????
     RefChild := nil; // clear reference
@@ -747,25 +797,25 @@ begin
   Result :=nil;
   if (AFieldNode <> nil) then
      begin
-       if AFieldNode.Attributes.GetNamedItem('datatype') <> nil then
-            FieldType := GetFieldTypeFromString(AFieldNode.Attributes.GetNamedItem('datatype').NodeValue)
+       if AFieldNode.Attributes.GetNamedItem(cFieldDataType) <> nil then
+            FieldType := GetFieldTypeFromString(AFieldNode.Attributes.GetNamedItem(cFieldDataType).NodeValue)
        else FieldType := GetFieldTypeFromString('');
 
-       if (AFieldNode.Attributes.GetNamedItem('value') <> nil) then // simple field
-            Value := AFieldNode.Attributes.GetNamedItem('value').NodeValue
+       if (AFieldNode.Attributes.GetNamedItem(cFieldValue) <> nil) then // simple field
+            Value := AFieldNode.Attributes.GetNamedItem(cFieldValue).NodeValue
        else Value := AFieldNode.NodeValue; // CDATA = Blob, String, etc
-       
+
        // create field according to type
-       case FieldType of
-         ftUnknown     : begin Result := TField.Create(nil);       Result.Value := Value; end;
-         ftString      : begin Result := TStringField.Create(nil); Result.AsString := VarToStr(Value); end;
-//         ftSmallint    : begin varsmallint end; //todo: check this
-         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := VarAsType(Value,varinteger); end;
+       case FieldType of //todo : synchronize with defs in fields.inc
+         ftUnknown     : begin Result := TField.Create(nil);        Result.Value := Value; end;
+         ftString      : begin Result := TStringField.Create(nil);  Result.AsString := VarToStr(Value); end;
+//         ftSmallint    : begin Result := TLongIntField.Create(nil); Result.AsInteger := Value; end;
+         ftInteger     : begin Result := TIntegerField.Create(nil); Result.AsInteger := Value; end;
          ftWord        : begin end;
-         ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := VarAsType(Value,varboolean); end;
-         ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := VarAsType(Value,vardouble); end;
+         ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := Value; end;
+         ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := Value; end;
          ftCurrency    : begin end;
-//         ftBCD         : begin Result := TBCDField.Create(nil); Result.Value := VarAsType(Value,varBCD); end;
+//         ftBCD         : begin Result := TBCDField.Create(nil); Result.Value := VarAsTyp(Value,varBCD); end;
          ftDate, ftDateTime, ftTime, ftTimeStamp :
             begin Result := TDateTimeField.Create(nil); Result.AsDateTime := VarToDateTime(Value); end;
          ftBytes       : begin Result := TBytesField.Create(nil); Result.Value := Value; end; //todo: fix
@@ -778,10 +828,10 @@ begin
          ftParadoxOle  : begin end;
          ftDBaseOle    : begin end;
          ftTypedBinary : begin end;
-         ftCursor      : begin end;
+         ftCursor      : Result := nil;
          ftFixedChar   : begin end;
          ftWideString  : begin end;
-         ftLargeint    : begin Result := TLargeintField.Create(nil); Result.AsLongint := VarAsType(Value,varinteger); end;
+         ftLargeint    : begin Result := TLargeintField.Create(nil); Result.AsLongint := Value; end;
          ftADT         : begin end;
          ftArray       : begin end;
          ftReference   : begin end;
