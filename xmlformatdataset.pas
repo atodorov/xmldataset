@@ -2,7 +2,7 @@ unit XMLFormatDataSet;
 
 {$mode objfpc}{$H+}
 
-//{$DEFINE DEBUGXML}
+{$DEFINE DEBUGXML}
 
 {*******************************************************************************
  TXMLFormatDataSet.
@@ -792,7 +792,7 @@ end;
 function TXMLBuffer.CreateFieldFromXML(const AFieldNode: TDOMNode): TField;
 //todo: should Owner of fields be property DataSet : TDataSet
 var FieldType : TFieldType;
-    Value : Variant;
+    Value : String; // Variant;
 begin
   Result :=nil;
   if (AFieldNode <> nil) then
@@ -801,10 +801,18 @@ begin
             FieldType := GetFieldTypeFromString(AFieldNode.Attributes.GetNamedItem(cFieldDataType).NodeValue)
        else FieldType := GetFieldTypeFromString('');
 
+{$IFDEF DEBUGXML}
+ShowMessage('NodeName = '+AFieldNode.Attributes.GetNamedItem(cFieldName).NodeValue);
+ShowMessage('NodeValue = '+AFieldNode.NodeValue);
+{$ENDIF}
        if (AFieldNode.Attributes.GetNamedItem(cFieldValue) <> nil) then // simple field
             Value := AFieldNode.Attributes.GetNamedItem(cFieldValue).NodeValue
-       else Value := AFieldNode.NodeValue; // CDATA = Blob, String, etc
+       else Value := TDOMCharacterData(AFieldNode).Data; // todo: N.B. type casting CDATA = Blob, String, etc
 
+Result:= TField.Create(nil);
+Result.AsString := Value;
+exit;
+(*
        // create field according to type
        case FieldType of //todo : synchronize with defs in fields.inc
          ftUnknown     : begin Result := TField.Create(nil);        Result.Value := Value; end;
@@ -842,8 +850,8 @@ begin
          ftGuid        : begin end;
          ftFMTBcd      : begin end;
          else Result := nil;
-       end;
-       
+       end; // case
+*)
 (*
        if (Result <> nil) then
           Result.DataSet := FParentDataSet;
