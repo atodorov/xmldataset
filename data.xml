@@ -1,46 +1,30 @@
 <?xml version="1.0" ?>
 <datapacket version="2.000" destination="" day="28" month="8" year="2005" hour="20" min="57" sec="12" msec="46">
-<producer name="alexx" url="" description="written by hand" />
-<metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
-<fielddefs count="2">
-<fielddef name="ID" fieldkind="data" datatype="integer" fieldsize="0" displaylabel="ID" displaywidth="10" fieldindex="0" required="true" readonly="false"/>
-<fielddef name="NAME" fieldkind="data" datatype="string" fieldsize="100" displaylabel="NAME" displaywidth="100" fieldindex="1" required="true" readonly="false"/>
-</fielddefs>
-<indexdefs count="0">
-</indexdefs>
-</metadata>
-<recorddata count="4">
-<row>
-<field name="ID" value="0" datatype="integer" />
-<field name="NAME" size="8" datatype="string">
-<![CDATA[
-Bulgaria
-]]>
-</field>
-</row>
-<row>
-<field name="ID" value="1" datatype="integer" />
-<field name="NAME" size="7" datatype="string">
-<![CDATA[
-Germany
-]]>
-</field>
-</row>
-<row>
-<field name="ID" value="2" datatype="integer" />
-<field name="NAME" size="14" datatype="string">
-<![CDATA[
-United Kingdom
-]]>
-</field>
-</row>
-<row>
-<field name="ID" value="3" datatype="integer" />
-<field name="NAME" size="6" datatype="string">
-<![CDATA[
-Greece
-]]>
-</field>
-</row>
-</recorddata>
+  <producer name="alexx" url="" description="written by hand" />
+  <metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
+    <fielddefs count="2">
+       <fielddef name="ID"   fieldkind="data" datatype="integer" fieldsize="0"   displaylabel="id"  displaywidth="10" fieldindex="0" required="true" readonly="false" />
+       <fielddef name="NAME" fieldkind="data" datatype="string"  fieldsize="100" displaylabel="Ime" displaywidth="50" fieldindex="1" required="true" readonly="false" />
+    </fielddefs>
+    <indexdefs count="0"> 
+    </indexdefs>
+  </metadata>
+  <recorddata count="4">
+    <row>
+       <field name="ID"   value="0"        datatype="integer" />
+       <field name="NAME" value="Bulgaria" datatype="string"  size="8" />
+    </row>
+    <row>
+       <field name="ID"   value="1"       datatype="integer" />
+       <field name="NAME" value="Germany" datatype="string"  size="7" />
+    </row>
+    <row>
+       <field name="ID"   value="2"              datatype="integer" />
+       <field name="NAME" value="United Kingdom" datatype="string"  size="14"/>
+    </row>
+    <row>
+       <field name="ID"   value="3"      datatype="integer" />
+       <field name="NAME" value="Greece" datatype="string"  size="6"/>
+    </row>
+  </recorddata>
 </datapacket>

@@ -96,6 +96,9 @@ const
 
 type
 
+  { forward declarations }
+  TXMLFormatDataSet = class;
+
   { PXMLBuffer }
   PXMLBuffer = ^TXMLBuffer;
   
@@ -103,25 +106,26 @@ type
 
   TXMLBuffer = class (TObject)
   private
-    FXMLNode : TDOMNode; // holds the xml value for a single record
+    FXMLElement : TDOMElement; // holds the xml value for a single record
+    FDataSet : TXMLFormatDataSet;    // holds reference to the parent dataset. used to create fields
     FBookmarkFlag : TBookmarkFlag;
     FBookmark : Integer;
     FFields : TFields;
     FRecordNumber : PtrInt; // copied from TRecInfo
   protected
-    function  CreateFieldFromXML(const AFieldNode : TDOMNode) : TField; virtual; // creates a TField from xml
+    function  CreateFieldFromXML(const AFieldNode : TDOMElement) : TField; virtual; // creates a TField from xml
     function  GetFieldByIndex(i : Integer) : TField;
     procedure CreateFields; // creates FFields from FXMLNode
-    procedure SetXMLNode(const ANode : TDOMNode); // sets FXMLNode and re-create fields
+    procedure SetXMLElement(const ANode : TDOMElement); // sets FXMLElement and re-create fields
   public
     constructor Create; virtual; overload;
-    constructor Create(ADOMNode : TDOMNode); virtual; overload;
+    constructor Create(const ADOMElement : TDOMElement); virtual; overload;
     destructor  Destroy; override;
     function FieldByName(const AFieldName : String) :TField;
     property BookmarkFlag : TBookmarkFlag read FBookmarkFlag write FBookmarkFlag;
     property Fields[i : Integer] : TField read GetFieldByIndex;
     property RecordNumber : PtrInt read FRecordNumber write FRecordNumber;
-    property XMLNode : TDOMNode read FXMLNode write SetXMLNode;
+    property XML : TDOMElement read FXMLElement write SetXMLElement;
     property BookMark : Integer read FBookmark write FBookmark;
   end;
 
@@ -392,6 +396,7 @@ begin
         FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.Attributes.GetNamedItem(cFieldDefFieldSize).NodeValue));
 
         FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
+        FieldDefs.Items[i].DisplayName := domNode.Attributes.GetNamedItem(cFieldDefDisplayLabel).NodeValue;
       end;
 end;
 
@@ -556,8 +561,11 @@ begin
     if (Result = grOk) then
     begin
 //todo: N.B.
+// CHANGED
         Move(
-           Pointer(TXMLBuffer.Create(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]))^,
+           Pointer(TXMLBuffer.Create(
+                   TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec])
+                   ))^,
            Buffer^,SizeOf(TXMLBuffer)
            );
       if Filtered then
@@ -614,15 +622,28 @@ begin
                  then strValue := Trim(BuffField.AsString)
                  else strValue := BuffField.AsString;
               Move(strValue[1],Buffer^,Length(strValue));
+{$IFDEF DEBUGXML}
+ShowMessage('Value = '+IntToStr(intValue));
+ShowMessage('Buffer = '+IntToStr(Integer(Buffer^)));
+{$ENDIF}
             end;
          ftSmallint    : ; //todo: check this
-         ftInteger     : begin intValue := BuffField.AsInteger;  Move(intValue,Buffer^,SizeOf(Integer));  end;
+         ftInteger     :
+            begin
+               intValue := BuffField.AsInteger;
+               Move(intValue,Buffer^,SizeOf(intValue));
+{$IFDEF DEBUGXML}
+ShowMessage('Value = '+IntToStr(intValue));
+ShowMessage('Buffer = '+IntToStr(Integer(Buffer^)));
+{$ENDIF}
+            end;
          ftWord        : ;
-         ftBoolean     : begin boolValue := BuffField.AsBoolean; Move(boolValue,Buffer^,SizeOf(Boolean)); end;
-         ftFloat       : begin dblValue := BuffField.AsFloat;    Move(dblValue,Buffer^,SizeOf(Double));   end;
+         ftBoolean     : begin boolValue := BuffField.AsBoolean; Move(boolValue,Buffer^,SizeOf(boolValue)); end;
+         ftFloat       : begin dblValue := BuffField.AsFloat;    Move(dblValue,Buffer^,SizeOf(dblValue));   end;
          ftCurrency    : ;
          ftBCD         : ;
-         ftDate, ftTime, ftDateTime, ftTimeStamp : begin dtValue := BuffField.AsDateTime; Move(dtValue,Buffer^,SizeOf(TDateTime)); end;
+         ftDate, ftTime, ftDateTime, ftTimeStamp :
+             begin dtValue := BuffField.AsDateTime; Move(dtValue,Buffer^,SizeOf(dtValue)); end;
          ftBytes       : ;
          ftVarBytes    : ;
          ftAutoInc     : ;
@@ -636,7 +657,7 @@ begin
          ftCursor      : ;
          ftFixedChar   : ;
          ftWideString  : ;
-         ftLargeint    : begin liValue := BuffField.AsLongint; Move(liValue,Buffer^,SizeOf(Longint)); end;
+         ftLargeint    : begin liValue := BuffField.AsLongint; Move(liValue,Buffer^,SizeOf(liValue)); end;
          ftADT         : ;
          ftArray       : ;
          ftReference   : ;
@@ -710,7 +731,7 @@ procedure TXMLFormatDataSet.InternalPost;
 begin
   inherited UpdateRecord;
   if (State = dsEdit) // just update the data in the xml document
-    then FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec].NodeValue := TXMLBuffer(Pointer(ActiveBuffer)^).XMLNode.NodeValue
+    then FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec].NodeValue := TXMLBuffer(Pointer(ActiveBuffer)^).XML.NodeValue
     else InternalAddRecord(ActiveBuffer, FALSE);
 end;
 
@@ -739,7 +760,7 @@ begin
        InternalLast;
 *)
     NewChild := TDOMNode.Create(FXMLDoc);
-    NewChild.NodeValue := TXMLBuffer(Pointer(Buffer)^).XMLNode.NodeValue;
+    NewChild.NodeValue := TXMLBuffer(Pointer(Buffer)^).XML.NodeValue;
 
     RefChild := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FLastBookmark];
 
@@ -789,7 +810,7 @@ end;
 
 { TXMLBuffer }
 
-function TXMLBuffer.CreateFieldFromXML(const AFieldNode: TDOMNode): TField;
+function TXMLBuffer.CreateFieldFromXML(const AFieldNode: TDOMElement): TField;
 //todo: should Owner of fields be property DataSet : TDataSet
 var FieldType : TFieldType;
     Value : String; // Variant;
@@ -802,22 +823,27 @@ begin
        else FieldType := GetFieldTypeFromString('');
 
 {$IFDEF DEBUGXML}
-ShowMessage('NodeName = '+AFieldNode.Attributes.GetNamedItem(cFieldName).NodeValue);
-ShowMessage('NodeValue = '+AFieldNode.NodeValue);
+//  ShowMessage('NodeName = '+AFieldNode.NodeName);
+//  ShowMessage('NodeValue = '+AFieldNode.AttribStrings[cFieldValue]);
 {$ENDIF}
-       if (AFieldNode.Attributes.GetNamedItem(cFieldValue) <> nil) then // simple field
-            Value := AFieldNode.Attributes.GetNamedItem(cFieldValue).NodeValue
+       if (AFieldNode.AttribStrings[cFieldValue] <> '') then // simple field
+            Value := AFieldNode.AttribStrings[cFieldValue]
        else Value := TDOMCharacterData(AFieldNode).Data; // todo: N.B. type casting CDATA = Blob, String, etc
 
+{$IFDEF DEBUGXML}
+  ShowMessage('Value = '+Value);
+{$ENDIF}
+(*
 Result:= TField.Create(nil);
 Result.AsString := Value;
 exit;
-(*
+*)
        // create field according to type
        case FieldType of //todo : synchronize with defs in fields.inc
          ftUnknown     : begin Result := TField.Create(nil);        Result.Value := Value; end;
          ftString      : begin Result := TStringField.Create(nil);  Result.AsString := VarToStr(Value); end;
-         ftSmallint, ftInteger, ftWord : begin Result := TLongIntField.Create(nil); Result.AsInteger := Value; end;
+         ftSmallint, ftInteger, ftWord : begin Result := TLongIntField.Create(nil); Result.AsInteger := StrToInt(Value); end;
+(*
          ftBoolean     : begin Result := TBooleanField.Create(nil); Result.AsBoolean := Value; end;
          ftFloat       : begin Result := TFloatField.Create(nil);  Result.AsFloat := Value; end;
          ftCurrency    : begin end;
@@ -850,8 +876,9 @@ exit;
          ftGuid        : begin end;
          ftFMTBcd      : begin end;
          else Result := nil;
-       end; // case
 *)
+       end; // case
+
 (*
        if (Result <> nil) then
           Result.DataSet := FParentDataSet;
@@ -876,33 +903,34 @@ begin
 </row>
 *)
   FFields.Clear;
-  if Assigned(FXMLNode) then
-     for i := 0 to FXMLNode.ChildNodes.Count-1 do
-         FFields.Add(CreateFieldFromXML(FXMLNode.ChildNodes.Item[i]));
+  if Assigned(FXMLElement) then
+     for i := 0 to FXMLElement.ChildNodes.Count-1 do
+// CHANGED
+         FFields.Add(CreateFieldFromXML(TDOMElement(FXMLElement.ChildNodes.Item[i])));
 end;
 
-procedure TXMLBuffer.SetXMLNode(const ANode: TDOMNode);
+procedure TXMLBuffer.SetXMLElement(const ANode: TDOMElement);
 begin
-  FXMLNode := ANode;
+  FXMLElement := ANode;
   CreateFields;
 end;
 
 constructor TXMLBuffer.Create;
 begin
-  FXMLNode := TDOMNode.Create(nil);
+  FXMLElement := TDOMElement.Create(nil);
   FFields  := TFields.Create(nil); // todo: should we have a dataset here
 end;
 
-constructor TXMLBuffer.Create(ADOMNode: TDOMNode);
+constructor TXMLBuffer.Create(const ADOMElement: TDOMElement);
 begin
  Self.Create;
- FXMLNode := ADOMNode;
+ FXMLElement := ADOMElement;
  CreateFields;
 end;
 
 destructor TXMLBuffer.Destroy;
 begin
-  FXMLNode.Free;
+  FXMLElement.Free;
   FFields.Free;
   inherited Destroy;
 end;
