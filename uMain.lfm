@@ -1,0 +1,47 @@
+object fMain: TfMain
+  Caption = 'fMain'
+  ClientHeight = 265
+  ClientWidth = 569
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  HorzScrollBar.Page = 568
+  VertScrollBar.Page = 264
+  Left = 215
+  Height = 265
+  Top = 118
+  Width = 569
+  object dbgMain: TdbGrid
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.OnChange = nil
+    DataSource = dsMain
+    FixedColor = clBtnFace
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+    OptionsExtra = [dgeAutoColumns, dgeCheckboxColumn]
+    Scrollbars = ssBoth
+    Height = 216
+    Width = 568
+  end
+  object btnLoad: TButton
+    BorderSpacing.OnChange = nil
+    Caption = 'Load'
+    OnClick = btnLoadClick
+    TabOrder = 0
+    Height = 25
+    Top = 224
+    Width = 75
+  end
+  object btnSave: TButton
+    Caption = 'Save'
+    OnClick = btnSaveClick
+    TabOrder = 1
+    Left = 88
+    Height = 25
+    Top = 224
+    Width = 75
+  end
+  object dsMain: TDatasource
+    left = 224
+    top = 216
+  end
+end
