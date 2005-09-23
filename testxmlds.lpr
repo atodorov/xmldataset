@@ -5,11 +5,12 @@ program TestXMLDS;
 uses
   Interfaces, // this includes the LCL widgetset
   Forms
-  { add your units here }, uMain, XMLFormatDataSet;
+  { add your units here }, XMLFormatDataSet,
+  uMain;
 
 begin
   Application.Initialize;
-  Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.
 

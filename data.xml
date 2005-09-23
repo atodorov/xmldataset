@@ -3,8 +3,8 @@
   <producer name="alexx" url="" description="written by hand" />
   <metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
     <fielddefs count="2">
-       <fielddef name="ID"   fieldkind="data" datatype="integer" fieldsize="0"   displaylabel="id"  displaywidth="10" fieldindex="0" required="true" readonly="false" />
-       <fielddef name="NAME" fieldkind="data" datatype="string"  fieldsize="100" displaylabel="Ime" displaywidth="50" fieldindex="1" required="true" readonly="false" />
+       <fielddef name="ID"   fieldkind="data" datatype="integer" fieldsize="0"  displaylabel="id"  displaywidth="10" fieldindex="0" required="true" readonly="false" />
+       <fielddef name="NAME" fieldkind="data" datatype="string"  fieldsize="30" displaylabel="Ime" displaywidth="20" fieldindex="1" required="true" readonly="false" />
     </fielddefs>
     <indexdefs count="0"> 
     </indexdefs>

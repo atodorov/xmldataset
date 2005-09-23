@@ -6,21 +6,21 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  Buttons, DB;
+  DB, Buttons, StdCtrls;
 
 type
 
-  { TfMain }
+  { TForm1 }
 
-  TfMain = class(TForm)
-   btnLoad: TButton;
-   btnSave: TButton;
-   dsMain: TDatasource;
-   dbgMain: TdbGrid;
-   procedure FormCreate(Sender: TObject);
-   procedure FormDestroy(Sender: TObject);
-   procedure btnLoadClick(Sender: TObject);
-   procedure btnSaveClick(Sender: TObject);
+  TForm1 = class(TForm)
+    Button1: TButton;
+    dsMain: TDatasource;
+    dbGrid1: TdbGrid;
+    GroupBox1: TGroupBox;
+    Memo1: TMemo;
+    procedure Button1Click(Sender: TObject);
+    procedure Form1Create(Sender: TObject);
+    procedure Form1Destroy(Sender: TObject);
   private
     { private declarations }
   public
@@ -28,43 +28,43 @@ type
   end; 
 
 var
-  fMain: TfMain;
+  Form1: TForm1; 
 
 implementation
 
-uses XMLFormatDataSet, XMLRead;
+uses XMLFormatDataSet, XMLRead, gxBaseDataSet;
 
 
-var XMLDS : TXMLFormatDataSet;
-{ TfMain }
+var gxXML : TgxXMLDataSet;
+    
+{ TForm1 }
 
-procedure TfMain.FormCreate(Sender: TObject);
+procedure TForm1.Button1Click(Sender: TObject);
 begin
-  XMLDS := TXMLFormatDataSet.Create(Self);
-  dsMain.DataSet := XMLDS;
+  ReadXMLFile(gxXML.XMLDocument,'D:\projects\TXMLFormatDataSet\data.xml');
+  gxXML.ReadOnly := true;
+  gxXML.Open;
 end;
 
-procedure TfMain.FormDestroy(Sender: TObject);
+procedure TForm1.Form1Create(Sender: TObject);
 begin
-  if XMLDS.Active then
-     XMLDS.Close;
-  XMLDS.Free;
+//{$IFDEF DEBUGXML}
+  XMLFormatDataSet.Memo := Memo1;
+  gxBaseDataSet.memoLog := Memo1;
+//{$ENDIF}
+  gxXML := TgxXMLDataSet.Create(Self);
+  dsMain.DataSet := gxXML;
 end;
 
-procedure TfMain.btnLoadClick(Sender: TObject);
+procedure TForm1.Form1Destroy(Sender: TObject);
 begin
-  ReadXMLFile(XMLDS.XMLDocument,'data.xml');
-  XMLDS.ReadOnly := true;
-  XMLDS.Open;
-end;
-
-procedure TfMain.btnSaveClick(Sender: TObject);
-begin
-// XMLDS.SaveToFile('save.xml');
+  if gxXML.Active then
+     gxXML.Close;
+  gxXML.Free;
 end;
 
 initialization
-  {$I umain.lrs}
+  {$I uMain.lrs}
 
 end.
 
