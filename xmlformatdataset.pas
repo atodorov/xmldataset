@@ -1,11 +1,10 @@
-unit XMLFormatDataSet;
+unit xmlformatdataset;
 
 {$mode objfpc}{$H+}
 
-{$DEFINE DEBUGXML}
-
 {*******************************************************************************
- TXMLFormatDataSet.
+ This file is part of the XMLDataset suite for the Free Pacal Components Library
+
  (c) 2005 - Alexander Todorov,
  e-mail: alexx.todorov@gmail.com
  
@@ -20,6 +19,12 @@ unit XMLFormatDataSet;
  *                                                                           *
  *****************************************************************************
 *******************************************************************************}
+
+// a work arround widestrings. We use this because DOMString = WideString
+{$DEFINE USEWIDESTRINGS}
+
+{$DEFINE DEBUGXML}
+
 interface
 
 uses
@@ -31,94 +36,18 @@ uses
   ;
   {$ENDIF}
 
-const
-
-// XML attribute values constants
-  cYes   = 'yes';
-  cNo    = 'no';
-  cTrue  = 'true';
-  cFalse = 'false';
-  
-// XML node and attribute name constants
-
-// <datapacket version="2.000" destination="" day="28" month="8" year="2005" hour="20" min="57" sec="12" msec="46">
-  cDatapacket             = 'datapacket';
-  cDatapacket_Version     = 'version';
-  cDatapacket_Destination = 'destination';
-  cDatapacket_Day         = 'day';
-  cDatapacket_Month       = 'month';
-  cDatapacket_Year        = 'year';
-  cDatapacket_Hour        = 'hour';
-  cDatapacket_Min         = 'min';
-  cDatapacket_Sec         = 'sec';
-  cDatapacket_MSec        = 'msec';
-  
-// <producer name="alexx" url="" description="written by hand" />
-  cProducer             = 'producer';
-  cProducer_Name        = 'name';
-  cProducer_URL         = 'url';
-  cProducer_Description = 'description';
-  
-// <metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
-  cMetadata            = 'metadata';
-  cMetadata_FieldDefs  = 'fielddefs';
-  cMetadata_IndexDefs  = 'indexdefs';
-  cMetadata_RecordData = 'recorddata';
-  cMetadata_Changes    = 'changes';
-
-// <fielddefs count="2">
-  cFieldDefs       = 'fielddefs';
-  cFieldDefs_Count = 'count';
-  
-// <fielddef name="ID" fieldkind="data" datatype="integer" fieldsize="0" displaylabel="ID" displaywidth="10" fieldindex="0" required="true" readonly="false"/>
-  cFieldDef              = 'fielddef';
-  cFieldDef_Name         = 'name';
-  cFieldDef_FieldKind    = 'fieldkind';
-  cFieldDef_DataType     = 'datatype';
-  cFieldDef_FieldSize    = 'fieldsize';
-  cFieldDef_DisplayLabel = 'displaylabel';
-  cFieldDef_DisplayWidth = 'displaywidth';
-  cFieldDef_FieldIndex   = 'fieldindex';
-  cFieldDef_Required     = 'required';
-  cFieldDef_ReadOnly     = 'readonly';
-
-// <indexdefs count="0" />
-  cIndexDefs       = 'indexdefs';
-  cIndexDefs_Count = 'count';
-  
-// <recorddata count="4" />
-  cRecordData       = 'recorddata';
-  cRecordData_Count = 'count';
-  
-// <row>
-  cRow = 'row';
-  
-// <field name="ID" value="0" datatype="integer" />
-  cField          = 'field';
-  cField_Name     = 'name';
-  cField_Value    = 'value';
-  cField_DataType = 'datatype';
-  cField_Size     = 'size';
-
 type
-  { TgxXMLDataSet }
+  { TBaseXMLDataSet }
 
-  TgxXMLDataSet=class(TGXBaseDataset)
+  // a base class of dataset working with xml.
+  TBaseXMLDataSet=class(TGXBaseDataset)
   private
-//    FOutlookFolder: TOutlookFolder;
-//    FApp: _Application;
-//    FFolder: MAPIFolder;
-//    FNMSpace: NameSpace;
-//    FItems: Items;
-//    FMailItem: MailItem;
     FCurRec: Integer;
     FReadOnly: Boolean;
     FXMLDoc : TXMLDocument;
     FNode : TDOMElement;
-//    procedure SetOutlookFolder(Value: TOutlookFolder);
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
-//    function EntryIDToIndex(AEntryID: WideString): Integer;
   protected {Simplified Dataset methods}
     function  DoOpen: Boolean; override;
     procedure DoClose; override;
@@ -167,6 +96,8 @@ type
   function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   
 implementation
+
+uses uXMLDSConsts;
 
 {$IFDEF DEBUGXML}
 procedure Log(const Msg : String);
@@ -295,10 +226,10 @@ begin
 end;
 
 (*******************************************************************************
-{ TgxXMLDataSet }
+{ TBaseXMLDataSet }
 *******************************************************************************)
 
-procedure TgxXMLDataSet.SetReadOnly(Value: Boolean);
+procedure TBaseXMLDataSet.SetReadOnly(Value: Boolean);
 begin
   if (Value <> FReadOnly) then
     begin
@@ -307,14 +238,14 @@ begin
     end;
 end;
 
-procedure TgxXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
+procedure TBaseXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
 begin
   if Active then
      DatabaseError('Cannot change XMLDoc property when dataset is active');
   FXMLDoc := AValue;
 end;
 
-function TgxXMLDataSet.DoOpen: Boolean;
+function TBaseXMLDataSet.DoOpen: Boolean;
 begin
   if not Assigned(FXMLDoc) then
      DatabaseError('XMLDoc is not assigned');
@@ -322,13 +253,13 @@ begin
   Result := true; //todo : true or <rowdata>.childs.count > 0 ?
 end;
 
-procedure TgxXMLDataSet.DoClose;
+procedure TBaseXMLDataSet.DoClose;
 begin
   FNode := nil;
 //  FXMLDoc := nil; //todo : check this
 end;
 
-procedure TgxXMLDataSet.DoDeleteRecord;
+procedure TBaseXMLDataSet.DoDeleteRecord;
 begin
 // todo : mark as deleted
   FXMLDoc.DocumentElement.FindNode(cRecordData).RemoveChild
@@ -338,7 +269,7 @@ begin
      Dec(FCurRec);
 end;
 
-procedure TgxXMLDataSet.DoCreateFieldDefs;
+procedure TBaseXMLDataSet.DoCreateFieldDefs;
 var i, FieldSize :Integer;
     domNode : TDOMNode;
     FieldName : String;
@@ -364,65 +295,46 @@ begin
       end;
 end;
 
-function TgxXMLDataSet.GetFieldValue(Field: TField): Variant;
+function TBaseXMLDataSet.GetFieldValue(Field: TField): Variant;
 var FieldNode : TDOMElement;
 begin
-{$IFDEF DEBUGXML}
-(*
-   FNode := TDOMElement(
-        FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
-*)
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
-   Log('GetFieldValue - '+FieldNode.AttribStrings[cField_Value]);
-(*
-   ShowMessage(TDOMElement(
-        FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec].
-                ChildNodes.Item[0]).AttribStrings[cField_Value]);
-*)
-   Result := FieldNode.AttribStrings[cField_Value]
-(*
-   if (Field.FieldName = 'ID') then
-      Result := 1234;
-
-   if (Field.FieldName = 'NAME') then
-      Result := 'BG';
-*)
+{$IFDEF USEWIDESTRINGS}
+   Result := WideCharToString(@FieldNode.AttribStrings[cField_Value][1]);
 {$ELSE}
-   FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
    Result := FieldNode.AttribStrings[cField_Value];
 {$ENDIF}
 end;
 
-procedure TgxXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
+procedure TBaseXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
 var FieldNode : TDOMElement;
 begin
-   FieldNode := GetFieldNodeByName(
-                FNode,
-                Field.FieldName);
+   FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
+// here it should be no problem assigning String to WideString;
    FieldNode.AttribStrings[cField_Value] := Value;
 end;
 
-procedure TgxXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
+procedure TBaseXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
 begin
 //todo : implement
 end;
 
-procedure TgxXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
+procedure TBaseXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
 begin
 //todo : implement
 end;
 
-procedure TgxXMLDataSet.DoFirst;
+procedure TBaseXMLDataSet.DoFirst;
 begin
   FCurRec := -1;
 end;
 
-procedure TgxXMLDataSet.DoLast;
+procedure TBaseXMLDataSet.DoLast;
 begin
   FCurRec := RecordCount;
 end;
 
-function TgxXMLDataSet.Navigate(GetMode: TGetMode): TGetResult;
+function TBaseXMLDataSet.Navigate(GetMode: TGetMode): TGetResult;
 begin
   if (RecordCount < 1)
     then Result := grEOF
@@ -442,48 +354,48 @@ begin
       end; // else
 end;
 
-function TgxXMLDataSet.AllocateRecordID: Pointer;
+function TBaseXMLDataSet.AllocateRecordID: Pointer;
 begin
   Result := Pointer(FCurRec);
 end;
 
-procedure TgxXMLDataSet.DisposeRecordID(Value: Pointer);
+procedure TBaseXMLDataSet.DisposeRecordID(Value: Pointer);
 begin
   //Do nothing, no need to dispose since pointer is just an integer
 end;
 
-procedure TgxXMLDataSet.GotoRecordID(Value: Pointer);
+procedure TBaseXMLDataSet.GotoRecordID(Value: Pointer);
 begin
   FCurRec := Integer(Value);
 end;
 
-function TgxXMLDataSet.GetBookMarkSize: Integer;
+function TBaseXMLDataSet.GetBookMarkSize: Integer;
 begin
   Result := SizeOf(Integer);
 end;
 
-procedure TgxXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
+procedure TBaseXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
 begin
   PInteger(ABookmark)^:=Integer(RecordID);
 end;
 
-procedure TgxXMLDataSet.DoGotoBookmark(ABookmark: Pointer);
+procedure TBaseXMLDataSet.DoGotoBookmark(ABookmark: Pointer);
 begin
   GotoRecordID(Pointer(PInteger(ABookmark)^));
 end;
 
-procedure TgxXMLDataSet.DoBeforeGetFieldValue;
+procedure TBaseXMLDataSet.DoBeforeGetFieldValue;
 begin
   FNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
 end;
 
-procedure TgxXMLDataSet.DoAfterGetFieldValue;
+procedure TBaseXMLDataSet.DoAfterGetFieldValue;
 begin
   if not ((FNode <> nil) and (State = dsInsert)) then
      FNode := nil;
 end;
 
-procedure TgxXMLDataSet.DoBeforeSetFieldValue(Inserting: Boolean);
+procedure TBaseXMLDataSet.DoBeforeSetFieldValue(Inserting: Boolean);
 var NewChild :TDOMElement;
 begin
   try
@@ -496,22 +408,22 @@ begin
   end;
 end;
 
-procedure TgxXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
+procedure TBaseXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
 begin
 //todo : check this out
 end;
 
-function TgxXMLDataSet.GetCanModify: Boolean;
+function TBaseXMLDataSet.GetCanModify: Boolean;
 begin
   Result := not FReadOnly;
 end;
 
-function TgxXMLDataSet.GetRecordCount: Integer;
+function TBaseXMLDataSet.GetRecordCount: Integer;
 begin
   Result := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count;
 end;
 
-function TgxXMLDataSet.GetRecNo: Integer;
+function TBaseXMLDataSet.GetRecNo: Integer;
 begin
   UpdateCursorPos;
   if (FCurRec = -1) and (RecordCount > 0)
@@ -519,7 +431,7 @@ begin
     else Result := FCurRec + 1;
 end;
 
-procedure TgxXMLDataSet.SetRecNo(Value: Integer);
+procedure TBaseXMLDataSet.SetRecNo(Value: Integer);
 begin
   if (Value > 0) and (Value < RecordCount) then
     begin
@@ -528,25 +440,25 @@ begin
     end;
 end;
 
-constructor TgxXMLDataSet.Create(AOwner: TComponent);
+constructor TBaseXMLDataSet.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FXMLDoc := TXMLDocument.Create;
 end;
 
-constructor TgxXMLDataSet.Create(AOwner: TComponent; AXMLDoc: TXMLDocument);
+constructor TBaseXMLDataSet.Create(AOwner: TComponent; AXMLDoc: TXMLDocument);
 begin
   Self.Create(AOwner);
   FXMLDoc := AXMLDoc;
 end;
 
-constructor TgxXMLDataSet.Create(AOwner: TComponent; AXML: String);
+constructor TBaseXMLDataSet.Create(AOwner: TComponent; AXML: String);
 begin
   Self.Create(AOwner);
   FXMLDoc.DocumentElement.NodeValue := AXML;
 end;
 
-destructor TgxXMLDataSet.Destroy;
+destructor TBaseXMLDataSet.Destroy;
 begin
   FXMLDoc.Free;
   inherited Destroy;

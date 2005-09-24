@@ -14,11 +14,13 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    Button2: TButton;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
     GroupBox1: TGroupBox;
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -32,35 +34,39 @@ var
 
 implementation
 
-uses XMLFormatDataSet, XMLRead, gxBaseDataSet;
+uses XMLFormatDataSet, XMLRead, XMLWrite;
 
 
-var gxXML : TgxXMLDataSet;
+var XMLDS : TBaseXMLDataSet;
     
 { TForm1 }
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  ReadXMLFile(gxXML.XMLDocument,'D:\projects\TXMLFormatDataSet\data.xml');
-  gxXML.ReadOnly := true;
-  gxXML.Open;
+  ReadXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\data.xml');
+  XMLDS.ReadOnly := false;// true;
+  XMLDS.Open;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  WriteXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\save.xml');
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);
 begin
 //{$IFDEF DEBUGXML}
   XMLFormatDataSet.Memo := Memo1;
-  gxBaseDataSet.memoLog := Memo1;
 //{$ENDIF}
-  gxXML := TgxXMLDataSet.Create(Self);
-  dsMain.DataSet := gxXML;
+  XMLDS := TBaseXMLDataSet.Create(Self);
+  dsMain.DataSet := XMLDS;
 end;
 
 procedure TForm1.Form1Destroy(Sender: TObject);
 begin
-  if gxXML.Active then
-     gxXML.Close;
-  gxXML.Free;
+  if XMLDS.Active then
+     XMLDS.Close;
+  XMLDS.Free;
 end;
 
 initialization

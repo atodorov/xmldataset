@@ -4,8 +4,8 @@ program TestXMLDS;
 
 uses
   Interfaces, // this includes the LCL widgetset
-  Forms
-  { add your units here }, XMLFormatDataSet,
+  Forms,
+  { add your units here }
   uMain;
 
 begin

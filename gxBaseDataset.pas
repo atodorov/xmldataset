@@ -2,20 +2,9 @@ unit gxBaseDataset;
 
 {$mode objfpc}{$H+}
 
-// a work arround until ftWideStringField is supported in fpc.
-// We use this because TDOMString is WideString
-{$DEFINE USEWIDESTRINGS}
-
-{$DEFINE DEBUGDATASET}
 interface
 
-uses Classes, SysUtils, DB
-  {$IFDEF DEBUGDATASET}
-    ,StdCtrls;
-    var MemoLog : TMemo;
-  {$ELSE}
-  ;
-  {$ENDIF}
+uses Classes, SysUtils, DB;
 
 type
   PRecordInfo = ^TRecordInfo;
@@ -590,16 +579,7 @@ begin
             Move((RecBuffer + Offset)^, TempBool, SizeOf(WordBool));
             Move(TempBool, WordBool(Buffer^), SizeOf(WordBool));
           end;
-        ftString:
-        {$IFDEF USEWIDESTRINGS}
-           {$IFDEF DEBUGDATASET}
-              Log('TGXBaseDataset.GetFieldData - '+IntToStr(Length(PWideString(RecBuffer + Offset)^)));
-           {$ENDIF}
-//            Move((RecBuffer + Offset)^, (Buffer)^, PWideString(RecBuffer + Offset)^[0])));
-        {$ELSE}
-            StrLCopy(Buffer, PChar(RecBuffer + Offset), StrLen(PChar(RecBuffer + Offset)));
-//**        ftWideString: StrLCopy(Buffer, PWideChar(RecBuffer + Offset), Length(PWideChar(RecBuffer + Offset)));
-        {$ENDIF}
+        ftString: StrLCopy(Buffer, PChar(RecBuffer + Offset), StrLen(PChar(RecBuffer + Offset)));
         ftCurrency, ftFloat: Move((RecBuffer + Offset)^, Double(Buffer^), sizeof(Double));
         ftDateTime:
           begin
