@@ -86,8 +86,11 @@ type
     function  GetRecNo: Integer; override;
     procedure SetRecNo(Value: Integer); override;
     { xml structure handling methods }
+    { deleting }
     procedure MarkDeletedRecord(const ANode : TDOMNode);
     procedure DeleteRecordFromXML(const ANode : TDOMNode);
+    { insert / edit }
+    function  CreateRowWithFields : TDOMElement;
   public
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
@@ -298,7 +301,7 @@ begin
       begin   // Add fields
         domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i]);
         FieldName := Trim(domNode.AttribStrings[cFieldDef_Name]);
-        ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]);
+        ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]));
         Required := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Required]) = cTrue;
         // determine field size
         FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.AttribStrings[cFieldDef_FieldSize]));
@@ -409,21 +412,35 @@ begin
 end;
 
 procedure TBaseXMLDataSet.DoBeforeSetFieldValue(Inserting: Boolean);
-var NewChild :TDOMElement;
+var LRecData : TDOMElement;
 begin
   try
-    NewChild := TDOMElement.Create(FXMLDoc);
-    if Inserting
-      then FNode := TDOMElement(TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData)).AppendChild(NewChild))
-      else FNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
+    LRecData := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData));
+
+    if Inserting then
+       begin // create a <row> element
+        FNode := CreateRowWithFields;
+/////// todo: insert node in <insertedrecords>
+        LRecData.AppendChild(FNode);
+        // increase record count
+        LRecData.AttribStrings[cRecordData_Count] := IntToStr(RecordCount);
+       end
+    else FNode := TDOMElement(LRecData.ChildNodes.Item[FCurRec]);
   finally
-    NewChild.Free;   // todo: clear or not ??
+    LRecData := nil; // clear reference
   end;
 end;
 
 procedure TBaseXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
+var Index : Integer;
 begin
-//todo : check this out
+  if Inserting then
+     begin
+//      Index := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData)).IndexOf(FNode);
+      if (Index >= 1) then
+         FCurRec := Index-1;
+     end;
+  FNode := nil;
 end;
 
 function TBaseXMLDataSet.GetCanModify: Boolean;
@@ -486,6 +503,33 @@ begin
     LRecords.AttribStrings[cRecordData_Count] := IntToStr(RecordCount);
   finally
     LRecords := nil; // clear reference
+  end;
+end;
+
+function TBaseXMLDataSet.CreateRowWithFields: TDOMElement;
+// creates a <row> element with corresponding <field> sub-elements
+var i : Integer;
+    LField : TDOMElement;
+begin
+  try
+    Result := FXMLDoc.CreateElement(cRow); // create <row>
+    for i := 0 to FieldDefs.Count - 1 do
+       begin
+         LField := FXMLDoc.CreateElement(cField); // create <field>
+         LField.AttribStrings[cField_Name] := FieldDefs.Items[i].Name;
+         LField.AttribStrings[cField_Value] := '';
+         case FieldDefs.Items[i].DataType of
+           ftInteger : LField.AttribStrings[cField_DataType] := 'integer';
+           ftString :
+             begin
+               LField.AttribStrings[cField_DataType] := 'string';
+               LField.AttribStrings[cField_Size] := IntToStr(0); // todo : Length(Field.AsString);
+             end;
+         end; // case
+         Result.AppendChild(LField); // append <field> to <row>
+       end; // for
+  finally
+    LField := nil; // clear reference
   end;
 end;
 

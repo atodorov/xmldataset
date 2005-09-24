@@ -655,7 +655,7 @@ begin
       end;
     end;
   if not (State in [dsCalcFields, dsFilter, dsNewValue]) then
-    DataEvent(deFieldChange, Longint(Field));
+    DataEvent(deFieldChange, Ptrint(Field));
 end;
 
 function TGXBaseDataset.GetBookMarkSize: Integer;
