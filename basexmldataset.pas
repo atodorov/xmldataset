@@ -4,9 +4,11 @@ unit basexmldataset;
 
 {*******************************************************************************
 
- This file is part of the XMLDataset suite for the Free Pacal Components Library
+ This file is part of the XMLDataset suite for the Free Component Library!
 
- (c) 2005 - Alexander Todorov.
+ Implements TBaseXMLDataset - a dataset that works with XML instead a database.
+
+ (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
  
  *****************************************************************************
@@ -38,9 +40,13 @@ uses
   {$ENDIF}
 
 type
-  { TBaseXMLDataSet }
+////// TODO LIST
+// - implement Base64 encoding for string and blob fields (for all = little dirty)
+// - handle .Cancel after record is inserted or edited : may be no need to do that
+// - handle .Post ?????
+// - add display format for Float and DateTime fields. allvariantions (Date, Time, Float, Currency)
 
-  // a base class of dataset working with xml.
+  { TBaseXMLDataSet }
   TBaseXMLDataSet=class(TGXBaseDataset)
   private
     FCurRec: Integer;
@@ -79,6 +85,9 @@ type
     function  GetRecordCount: Integer; override;
     function  GetRecNo: Integer; override;
     procedure SetRecNo(Value: Integer); override;
+    { xml structure handling methods }
+    procedure MarkDeletedRecord(const ANode : TDOMNode);
+    procedure DeleteRecordFromXML(const ANode : TDOMNode);
   public
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
@@ -263,18 +272,19 @@ end;
 procedure TBaseXMLDataSet.DoDeleteRecord;
 begin
 // mark as deleted
-  FXMLDoc.DocumentElement.FindNode(cDeletedRecords).AppendChild(FNode.CloneNode(true,FXMLDoc));
-// remove
-  FXMLDoc.DocumentElement.FindNode(cRecordData).RemoveChild
-      (FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
+  MarkDeletedRecord(
+    TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec])
+    );
 
-  if FCurRec >= FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count then
-     Dec(FCurRec);
+// remove record
+  DeleteRecordFromXML(
+    FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]
+    );
 end;
 
 procedure TBaseXMLDataSet.DoCreateFieldDefs;
 var i, FieldSize :Integer;
-    domNode : TDOMNode;
+    domNode : TDOMElement;
     FieldName : String;
     Required : Boolean;
     ftFieldType : TFieldType;
@@ -286,15 +296,15 @@ begin
   FieldDefs.Clear;
   for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
       begin   // Add fields
-        domNode := FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i];
-        FieldName := Trim(domNode.Attributes.GetNamedItem(cFieldDef_Name).NodeValue);
-        ftFieldType := GetFieldTypeFromString(Trim(domNode.Attributes.GetNamedItem(cFieldDef_DataType).NodeValue));
-        Required := AnsiLowerCase(domNode.Attributes.GetNamedItem(cFieldDef_Required).NodeValue) = cTrue;
+        domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i]);
+        FieldName := Trim(domNode.AttribStrings[cFieldDef_Name]);
+        ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]);
+        Required := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Required]) = cTrue;
         // determine field size
-        FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.Attributes.GetNamedItem(cFieldDef_FieldSize).NodeValue));
+        FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.AttribStrings[cFieldDef_FieldSize]));
 
         FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
-        FieldDefs.Items[i].DisplayName := domNode.Attributes.GetNamedItem(cFieldDef_DisplayLabel).NodeValue;
+        FieldDefs.Items[i].DisplayName := domNode.AttribStrings[cFieldDef_DisplayLabel];
       end;
 end;
 
@@ -441,6 +451,42 @@ begin
       FCurRec := Value-1;
       Resync([]);
     end;
+end;
+
+procedure TBaseXMLDataSet.MarkDeletedRecord(const ANode: TDOMNode);
+var LDeleted : TDOMElement;
+begin
+  try
+    LDeleted := TDOMElement(FXMLDoc.DocumentElement.FindNode(cDeletedRecords));
+    if not Assigned(LDeleted) then
+       begin // create <deletedrecords> node
+         LDeleted := FXMLDoc.CreateElement(cDeletedRecords);
+         LDeleted.AttribStrings[cDeletedRecords_Count] := '0';
+         FXMLDoc.DocumentElement.AppendChild(LDeleted); // DocumentElement = <cDatapacket>
+       end;
+// mark entire record as deleted
+    LDeleted.AppendChild(ANode.CloneNode(true,ANode.OwnerDocument));
+// increase deleted records count
+    LDeleted.AttribStrings[cDeletedRecords_Count] :=
+       IntToStr(StrToInt(LDeleted.AttribStrings[cDeletedRecords_Count])+1);
+  finally
+    LDeleted := nil; // clear reference
+  end;
+end;
+
+procedure TBaseXMLDataSet.DeleteRecordFromXML(const ANode: TDOMNode);
+var LRecords : TDOMElement;
+begin
+  try
+    LRecords := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData));
+// remove node from <recorddata> section
+    LRecords.RemoveChild(ANode);
+// decrease record count
+    if FCurRec >= LRecords.ChildNodes.Count then Dec(FCurRec);
+    LRecords.AttribStrings[cRecordData_Count] := IntToStr(RecordCount);
+  finally
+    LRecords := nil; // clear reference
+  end;
 end;
 
 constructor TBaseXMLDataSet.Create(AOwner: TComponent);

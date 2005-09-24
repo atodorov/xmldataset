@@ -4,11 +4,11 @@ unit uxmldsconsts;
 
 {*******************************************************************************
 
- This file is part of the XMLDataset suite for the Free Pacal Components Library
+ This file is part of the XMLDataset suite for the Free Component Library!
 
  Constants describing the xml structure of the format used by TBaseXMLDataset.
  
- (c) 2005 - Alexander Todorov.
+ (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
 
  *****************************************************************************

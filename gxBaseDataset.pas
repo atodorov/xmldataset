@@ -4,13 +4,13 @@ unit gxBaseDataset;
 
 {*******************************************************************************
 
- This file is part of the XMLDataset suite for the Free Pacal Components Library
+ This file is part of the XMLDataset suite for the Free Component Library!
 
- This source code gives a base class for deriving custom datasets.
+ This source code implements a base class for deriving custom datasets.
  It is described in the article "Writing Custom Datasets" available at
  http://www.gexperts.com/CustomDS.html
 
- (c) GExperts Inc.
+ GExperts Inc.
  www.gexperts.com
 
  FPC modifications and additional improvements made by Alexander Todorov.

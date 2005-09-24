@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  DB, Buttons, StdCtrls;
+  DB, Buttons, StdCtrls, DBCtrls;
 
 type
 
@@ -15,6 +15,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
     GroupBox1: TGroupBox;
