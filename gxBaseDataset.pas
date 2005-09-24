@@ -2,6 +2,22 @@ unit gxBaseDataset;
 
 {$mode objfpc}{$H+}
 
+{*******************************************************************************
+
+ This file is part of the XMLDataset suite for the Free Pacal Components Library
+
+ This source code gives a base class for deriving custom datasets.
+ It is described in the article "Writing Custom Datasets" available at
+ http://www.gexperts.com/CustomDS.html
+
+ (c) GExperts Inc.
+ www.gexperts.com
+
+ FPC modifications and additional improvements made by Alexander Todorov.
+ e-mail: alexx.todorov@gmail.com
+
+*******************************************************************************}
+
 interface
 
 uses Classes, SysUtils, DB;

@@ -1,11 +1,12 @@
-unit xmlformatdataset;
+unit basexmldataset;
 
 {$mode objfpc}{$H+}
 
 {*******************************************************************************
+
  This file is part of the XMLDataset suite for the Free Pacal Components Library
 
- (c) 2005 - Alexander Todorov,
+ (c) 2005 - Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
  
  *****************************************************************************
@@ -261,7 +262,9 @@ end;
 
 procedure TBaseXMLDataSet.DoDeleteRecord;
 begin
-// todo : mark as deleted
+// mark as deleted
+  FXMLDoc.DocumentElement.FindNode(cDeletedRecords).AppendChild(FNode.CloneNode(true,FXMLDoc));
+// remove
   FXMLDoc.DocumentElement.FindNode(cRecordData).RemoveChild
       (FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
 

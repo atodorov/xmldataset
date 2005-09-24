@@ -5,90 +5,156 @@
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
     </General>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="gxBaseDataset.pas"/>
-        <Caret Line="9" Column="1" TopLine="1"/>
+        <Filename Value="uxmldsconsts.pas"/>
+        <Caret Line="98" Column="15" TopLine="87"/>
       </Position1>
       <Position2>
-        <Filename Value="gxBaseDataset.pas"/>
-        <Caret Line="576" Column="15" TopLine="568"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="466" Column="1" TopLine="454"/>
       </Position2>
       <Position3>
-        <Filename Value="gxBaseDataset.pas"/>
-        <Caret Line="2" Column="1" TopLine="1"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="40" Column="1" TopLine="25"/>
       </Position3>
       <Position4>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="365" Column="68" TopLine="357"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="266" Column="55" TopLine="263"/>
       </Position4>
       <Position5>
-        <Filename Value="gxBaseDataset.pas"/>
-        <Caret Line="648" Column="1" TopLine="632"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="266" Column="3" TopLine="263"/>
       </Position5>
       <Position6>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="365" Column="72" TopLine="357"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position6>
       <Position7>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="22" Column="19" TopLine="14"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="49" Column="24" TopLine="41"/>
       </Position7>
       <Position8>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="77" Column="1" TopLine="61"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="96" Column="55" TopLine="88"/>
       </Position8>
       <Position9>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="368" Column="24" TopLine="367"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position9>
       <Position10>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="110" Column="3" TopLine="103"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="55" Column="23" TopLine="47"/>
       </Position10>
       <Position11>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="526" Column="20" TopLine="517"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="263" Column="35" TopLine="255"/>
       </Position11>
       <Position12>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="30" Column="1" TopLine="20"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="266" Column="13" TopLine="258"/>
       </Position12>
       <Position13>
-        <Filename Value="XMLFormatDataSet.pas"/>
-        <Caret Line="198" Column="55" TopLine="190"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="267" Column="39" TopLine="259"/>
       </Position13>
+      <Position14>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="266" Column="15" TopLine="258"/>
+      </Position14>
+      <Position15>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="530" Column="1" TopLine="522"/>
+      </Position15>
+      <Position16>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="529" Column="1" TopLine="521"/>
+      </Position16>
+      <Position17>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="530" Column="1" TopLine="522"/>
+      </Position17>
+      <Position18>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="531" Column="1" TopLine="523"/>
+      </Position18>
+      <Position19>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="532" Column="1" TopLine="524"/>
+      </Position19>
+      <Position20>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="533" Column="1" TopLine="525"/>
+      </Position20>
+      <Position21>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="529" Column="1" TopLine="521"/>
+      </Position21>
+      <Position22>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="530" Column="1" TopLine="522"/>
+      </Position22>
+      <Position23>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="531" Column="1" TopLine="523"/>
+      </Position23>
+      <Position24>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="532" Column="1" TopLine="524"/>
+      </Position24>
+      <Position25>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="533" Column="1" TopLine="525"/>
+      </Position25>
+      <Position26>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="559" Column="1" TopLine="551"/>
+      </Position26>
+      <Position27>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <Caret Line="569" Column="1" TopLine="561"/>
+      </Position27>
+      <Position28>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <Caret Line="263" Column="16" TopLine="258"/>
+      </Position28>
+      <Position29>
+        <Filename Value="testxmlds.lpr"/>
+        <Caret Line="1" Column="14" TopLine="1"/>
+      </Position29>
+      <Position30>
+        <Filename Value="testxmlds.lpr"/>
+        <Caret Line="11" Column="26" TopLine="1"/>
+      </Position30>
     </JumpHistory>
-    <Units Count="51">
+    <Units Count="52">
       <Unit0>
-        <CursorPos X="14" Y="1"/>
+        <CursorPos X="15" Y="7"/>
+        <EditorIndex Value="1"/>
         <Filename Value="testxmlds.lpr"/>
         <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="79"/>
       </Unit0>
       <Unit1>
         <CursorPos X="3" Y="44"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="fMain"/>
-        <IsPartOfProject Value="True"/>
         <ResourceFilename Value="umain.lrs"/>
         <TopLine Value="56"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="79"/>
       </Unit1>
       <Unit2>
-        <CursorPos X="1" Y="99"/>
-        <EditorIndex Value="0"/>
+        <CursorPos X="6" Y="1"/>
         <Filename Value="XMLFormatDataSet.pas"/>
-        <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
-        <TopLine Value="93"/>
+        <TopLine Value="1"/>
         <UnitName Value="xmlformatdataset"/>
         <UsageCount Value="76"/>
       </Unit2>
@@ -100,9 +166,9 @@
         <UsageCount Value="9"/>
       </Unit3>
       <Unit4>
-        <CursorPos X="13" Y="67"/>
+        <CursorPos X="12" Y="424"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\xml\dom.pp"/>
-        <TopLine Value="67"/>
+        <TopLine Value="424"/>
         <UnitName Value="DOM"/>
         <UsageCount Value="12"/>
       </Unit4>
@@ -120,9 +186,11 @@
         <UsageCount Value="20"/>
       </Unit6>
       <Unit7>
-        <CursorPos X="22" Y="1"/>
+        <CursorPos X="1" Y="569"/>
+        <EditorIndex Value="2"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
-        <TopLine Value="1"/>
+        <Loaded Value="True"/>
+        <TopLine Value="561"/>
         <UsageCount Value="14"/>
       </Unit7>
       <Unit8>
@@ -328,10 +396,9 @@
       <Unit39>
         <CursorPos X="17" Y="1"/>
         <Filename Value="gxxmldataset.pas"/>
-        <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="gxXMLDataSet"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="38"/>
       </Unit39>
       <Unit40>
         <CursorPos X="40" Y="1"/>
@@ -341,13 +408,11 @@
         <UsageCount Value="9"/>
       </Unit40>
       <Unit41>
-        <CursorPos X="1" Y="74"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="5" Y="15"/>
         <Filename Value="gxBaseDataset.pas"/>
-        <Loaded Value="True"/>
-        <TopLine Value="1"/>
+        <TopLine Value="15"/>
         <UnitName Value="gxBaseDataset"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="14"/>
       </Unit41>
       <Unit42>
         <CursorPos X="20" Y="1"/>
@@ -363,14 +428,14 @@
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="14" Y="53"/>
+        <CursorPos X="11" Y="48"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <IsPartOfProject Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="53"/>
+        <TopLine Value="48"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="35"/>
       </Unit44>
       <Unit45>
         <CursorPos X="21" Y="194"/>
@@ -399,21 +464,31 @@
         <UsageCount Value="10"/>
       </Unit48>
       <Unit49>
-        <CursorPos X="14" Y="33"/>
+        <CursorPos X="22" Y="58"/>
         <Filename Value="c:\lazarus\fpcsrc\rtl\inc\wstringh.inc"/>
-        <TopLine Value="33"/>
+        <TopLine Value="58"/>
         <UsageCount Value="10"/>
       </Unit49>
       <Unit50>
-        <CursorPos X="1" Y="7"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="6" Y="113"/>
+        <EditorIndex Value="3"/>
         <Filename Value="uxmldsconsts.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="1"/>
+        <TopLine Value="106"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit50>
+      <Unit51>
+        <CursorPos X="41" Y="267"/>
+        <EditorIndex Value="0"/>
+        <Filename Value="BaseXMLDataSet.pas"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="258"/>
+        <UnitName Value="basexmldataset"/>
+        <UsageCount Value="20"/>
+      </Unit51>
     </Units>
     <PublishOptions>
       <Version Value="2"/>

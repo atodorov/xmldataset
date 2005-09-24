@@ -4,9 +4,7 @@ program TestXMLDS;
 
 uses
   Interfaces, // this includes the LCL widgetset
-  Forms,
-  { add your units here }
-  uMain;
+  Forms, uMain;
 
 begin
   Application.Initialize;

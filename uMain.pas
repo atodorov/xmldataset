@@ -34,7 +34,7 @@ var
 
 implementation
 
-uses XMLFormatDataSet, XMLRead, XMLWrite;
+uses basexmldataset, XMLRead, XMLWrite;
 
 
 var XMLDS : TBaseXMLDataSet;
@@ -56,7 +56,7 @@ end;
 procedure TForm1.Form1Create(Sender: TObject);
 begin
 //{$IFDEF DEBUGXML}
-  XMLFormatDataSet.Memo := Memo1;
+  baseXMLDataSet.Memo := Memo1;
 //{$ENDIF}
   XMLDS := TBaseXMLDataSet.Create(Self);
   dsMain.DataSet := XMLDS;
