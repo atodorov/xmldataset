@@ -27,7 +27,8 @@ interface
 
 const
 
-// XML attribute value constants
+// XML attribute name / value constants
+  cCount = 'count';
   cYes   = 'yes';
   cNo    = 'no';
   cTrue  = 'true';
@@ -77,8 +78,6 @@ const
 {|  |  +---}cUniques = 'uniques';
 {|  |  +---}cChecks  = 'checks';
 {|  +--+}cFieldDefs = 'fielddefs';
-{|  |  | [FIELDDEFS ATTRIBUTES] }
-{|  |  |}cFieldDefs_Count = 'count';
 {|  |  +---}cFieldDef = 'fielddef';
 {|  |       [FIELDDEF ATTRIBUTES] }
 {|  |}      cFieldDef_Name          = 'name';
@@ -92,12 +91,10 @@ const
 {|  |}      cFieldDef_Required      = 'required';
 {|  |}      cFieldDef_ReadOnly      = 'readonly';
 {|  +---}cIndexDefs = 'indexdefs';
-{|       [FIELDDEFS ATTRIBUTES] }
-{|}      cIndexDefs_Count = 'count';
 {+--+}cRecordData = 'recorddata';
-{|  | [RECORDDATA ATTRIBUTES] }
-{|  |}cRecordData_Count = 'count';
 {|  +--+}cRow = 'row';
+{|     | [ROW ATTRIBUTES] }
+{|     |}cRow_ID = 'id'; // internal id
 {|     +---}cField = 'field';
 {|          [FIELD ATTRIBUTES] }
 {|}         cField_Name     = 'name';
@@ -106,17 +103,11 @@ const
 {|}         cField_Size     = 'size';
 {|}         cField_OldValue = 'oldvalue'; // used in <modifiedrecords>
 {|}         cField_NewValue = 'newvalue'; // used in <modifiedrecords>
-{+--+}cModifiedRecords = 'modifiedrecords';
-{|  | [MODIFIEDRECORDS ATTRIBUTES] }
-{|  |}cModifiedRecords_Count = 'count';
-{|  +--- count <row>'s ... }
 {+--+}cInsertedRecords = 'insertedrecords';
-{|  | [INSERTEDRECORDS ATTRIBUTES] }
-{|  |}cInsertedRecords_Count = 'count';
+{|  +--- count <row>'s ... }
+{+--+}cModifiedRecords = 'modifiedrecords';
 {|  +--- count <row>'s ... }
 {+--+}cDeletedRecords = 'deletedrecords';
-{|  | [DELETEDRECORDS ATTRIBUTES] }
-{|  |}cDeletedRecords_Count = 'count';
 {|  +--- count <row>'s ... }
 {.}
      

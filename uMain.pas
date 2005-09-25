@@ -44,14 +44,14 @@ var XMLDS : TBaseXMLDataSet;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  ReadXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\data.xml');
+  ReadXMLFile(XMLDS.XMLDocument,'D:/projects/TXMLFormatDataSet/data.xml');
   XMLDS.ReadOnly := false;// true;
   XMLDS.Open;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  WriteXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\save.xml');
+  WriteXMLFile(XMLDS.XMLDocument,'D:/projects/TXMLFormatDataSet/save.xml');
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);

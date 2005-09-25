@@ -44,7 +44,11 @@ type
 // - implement Base64 encoding for string and blob fields (for all = little dirty)
 // - handle .Cancel after record is inserted or edited : may be no need to do that
 // - handle .Post ?????
-// - add display format for Float and DateTime fields. allvariantions (Date, Time, Float, Currency)
+// - add display format for Float and DateTime fields. all variantions (Date, Time, Float, Currency)
+// - when deleting, editing more than once, inserting, canceling => N.B. internal ID
+// - fix deleting of record that was inserted / edited before
+// - get rid of cField_Size attributes if not needed
+// - set oldvalue, newvalue when editing. fix adding all childs to the end to <modifiedrecords>
 
   { TBaseXMLDataSet }
   TBaseXMLDataSet=class(TGXBaseDataset)
@@ -53,6 +57,11 @@ type
     FReadOnly: Boolean;
     FXMLDoc : TXMLDocument;
     FNode : TDOMElement;
+    { internal counters }
+    FDeletedCount : Longint;
+    FInsertedCount : Longint;
+    FModifiedCount : Longint;
+    FInternalID : Longint;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
   protected {Simplified Dataset methods}
@@ -86,17 +95,25 @@ type
     function  GetRecNo: Integer; override;
     procedure SetRecNo(Value: Integer); override;
     { xml structure handling methods }
+    { general section management }
+    procedure AddXMLRecordToSection(const ANode: TDOMElement; const ASection : String);
     { deleting }
-    procedure MarkDeletedRecord(const ANode : TDOMNode);
-    procedure DeleteRecordFromXML(const ANode : TDOMNode);
+    procedure DeleteRecordFromXML(const ANode : TDOMElement);
+    function  FindRowIDAndDeleteFromSection(const AnID, ASection : String) : Boolean;
     { insert / edit }
     function  CreateRowWithFields : TDOMElement;
+    { internal ID management }
+    function  nGetNextID : Longint;
+    function  sGetNextID : String;
+    procedure AssignInternalIDS;
+    { search and indexing }
+    function  FindRowInSectionByID(const ASection,AnID : String) : TDOMElement;
+    function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
   public
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
     destructor Destroy; override;
-//    property OutlookFolder: TOutlookFolder read FOutlookFolder write SetOutlookFolder;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
   end;
@@ -263,6 +280,13 @@ begin
   if not Assigned(FXMLDoc) then
      DatabaseError('XMLDoc is not assigned');
   FCurRec:=-1;
+  // initialize internal counters
+  FDeletedCount  := 0;
+  FInsertedCount := 0;
+  FModifiedCount := 0;
+  FInternalID    := -1;
+  AssignInternalIDS;
+  
   Result := true; //todo : true or <rowdata>.childs.count > 0 ?
 end;
 
@@ -275,13 +299,14 @@ end;
 procedure TBaseXMLDataSet.DoDeleteRecord;
 begin
 // mark as deleted
-  MarkDeletedRecord(
-    TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec])
+  AddXMLRecordToSection(
+    TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]),
+    cDeletedRecords
     );
 
 // remove record
   DeleteRecordFromXML(
-    FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]
+    TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec])
     );
 end;
 
@@ -419,26 +444,34 @@ begin
 
     if Inserting then
        begin // create a <row> element
-        FNode := CreateRowWithFields;
-/////// todo: insert node in <insertedrecords>
-        LRecData.AppendChild(FNode);
-        // increase record count
-        LRecData.AttribStrings[cRecordData_Count] := IntToStr(RecordCount);
+         FNode := CreateRowWithFields;
+         // insert node in <insertedrecords>
+         AddXMLRecordToSection(FNode,cInsertedRecords);
+         // add to <recorddata>
+         LRecData.AppendChild(FNode);
+         // increase record count
+         LRecData.AttribStrings[cCount] := IntToStr(RecordCount);
        end
-    else FNode := TDOMElement(LRecData.ChildNodes.Item[FCurRec]);
+    else
+       begin
+         FNode := TDOMElement(LRecData.ChildNodes.Item[FCurRec]);
+         AddXMLRecordToSection(FNode,cModifiedRecords);
+         //todo : set oldvalue, newvalue
+       end;
   finally
     LRecData := nil; // clear reference
   end;
 end;
 
 procedure TBaseXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
+// todo : fix this
 var Index : Integer;
 begin
   if Inserting then
      begin
-//      Index := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData)).IndexOf(FNode);
-      if (Index >= 1) then
-         FCurRec := Index-1;
+//      Index := FindRowIndexInSection(FNode,cRecordData);
+      if (Index >= 0) then
+         FCurRec := Index;
      end;
   FNode := nil;
 end;
@@ -470,39 +503,57 @@ begin
     end;
 end;
 
-procedure TBaseXMLDataSet.MarkDeletedRecord(const ANode: TDOMNode);
-var LDeleted : TDOMElement;
-begin
-  try
-    LDeleted := TDOMElement(FXMLDoc.DocumentElement.FindNode(cDeletedRecords));
-    if not Assigned(LDeleted) then
-       begin // create <deletedrecords> node
-         LDeleted := FXMLDoc.CreateElement(cDeletedRecords);
-         LDeleted.AttribStrings[cDeletedRecords_Count] := '0';
-         FXMLDoc.DocumentElement.AppendChild(LDeleted); // DocumentElement = <cDatapacket>
-       end;
-// mark entire record as deleted
-    LDeleted.AppendChild(ANode.CloneNode(true,ANode.OwnerDocument));
-// increase deleted records count
-    LDeleted.AttribStrings[cDeletedRecords_Count] :=
-       IntToStr(StrToInt(LDeleted.AttribStrings[cDeletedRecords_Count])+1);
-  finally
-    LDeleted := nil; // clear reference
-  end;
-end;
-
-procedure TBaseXMLDataSet.DeleteRecordFromXML(const ANode: TDOMNode);
+procedure TBaseXMLDataSet.DeleteRecordFromXML(const ANode: TDOMElement);
+// removes record from <recorddata> section
 var LRecords : TDOMElement;
+    bWasInserted : Boolean;
 begin
   try
     LRecords := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData));
 // remove node from <recorddata> section
     LRecords.RemoveChild(ANode);
+
+// todo : FIX
+(*
+// search and remove from <modifiedrecords>, and <insertedrecords>
+    FindRowIDAndDeleteFromSection(ANode.AttribStrings[cRow_ID],cModifiedRecords);
+    bWasInserted := FindRowIDAndDeleteFromSection(ANode.AttribStrings[cRow_ID],cInsertedRecords);
+
+// record was inserted => remove from <deletedrecords>. we don't want it in final xml
+    if bWasInserted then
+       FindRowIDAndDeleteFromSection(ANode.AttribStrings[cRow_ID],cDeletedRecords);
+*)
 // decrease record count
     if FCurRec >= LRecords.ChildNodes.Count then Dec(FCurRec);
-    LRecords.AttribStrings[cRecordData_Count] := IntToStr(RecordCount);
+    LRecords.AttribStrings[cCount] := IntToStr(RecordCount);
   finally
     LRecords := nil; // clear reference
+  end;
+end;
+
+function TBaseXMLDataSet.FindRowIDAndDeleteFromSection(const AnID, ASection: String) : Boolean;
+// finds a <row id="AnID"> and deletes it from <ASection>
+// this fix deleting of records that were inserted / edited before deleting
+// returns true if record is found. use result to not add <row> to <deletedrecords>
+// if it was inserted before. in this case we have nothing to handle later.
+// record was not present in the beginning and will not be present at the end
+var LRow, LSection : TDOMElement;
+begin
+  try
+    Result := false;
+    LSection := TDOMElement(FXMLDoc.DocumentElement.FindNode(ASection));
+    if Assigned(LSection) then
+       begin
+         LRow := FindRowInSectionByID(ASection,AnID);
+         if Assigned(LRow) then
+           begin
+             LSection.RemoveChild(LRow);
+             Result := true;
+           end;
+       end;
+  finally
+    LRow := nil; // clear reference
+    LSection := nil;
   end;
 end;
 
@@ -513,6 +564,7 @@ var i : Integer;
 begin
   try
     Result := FXMLDoc.CreateElement(cRow); // create <row>
+    Result.AttribStrings[cRow_ID] := sGetNextID;
     for i := 0 to FieldDefs.Count - 1 do
        begin
          LField := FXMLDoc.CreateElement(cField); // create <field>
@@ -530,6 +582,109 @@ begin
        end; // for
   finally
     LField := nil; // clear reference
+  end;
+end;
+
+procedure TBaseXMLDataSet.AddXMLRecordToSection(const ANode: TDOMElement; const ASection : String);
+// add record to specified section
+// <insertedrecords>, <modifiedrecords>, <deletedrecords>
+var LSection : TDOMElement;
+    LCount : Longint;
+begin
+  try
+    LSection := TDOMElement(FXMLDoc.DocumentElement.FindNode(ASection));
+    if not Assigned(LSection) then
+       begin // create section
+         LSection := FXMLDoc.CreateElement(ASection);
+         LSection.AttribStrings[cCount] := '0';
+         FXMLDoc.DocumentElement.AppendChild(LSection);
+       end;
+
+// add record to section
+    if (ASection = cDeletedRecords)
+      then LSection.AppendChild(ANode.CloneNode(true,ANode.OwnerDocument))
+      else LSection.AppendChild(ANode);
+
+// increase section records count
+    if (ASection = cInsertedRecords)
+      then begin inc(FInsertedCount); LCount := FInsertedCount; end
+      else if (ASection = cModifiedRecords)
+             then begin inc(FModifiedCount); LCount := FModifiedCount; end
+             else if (ASection = cDeletedRecords)
+                    then begin inc(FDeletedCount); LCount := FDeletedCount; end;
+
+    LSection.AttribStrings[cCount] := IntToStr(LCount);
+  finally
+    LSection := nil; // clear reference
+  end;
+end;
+
+function TBaseXMLDataSet.nGetNextID: Longint;
+begin
+  inc(FInternalID);
+  Result := FInternalID;
+end;
+
+function TBaseXMLDataSet.sGetNextID: String;
+begin
+  Result := IntToStr(nGetNextID);
+end;
+
+procedure TBaseXMLDataSet.AssignInternalIDS;
+var i : Longint;
+    domNode : TDOMElement;
+begin
+  try
+    for i := 0 to FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count - 1 do
+      begin
+        domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[i]);
+        domNode.AttribStrings[cRow_ID] := sGetNextID;
+      end;
+  finally
+    domNode := nil; // clear reference
+  end;
+end;
+
+function TBaseXMLDataSet.FindRowInSectionByID(const ASection, AnID: String): TDOMElement;
+var i : Longint;
+    LSection, LRow : TDOMElement;
+begin
+  try
+    Result := nil;
+    LSection := TDOMElement(FXMLDoc.DocumentElement.FindNode(ASection));
+    if Assigned(LSection) then
+      for i := 0 to LSection.ChildNodes.Count - 1 do
+        begin
+          LRow := TDOMElement(LSection.ChildNodes.Item[i]);
+          if (LRow.AttribStrings[cRow_ID] = AnID) then
+             begin
+                Result := LRow;
+                exit;
+             end;
+        end;
+  finally
+    LRow := nil;
+    LSection := nil; // clear reference
+  end;
+end;
+
+function TBaseXMLDataSet.FindRowIndexInSection(const ARow: TDOMElement; const ASection : String): Longint;
+var i : Longint;
+    LSection : TDOMElement;
+begin
+  try
+    Result := -1;
+    LSection := TDOMElement(FXMLDoc.DocumentElement.FindNode(ASection));
+    if Assigned(LSection) then
+      for i := 0 to LSection.ChildNodes.Count - 1 do
+        if (ARow.AttribStrings[cRow_ID] =
+            TDOMElement(LSection.ChildNodes.Item[i]).AttribStrings[cRow_ID]) then
+           begin
+              Result := i;
+              exit;
+           end;
+  finally
+    LSection := nil; // clear reference
   end;
 end;
 

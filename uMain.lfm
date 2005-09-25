@@ -13,7 +13,6 @@ object Form1: TForm1
   Width = 459
   object dbGrid1: TdbGrid
     Align = alClient
-    BorderSpacing.OnChange = nil
     DataSource = dsMain
     FixedColor = clBtnFace
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -25,6 +24,7 @@ object Form1: TForm1
   end
   object GroupBox1: TGroupBox
     Align = alBottom
+    BorderSpacing.OnChange = nil
     Caption = 'GroupBox1'
     ClientHeight = 105
     ClientWidth = 455
@@ -34,6 +34,7 @@ object Form1: TForm1
     Top = 208
     Width = 459
     object Button1: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Button1'
       OnClick = Button1Click
       TabOrder = 0
@@ -43,7 +44,6 @@ object Form1: TForm1
     end
     object Memo1: TMemo
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.OnChange = nil
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 1
@@ -52,6 +52,7 @@ object Form1: TForm1
       Width = 360
     end
     object Button2: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Button2'
       OnClick = Button2Click
       TabOrder = 2

@@ -36,11 +36,6 @@
        <field name="NAME" value="Greece" datatype="string"  size="6"/>
     </row>
   </recorddata>
-  <modifiedrecords count="1">
-      <row>
-       <field name="ID" oldvalue="3" newvalue="30" datatype="integer" />       
-    </row>
-  </modifiedrecords>
   <insertedrecords count="2">
     <row>
        <field name="ID"   value="20"  datatype="integer" />
@@ -51,6 +46,11 @@
        <field name="NAME" value="Japan" datatype="string"  size="5"/>
     </row>  
   </insertedrecords>
+  <modifiedrecords count="1">
+      <row>
+       <field name="ID" oldvalue="3" newvalue="30" datatype="integer" />       
+    </row>
+  </modifiedrecords>
   <deletedrecords count="0">  
   </deletedrecords>
 </datapacket>
