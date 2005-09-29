@@ -34,6 +34,11 @@ const
   cTrue  = 'true';
   cFalse = 'false';
 
+// row state constants. bit wise or
+  ROW_NOT_MODIFIED = $00000000;
+  ROW_INSERTED     = $00000001;
+  ROW_MODIFIED     = $00000002;
+  
 // XML node and attribute name constants
 
 //<?xml version="1.0" ?>
@@ -86,7 +91,7 @@ const
 {|  |}      cFieldDef_FieldSize     = 'fieldsize';
 {|  |}      cFieldDef_DisplayLabel  = 'displaylabel';
 {|  |}      cFieldDef_DisplayWidth  = 'displaywidth';
-{|  |}      cFieldDef_DisplayFormat = 'displayformat'; //float and date fields
+{|  |}      cFieldDef_DisplayFormat = 'displayformat'; //float and date fields  // todo : fix this
 {|  |}      cFieldDef_FieldIndex    = 'fieldindex';
 {|  |}      cFieldDef_Required      = 'required';
 {|  |}      cFieldDef_ReadOnly      = 'readonly';
@@ -94,7 +99,8 @@ const
 {+--+}cRecordData = 'recorddata';
 {|  +--+}cRow = 'row';
 {|     | [ROW ATTRIBUTES] }
-{|     |}cRow_ID = 'id'; // internal id
+{|     |}cRow_ID = 'id';       // internal id
+{|     |}cRow_State = 'state'; // not modified, inserted, modified
 {|     +---}cField = 'field';
 {|          [FIELD ATTRIBUTES] }
 {|}         cField_Name     = 'name';
@@ -103,10 +109,10 @@ const
 {|}         cField_Size     = 'size';
 {|}         cField_OldValue = 'oldvalue'; // used in <modifiedrecords>
 {|}         cField_NewValue = 'newvalue'; // used in <modifiedrecords>
-{+--+}cInsertedRecords = 'insertedrecords';
-{|  +--- count <row>'s ... }
-{+--+}cModifiedRecords = 'modifiedrecords';
-{|  +--- count <row>'s ... }
+//// {+--+}cInsertedRecords = 'insertedrecords';
+//// {|  +--- count <row>'s ... }
+//// {+--+}cModifiedRecords = 'modifiedrecords';
+//// {|  +--- count <row>'s ... }
 {+--+}cDeletedRecords = 'deletedrecords';
 {|  +--- count <row>'s ... }
 {.}

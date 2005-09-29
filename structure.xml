@@ -18,39 +18,24 @@
     <indexdefs count="0"> 
     </indexdefs>
   </metadata>
-  <recorddata count="4">
-    <row>
+  <recorddata count="3">
+    <row id="0" state="0">
        <field name="ID"   value="0"        datatype="integer" />
        <field name="NAME" value="Bulgaria" datatype="string"  size="8" />
     </row>
-    <row>
+    <row id="1" state="1">
        <field name="ID"   value="1"       datatype="integer" />
        <field name="NAME" value="Germany" datatype="string"  size="7" />
     </row>
-    <row>
+    <row id="2" state="2">
        <field name="ID"   value="2"              datatype="integer" />
        <field name="NAME" value="United Kingdom" datatype="string"  size="14"/>
     </row>
-    <row>
+  </recorddata>
+  <deletedrecords count="1">
+    <row id="3" state="3">
        <field name="ID"   value="3"      datatype="integer" />
        <field name="NAME" value="Greece" datatype="string"  size="6"/>
-    </row>
-  </recorddata>
-  <insertedrecords count="2">
-    <row>
-       <field name="ID"   value="20"  datatype="integer" />
-       <field name="NAME" value="USA" datatype="string"  size="3"/>
-    </row>
-    <row>
-       <field name="ID"   value="21"    datatype="integer" />
-       <field name="NAME" value="Japan" datatype="string"  size="5"/>
     </row>  
-  </insertedrecords>
-  <modifiedrecords count="1">
-      <row>
-       <field name="ID" oldvalue="3" newvalue="30" datatype="integer" />       
-    </row>
-  </modifiedrecords>
-  <deletedrecords count="0">  
   </deletedrecords>
 </datapacket>
