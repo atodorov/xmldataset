@@ -6,9 +6,6 @@ unit sqlconnection;
 
  This file is part of the XMLDataset suite for the Free Component Library!
 
- Implements TBaseSQLConnection - base interface to handle multiple connections
- and transactions, used by TBaseXMLQuery.
-
  (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
 
@@ -26,18 +23,8 @@ unit sqlconnection;
 
 interface
 
-uses
-  Classes, SysUtils; 
+uses Classes, SysUtils;
 
-type
-
-  TBaseSQLConnection = class(TComponent)
-  private
-    FDatasets : TList; // list of all datasets that use this connection
-    FInTransaction : Boolean; // transaction handling
-    
-  end;
-  
 implementation
 
 end.
