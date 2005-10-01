@@ -6,8 +6,6 @@ unit basexmldataset;
 
  This file is part of the XMLDataset suite for the Free Component Library!
 
- Implements TBaseXMLDataset - a dataset that works with XML instead a database.
-
  (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
  
@@ -31,7 +29,7 @@ unit basexmldataset;
 interface
 
 uses
-  Classes, SysUtils, DB, DOM, gxBaseDataset
+  Classes, SysUtils, DB, DOM, gxBaseDataset, SQLConnection
   {$IFDEF DEBUGXML}
     ,StdCtrls;
     var Memo : TMemo;
@@ -42,15 +40,11 @@ uses
 type
 ////// TODO LIST
 // - implement Base64 encoding for string and blob fields (for all = little dirty)
-// - handle .Cancel after record is inserted or edited : may be no need to do that
-// - handle .Post ?????
 // - add display format for Float and DateTime fields. all variantions (Date, Time, Float, Currency)
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
-// - fix deleting of record that was inserted / edited before
-// - get rid of cField_Size attributes if not needed
-// - set oldvalue, newvalue when editing. fix adding all childs to the end to <modifiedrecords>
+// - add some events to Dataset / Query
 
-  { TBaseXMLDataSet }
+  { TBaseXMLDataSet - dataset that works with XML instead a database }
   TBaseXMLDataSet=class(TGXBaseDataset)
   private
     FCurRec: Integer;
@@ -106,27 +100,43 @@ type
     function  sGetNextID : String;
     procedure AssignInternalIDS;
     { search and indexing }
-    function  FindRowInSectionByID(const ASection,AnID : String) : TDOMElement;
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
   public
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
     destructor Destroy; override;
+  published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
   end;
-
+  
+  { TBaseXMLQuery - adds sql states execution to the dataset and uses a connection }
+  TBaseXMLQuery = class(TBaseXMLDataSet)
+  private
+    FSQL : TStrings;
+    FSQLConnection : TBaseSQLConnection; // a connection to retreive XML / execute SQL
+    procedure SetSQL(const AValue: TStrings);
+    procedure SetSQLConnection(const AValue: TBaseSQLConnection);
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor  Destroy; override;
+/////////
+//    procedure Open; override;  // SELECT only
+//    procedure ExecSQL;         // INSERT, DELETE, MODIFY, CREATE TABLE, etc ...
+  published
+    property SQL : TStrings read FSQL write SetSQL;
+    property Connection : TBaseSQLConnection read FSQLConnection write SetSQLConnection;
+  end;
   
   { helper functions }
   function GetFieldTypeFromString(FieldType : String) : TFieldType;
   function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
-  function GetFieldSizeFromXML(FieldNode : TDOMElement; const Size : Integer = 0) : Integer;
   function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   
 implementation
 
-uses uXMLDSConsts;
+uses uXMLDSConsts, Variants;
 
 {$IFDEF DEBUGXML}
 procedure Log(const Msg : String);
@@ -225,13 +235,6 @@ begin
    end;
 end;
 
-function GetFieldSizeFromXML(FieldNode : TDOMElement; const Size : Integer = 0) : Integer;
-begin
-   Result := Size;
-   if (FieldNode <> nil) and (FieldNode.AttribStrings[cField_Size] <> '') then
-      Result := StrToInt(FieldNode.AttribStrings[cField_Size]);
-end;
-
 function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
 var i : Integer;
 begin
@@ -239,19 +242,13 @@ begin
 // ChildNodes.Item[i] = <field ... />
   Result := nil;
   AFieldName := AnsiUpperCase(AFieldName);
-  {$IFDEF DEBUGXML}
-  {$ENDIF}
-    
+
   for i := 0 to AParent.ChildNodes.Count - 1 do
-    begin
-    {$IFDEF DEBUGXML}
-    {$ENDIF}
-      if (AnsiUpperCase(TDOMElement(AParent.ChildNodes.Item[i]).AttribStrings[cField_Name]) = AFieldName) then
-        begin
-          Result := TDOMElement(AParent.ChildNodes.Item[i]);
-          exit;
-        end;
-    end;
+    if (AnsiUpperCase(TDOMElement(AParent.ChildNodes.Item[i]).AttribStrings[cField_Name]) = AFieldName) then
+      begin
+         Result := TDOMElement(AParent.ChildNodes.Item[i]);
+         exit;
+       end;
 end;
 
 (*******************************************************************************
@@ -310,7 +307,8 @@ begin
 end;
 
 procedure TBaseXMLDataSet.DoCreateFieldDefs;
-var i, FieldSize :Integer;
+var i : Integer;
+    FieldSize : Word;
     domNode : TDOMElement;
     FieldName : String;
     Required : Boolean;
@@ -350,6 +348,14 @@ procedure TBaseXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
 var FieldNode : TDOMElement;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
+
+//todo : N.B. Base64 here. do not add 'oldvalue' when record is inserted
+   // set old data if we are editing
+   if (State = dsEdit) and
+      (VarToStr(Value) <> FieldNode.AttribStrings[cField_Value]) and
+      (FieldNode.AttribStrings[cField_OldValue] = '') then
+     FieldNode.AttribStrings[cField_OldValue] := FieldNode.AttribStrings[cField_Value];
+     
 // here it should be no problem assigning String to WideString;
    FieldNode.AttribStrings[cField_Value] := Value;
 end;
@@ -455,7 +461,6 @@ begin
          FNode := TDOMElement(LRecData.ChildNodes.Item[FCurRec]);
          LOldState := StrToInt(FNode.AttribStrings[cRow_State]);
          FNode.AttribStrings[cRow_State] := IntToStr(LOldState or ROW_MODIFIED);
-         //todo : set oldvalue, newvalue
        end;
   finally
     LRecData := nil; // clear reference
@@ -463,12 +468,12 @@ begin
 end;
 
 procedure TBaseXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
-// todo : fix this
+// todo : fix this. don't know if it's needed
 var Index : Integer;
 begin
   if Inserting then
      begin
-//      Index := FindRowIndexInSection(FNode,cRecordData);
+      Index := FindRowIndexInSection(FNode,cRecordData);
       if (Index >= 0) then
          FCurRec := Index;
      end;
@@ -505,7 +510,6 @@ end;
 procedure TBaseXMLDataSet.DeleteRecordFromXML(const ANode: TDOMElement);
 // removes record from <recorddata> section
 var LRecords : TDOMElement;
-    bWasInserted : Boolean;
 begin
   try
     LRecords := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData));
@@ -537,11 +541,7 @@ begin
          LField.AttribStrings[cField_Value] := '';
          case FieldDefs.Items[i].DataType of
            ftInteger : LField.AttribStrings[cField_DataType] := 'integer';
-           ftString :
-             begin
-               LField.AttribStrings[cField_DataType] := 'string';
-               LField.AttribStrings[cField_Size] := IntToStr(0); // todo : Length(Field.AsString);
-             end;
+           ftString  : LField.AttribStrings[cField_DataType] := 'string';
          end; // case
          Result.AppendChild(LField); // append <field> to <row>
        end; // for
@@ -612,29 +612,6 @@ begin
   end;
 end;
 
-function TBaseXMLDataSet.FindRowInSectionByID(const ASection, AnID: String): TDOMElement;
-var i : Longint;
-    LSection, LRow : TDOMElement;
-begin
-  try
-    Result := nil;
-    LSection := TDOMElement(FXMLDoc.DocumentElement.FindNode(ASection));
-    if Assigned(LSection) then
-      for i := 0 to LSection.ChildNodes.Count - 1 do
-        begin
-          LRow := TDOMElement(LSection.ChildNodes.Item[i]);
-          if (LRow.AttribStrings[cRow_ID] = AnID) then
-             begin
-                Result := LRow;
-                exit;
-             end;
-        end;
-  finally
-    LRow := nil;
-    LSection := nil; // clear reference
-  end;
-end;
-
 function TBaseXMLDataSet.FindRowIndexInSection(const ARow: TDOMElement; const ASection : String): Longint;
 var i : Longint;
     LSection : TDOMElement;
@@ -676,6 +653,37 @@ end;
 destructor TBaseXMLDataSet.Destroy;
 begin
   FXMLDoc.Free;
+  inherited Destroy;
+end;
+
+{ TBaseXMLQuery }
+
+procedure TBaseXMLQuery.SetSQL(const AValue: TStrings);
+begin
+  Close;
+  SQL.BeginUpdate;
+  try
+    SQL.Assign(AValue);
+  finally
+    SQL.EndUpdate;
+  end;
+end;
+
+procedure TBaseXMLQuery.SetSQLConnection(const AValue: TBaseSQLConnection);
+begin
+  raise exception.create('not implemented');
+end;
+
+constructor TBaseXMLQuery.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  FSQL := TStringList.Create;
+end;
+
+destructor TBaseXMLQuery.Destroy;
+begin
+  SetSQLConnection(nil);
+  FSQL.Free;
   inherited Destroy;
 end;
 

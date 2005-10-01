@@ -21,21 +21,21 @@
   <recorddata count="3">
     <row id="0" state="0">
        <field name="ID"   value="0"        datatype="integer" />
-       <field name="NAME" value="Bulgaria" datatype="string"  size="8" />
+       <field name="NAME" value="Bulgaria" datatype="string" />
     </row>
     <row id="1" state="1">
        <field name="ID"   value="1"       datatype="integer" />
-       <field name="NAME" value="Germany" datatype="string"  size="7" />
+       <field name="NAME" value="Germany" datatype="string" />
     </row>
     <row id="2" state="2">
        <field name="ID"   value="2"              datatype="integer" />
-       <field name="NAME" value="United Kingdom" datatype="string"  size="14"/>
+       <field name="NAME" value="United Kingdom" datatype="string" />
     </row>
   </recorddata>
   <deletedrecords count="1">
     <row id="3" state="3">
        <field name="ID"   value="3"      datatype="integer" />
-       <field name="NAME" value="Greece" datatype="string"  size="6"/>
+       <field name="NAME" value="Greece" datatype="string" />
     </row>  
   </deletedrecords>
 </datapacket>

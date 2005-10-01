@@ -106,13 +106,7 @@ const
 {|}         cField_Name     = 'name';
 {|}         cField_Value    = 'value';
 {|}         cField_DataType = 'datatype';
-{|}         cField_Size     = 'size';
-{|}         cField_OldValue = 'oldvalue'; // used in <modifiedrecords>
-{|}         cField_NewValue = 'newvalue'; // used in <modifiedrecords>
-//// {+--+}cInsertedRecords = 'insertedrecords';
-//// {|  +--- count <row>'s ... }
-//// {+--+}cModifiedRecords = 'modifiedrecords';
-//// {|  +--- count <row>'s ... }
+{|}         cField_OldValue = 'oldvalue';
 {+--+}cDeletedRecords = 'deletedrecords';
 {|  +--- count <row>'s ... }
 {.}
