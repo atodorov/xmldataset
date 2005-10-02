@@ -24,7 +24,8 @@ unit sqlconnection;
 interface
 
 uses Classes, SysUtils,
-     HTTPClient; // in 'C:\lazarus\fpcsrc\fcl\net\httpclient.pp';
+//     HTTPClient; // in 'C:\lazarus\fpcsrc\fcl\net\httpclient.pp',
+     BaseXMLDataset;
 
   { TBaseSQLConnection - connection and transaction handling }
 (*
@@ -58,12 +59,14 @@ type
     function  GetDataSet(Index: Integer): TBaseXMLDataSet; virtual;
     function  GetDataSetCount: Integer; virtual;
     procedure Loaded; override;
-    procedure RegisterClient(Client: TObject; Event: TConnectChangeEvent = nil); virtual;
     procedure SetConnected(Value: Boolean); virtual;
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
-    procedure UnRegisterClient(Client: TObject); virtual;
   public
+    // moved to public
+    procedure RegisterClient(Client: TObject; Event: TConnectChangeEvent = nil); virtual;
+    procedure UnRegisterClient(Client: TObject); virtual;
+    
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Open; overload;

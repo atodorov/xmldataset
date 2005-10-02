@@ -21,7 +21,7 @@ unit basexmldataset;
  *****************************************************************************
 *******************************************************************************}
 
-// a work arround widestrings. We use this because DOMString = WideString
+// a workaround widestrings. We use this because DOMString = WideString
 {$DEFINE USEWIDESTRINGS}
 
 {$DEFINE DEBUGXML}
@@ -29,8 +29,7 @@ unit basexmldataset;
 interface
 
 uses
-  Classes, SysUtils, DB, DOM,
-  gxBaseDataset, sqlConnection
+  Classes, SysUtils, DB, DOM, gxBaseDataset
   {$IFDEF DEBUGXML}
     ,StdCtrls;
     var Memo : TMemo;
@@ -113,24 +112,6 @@ type
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
   end;
 
-  { TBaseXMLQuery - adds sql states execution to the dataset and uses a connection }
-  TBaseXMLQuery = class(TBaseXMLDataSet)
-  private
-    FSQL : TStrings;
-    FSQLConnection : TBaseSQLConnection; // a connection to retreive XML / execute SQL
-    procedure SetSQL(const AValue: TStrings);
-    procedure SetSQLConnection(const AValue: TBaseSQLConnection);
-  public
-    constructor Create(AOwner: TComponent); override;
-    destructor  Destroy; override;
-/////////
-//    procedure Open; override;  // SELECT only
-//    procedure ExecSQL;         // INSERT, DELETE, MODIFY, CREATE TABLE, etc ...
-  published
-    property SQL : TStrings read FSQL write SetSQL;
-    property Connection : TBaseSQLConnection read FSQLConnection write SetSQLConnection;
-  end;
-  
   { helper functions }
   function GetFieldTypeFromString(FieldType : String) : TFieldType;
   function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
@@ -655,44 +636,6 @@ end;
 destructor TBaseXMLDataSet.Destroy;
 begin
   FXMLDoc.Free;
-  inherited Destroy;
-end;
-
-(*******************************************************************************
-{ TBaseXMLQuery }
-*******************************************************************************)
-
-procedure TBaseXMLQuery.SetSQL(const AValue: TStrings);
-begin
-  Close;
-  SQL.BeginUpdate;
-  try
-    SQL.Assign(AValue);
-  finally
-    SQL.EndUpdate;
-  end;
-end;
-
-procedure TBaseXMLQuery.SetSQLConnection(const AValue: TBaseSQLConnection);
-begin
-  CheckInactive;
-  if Assigned(FSQLConnection) then
-     FSQLConnection.UnRegisterClient(Self);
-  FSQLConnection := AValue;
-  if Assigned(FSQLConnection) then
-     FSQLConnection.RegisterClient(Self,nil);
-end;
-
-constructor TBaseXMLQuery.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-  FSQL := TStringList.Create;
-end;
-
-destructor TBaseXMLQuery.Destroy;
-begin
-  SetSQLConnection(nil);
-  FSQL.Free;
   inherited Destroy;
 end;
 

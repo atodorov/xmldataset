@@ -128,13 +128,6 @@ type
 
 implementation
 
-{$IFDEF DEBUGDATASET}
-procedure Log(const Msg : String);
-begin
-  MemoLog.Lines.Add(DateTimeToStr(Now)+' : '+Msg);
-end;
-{$ENDIF}
-
 { TGXBaseDataset }
 
 constructor TGXBaseDataset.Create(AOwner: TComponent);

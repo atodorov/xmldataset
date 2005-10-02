@@ -1,0 +1,25 @@
+*************************************************************************************************
+unit gxBaseDataset
+
+classes
+ 
+  TGXBaseDataset - base class for deriving custom datasets
+  TGXBlobStream  - base class to handle BLOB fields in TGXBaseDataset descendants
+*************************************************************************************************
+unit BaseXMLDataset
+
+classes
+
+  TBaseXMLDataSet - base class for dataset that works with XML
+*************************************************************************************************
+unit SQLConnection
+
+classes
+  TBaseSQLConnection - base class that handles connections / transactions. 
+                       Descendants must override some methods in order to send / receive data.
+*************************************************************************************************
+unit XMLQuery
+
+classes
+  TBaseXMLQuery - base class that handles XML using a connection to somewhere
+*************************************************************************************************
