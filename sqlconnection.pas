@@ -24,19 +24,34 @@ unit sqlconnection;
 interface
 
 uses Classes, SysUtils,
-//     HTTPClient; // in 'C:\lazarus\fpcsrc\fcl\net\httpclient.pp',
+     {$IFDEF WIN32} //todo : change this to only HTTPClient
+     HTTPSend in 'synapse/source/lib/httpsend.pas',
+     {$ELSE}
+       {$IFDEF LINUX}
+       HTTPClient,
+       {$ENDIF}
+     {$ENDIF}
      BaseXMLDataset;
 
-  { TBaseSQLConnection - connection and transaction handling }
-(*
+
 const
   // xml processor parameters constants
-  XML_PROCESSOR_
-*)
+  XML_PROCESSOR_URL = 'url';
+  SQL_CONNECTION_STRING = 'connstr';
+
+  HTTP_USER_AGENT = 'user-agent';
+  HTTP_URL = 'url';
+  HTTP_METHOD = 'method'; // allowed values are POST, GET
+  HTTP_METHOD_POST = 'POST';
+  HTTP_METHOD_GET  = 'GET';
+  HTTP_COOKIES = 'cookies';
+  
 type
 
   TLoginEvent = procedure(Sender: TObject; Username, Password: string) of object;
   TConnectChangeEvent = procedure(Sender: TObject; Connecting: Boolean) of object;
+
+  { TBaseSQLConnection - connection and transaction handling }
 
   TBaseSQLConnection = class(TComponent)
   private
@@ -69,8 +84,8 @@ type
     
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Open; overload;
-    procedure Close;
+    procedure Open;  virtual;
+    procedure Close; virtual;
     property Connected: Boolean read GetConnected write SetConnected default False;
     property DataSets[Index: Integer]: TBaseXMLDataSet read GetDataSet;
     property DataSetCount: Integer read GetDataSetCount;
@@ -82,6 +97,35 @@ type
     property OnLogin: TLoginEvent read FOnLogin write FOnLogin;
   published
     property XMLProcessorParameters : TStrings read FXMLProcessorParameters write FXMLProcessorParameters;
+  end;
+  
+  { THTTPSQLConnection }
+  THTTPSQLConnection = class(TBaseSQLConnection)
+  private
+    FHttpClient : {$IFDEF WIN32} THTTPSend; {$ELSE} {$IFDEF LINUX} THTTPClient; {$ENDIF} {$ENDIF}
+    FHttpMethod : String;
+    FURL : String;
+    function  GetDocument: TMemoryStream;
+    function  GetUserAgent: String;
+    procedure SetDocument(const AValue: TMemoryStream);
+    procedure SetUserAgent(const AValue: String);
+    procedure DoSetConnectionParams;
+  protected
+    procedure DoConnect; override;
+    procedure DoDisconnect; override;
+    function  GetConnected: Boolean; override;
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+    procedure Open;  override;
+    procedure Close; override;
+    // XML document that is being sent / received
+    property Document: TMemoryStream read GetDocument write SetDocument;
+  published
+    // connection properties
+    property UserAgent : String read GetUserAgent write SetUserAgent;
+    property HttpMethod : String read FHttpMethod write FHttpMethod;
+    property HttpUrl : String read FURL write FURL;
   end;
 
 implementation
@@ -223,6 +267,92 @@ end;
 procedure TBaseSQLConnection.Close;
 begin
   SetConnected(False);
+end;
+
+{ THTTPSQLConnection }
+
+function THTTPSQLConnection.GetUserAgent: String;
+begin
+  Result := FHttpClient.UserAgent;
+end;
+
+function THTTPSQLConnection.GetDocument: TMemoryStream;
+begin
+  Result := FHttpClient.Document;
+end;
+
+procedure THTTPSQLConnection.SetDocument(const AValue: TMemoryStream);
+begin
+  FHttpClient.Document.CopyFrom(AValue,0); // copy entire document
+end;
+
+procedure THTTPSQLConnection.SetUserAgent(const AValue: String);
+begin
+  FHttpClient.UserAgent := AValue;
+end;
+
+procedure THTTPSQLConnection.DoSetConnectionParams;
+var index : Integer;
+begin
+// USER AGENT
+  index := XMLProcessorParameters.IndexOfName(HTTP_USER_AGENT);
+  if (index > -1) then UserAgent := XMLProcessorParameters.ValueFromIndex[index];
+// HTTP_METHOD
+  index := XMLProcessorParameters.IndexOfName(HTTP_METHOD);
+  if (index > -1) then HttpMethod := XMLProcessorParameters.ValueFromIndex[index];
+// HTTP_URL
+  index := XMLProcessorParameters.IndexOfName(HTTP_URL);
+  if (index > -1) then HttpUrl := XMLProcessorParameters.ValueFromIndex[index];
+  
+end;
+
+procedure THTTPSQLConnection.DoConnect;
+begin
+  DoSetConnectionParams;
+  
+  
+end;
+
+procedure THTTPSQLConnection.DoDisconnect;
+begin
+
+end;
+
+function THTTPSQLConnection.GetConnected: Boolean;
+begin
+  Result := false;
+end;
+
+constructor THTTPSQLConnection.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  {$IFDEF WIN32}
+     FHttpClient := THTTPSend.Create;
+  {$ELSE}
+     {$IFDEF LINUX}
+        FHttpClient := THTTPClient.Create;
+     {$ENDIF}
+  {$ENDIF}
+  FHttpMethod := HTTP_METHOD_POST;
+  FURL := '';
+end;
+
+destructor THTTPSQLConnection.Destroy;
+begin
+  FHttpClient.Free;
+  inherited Destroy;
+end;
+
+procedure THTTPSQLConnection.Open;  // todo : fix
+begin
+//  FHttpClient.;
+  inherited Open;
+end;
+
+procedure THTTPSQLConnection.Close; // todo : fix
+begin
+//  FHttpClient.;
+  inherited Close;
 end;
 
 end.
