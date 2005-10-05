@@ -15,6 +15,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -22,6 +23,7 @@ type
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -35,7 +37,7 @@ var
 
 implementation
 
-uses basexmldataset, XMLRead, XMLWrite;
+uses basexmldataset, XMLRead, XMLWrite, SQLConnection;
 
 
 var XMLDS : TBaseXMLDataSet;
@@ -52,6 +54,32 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   WriteXMLFile(XMLDS.XMLDocument,'D:/projects/TXMLFormatDataSet/save.xml');
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var Conn : THttpSQLConnection;
+begin
+  try
+    Memo1.Lines.Clear;
+    Conn := THTTPSQLConnection.Create(Self);
+
+(*
+    Conn.ConnParams.Add(HTTP_URL+'=http://localhost/cgi-bin/showparams.pl');
+    Conn.Document.LoadFromStream(XMLDS.XMLStringStream);
+    Conn.Connected := true;
+*)
+    Conn.HttpPostFile('http://localhost/cgi-bin/showparams.pl',
+                      'xml_file','file.xml',
+                      XMLDS.XMLStringStream,
+                      Memo1.Lines);
+
+    Memo1.Lines.Assign(Conn.FHttpClient.Headers);
+    Memo1.Lines.Add('Download size ='+IntToStr(Conn.FHttpClient.DownloadSize));
+
+  finally
+    if Assigned(Conn) then
+       Conn.Free;
+  end;
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);

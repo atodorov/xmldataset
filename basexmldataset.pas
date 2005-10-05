@@ -57,6 +57,7 @@ type
     FInsertedCount : Longint;
     FModifiedCount : Longint;
     FInternalID : Longint;
+    function GetXMLStringStream: TStringStream;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
   protected {Simplified Dataset methods}
@@ -110,6 +111,7 @@ type
   published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
+    property XMLStringStream : TStringStream read GetXMLStringStream;
   end;
 
   { helper functions }
@@ -245,6 +247,11 @@ begin
      if Active then DatabaseError('Cannot change readonly property when dataset is active');
      FReadOnly:=Value;
     end;
+end;
+
+function TBaseXMLDataSet.GetXMLStringStream: TStringStream;
+begin //todo : possible memory leaks
+  Result := TStringStream.Create(XMLDocument.NodeValue);
 end;
 
 procedure TBaseXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
