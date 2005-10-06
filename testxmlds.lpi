@@ -5,133 +5,49 @@
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
-      <ActiveEditorIndexAtStart Value="2"/>
+      <ActiveEditorIndexAtStart Value="3"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
     </General>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="232" Column="80" TopLine="224"/>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="23" Column="1" TopLine="8"/>
       </Position1>
       <Position2>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="233" Column="10" TopLine="225"/>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="94" Column="1" TopLine="79"/>
       </Position2>
       <Position3>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="60" Column="24" TopLine="52"/>
       </Position3>
       <Position4>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="256" Column="10" TopLine="248"/>
-      </Position4>
-      <Position5>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="748" Column="22" TopLine="740"/>
-      </Position5>
-      <Position6>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
-      </Position6>
-      <Position7>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="256" Column="22" TopLine="248"/>
-      </Position7>
-      <Position8>
-        <Filename Value="sqlconnection.pas"/>
-        <Caret Line="381" Column="5" TopLine="359"/>
-      </Position8>
-      <Position9>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="754" Column="1" TopLine="748"/>
-      </Position9>
-      <Position10>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="64" Column="1" TopLine="56"/>
-      </Position10>
-      <Position11>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="754" Column="1" TopLine="746"/>
-      </Position11>
-      <Position12>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="755" Column="1" TopLine="747"/>
-      </Position12>
-      <Position13>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="756" Column="1" TopLine="748"/>
-      </Position13>
-      <Position14>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="757" Column="1" TopLine="749"/>
-      </Position14>
-      <Position15>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="758" Column="1" TopLine="750"/>
-      </Position15>
-      <Position16>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="759" Column="1" TopLine="751"/>
-      </Position16>
-      <Position17>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="760" Column="1" TopLine="752"/>
-      </Position17>
-      <Position18>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="763" Column="1" TopLine="755"/>
-      </Position18>
-      <Position19>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="764" Column="1" TopLine="756"/>
-      </Position19>
-      <Position20>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="765" Column="1" TopLine="757"/>
-      </Position20>
-      <Position21>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="766" Column="32" TopLine="759"/>
-      </Position21>
-      <Position22>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="768" Column="1" TopLine="759"/>
-      </Position22>
-      <Position23>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="339" Column="46" TopLine="347"/>
-      </Position23>
-      <Position24>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="70" Column="56" TopLine="62"/>
-      </Position24>
-      <Position25>
         <Filename Value="uMain.pas"/>
         <Caret Line="71" Column="19" TopLine="63"/>
-      </Position25>
-      <Position26>
-        <Filename Value="sqlconnection.pas"/>
-        <Caret Line="132" Column="28" TopLine="122"/>
-      </Position26>
-      <Position27>
-        <Filename Value="sqlconnection.pas"/>
-        <Caret Line="384" Column="17" TopLine="373"/>
-      </Position27>
-      <Position28>
-        <Filename Value="synapse\source\lib\httpsend.pas"/>
-        <Caret Line="749" Column="30" TopLine="741"/>
-      </Position28>
-      <Position29>
-        <Filename Value="sqlconnection.pas"/>
-        <Caret Line="385" Column="3" TopLine="374"/>
-      </Position29>
-      <Position30>
-        <Filename Value="sqlconnection.pas"/>
-        <Caret Line="80" Column="15" TopLine="72"/>
-      </Position30>
+      </Position4>
+      <Position5>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="60" Column="12" TopLine="52"/>
+      </Position5>
+      <Position6>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="95" Column="81" TopLine="81"/>
+      </Position6>
+      <Position7>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="36" Column="6" TopLine="28"/>
+      </Position7>
+      <Position8>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="33" Column="19" TopLine="28"/>
+      </Position8>
+      <Position9>
+        <Filename Value="httpsqlconn.pas"/>
+        <Caret Line="60" Column="29" TopLine="52"/>
+      </Position9>
     </JumpHistory>
-    <Units Count="68">
+    <Units Count="69">
       <Unit0>
         <CursorPos X="21" Y="1"/>
         <Filename Value="testxmlds.lpr"/>
@@ -424,14 +340,14 @@
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="19" Y="71"/>
-        <EditorIndex Value="3"/>
+        <CursorPos X="52" Y="40"/>
+        <EditorIndex Value="4"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="63"/>
+        <TopLine Value="27"/>
         <UnitName Value="uMain"/>
         <UsageCount Value="62"/>
       </Unit44>
@@ -493,12 +409,12 @@
         <UsageCount Value="10"/>
       </Unit52>
       <Unit53>
-        <CursorPos X="1" Y="27"/>
+        <CursorPos X="1" Y="83"/>
         <EditorIndex Value="2"/>
         <Filename Value="sqlconnection.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="16"/>
+        <TopLine Value="78"/>
         <UnitName Value="sqlconnection"/>
         <UsageCount Value="34"/>
       </Unit53>
@@ -583,7 +499,7 @@
       </Unit64>
       <Unit65>
         <CursorPos X="20" Y="770"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <Filename Value="synapse\source\lib\httpsend.pas"/>
         <Loaded Value="True"/>
         <TopLine Value="759"/>
@@ -603,6 +519,16 @@
         <UnitName Value="blcksock"/>
         <UsageCount Value="10"/>
       </Unit67>
+      <Unit68>
+        <CursorPos X="1" Y="60"/>
+        <EditorIndex Value="3"/>
+        <Filename Value="httpsqlconn.pas"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="46"/>
+        <UnitName Value="httpsqlconn"/>
+        <UsageCount Value="20"/>
+      </Unit68>
     </Units>
     <PublishOptions>
       <Version Value="2"/>

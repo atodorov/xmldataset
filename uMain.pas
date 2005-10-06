@@ -37,7 +37,7 @@ var
 
 implementation
 
-uses basexmldataset, XMLRead, XMLWrite, SQLConnection;
+uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn;
 
 
 var XMLDS : TBaseXMLDataSet;
