@@ -21,7 +21,7 @@ unit httpsqlconn;
  *****************************************************************************
 *******************************************************************************}
 
-{$DEFINE DEBUGCONNECTION}
+//{$DEFINE DEBUGCONNECTION}
 
 interface
 
@@ -69,6 +69,7 @@ type
     procedure SetDocument(const AValue: TMemoryStream);
     procedure DoSetConnectionParams;
   protected
+  //todo : fix this ????
     procedure DoConnect; override;
     procedure DoDisconnect; override;
     function  GetConnected: Boolean; override;
@@ -77,10 +78,12 @@ type
     destructor Destroy; override;
     procedure Open;  override;
     procedure Close; override;
+    //todo : fix params.
     function  HttpPostFile(const URL, FieldName, FileName: string;
                            const Data: TStream;
-                           ResultData: TStrings): Boolean;
+                           const ResultData: TStrings): Boolean;
     // XML document that is being sent / received
+    //todo : remove if not needed
     property Document: TMemoryStream read GetDocument write SetDocument;
 //    property Cookies : TStringList // http connection cookies - session management
   end;
@@ -147,7 +150,7 @@ end;
 procedure THTTPSQLConnection.DoConnect;
 begin
   DoSetConnectionParams;
-  FHttpClient.HTTPMethod(FHttpMethod,FHttpURL);
+//  FHttpClient.HTTPMethod(FHttpMethod,FHttpURL);
 end;
 
 procedure THTTPSQLConnection.DoDisconnect;
@@ -195,15 +198,27 @@ begin
   inherited Close;
 end;
 
-function THTTPSQLConnection.HttpPostFile(const URL, FieldName, FileName: string;
+function THTTPSQLConnection.HttpPostFile(const URL, FieldName, FileName: String;
                                          const Data: TStream;
-                                         ResultData: TStrings): Boolean;
+                                         const ResultData: TStrings): Boolean;
+const
+  CRLF = #$0D + #$0A;
+var
+  Bound, S : String;
 begin
-  httpsend.HttpPostFile(URL,FieldName,FileName,Data,ResultData);
-{$IFDEF DEBUGCONNECTION}
-  ShowMessage(ResultData.Text);
-{$ENDIF}
-//  httpsend.HttpPostBinary(URL,Data); ResultData.LoadFromStream(Data);
+  Bound := IntToHex(Random(MaxInt), 8) + '_HTTPSQLConnection_Boundary';
+  S := '--' + Bound + CRLF;
+  S := S + 'content-disposition: form-data; name="' + FieldName + '";';
+  S := S + ' filename="' + FileName +'"' + CRLF;
+  S := S + 'Content-Type: Application/octet-string' + CRLF + CRLF;
+  FHttpClient.Document.Clear;
+  FHttpClient.Document.Write(Pointer(S)^, Length(S));
+  FHttpClient.Document.CopyFrom(Data, 0);
+  S := CRLF + '--' + Bound + '--' + CRLF;
+  FHttpClient.Document.Write(Pointer(S)^, Length(S));
+  FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
+  Result := FHttpClient.HTTPMethod('POST', URL);
+  ResultData.LoadFromStream(FHttpClient.Document);
 end;
 
 end.

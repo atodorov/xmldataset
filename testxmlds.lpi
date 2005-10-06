@@ -5,56 +5,24 @@
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
-      <ActiveEditorIndexAtStart Value="3"/>
+      <ActiveEditorIndexAtStart Value="2"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
     </General>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="1" HistoryIndex="0">
       <Position1>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="23" Column="1" TopLine="8"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="40" Column="12" TopLine="34"/>
       </Position1>
-      <Position2>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="94" Column="1" TopLine="79"/>
-      </Position2>
-      <Position3>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="60" Column="24" TopLine="52"/>
-      </Position3>
-      <Position4>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="71" Column="19" TopLine="63"/>
-      </Position4>
-      <Position5>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="60" Column="12" TopLine="52"/>
-      </Position5>
-      <Position6>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="95" Column="81" TopLine="81"/>
-      </Position6>
-      <Position7>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="36" Column="6" TopLine="28"/>
-      </Position7>
-      <Position8>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="33" Column="19" TopLine="28"/>
-      </Position8>
-      <Position9>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="60" Column="29" TopLine="52"/>
-      </Position9>
     </JumpHistory>
-    <Units Count="69">
+    <Units Count="70">
       <Unit0>
         <CursorPos X="21" Y="1"/>
         <Filename Value="testxmlds.lpr"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="108"/>
       </Unit0>
       <Unit1>
         <CursorPos X="3" Y="44"/>
@@ -340,16 +308,16 @@
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="52" Y="40"/>
-        <EditorIndex Value="4"/>
+        <CursorPos X="12" Y="40"/>
+        <EditorIndex Value="1"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="27"/>
+        <TopLine Value="34"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="64"/>
       </Unit44>
       <Unit45>
         <CursorPos X="36" Y="196"/>
@@ -389,17 +357,17 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="52"/>
       </Unit50>
       <Unit51>
-        <CursorPos X="29" Y="253"/>
-        <EditorIndex Value="0"/>
-        <Filename Value="BaseXMLDataSet.pas"/>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="2"/>
+        <Filename Value="basexmldataset.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="252"/>
+        <TopLine Value="1"/>
         <UnitName Value="basexmldataset"/>
-        <UsageCount Value="47"/>
+        <UsageCount Value="49"/>
       </Unit51>
       <Unit52>
         <CursorPos X="25" Y="5"/>
@@ -409,14 +377,12 @@
         <UsageCount Value="10"/>
       </Unit52>
       <Unit53>
-        <CursorPos X="1" Y="83"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="22" Y="78"/>
         <Filename Value="sqlconnection.pas"/>
         <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
         <TopLine Value="78"/>
         <UnitName Value="sqlconnection"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="36"/>
       </Unit53>
       <Unit54>
         <CursorPos X="22" Y="218"/>
@@ -488,21 +454,19 @@
         <UsageCount Value="10"/>
       </Unit63>
       <Unit64>
-        <CursorPos X="15" Y="32"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="10" Y="32"/>
         <Filename Value="xmlquery.pas"/>
         <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
         <TopLine Value="32"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="29"/>
       </Unit64>
       <Unit65>
-        <CursorPos X="20" Y="770"/>
-        <EditorIndex Value="5"/>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="3"/>
         <Filename Value="synapse\source\lib\httpsend.pas"/>
         <Loaded Value="True"/>
-        <TopLine Value="759"/>
+        <TopLine Value="1"/>
         <UnitName Value="httpsend"/>
         <UsageCount Value="13"/>
       </Unit65>
@@ -520,15 +484,21 @@
         <UsageCount Value="10"/>
       </Unit67>
       <Unit68>
-        <CursorPos X="1" Y="60"/>
-        <EditorIndex Value="3"/>
+        <CursorPos X="34" Y="77"/>
+        <EditorIndex Value="0"/>
         <Filename Value="httpsqlconn.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="46"/>
+        <TopLine Value="74"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="22"/>
       </Unit68>
+      <Unit69>
+        <CursorPos X="16" Y="18"/>
+        <Filename Value="c:\lazarus\fpcsrc\rtl\objpas\sysutils\osutilsh.inc"/>
+        <TopLine Value="18"/>
+        <UsageCount Value="10"/>
+      </Unit69>
     </Units>
     <PublishOptions>
       <Version Value="2"/>
@@ -575,7 +545,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="4">
+    <BreakPoints Count="2">
       <Item1>
         <Source Value="XMLFormatDataSet.pas"/>
         <Line Value="1031"/>
@@ -584,14 +554,6 @@
         <Source Value="XMLFormatDataSet.pas"/>
         <Line Value="1115"/>
       </Item2>
-      <Item3>
-        <Source Value="synapse\source\lib\httpsend.pas"/>
-        <Line Value="769"/>
-      </Item3>
-      <Item4>
-        <Source Value="synapse\source\lib\httpsend.pas"/>
-        <Line Value="771"/>
-      </Item4>
     </BreakPoints>
     <Watches Count="3">
       <Item1>

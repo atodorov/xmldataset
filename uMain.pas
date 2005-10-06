@@ -62,20 +62,24 @@ begin
   try
     Memo1.Lines.Clear;
     Conn := THTTPSQLConnection.Create(Self);
-
 (*
     Conn.ConnParams.Add(HTTP_URL+'=http://localhost/cgi-bin/showparams.pl');
     Conn.Document.LoadFromStream(XMLDS.XMLStringStream);
     Conn.Connected := true;
 *)
-    Conn.HttpPostFile('http://localhost/cgi-bin/showparams.pl',
+//(*
+    Conn.HttpPostFile('http://localhost/cgi-bin/showupload.pl',
                       'xml_file','file.xml',
                       XMLDS.XMLStringStream,
-                      Memo1.Lines);
-
+                      TStringList(Memo1.Lines));
+//*)
+(*
     Memo1.Lines.Assign(Conn.FHttpClient.Headers);
     Memo1.Lines.Add('Download size ='+IntToStr(Conn.FHttpClient.DownloadSize));
-
+    Sleep(5000);
+    Memo1.Lines.Clear;
+    Memo1.Lines.LoadFromStream(Conn.Document);
+*)
   finally
     if Assigned(Conn) then
        Conn.Free;
