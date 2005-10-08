@@ -107,7 +107,7 @@ type
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
-    destructor Destroy; override;
+    destructor  Destroy; override;
   published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;

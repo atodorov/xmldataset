@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<query_document>
+  <query type="select">
+    <![CDATA[
+      SELECT * FROM COUNTRY;
+    !]]>
+  </query>
+  <query type="insert">
+    <![CDATA[
+      INSERT INTO COUNTRY (ID, NAME) VALUES (0, "Bulgaria");
+    !]]>
+  </query>
+  <query type="delete">
+    <![CDATA[
+      DELETE FROM HISTORY;
+    !]]>
+  </query>  
+</query_document>

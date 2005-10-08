@@ -36,9 +36,6 @@ uses Classes, SysUtils, SQLConnection
      ;
 
 const
-  // xml processor parameters constants
-  SQL_CONNECTION_STRING = 'connstr';
-
   HTTP_USER_AGENT = 'user-agent';
   HTTP_URL = 'url';
   HTTP_PROTOCOL = 'protocol'; // http protocol version 0.9, 1.0, 1.1 (default)
@@ -60,16 +57,12 @@ type
 
   { THTTPSQLConnection }
   THTTPSQLConnection = class(TBaseSQLConnection)
-  public
-    FHttpClient : {$IFDEF WIN32} THTTPSend; {$ELSE} {$IFDEF LINUX} THTTPClient; {$ENDIF} {$ENDIF}
   private
+    FHttpClient : {$IFDEF WIN32} THTTPSend;   {$ENDIF}
+                  {$IFDEF LINUX} THTTPClient; {$ENDIF}
     FHttpURL : String;
-    FHttpMethod : String;
-    function  GetDocument: TMemoryStream;
-    procedure SetDocument(const AValue: TMemoryStream);
     procedure DoSetConnectionParams;
   protected
-  //todo : fix this ????
     procedure DoConnect; override;
     procedure DoDisconnect; override;
     function  GetConnected: Boolean; override;
@@ -78,13 +71,9 @@ type
     destructor Destroy; override;
     procedure Open;  override;
     procedure Close; override;
-    //todo : fix params.
-    function  HttpPostFile(const URL, FieldName, FileName: string;
-                           const Data: TStream;
-                           const ResultData: TStrings): Boolean;
-    // XML document that is being sent / received
+    function  HttpPostFile(const FieldName, FileName: string;
+                           const Data, ResultData : TStream): Boolean;
     //todo : remove if not needed
-    property Document: TMemoryStream read GetDocument write SetDocument;
 //    property Cookies : TStringList // http connection cookies - session management
   end;
   
@@ -99,16 +88,6 @@ uses Dialogs;
 { THTTPSQLConnection }
 *******************************************************************************)
 
-function THTTPSQLConnection.GetDocument: TMemoryStream;
-begin
-  Result := FHttpClient.Document;
-end;
-
-procedure THTTPSQLConnection.SetDocument(const AValue: TMemoryStream);
-begin
-  FHttpClient.Document.CopyFrom(AValue,0); // copy entire document
-end;
-
 procedure THTTPSQLConnection.DoSetConnectionParams;
 var index : Integer;
 begin
@@ -117,10 +96,6 @@ begin
   if (index > -1)
     then FHttpUrl := ConnParams.ValueFromIndex[index]
     else raise Exception.Create('Required parameter HTTP_URL is missing!');
-
-// HTTP_METHOD
-  index := ConnParams.IndexOfName(HTTP_METHOD);
-  if (index > -1) then FHttpMethod := ConnParams.ValueFromIndex[index];
 
 // HTTP_PROTOCOL
   index := ConnParams.IndexOfName(HTTP_PROTOCOL);
@@ -150,7 +125,7 @@ end;
 procedure THTTPSQLConnection.DoConnect;
 begin
   DoSetConnectionParams;
-//  FHttpClient.HTTPMethod(FHttpMethod,FHttpURL);
+// do nothing. no persistent connections here.
 end;
 
 procedure THTTPSQLConnection.DoDisconnect;
@@ -161,6 +136,7 @@ end;
 
 function THTTPSQLConnection.GetConnected: Boolean;
 begin
+// no persistent connections here.
   Result := false;
 end;
 
@@ -169,14 +145,11 @@ begin
   inherited Create(AOwner);
   {$IFDEF WIN32}
      FHttpClient := THTTPSend.Create;
-  {$ELSE}
-     {$IFDEF LINUX}
-        FHttpClient := THTTPClient.Create;
-     {$ENDIF}
+  {$ENDIF}
+  {$IFDEF LINUX}
+     FHttpClient := THTTPClient.Create;
   {$ENDIF}
   FHttpClient.Protocol := HTTP_PROTOCOL_1_1;
-
-  FHttpMethod := HTTP_METHOD_POST;
   FHttpURL := '';
 end;
 
@@ -198,14 +171,15 @@ begin
   inherited Close;
 end;
 
-function THTTPSQLConnection.HttpPostFile(const URL, FieldName, FileName: String;
-                                         const Data: TStream;
-                                         const ResultData: TStrings): Boolean;
+function THTTPSQLConnection.HttpPostFile(const FieldName, FileName: String;
+                                         const Data, ResultData : TStream): Boolean;
 const
   CRLF = #$0D + #$0A;
 var
   Bound, S : String;
 begin
+  DoSetConnectionParams;
+  
   Bound := IntToHex(Random(MaxInt), 8) + '_HTTPSQLConnection_Boundary';
   S := '--' + Bound + CRLF;
   S := S + 'content-disposition: form-data; name="' + FieldName + '";';
@@ -217,8 +191,8 @@ begin
   S := CRLF + '--' + Bound + '--' + CRLF;
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
-  Result := FHttpClient.HTTPMethod('POST', URL);
-  ResultData.LoadFromStream(FHttpClient.Document);
+  Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
+  ResultData.CopyFrom(FHttpClient.Document,0);
 end;
 
 end.

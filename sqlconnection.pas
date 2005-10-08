@@ -31,9 +31,9 @@ type
   TConnectChangeEvent = procedure(Sender: TObject; Connecting: Boolean) of object;
 
   { TBaseSQLConnection - connection and transaction handling }
-
   TBaseSQLConnection = class(TComponent)
   private
+//todo: fix transactions, commit / rollback
     FInTransaction : Boolean; // transaction handling
     FConnParams : TStrings;   // Used to handle sending / receiving
     FClients: TList;
@@ -57,7 +57,6 @@ type
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
   public
-    // moved to public
     procedure RegisterClient(Client: TObject; Event: TConnectChangeEvent = nil); virtual;
     procedure UnRegisterClient(Client: TObject); virtual;
     

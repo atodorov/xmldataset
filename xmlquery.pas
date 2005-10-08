@@ -24,7 +24,7 @@ unit xmlquery;
 interface
 
 uses
-  Classes, SysUtils, BaseXMLDataset, SQLConnection;
+  Classes, SysUtils, DOM, BaseXMLDataset, SQLConnection;
 
 type
 
@@ -32,15 +32,16 @@ type
   TBaseXMLQuery = class(TBaseXMLDataSet)
   private
     FSQL : TStrings;
+    FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
     FSQLConnection : TBaseSQLConnection; // a connection to retreive XML / execute SQL
     procedure SetSQL(const AValue: TStrings);
     procedure SetSQLConnection(const AValue: TBaseSQLConnection);
+  protected
+    procedure ConstructQuery; virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor  Destroy; override;
-/////////
-//    procedure Open; override;  // SELECT only
-//    procedure ExecSQL;         // INSERT, DELETE, MODIFY, CREATE TABLE, etc ...
+    procedure ExecSQL; // executes FSQL
   published
     property SQL : TStrings read FSQL write SetSQL;
     property Connection : TBaseSQLConnection read FSQLConnection write SetSQLConnection;
@@ -48,6 +49,7 @@ type
   
 implementation
 
+uses uXMLDSConsts;
 
 (*******************************************************************************
 { TBaseXMLQuery }
@@ -74,17 +76,49 @@ begin
      FSQLConnection.RegisterClient(Self,nil);
 end;
 
+procedure TBaseXMLQuery.ConstructQuery;
+var FNode : TDOMElement;
+    CDATA : TDOMCDATASection;
+begin
+//  FSQLXML.CreateAttribute();
+  try
+    FNode := FSQLXML.CreateElement(cQueryDocument);
+    FSQLXML.AppendChild(FNode);
+
+    FNode := FSQLXML.CreateElement(cQuery);
+    //todo : fix this. determine type
+    FNode.AttribStrings[cQuery_Type] := '';
+    FSQLXML.DocumentElement.AppendChild(FNode);
+
+    CDATA := FSQLXML.CreateCDATASection(FSQL.Text);
+    FSQLXML.DocumentElement.ChildNodes.Item[0].AppendChild(CDATA);
+    
+  finally
+    FNode := nil; // clear referecne
+    CDATA := nil;
+  end;
+end;
+
 constructor TBaseXMLQuery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FSQL := TStringList.Create;
+  FSQLXML := TXMLDocument.Create;
 end;
 
 destructor TBaseXMLQuery.Destroy;
 begin
   SetSQLConnection(nil);
   FSQL.Free;
+  FSQLXML.Free;
   inherited Destroy;
+end;
+
+procedure TBaseXMLQuery.ExecSQL;
+begin
+  ConstructQuery;
+//  FSQLConnection.ConnParams;
+//  FSQLConnection.; send and receive result
 end;
 
 end.

@@ -38,7 +38,18 @@ const
   ROW_NOT_MODIFIED = $00000000;
   ROW_INSERTED     = $00000001;
   ROW_MODIFIED     = $00000002;
-  
+
+// update mode constants
+  WHERE_ALL      = 'upWhereAll';
+  WHERE_CHANGED  = 'upWhereChanged';
+  WHERE_KEY_ONLY = 'upWhereKeyOnly';
+
+// query type constants
+  QUERY_INSERT = 'insert';
+  QUERY_DELETE = 'delete';
+  QUERY_SELECT = 'select';
+  QUERY_UPDATE = 'update';
+
 // XML node and attribute name constants
 
 //<?xml version="1.0" ?>
@@ -82,6 +93,9 @@ const
 {|  |  |}      cForeignKey_Action   = 'action';
 {|  |  +---}cUniques = 'uniques';
 {|  |  +---}cChecks  = 'checks';
+{|  +--+}cUpdateMode = 'update_mode';
+{|  |    [UPDATE_MODE ATTRIBUTES] }
+{|  |}   cUpdateMode_Value = 'value';
 {|  +--+}cFieldDefs = 'fielddefs';
 {|  |  +---}cFieldDef = 'fielddef';
 {|  |       [FIELDDEF ATTRIBUTES] }
@@ -110,7 +124,15 @@ const
 {+--+}cDeletedRecords = 'deletedrecords';
 {|  +--- count <row>'s ... }
 {.}
-     
+
+// query xml constants
+//<?xml version="1.0" ?>
+{+}cQueryDocument = 'query_document';
+{+---+}cQuery = 'query';
+{|     [QUERY ATTRIBUTES] }
+{|}    cQuery_Type = 'type';
+{.}
+
 implementation
 
 end.
