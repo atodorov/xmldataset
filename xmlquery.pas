@@ -39,7 +39,7 @@ type
   protected
     procedure ConstructQuery; virtual;
   public
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent); {reintroduce;} override; // overload;
     destructor  Destroy; override;
     procedure ExecSQL; // executes FSQL
   published
@@ -49,7 +49,7 @@ type
   
 implementation
 
-uses uXMLDSConsts;
+uses uXMLDSConsts, XMLWrite;
 
 (*******************************************************************************
 { TBaseXMLQuery }
@@ -117,6 +117,7 @@ end;
 procedure TBaseXMLQuery.ExecSQL;
 begin
   ConstructQuery;
+  WriteXMLFile(FSQLXML,'query.xml');
 //  FSQLConnection.ConnParams;
 //  FSQLConnection.; send and receive result
 end;

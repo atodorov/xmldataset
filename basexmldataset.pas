@@ -104,7 +104,7 @@ type
     { search and indexing }
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
   public
-    constructor Create(AOwner: TComponent); override; overload;
+    constructor Create(AOwner: TComponent); {reintroduce;} override; //overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
     destructor  Destroy; override;

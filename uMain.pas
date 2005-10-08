@@ -16,6 +16,7 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    Button4: TButton;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -24,6 +25,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -37,7 +39,7 @@ var
 
 implementation
 
-uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn;
+uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn, XMLQuery;
 
 
 var XMLDS : TBaseXMLDataSet;
@@ -72,6 +74,17 @@ begin
     if Assigned(Conn) then
        Conn.Free;
   end;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var XQ : TBaseXMLQuery;
+begin
+   xq := TBaseXMLQuery.Create;
+   if xq.SQL = nil then
+      Memo1.Lines.Add('xq.SQL = nil');
+   xq.SQL.Text := 'SELECT * FROM COUNTRY';
+   xq.ExecSQL;
+   xq.Free;
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);

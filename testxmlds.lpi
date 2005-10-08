@@ -11,124 +11,124 @@
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="443" Column="34" TopLine="435"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="82" Column="23" TopLine="74"/>
       </Position1>
       <Position2>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="523" Column="1" TopLine="521"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="46" Column="31" TopLine="35"/>
       </Position2>
       <Position3>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="526" Column="45" TopLine="517"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="82" Column="1" TopLine="74"/>
       </Position3>
       <Position4>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="84" Column="36" TopLine="75"/>
       </Position4>
       <Position5>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="99" Column="34" TopLine="91"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="82" Column="1" TopLine="74"/>
       </Position5>
       <Position6>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="443" Column="38" TopLine="435"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="83" Column="1" TopLine="75"/>
       </Position6>
       <Position7>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="517" Column="45" TopLine="509"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="84" Column="1" TopLine="76"/>
       </Position7>
       <Position8>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="42" Column="17" TopLine="34"/>
       </Position8>
       <Position9>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="99" Column="34" TopLine="91"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="86" Column="19" TopLine="74"/>
       </Position9>
       <Position10>
-        <Filename Value="uXMLDSConsts.pas"/>
-        <Caret Line="130" Column="28" TopLine="123"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="627" Column="1" TopLine="619"/>
       </Position10>
       <Position11>
-        <Filename Value="uXMLDSConsts.pas"/>
-        <Caret Line="136" Column="1" TopLine="123"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="85" Column="24" TopLine="74"/>
       </Position11>
       <Position12>
         <Filename Value="uMain.pas"/>
-        <Caret Line="51" Column="1" TopLine="44"/>
+        <Caret Line="83" Column="1" TopLine="75"/>
       </Position12>
       <Position13>
         <Filename Value="uMain.pas"/>
-        <Caret Line="61" Column="16" TopLine="53"/>
+        <Caret Line="84" Column="1" TopLine="76"/>
       </Position13>
       <Position14>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="9" Column="41" TopLine="1"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="34" Column="20" TopLine="22"/>
       </Position14>
       <Position15>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="627" Column="1" TopLine="619"/>
       </Position15>
       <Position16>
         <Filename Value="uMain.pas"/>
-        <Caret Line="9" Column="39" TopLine="1"/>
+        <Caret Line="81" Column="15" TopLine="74"/>
       </Position16>
       <Position17>
         <Filename Value="uMain.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Caret Line="83" Column="1" TopLine="75"/>
       </Position17>
       <Position18>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="80" Column="22" TopLine="75"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="84" Column="1" TopLine="76"/>
       </Position18>
       <Position19>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="9" Column="33" TopLine="1"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="42" Column="76" TopLine="34"/>
       </Position19>
       <Position20>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="61" Column="16" TopLine="53"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="627" Column="1" TopLine="619"/>
       </Position20>
       <Position21>
-        <Filename Value="uMain.pas"/>
-        <Caret Line="8" Column="7" TopLine="1"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="628" Column="1" TopLine="620"/>
       </Position21>
       <Position22>
         <Filename Value="uMain.pas"/>
-        <Caret Line="8" Column="7" TopLine="1"/>
+        <Caret Line="85" Column="18" TopLine="74"/>
       </Position22>
       <Position23>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="85" Column="42" TopLine="81"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="83" Column="1" TopLine="75"/>
       </Position23>
       <Position24>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="84" Column="30" TopLine="76"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="84" Column="1" TopLine="76"/>
       </Position24>
       <Position25>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="52" Column="1" TopLine="46"/>
+        <Caret Line="105" Column="1" TopLine="102"/>
       </Position25>
       <Position26>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="88" Column="14" TopLine="80"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="627" Column="1" TopLine="619"/>
       </Position26>
       <Position27>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="89" Column="17" TopLine="80"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="83" Column="1" TopLine="75"/>
       </Position27>
       <Position28>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="117" Column="29" TopLine="109"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="84" Column="1" TopLine="76"/>
       </Position28>
       <Position29>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="80" Column="17" TopLine="64"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="82" Column="28" TopLine="77"/>
       </Position29>
       <Position30>
-        <Filename Value="httpsqlconn.pas"/>
-        <Caret Line="109" Column="1" TopLine="100"/>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="627" Column="1" TopLine="619"/>
       </Position30>
     </JumpHistory>
     <Units Count="70">
@@ -138,7 +138,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="111"/>
+        <UsageCount Value="112"/>
       </Unit0>
       <Unit1>
         <CursorPos X="3" Y="44"/>
@@ -424,16 +424,16 @@
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="25" Y="61"/>
+        <CursorPos X="36" Y="82"/>
         <EditorIndex Value="2"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="53"/>
+        <TopLine Value="74"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="68"/>
       </Unit44>
       <Unit45>
         <CursorPos X="36" Y="196"/>
@@ -475,22 +475,22 @@
         <Loaded Value="True"/>
         <TopLine Value="123"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="55"/>
+        <UsageCount Value="56"/>
       </Unit50>
       <Unit51>
-        <CursorPos X="38" Y="443"/>
+        <CursorPos X="57" Y="107"/>
         <EditorIndex Value="4"/>
         <Filename Value="basexmldataset.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="435"/>
+        <TopLine Value="99"/>
         <UnitName Value="basexmldataset"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="53"/>
       </Unit51>
       <Unit52>
-        <CursorPos X="25" Y="5"/>
+        <CursorPos X="31" Y="21"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\xml\xmlwrite.pp"/>
-        <TopLine Value="5"/>
+        <TopLine Value="21"/>
         <UnitName Value="XMLWrite"/>
         <UsageCount Value="10"/>
       </Unit52>
@@ -502,7 +502,7 @@
         <Loaded Value="True"/>
         <TopLine Value="31"/>
         <UnitName Value="sqlconnection"/>
-        <UsageCount Value="39"/>
+        <UsageCount Value="40"/>
       </Unit53>
       <Unit54>
         <CursorPos X="22" Y="218"/>
@@ -574,14 +574,14 @@
         <UsageCount Value="10"/>
       </Unit63>
       <Unit64>
-        <CursorPos X="45" Y="121"/>
+        <CursorPos X="46" Y="42"/>
         <EditorIndex Value="3"/>
         <Filename Value="xmlquery.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="107"/>
+        <TopLine Value="34"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="33"/>
       </Unit64>
       <Unit65>
         <CursorPos X="52" Y="717"/>
@@ -611,7 +611,7 @@
         <Loaded Value="True"/>
         <TopLine Value="171"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="26"/>
       </Unit68>
       <Unit69>
         <CursorPos X="16" Y="18"/>
@@ -665,7 +665,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="2">
+    <BreakPoints Count="8">
       <Item1>
         <Source Value="XMLFormatDataSet.pas"/>
         <Line Value="1031"/>
@@ -674,6 +674,30 @@
         <Source Value="XMLFormatDataSet.pas"/>
         <Line Value="1115"/>
       </Item2>
+      <Item3>
+        <Source Value="xmlquery.pas"/>
+        <Line Value="120"/>
+      </Item3>
+      <Item4>
+        <Source Value="xmlquery.pas"/>
+        <Line Value="85"/>
+      </Item4>
+      <Item5>
+        <Source Value="uMain.pas"/>
+        <Line Value="82"/>
+      </Item5>
+      <Item6>
+        <Source Value="xmlquery.pas"/>
+        <Line Value="60"/>
+      </Item6>
+      <Item7>
+        <Source Value="basexmldataset.pas"/>
+        <Line Value="627"/>
+      </Item7>
+      <Item8>
+        <Source Value="xmlquery.pas"/>
+        <Line Value="104"/>
+      </Item8>
     </BreakPoints>
     <Watches Count="3">
       <Item1>
