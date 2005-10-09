@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  DB, Buttons, StdCtrls, DBCtrls;
+  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs;
 
 type
 
@@ -17,6 +17,7 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    DBImage1: TDBImage;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -26,6 +27,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure DBImage1Click(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -86,6 +88,17 @@ begin
    xq.SQL.Text := 'SELECT * FROM COUNTRY';
    xq.ExecSQL(QUERY_SELECT);
    xq.Free;
+end;
+
+procedure TForm1.DBImage1Click(Sender: TObject);
+begin
+  with TOpenPictureDialog.Create(Self) do
+   try
+     if Execute then
+       DBImage1.Picture.LoadFromFile(FileName);
+   finally
+     Free;
+   end;
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);

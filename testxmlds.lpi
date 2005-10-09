@@ -9,39 +9,55 @@
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
     </General>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
-        <Filename Value="basexmldataset.pas"/>
-        <Caret Line="444" Column="7" TopLine="436"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="91" Column="35" TopLine="87"/>
       </Position1>
       <Position2>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="443" Column="22" TopLine="436"/>
+        <Caret Line="268" Column="36" TopLine="258"/>
       </Position2>
       <Position3>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="54" Column="5" TopLine="95"/>
+        <Caret Line="397" Column="92" TopLine="389"/>
       </Position3>
       <Position4>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="444" Column="7" TopLine="436"/>
+        <Caret Line="417" Column="65" TopLine="409"/>
       </Position4>
       <Position5>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="110" Column="12" TopLine="110"/>
+        <Caret Line="434" Column="65" TopLine="426"/>
       </Position5>
       <Position6>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="120" Column="30" TopLine="110"/>
+        <Caret Line="267" Column="1" TopLine="246"/>
       </Position6>
       <Position7>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="452" Column="26" TopLine="438"/>
+        <Caret Line="308" Column="33" TopLine="300"/>
       </Position7>
       <Position8>
         <Filename Value="basexmldataset.pas"/>
-        <Caret Line="108" Column="12" TopLine="108"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position8>
+      <Position9>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="446" Column="92" TopLine="438"/>
+      </Position9>
+      <Position10>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="466" Column="65" TopLine="458"/>
+      </Position10>
+      <Position11>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="483" Column="65" TopLine="475"/>
+      </Position11>
+      <Position12>
+        <Filename Value="basexmldataset.pas"/>
+        <Caret Line="128" Column="34" TopLine="123"/>
+      </Position12>
     </JumpHistory>
     <Units Count="71">
       <Unit0>
@@ -50,7 +66,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="116"/>
+        <UsageCount Value="118"/>
       </Unit0>
       <Unit1>
         <CursorPos X="3" Y="44"/>
@@ -336,14 +352,16 @@
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="19" Y="46"/>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="4"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="46"/>
+        <TopLine Value="1"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="74"/>
       </Unit44>
       <Unit45>
         <CursorPos X="36" Y="196"/>
@@ -383,17 +401,17 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="41"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="60"/>
+        <UsageCount Value="62"/>
       </Unit50>
       <Unit51>
-        <CursorPos X="15" Y="36"/>
+        <CursorPos X="43" Y="126"/>
         <EditorIndex Value="3"/>
         <Filename Value="basexmldataset.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="33"/>
+        <TopLine Value="123"/>
         <UnitName Value="basexmldataset"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
       </Unit51>
       <Unit52>
         <CursorPos X="31" Y="21"/>
@@ -410,7 +428,7 @@
         <Loaded Value="True"/>
         <TopLine Value="31"/>
         <UnitName Value="sqlconnection"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
       </Unit53>
       <Unit54>
         <CursorPos X="22" Y="218"/>
@@ -489,7 +507,7 @@
         <Loaded Value="True"/>
         <TopLine Value="75"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="39"/>
       </Unit64>
       <Unit65>
         <CursorPos X="52" Y="717"/>
@@ -519,7 +537,7 @@
         <Loaded Value="True"/>
         <TopLine Value="177"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="32"/>
       </Unit68>
       <Unit69>
         <CursorPos X="16" Y="18"/>
@@ -528,9 +546,9 @@
         <UsageCount Value="10"/>
       </Unit69>
       <Unit70>
-        <CursorPos X="42" Y="254"/>
+        <CursorPos X="36" Y="67"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\inc\base64.pp"/>
-        <TopLine Value="254"/>
+        <TopLine Value="67"/>
         <UnitName Value="base64"/>
         <UsageCount Value="11"/>
       </Unit70>

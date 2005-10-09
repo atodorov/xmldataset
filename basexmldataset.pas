@@ -56,7 +56,7 @@ type
     FInsertedCount : Longint;
     FModifiedCount : Longint;
     FInternalID : Longint;
-    function GetXMLStringStream: TStringStream;
+    function  GetXMLStringStream: TStringStream;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
   protected {Simplified Dataset methods}
@@ -115,6 +115,7 @@ type
 
   { helper functions }
   function GetFieldTypeFromString(FieldType : String) : TFieldType;
+  function GetStringFromFieldType(const FieldType : TFieldType) : String;
   function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
   function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   function EncodeBase64(const S : String)  : String; overload;
@@ -216,6 +217,7 @@ begin
 end;
 
 function GetFieldTypeFromString(FieldType : String) : TFieldType;
+//todo : changed this using constant array in new DB.pp
 begin
    FieldType := AnsiUpperCase(FieldType);
    Result := ftUnknown;
@@ -257,6 +259,53 @@ begin
    else if (FieldType = 'GUID')        then Result := ftGuid
    else if (FieldType = 'TIMESTAMP')   then Result := ftTimeStamp
    else if (FieldType = 'FMTBCD')      then Result := ftFMTBcd;
+end;
+
+function GetStringFromFieldType(const FieldType : TFieldType) : String;
+//todo : changed this using constant array in new DB.pp
+begin
+   case FieldType of
+     ftUnknown :     Result := 'UNKNOWN';
+     ftString :      Result := 'STRING';
+     ftSmallint :    Result := 'SMALLINT';
+     ftInteger :     Result := 'INTEGER';
+     ftWord :        Result := 'WORD';
+     ftBoolean :     Result := 'BOOLEAN';
+     ftFloat:        Result := 'FLOAT';
+     ftCurrency :    Result := 'CURRENCY';
+     ftBCD :         Result := 'BCD';
+     ftDate :        Result := 'DATE';
+     ftTime :        Result := 'TIME';
+     ftDateTime :    Result := 'DATETIME';
+     ftBytes :       Result := 'BYTES';
+     ftVarBytes :    Result := 'VARBYTES';
+     ftAutoInc :     Result := 'AUTOINC';
+     ftBlob :        Result := 'BLOB';
+     ftMemo :        Result := 'MEMO';
+     ftGraphic :     Result := 'GRAPHIC';
+     ftFmtMemo :     Result := 'FMTMEMO';
+     ftParadoxOle :  Result := 'PARADOXOLE';
+     ftDBaseOle :    Result := 'DBASEOLE';
+     ftTypedBinary : Result := 'TYPEDBINARY';
+     ftCursor :      Result := 'CURSOR';
+     ftFixedChar :   Result := 'FIXEDCHAR';
+     ftWideString :  Result := 'WIDESTRING';
+     ftLargeint :    Result := 'LARGEINT';
+     ftADT :         Result := 'ADT';
+     ftArray :       Result := 'ARRAY';
+     ftReference :   Result := 'REFERENCE';
+     ftDataSet :     Result := 'DATASET';
+     ftOraBlob :     Result := 'ORABLOB';
+     ftOraClob :     Result := 'ORACLOB';
+     ftVariant :     Result := 'VARIANT';
+     ftInterface :   Result := 'INTERFACE';
+     ftIDispatch :   Result := 'IDISPATCH';
+     ftGuid :        Result := 'GUID';
+     ftTimeStamp :   Result := 'TIMESTAMP';
+     ftFMTBcd :      Result := 'FMTBCD';
+     else            Result := 'UNKNOWN';
+   end;
+   Result :=AnsiLowerCase(Result);
 end;
 
 function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
@@ -637,10 +686,7 @@ begin
          LField := FXMLDoc.CreateElement(cField); // create <field>
          LField.AttribStrings[cField_Name] := FieldDefs.Items[i].Name;
          LField.AttribStrings[cField_Value] := '';
-         case FieldDefs.Items[i].DataType of
-           ftInteger : LField.AttribStrings[cField_DataType] := 'integer';
-           ftString  : LField.AttribStrings[cField_DataType] := 'string';
-         end; // case
+         LField.AttribStrings[cField_DataType] := GetStringFromFieldType(FieldDefs.Items[i].DataType);
          Result.AppendChild(LField); // append <field> to <row>
        end; // for
   finally
