@@ -37,11 +37,11 @@ type
     procedure SetSQL(const AValue: TStrings);
     procedure SetSQLConnection(const AValue: TBaseSQLConnection);
   protected
-    procedure ConstructQuery; virtual;
+    procedure ConstructQuery(const QueryType : String); virtual;
   public
-    constructor Create(AOwner: TComponent); {reintroduce;} override; // overload;
+    constructor Create(AOwner: TComponent); override;
     destructor  Destroy; override;
-    procedure ExecSQL; // executes FSQL
+    procedure ExecSQL(const QueryType : String); // executes FSQL
   published
     property SQL : TStrings read FSQL write SetSQL;
     property Connection : TBaseSQLConnection read FSQLConnection write SetSQLConnection;
@@ -76,23 +76,22 @@ begin
      FSQLConnection.RegisterClient(Self,nil);
 end;
 
-procedure TBaseXMLQuery.ConstructQuery;
+procedure TBaseXMLQuery.ConstructQuery(const QueryType : String);
 var FNode : TDOMElement;
     CDATA : TDOMCDATASection;
 begin
-//  FSQLXML.CreateAttribute();
+//todo : fix clearing previous contents
   try
     FNode := FSQLXML.CreateElement(cQueryDocument);
     FSQLXML.AppendChild(FNode);
 
-    FNode := FSQLXML.CreateElement(cQuery);
-    //todo : fix this. determine type
-    FNode.AttribStrings[cQuery_Type] := '';
-    FSQLXML.DocumentElement.AppendChild(FNode);
-
     CDATA := FSQLXML.CreateCDATASection(FSQL.Text);
-    FSQLXML.DocumentElement.ChildNodes.Item[0].AppendChild(CDATA);
     
+    FNode := FSQLXML.CreateElement(cQuery);
+    FNode.AttribStrings[cQuery_Type] := QueryType;
+    FNode.AppendChild(CDATA);
+
+    FSQLXML.DocumentElement.AppendChild(FNode);
   finally
     FNode := nil; // clear referecne
     CDATA := nil;
@@ -114,10 +113,9 @@ begin
   inherited Destroy;
 end;
 
-procedure TBaseXMLQuery.ExecSQL;
+procedure TBaseXMLQuery.ExecSQL(const QueryType : String);
 begin
-  ConstructQuery;
-  WriteXMLFile(FSQLXML,'query.xml');
+  ConstructQuery(QueryType);
 //  FSQLConnection.ConnParams;
 //  FSQLConnection.; send and receive result
 end;

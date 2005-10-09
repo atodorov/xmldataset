@@ -39,7 +39,6 @@ uses
 
 type
 ////// TODO LIST
-// - implement Base64 encoding for string and blob fields (for all = little dirty)
 // - add display format for Float and DateTime fields. all variantions (Date, Time, Float, Currency)
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
@@ -104,7 +103,7 @@ type
     { search and indexing }
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
   public
-    constructor Create(AOwner: TComponent); {reintroduce;} override; //overload;
+    constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
     destructor  Destroy; override;
@@ -118,10 +117,14 @@ type
   function GetFieldTypeFromString(FieldType : String) : TFieldType;
   function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
   function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+  function EncodeBase64(const S : String)  : String; overload;
+  function EncodeBase64(const S : TStream) : String; overload;
+  function DecodeBase64ToString(const S : String) : String;
+  function DecodeBase64ToStream(const S : String) : TMemoryStream;
   
 implementation
 
-uses uXMLDSConsts, Variants;
+uses uXMLDSConsts, Variants, Base64;
 
 {$IFDEF DEBUGXML}
 procedure Log(const Msg : String);
@@ -133,6 +136,84 @@ end;
 (*******************************************************************************
 { helper functions }
 *******************************************************************************)
+
+function EncodeBase64(const S : String) : String;
+var S1, S2 : TStringStream;
+begin
+  S1 := TStringStream.Create(S);
+  try
+    S1.Position:=0;
+    S2 := TStringStream.Create('');
+    try
+      with TBase64EncodingStream.Create(S2) do
+        try
+          CopyFrom(S1,S1.Size);
+        finally
+          Free;
+        end;
+      Result := S2.DataString;
+    finally
+      S2.Free;
+    end;
+ finally
+   S1.Free;
+ end;
+end;
+
+function EncodeBase64(const S : TStream) : String;
+var strStrm : TStringStream;
+begin
+  S.Position:=0;
+  strStrm := TStringStream.Create('');
+  try
+    with TBase64EncodingStream.Create(strStrm) do
+      try
+        CopyFrom(S, S.Size);
+      finally
+        Free;
+      end;
+    Result := strStrm.DataString;
+  finally
+    strStrm.Free;
+  end;
+end;
+
+function DecodeBase64ToString(const S : String) : String;
+var S1, S2 : TStringStream;
+    b64Decoder : TBase64DecodingStream;
+begin
+  S1 := TStringStream.Create(S);
+  try
+    S1.Position:=0;
+    S2 := TStringStream.Create('');
+    try
+      b64Decoder := TBase64DecodingStream.Create(S1);
+      S2.CopyFrom(b64Decoder, b64Decoder.Size);
+    finally
+      b64Decoder.Free;
+    end;
+    Result := S2.DataString;
+ finally
+   S2.Free;
+   S1.Free;
+ end;
+end;
+
+function DecodeBase64ToStream(const S : String) : TMemoryStream;
+var Strm : TStringStream;
+    b64Decoder : TBase64DecodingStream;
+begin
+  Result := TMemoryStream.Create;
+  Strm := TStringStream.Create(S);
+  Strm.Position := 0;
+  try
+     b64Decoder := TBase64DecodingStream.Create(Strm);
+     Result.CopyFrom(b64Decoder, b64Decoder.Size);
+  finally
+    b64Decoder.Free;
+    Strm.Free;
+  end;
+end;
 
 function GetFieldTypeFromString(FieldType : String) : TFieldType;
 begin
@@ -325,13 +406,17 @@ end;
 
 function TBaseXMLDataSet.GetFieldValue(Field: TField): Variant;
 var FieldNode : TDOMElement;
+    strValue : String;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
 {$IFDEF USEWIDESTRINGS}
-   Result := WideCharToString(@FieldNode.AttribStrings[cField_Value][1]);
+   strValue := WideCharToString(@FieldNode.AttribStrings[cField_Value][1]);
 {$ELSE}
-   Result := FieldNode.AttribStrings[cField_Value];
+   strValue := FieldNode.AttribStrings[cField_Value];
 {$ENDIF}
+   if (FieldNode.AttribStrings[cField_DataType] = FIELD_DATATYPE_STRING)
+     then Result := DecodeBase64ToString(strValue)
+     else Result := strValue;
 end;
 
 procedure TBaseXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
@@ -339,25 +424,48 @@ var FieldNode : TDOMElement;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
 
-//todo : N.B. Base64 here. do not add 'oldvalue' when record is inserted
    // set old data if we are editing
    if (State = dsEdit) and
+      ((StrToInt(FNode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED) and
       (VarToStr(Value) <> FieldNode.AttribStrings[cField_Value]) and
       (FieldNode.AttribStrings[cField_OldValue] = '') then
      FieldNode.AttribStrings[cField_OldValue] := FieldNode.AttribStrings[cField_Value];
-     
-// here it should be no problem assigning String to WideString;
-   FieldNode.AttribStrings[cField_Value] := Value;
+
+   if (FieldNode.AttribStrings[cField_DataType] = FIELD_DATATYPE_STRING)
+     then FieldNode.AttribStrings[cField_Value] := EncodeBase64(Value)
+     else FieldNode.AttribStrings[cField_Value] := Value;
 end;
 
 procedure TBaseXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
+// all blob fields are Base64 encoded
+var LBlob : TDOMElement;
+    strTemp : String;
 begin
-//todo : implement
+  if not Assigned(FNode) then exit;
+  try
+    LBlob := GetFieldNodeByName(FNode, Field.FieldName);
+    if not Assigned(LBlob)
+      then strTemp := ''
+      else strTemp := LBlob.AttribStrings[cField_Value];
+
+    Stream := DecodeBase64ToStream(strTemp);
+  finally
+    lBlob := nil; // clear reference
+  end;
 end;
 
 procedure TBaseXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
+// all blob fields are Base64 encoded
+var LBlob : TDOMElement;
 begin
-//todo : implement
+  if not Assigned(FNode) then exit;
+  try
+    LBlob := GetFieldNodeByName(FNode, Field.FieldName);
+    if Assigned(LBlob) then
+      LBlob.AttribStrings[cField_Value] := EncodeBase64(Stream);
+  finally
+    LBlob := nil; // clear reference
+  end;
 end;
 
 procedure TBaseXMLDataSet.DoFirst;

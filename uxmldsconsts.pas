@@ -50,6 +50,11 @@ const
   QUERY_SELECT = 'select';
   QUERY_UPDATE = 'update';
 
+// field data type constants
+  FIELD_DATATYPE_STRING  = 'string';
+  FIELD_DATATYPE_INTEGER = 'integer';
+
+
 // XML node and attribute name constants
 
 //<?xml version="1.0" ?>

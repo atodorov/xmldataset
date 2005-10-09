@@ -39,7 +39,8 @@ var
 
 implementation
 
-uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn, XMLQuery;
+uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn, XMLQuery,
+     uXMLDSConsts;
 
 
 var XMLDS : TBaseXMLDataSet;
@@ -48,14 +49,14 @@ var XMLDS : TBaseXMLDataSet;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  ReadXMLFile(XMLDS.XMLDocument,'D:/projects/TXMLFormatDataSet/data.xml');
+  ReadXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\data.xml');
   XMLDS.ReadOnly := false;// true;
   XMLDS.Open;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  WriteXMLFile(XMLDS.XMLDocument,'D:/projects/TXMLFormatDataSet/save.xml');
+  WriteXMLFile(XMLDS.XMLDocument,'D:\projects\TXMLFormatDataSet\save.xml');
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -79,11 +80,11 @@ end;
 procedure TForm1.Button4Click(Sender: TObject);
 var XQ : TBaseXMLQuery;
 begin
-   xq := TBaseXMLQuery.Create;
+   xq := TBaseXMLQuery.Create(Self);
    if xq.SQL = nil then
       Memo1.Lines.Add('xq.SQL = nil');
    xq.SQL.Text := 'SELECT * FROM COUNTRY';
-   xq.ExecSQL;
+   xq.ExecSQL(QUERY_SELECT);
    xq.Free;
 end;
 

@@ -751,7 +751,7 @@ begin
   if RecBuffer <> nil then
     begin
       Offset := FDataset.GetFieldOffset(FField);
-      Move((RecBuffer + Offset)^, Pointer(Stream), sizeof(Pointer));
+      Move((RecBuffer + Offset)^, Pointer(Stream), SizeOf(Pointer));
       Self.CopyFrom(Stream, 0);
     end;
   Position := 0;
@@ -767,7 +767,7 @@ begin
   if RecBuffer <> nil then
     begin
       Offset := FDataset.GetFieldOffset(FField);
-      Move((RecBuffer + Offset)^, Pointer(Stream), sizeof(Pointer));
+      Move((RecBuffer + Offset)^, Pointer(Stream), SizeOf(Pointer));
       Stream.Size := 0;
       Stream.CopyFrom(Self, 0);
       Stream.Position := 0;
