@@ -66,8 +66,10 @@ type
     procedure DoCreateFieldDefs; override;
     function  GetFieldValue(Field: TField): Variant; override;
     procedure SetFieldValue(Field: TField; Value: Variant); override;
+//********* todo : fix blob support. sreams not working correct with Base64 yet
     procedure GetBlobField(Field: TField; Stream: TStream); override;
     procedure SetBlobField(Field: TField; Stream: TStream); override;
+//*********
     procedure DoFirst; override;
     procedure DoLast; override;
     function  Navigate(GetMode: TGetMode): TGetResult; override;
@@ -148,7 +150,7 @@ begin
     try
       with TBase64EncodingStream.Create(S2) do
         try
-          CopyFrom(S1,S1.Size);
+          CopyFrom(S1, S1.Size);
         finally
           Free;
         end;
@@ -164,7 +166,7 @@ end;
 function EncodeBase64(const S : TStream) : String;
 var strStrm : TStringStream;
 begin
-  S.Position:=0;
+  S.Position := 0;
   strStrm := TStringStream.Create('');
   try
     with TBase64EncodingStream.Create(strStrm) do
@@ -173,6 +175,10 @@ begin
       finally
         Free;
       end;
+{$IFDEF DEBUGXML}
+ Log('EncodeBase64 - S.Size = '+IntToStr(S.Size));
+ Log('EncodeBase64 - strStrm.Size = '+IntToStr(strStrm.Size));
+{$ENDIF}
     Result := strStrm.DataString;
   finally
     strStrm.Free;
@@ -210,6 +216,10 @@ begin
   try
      b64Decoder := TBase64DecodingStream.Create(Strm);
      Result.CopyFrom(b64Decoder, b64Decoder.Size);
+{$IFDEF DEBUGXML}
+ Log('DecodeBase64ToStream - Strm.Size = '+IntToStr(Strm.Size));
+ Log('DecodeBase64ToStream - Result.Size = '+IntToStr(Result.Size));
+{$ENDIF}
   finally
     b64Decoder.Free;
     Strm.Free;

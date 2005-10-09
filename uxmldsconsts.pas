@@ -49,6 +49,7 @@ const
   QUERY_DELETE = 'delete';
   QUERY_SELECT = 'select';
   QUERY_UPDATE = 'update';
+  QUERY_DO     = 'do'; // anything else : create table, stored procs, etc
 
 // field data type constants
   FIELD_DATATYPE_STRING  = 'string';

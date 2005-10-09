@@ -57,12 +57,13 @@ type
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
   public
+    DataToSend   : TStream;     // data that is being passed over the connection
+    ReceivedData : TStream;
     procedure RegisterClient(Client: TObject; Event: TConnectChangeEvent = nil); virtual;
     procedure UnRegisterClient(Client: TObject); virtual;
-    
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Open;  virtual;
+    function  Open : Boolean;  virtual;
     procedure Close; virtual;
     property Connected: Boolean read GetConnected write SetConnected default False;
     property DataSets[Index: Integer]: TBaseXMLDataSet read GetDataSet;
@@ -207,9 +208,10 @@ begin
   inherited Destroy;
 end;
 
-procedure TBaseSQLConnection.Open;
+function TBaseSQLConnection.Open : Boolean;
 begin
   SetConnected(True);
+  Result := true;
 end;
 
 procedure TBaseSQLConnection.Close;

@@ -49,7 +49,13 @@ type
   
 implementation
 
-uses uXMLDSConsts, XMLWrite;
+{$DEFINE DEBUGXML}
+
+uses uXMLDSConsts, XMLRead
+     {$IFDEF DEBUGXML}
+     , XMLWrite
+     {$ENDIF}
+     ;
 
 (*******************************************************************************
 { TBaseXMLQuery }
@@ -80,8 +86,10 @@ procedure TBaseXMLQuery.ConstructQuery(const QueryType : String);
 var FNode : TDOMElement;
     CDATA : TDOMCDATASection;
 begin
-//todo : fix clearing previous contents
   try
+    if Assigned(FSQLXML.DocumentElement) then        // remove previous contents
+       FSQLXML.RemoveChild(FSQLXML.DocumentElement); // only one SQL statement at a time
+       
     FNode := FSQLXML.CreateElement(cQueryDocument);
     FSQLXML.AppendChild(FNode);
 
@@ -96,6 +104,9 @@ begin
     FNode := nil; // clear referecne
     CDATA := nil;
   end;
+  {$IFDEF DEBUGXML}
+     WriteXMLFile(FSQLXML,'query.xml');
+  {$ENDIF}
 end;
 
 constructor TBaseXMLQuery.Create(AOwner: TComponent);
@@ -116,8 +127,10 @@ end;
 procedure TBaseXMLQuery.ExecSQL(const QueryType : String);
 begin
   ConstructQuery(QueryType);
-//  FSQLConnection.ConnParams;
-//  FSQLConnection.; send and receive result
+  FSQLConnection.DataToSend := XMLStringStream;   // send current xml
+  FSQLConnection.Open;
+  if (QueryType = QUERY_SELECT) then // and get a new one
+    ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
 end;
 
 end.

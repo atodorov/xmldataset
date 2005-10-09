@@ -42,11 +42,13 @@ const
   HTTP_PROTOCOL_0_9 = '0.9';
   HTTP_PROTOCOL_1_0 = '1.0';
   HTTP_PROTOCOL_1_1 = '1.1';
-  HTTP_METHOD = 'method'; // allowed values are POST, GET
+  HTTP_METHOD = 'method';     // allowed values are POST, GET
   HTTP_METHOD_POST = 'POST';
   HTTP_METHOD_GET  = 'GET';
-  HTTP_COOKIES  = 'cookies';
-  HTTP_MIMETYPE = 'mimetype'; // is it needed ???
+  HTTP_COOKIES  = 'cookies';  // todo: is it needed ??? log in / out handling
+  HTTP_MIMETYPE = 'mimetype'; // todo: is it needed ???
+  HTTP_POST_FILENAME  = 'filename';
+  HTTP_POST_FIELDNAME = 'fieldname';
 
   PROXY_HOST = 'proxy_host';
   PROXY_PORT = 'proxy_port';
@@ -60,19 +62,19 @@ type
   private
     FHttpClient : {$IFDEF WIN32} THTTPSend;   {$ENDIF}
                   {$IFDEF LINUX} THTTPClient; {$ENDIF}
-    FHttpURL : String;
+    FHttpURL   : String;
+    FFieldName : String;
+    FFileName  : String;
     procedure DoSetConnectionParams;
   protected
     procedure DoConnect; override;
     procedure DoDisconnect; override;
     function  GetConnected: Boolean; override;
+    function  HttpPostFile: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Open;  override;
-    procedure Close; override;
-    function  HttpPostFile(const FieldName, FileName: string;
-                           const Data, ResultData : TStream): Boolean;
+    function Open : Boolean;  override;
     //todo : remove if not needed
 //    property Cookies : TStringList // http connection cookies - session management
   end;
@@ -95,8 +97,20 @@ begin
   index := ConnParams.IndexOfName(HTTP_URL);
   if (index > -1)
     then FHttpUrl := ConnParams.ValueFromIndex[index]
-    else raise Exception.Create('Required parameter HTTP_URL is missing!');
+    else raise Exception.Create('Required parameter '+HTTP_URL+' is missing!');
 
+// HTTP_POST_FILENAME
+  index := ConnParams.IndexOfName(HTTP_POST_FILENAME);
+  if (index > -1)
+    then FFileName := ConnParams.ValueFromIndex[index]
+    else raise Exception.Create('Required parameter '+HTTP_POST_FILENAME+' is missing!');
+
+// HTTP_POST_FIELDNAME
+  index := ConnParams.IndexOfName(HTTP_POST_FIELDNAME);
+  if (index > -1)
+    then FFileName := ConnParams.ValueFromIndex[index]
+    else raise Exception.Create('Required parameter '+HTTP_POST_FIELDNAME+' is missing!');
+    
 // HTTP_PROTOCOL
   index := ConnParams.IndexOfName(HTTP_PROTOCOL);
   if (index > -1) then FHttpClient.Protocol := ConnParams.ValueFromIndex[index];
@@ -129,9 +143,11 @@ begin
 end;
 
 procedure THTTPSQLConnection.DoDisconnect;
-begin // todo
-// do nothing. no persistent connections here.
+begin
+// no persistent connections here.
 // clear session cookies maybe
+   DataToSend   := nil;  // clear reference
+   ReceivedData := nil;
 end;
 
 function THTTPSQLConnection.GetConnected: Boolean;
@@ -150,7 +166,9 @@ begin
      FHttpClient := THTTPClient.Create;
   {$ENDIF}
   FHttpClient.Protocol := HTTP_PROTOCOL_1_1;
-  FHttpURL := '';
+  FHttpURL   := '';
+  FFileName  := '';
+  FFieldName := '';
 end;
 
 destructor THTTPSQLConnection.Destroy;
@@ -159,20 +177,14 @@ begin
   inherited Destroy;
 end;
 
-procedure THTTPSQLConnection.Open;  // todo : fix
+function THTTPSQLConnection.Open : Boolean;
 begin
-//  FHttpClient.;
+  DoSetConnectionParams;
   inherited Open;
+  Result := HttpPostFile;
 end;
 
-procedure THTTPSQLConnection.Close; // todo : fix
-begin
-//  FHttpClient.;
-  inherited Close;
-end;
-
-function THTTPSQLConnection.HttpPostFile(const FieldName, FileName: String;
-                                         const Data, ResultData : TStream): Boolean;
+function THTTPSQLConnection.HttpPostFile: Boolean;
 const
   CRLF = #$0D + #$0A;
 var
@@ -182,17 +194,17 @@ begin
   
   Bound := IntToHex(Random(MaxInt), 8) + '_HTTPSQLConnection_Boundary';
   S := '--' + Bound + CRLF;
-  S := S + 'content-disposition: form-data; name="' + FieldName + '";';
-  S := S + ' filename="' + FileName +'"' + CRLF;
+  S := S + 'content-disposition: form-data; name="' + FFieldName + '";';
+  S := S + ' filename="' + FFileName +'"' + CRLF;
   S := S + 'Content-Type: Application/octet-string' + CRLF + CRLF;
   FHttpClient.Document.Clear;
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
-  FHttpClient.Document.CopyFrom(Data, 0);
+  FHttpClient.Document.CopyFrom(DataToSend, 0);
   S := CRLF + '--' + Bound + '--' + CRLF;
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
   Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
-  ResultData.CopyFrom(FHttpClient.Document,0);
+  ReceivedData.CopyFrom(FHttpClient.Document,0);
 end;
 
 end.

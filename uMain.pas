@@ -18,6 +18,7 @@ type
     Button3: TButton;
     Button4: TButton;
     DBImage1: TDBImage;
+    DBMemo1: TDBMemo;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -69,9 +70,11 @@ begin
     Memo1.Lines.Clear;
     Conn := THTTPSQLConnection.Create(Self);
     Conn.ConnParams.Add(HTTP_URL+'=http://localhost/cgi-bin/showparams.pl');
-    Conn.HttpPostFile('xml_file','file.xml',
-                      XMLDS.XMLStringStream,
-                      ssResult);
+    Conn.ConnParams.Add(HTTP_POST_FILENAME+'=file.xml');
+    Conn.ConnParams.Add(HTTP_POST_FIELDNAME+'=xml_file');
+    Conn.DataToSend := XMLDS.XMLStringStream;
+    Conn.ReceivedData := ssResult;
+    Conn.Open;
     Memo1.Lines.LoadFromStream(ssResult);
   finally
     if Assigned(Conn) then
@@ -83,10 +86,12 @@ procedure TForm1.Button4Click(Sender: TObject);
 var XQ : TBaseXMLQuery;
 begin
    xq := TBaseXMLQuery.Create(Self);
-   if xq.SQL = nil then
-      Memo1.Lines.Add('xq.SQL = nil');
    xq.SQL.Text := 'SELECT * FROM COUNTRY';
    xq.ExecSQL(QUERY_SELECT);
+   
+   xq.SQL.Text := 'SELECT * FROM CITY';
+   xq.ExecSQL(QUERY_SELECT);
+   
    xq.Free;
 end;
 
