@@ -37,6 +37,7 @@ type
     procedure SetSQL(const AValue: TStrings);
     procedure SetSQLConnection(const AValue: TBaseSQLConnection);
   protected
+
     procedure ConstructQuery(const QueryType : String); virtual;
   public
     constructor Create(AOwner: TComponent); override;

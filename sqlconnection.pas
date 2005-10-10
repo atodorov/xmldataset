@@ -33,8 +33,6 @@ type
   { TBaseSQLConnection - connection and transaction handling }
   TBaseSQLConnection = class(TComponent)
   private
-//todo: fix transactions, commit / rollback
-    FInTransaction : Boolean; // transaction handling
     FConnParams : TStrings;   // Used to handle sending / receiving
     FClients: TList;
     FDataSets: TList;
@@ -47,6 +45,8 @@ type
     FBeforeDisconnect: TNotifyEvent;
     FOnLogin: TLoginEvent;
   protected
+    FInTransaction : Boolean; // transaction handling
+    FTransactXMLList : TList; // used for internal cache of XML during transactions
     procedure DoConnect; virtual;             // descendants must override this
     procedure DoDisconnect; virtual;          // descendants must override this
     function  GetConnected: Boolean; virtual; // descendants must override this
@@ -61,10 +61,18 @@ type
     ReceivedData : TStream;
     procedure RegisterClient(Client: TObject; Event: TConnectChangeEvent = nil); virtual;
     procedure UnRegisterClient(Client: TObject); virtual;
+    {--------------------------------------------------------------------------}
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    {--------------------------------------------------------------------------}
     function  Open : Boolean;  virtual;
     procedure Close; virtual;
+    { transaction handling }
+    procedure StartTransaction; virtual;
+    procedure Rollback; virtual;
+    procedure Commit; virtual;
+    property  InTransaction : Boolean read FInTransaction;
+    {--------------------------------------------------------------------------}
     property Connected: Boolean read GetConnected write SetConnected default False;
     property DataSets[Index: Integer]: TBaseXMLDataSet read GetDataSet;
     property DataSetCount: Integer read GetDataSetCount;
@@ -79,6 +87,8 @@ type
   end;
 
 implementation
+
+uses DOM, XMLRead;
 
 (*******************************************************************************
 { TBaseSQLConnection }
@@ -125,10 +135,15 @@ end;
 
 procedure TBaseSQLConnection.RegisterClient(Client: TObject; Event: TConnectChangeEvent);
 begin
+//todo : fix - possible registration of non TBaseXMLDataset clients
+// FClients and FDataSets are the same
   FClients.Add(Client);
   FConnectEvents.Add(TMethod(Event).Code);
-  if Client is TBaseXMLDataSet then
-     FDataSets.Add(Client);
+  if (Client is TBaseXMLDataSet) then
+    begin
+      FDataSets.Add(Client);
+      FTransactXMLList.Add(TXMLDocument.Create);
+    end;
 end;
 
 procedure TBaseSQLConnection.SetConnected(Value: Boolean);
@@ -178,9 +193,22 @@ end;
 
 procedure TBaseSQLConnection.UnRegisterClient(Client: TObject);
 var Index: Integer;
+    P : Pointer;
 begin
-  if Client is TBaseXMLDataSet then
+//todo : fix - possible unregistration of non TBaseXMLDataset clients
+// FClients and FDataSets are the same
+  if (Client is TBaseXMLDataSet) then
+    begin
+     Index := FDataSets.IndexOf(Client);
+//todo: check deleting of internal XML documents
+     if Index <> -1 then
+       begin
+         P := FTransactXMLList.Items[Index];
+         FTransactXMLList.Delete(Index);
+         TXMLDocument(P^).Free;
+       end;
      FDataSets.Remove(Client);
+    end;
   Index := FClients.IndexOf(Client);
   if Index <> -1 then
     begin
@@ -196,15 +224,24 @@ begin
   FClients := TList.Create;
   FConnectEvents := TList.Create;
   FConnParams := TStringList.Create;
+  FInTransaction := false;
+  FTransactXMLList := TList.Create;
 end;
 
 destructor TBaseSQLConnection.Destroy;
+var i : Integer;
 begin
   SetConnected(False);
   FreeAndNil(FConnectEvents);
   FreeAndNil(FClients);
   FreeAndNil(FDataSets);
   FConnParams.Free;
+
+//todo : check this out
+  for i := 0 to FTransactXMLList.Count - 1 do
+     TXMLDocument(FTransactXMLList.Items[i]^).Free;
+  FreeAndNil(FTransactXMLList);
+  
   inherited Destroy;
 end;
 
@@ -217,6 +254,59 @@ end;
 procedure TBaseSQLConnection.Close;
 begin
   SetConnected(False);
+end;
+
+procedure TBaseSQLConnection.StartTransaction;
+var i : Integer;
+begin
+  if InTransaction then
+     raise Exception.Create('Transaction is active!');
+     
+  if (FTransactXMLList.Count <> FDataSets.Count) then
+     raise Exception.Create('Can not start transaction. Internal count differs!');
+     
+  for i := 0 to FTransactXMLList.Count - 1 do
+    if Assigned(TXMLDocument(FTransactXMLList.Items[i]^).DocumentElement) then
+      with TXMLDocument(FTransactXMLList.Items[i]^) do
+        begin
+          RemoveChild(DocumentElement);
+          AppendChild(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement);
+        end;
+
+  FInTransaction := true;
+end;
+
+procedure TBaseSQLConnection.Rollback;
+var i : Integer;
+begin
+  if (FTransactXMLList.Count <> FDataSets.Count) then
+     raise Exception.Create('Can not rollback. Internal count differs!');
+
+  for i := 0 to FTransactXMLList.Count - 1 do
+    if Assigned(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement) then
+      with TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument do
+        begin
+          RemoveChild(DocumentElement);
+          AppendChild(TXMLDocument(FTransactXMLList.Items[i]^).DocumentElement);
+        end;
+  FInTransaction := false;
+end;
+
+procedure TBaseSQLConnection.Commit;
+//todo : fix time out / connection errors
+
+// todo : N.B. COMMIT always returns a valid XML file
+// the other side of the connection must supply the result XML file
+// XML for all datasets is sent step by step
+var i : Integer;
+begin
+  for i := 0 to FDataSets.Count - 1 do
+    begin // send current xml
+      DataToSend := TBaseXMLDataset(FDataSets.Items[i]^).XMLStringStream;
+      Open;
+      ReadXMLFile(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument,ReceivedData);
+    end;
+  FInTransaction := false;
 end;
 
 end.
