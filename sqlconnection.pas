@@ -67,7 +67,7 @@ type
     {--------------------------------------------------------------------------}
     function  Open : Boolean;  virtual;
     procedure Close; virtual;
-    { transaction handling }
+    { ----- transaction handling ----- }
     procedure StartTransaction; virtual;
     procedure Rollback; virtual;
     procedure Commit; virtual;

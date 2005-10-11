@@ -123,7 +123,7 @@ type
   function EncodeBase64(const S : String)  : String; overload;
   function EncodeBase64(const S : TStream) : String; overload;
   function DecodeBase64ToString(const S : String) : String;
-  function DecodeBase64ToStream(const S : String) : TMemoryStream;
+  procedure DecodeBase64ToStream(const S : String; Output : TStream);
   
 implementation
 
@@ -206,20 +206,16 @@ begin
  end;
 end;
 
-function DecodeBase64ToStream(const S : String) : TMemoryStream;
+procedure DecodeBase64ToStream(const S : String; Output : TStream);
 var Strm : TStringStream;
     b64Decoder : TBase64DecodingStream;
 begin
-  Result := TMemoryStream.Create;
-  Strm := TStringStream.Create(S);
-  Strm.Position := 0;
   try
+     Strm := TStringStream.Create(S);
+     Strm.Position := 0;
+  
      b64Decoder := TBase64DecodingStream.Create(Strm);
-     Result.CopyFrom(b64Decoder, b64Decoder.Size);
-{$IFDEF DEBUGXML}
- Log('DecodeBase64ToStream - Strm.Size = '+IntToStr(Strm.Size));
- Log('DecodeBase64ToStream - Result.Size = '+IntToStr(Result.Size));
-{$ENDIF}
+     Output.CopyFrom(b64Decoder, b64Decoder.Size);
   finally
     b64Decoder.Free;
     Strm.Free;
@@ -506,8 +502,12 @@ begin
     if not Assigned(LBlob)
       then strTemp := ''
       else strTemp := LBlob.AttribStrings[cField_Value];
-
-    Stream := DecodeBase64ToStream(strTemp);
+(*
+{$IFDEF DEBUGXML}
+Log('TBaseXMLDataSet.GetBlobField - strTemp = '+strTemp);
+{$ENDIF}
+*)
+    DecodeBase64ToStream(strTemp,Stream);
   finally
     lBlob := nil; // clear reference
   end;
@@ -520,6 +520,9 @@ begin
   if not Assigned(FNode) then exit;
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
+{$IFDEF DEBUGXML}
+Log('TBaseXMLDataSet.SetBlobField - '+EncodeBase64(Stream));
+{$ENDIF}
     if Assigned(LBlob) then
       LBlob.AttribStrings[cField_Value] := EncodeBase64(Stream);
   finally
