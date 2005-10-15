@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<document type="sql">
+  <query type="select">
+      <![CDATA[
+      SELECT * FROM CITY
+      ]]>
+  </query>
+  <query type="update">
+      <![CDATA[
+      UPDATE COUNTRY SET NAME = "Bulgaria" WHERE id=0
+      ]]>
+  </query>  
+</document>

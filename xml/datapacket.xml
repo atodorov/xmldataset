@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<document type="datapacket" version="2.000" destination="" day="28" month="8" year="2005" hour="20" min="57" sec="12" msec="46">
+  <producer name="alexx" url="" description="written by hand" />
+  <metadata fielddefs="yes" indexdefs="no" recorddata="yes" changes="yes">
+    <table name="COUNTRY" />
+    <constraints>
+       <keys>
+          <primary_key name="PK_COUNTRY" field="ID" />
+          <foreign_key name="FK_COUNTRY" field="CONTINENT_ID" reftable="CONTINENT" reffield="ID" action="none" />
+       </keys>
+       <uniques />
+       <checks />
+    </constraints>
+    <fielddefs count="4">
+       <fielddef name="ID"    fieldkind="data" datatype="integer" fieldsize="0"     displaylabel="id"   displaywidth="10" fieldindex="0"  required="false" readonly="false" />
+       <fielddef name="NAME"  fieldkind="data" datatype="string"  fieldsize="30"    displaylabel="Name" displaywidth="20" fieldindex="1"  required="false" readonly="false" />
+       <fielddef name="FLAG"  fieldkind="data" datatype="graphic" fieldsize="2048"  displaylabel="Flag" displaywidth="20" fieldindex="2"  required="false" readonly="false" />
+       <fielddef name="NOTES" fieldkind="data" datatype="memo"    fieldsize="1024"  displaylabel="Memo" displaywidth="20" fieldindex="3"  required="false" readonly="false" />
+    </fielddefs>
+    <indexdefs count="0"> 
+    </indexdefs>
+  </metadata>
+  <recorddata count="1">
+    <row>
+      <field name="ID" value="0" datatype="integer"/>
+      <field name="NAME" value="wfrr4+Dw6P8=" datatype="string"/>
+      <field name="FLAG" value="" datatype="graphic"/>
+      <field name="NOTES" value="8uXx8i4NCjEyMw==" datatype="memo"/>
+    </row>
+  </recorddata>
+</document>

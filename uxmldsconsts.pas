@@ -58,9 +58,18 @@ const
 
 // XML node and attribute name constants
 
+
+// global xml constants
+{+}cDocument = 'document';
+{| [DOCUMENT ATTRIBUTES]}
+{|}cDocument_Type = 'type';
+{|}cDocument_Type_SQL = 'sql';
+{|}cDocument_Type_Datapacket = 'datapacket';
+{.}
+
 //<?xml version="1.0" ?>
-{+}cDatapacket = 'datapacket';
-{| [DATAPACKET ATTRIBUTES] }
+{+ <document type="datapacket">}
+{| [DOCUMENT DATAPACKET ATTRIBUTES] }
 {|}cDatapacket_Version     = 'version';
 {|}cDatapacket_Destination = 'destination';
 {|}cDatapacket_Day         = 'day';
@@ -131,12 +140,11 @@ const
 {|  +--- count <row>'s ... }
 {.}
 
-// query xml constants
-//<?xml version="1.0" ?>
-{+}cQueryDocument = 'query_document';
-{+---+}cQuery = 'query';
-{|     [QUERY ATTRIBUTES] }
-{|}    cQuery_Type = 'type';
+// sql xml constants
+{+ <document type="sql_xml">}
+{|---}cQuery = 'query';
+{|    [QUERY ATTRIBUTES] }
+{|   }cQuery_Type = 'type';
 {.}
 
 implementation

@@ -443,7 +443,9 @@ begin
   if (not Assigned(FXMLDoc)) or
      (csDesigning in ComponentState) then
      exit;
-
+  if (XMLDocument.DocumentElement.AttribStrings[cDocument_Type] <> cDocument_Type_Datapacket) then
+     raise Exception.Create('Invalid XML Document!');
+     
   FieldDefs.Clear;
   for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
       begin   // Add fields

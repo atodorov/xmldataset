@@ -91,7 +91,8 @@ begin
     if Assigned(FSQLXML.DocumentElement) then        // remove previous contents
        FSQLXML.RemoveChild(FSQLXML.DocumentElement); // only one SQL statement at a time
        
-    FNode := FSQLXML.CreateElement(cQueryDocument);
+    FNode := FSQLXML.CreateElement(cDocument);
+    FNode.AttribStrings[cDocument_Type] := cDocument_Type_SQL;
     FSQLXML.AppendChild(FNode);
 
     CDATA := FSQLXML.CreateCDATASection(FSQL.Text);
