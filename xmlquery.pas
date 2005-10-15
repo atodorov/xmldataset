@@ -24,18 +24,19 @@ unit xmlquery;
 interface
 
 uses
-  Classes, SysUtils, DOM, BaseXMLDataset, SQLConnection;
+  Classes, SysUtils, DOM,
+  CustomXMLDataset, CustomSQLConn;
 
 type
 
-  { TBaseXMLQuery - adds sql states execution to the dataset and uses a connection }
-  TBaseXMLQuery = class(TBaseXMLDataSet)
+  { TCustomXMLQuery - adds sql states execution to the dataset and uses a connection }
+  TCustomXMLQuery = class(TCustomXMLDataSet)
   private
     FSQL : TStrings;
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
-    FSQLConnection : TBaseSQLConnection; // a connection to retreive XML / execute SQL
+    FSQLConnection : TCustomSQLConnection; // a connection to retreive XML / execute SQL
     procedure SetSQL(const AValue: TStrings);
-    procedure SetSQLConnection(const AValue: TBaseSQLConnection);
+    procedure SetSQLConnection(const AValue: TCustomSQLConnection);
   protected
 
     procedure ConstructQuery(const QueryType : String); virtual;
@@ -45,7 +46,7 @@ type
     procedure ExecSQL(const QueryType : String); // executes FSQL
   published
     property SQL : TStrings read FSQL write SetSQL;
-    property Connection : TBaseSQLConnection read FSQLConnection write SetSQLConnection;
+    property Connection : TCustomSQLConnection read FSQLConnection write SetSQLConnection;
   end;
   
 implementation
@@ -59,10 +60,10 @@ uses uXMLDSConsts, XMLRead
      ;
 
 (*******************************************************************************
-{ TBaseXMLQuery }
+{ TCustomXMLQuery }
 *******************************************************************************)
 
-procedure TBaseXMLQuery.SetSQL(const AValue: TStrings);
+procedure TCustomXMLQuery.SetSQL(const AValue: TStrings);
 begin
   Close;
   SQL.BeginUpdate;
@@ -73,7 +74,7 @@ begin
   end;
 end;
 
-procedure TBaseXMLQuery.SetSQLConnection(const AValue: TBaseSQLConnection);
+procedure TCustomXMLQuery.SetSQLConnection(const AValue: TCustomSQLConnection);
 begin
   CheckInactive;
   if Assigned(FSQLConnection) then
@@ -83,7 +84,7 @@ begin
      FSQLConnection.RegisterClient(Self,nil);
 end;
 
-procedure TBaseXMLQuery.ConstructQuery(const QueryType : String);
+procedure TCustomXMLQuery.ConstructQuery(const QueryType : String);
 var FNode : TDOMElement;
     CDATA : TDOMCDATASection;
 begin
@@ -111,14 +112,14 @@ begin
   {$ENDIF}
 end;
 
-constructor TBaseXMLQuery.Create(AOwner: TComponent);
+constructor TCustomXMLQuery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FSQL := TStringList.Create;
   FSQLXML := TXMLDocument.Create;
 end;
 
-destructor TBaseXMLQuery.Destroy;
+destructor TCustomXMLQuery.Destroy;
 begin
   SetSQLConnection(nil);
   FSQL.Free;
@@ -126,7 +127,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TBaseXMLQuery.ExecSQL(const QueryType : String);
+procedure TCustomXMLQuery.ExecSQL(const QueryType : String);
 begin
   ConstructQuery(QueryType);
   FSQLConnection.DataToSend := XMLStringStream;   // send current xml

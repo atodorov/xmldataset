@@ -6,7 +6,7 @@ unit uxmldsconsts;
 
  This file is part of the XMLDataset suite for the Free Component Library!
 
- Constants describing the xml structure of the format used by TBaseXMLDataset.
+ Constants describing the xml structure of the format used by XMLDataset componets
  
  (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com

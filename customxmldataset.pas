@@ -1,4 +1,4 @@
-unit basexmldataset;
+unit customxmldataset;
 
 {$mode objfpc}{$H+}
 
@@ -44,8 +44,8 @@ type
 // - add some events to Dataset / Query
 // - change all Integer to Longword / Longint N.B. sign / range
 
-  { TBaseXMLDataSet - dataset that works with XML instead a database }
-  TBaseXMLDataSet=class(TGXBaseDataset)
+  { TCustomXMLDataSet - dataset that works with XML instead a database }
+  TCustomXMLDataSet=class(TGXBaseDataset)
   private
     FCurRec: Integer;
     FReadOnly: Boolean;
@@ -373,10 +373,10 @@ begin
 end;
 
 (*******************************************************************************
-{ TBaseXMLDataSet }
+{ TCustomXMLDataSet }
 *******************************************************************************)
 
-procedure TBaseXMLDataSet.SetReadOnly(Value: Boolean);
+procedure TCustomXMLDataSet.SetReadOnly(Value: Boolean);
 begin
   if (Value <> FReadOnly) then
     begin
@@ -385,19 +385,19 @@ begin
     end;
 end;
 
-function TBaseXMLDataSet.GetXMLStringStream: TStringStream;
+function TCustomXMLDataSet.GetXMLStringStream: TStringStream;
 begin //todo : possible memory leaks
   Result := TStringStream.Create(XMLDocument.NodeValue);
 end;
 
-procedure TBaseXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
+procedure TCustomXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
 begin
   if Active then
      DatabaseError('Cannot change XMLDoc property when dataset is active');
   FXMLDoc := AValue;
 end;
 
-function TBaseXMLDataSet.DoOpen: Boolean;
+function TCustomXMLDataSet.DoOpen: Boolean;
 begin
   if not Assigned(FXMLDoc) then
      DatabaseError('XMLDoc is not assigned');
@@ -412,13 +412,13 @@ begin
   Result := true; //todo : true or <rowdata>.childs.count > 0 ?
 end;
 
-procedure TBaseXMLDataSet.DoClose;
+procedure TCustomXMLDataSet.DoClose;
 begin
   FNode := nil;
 //  FXMLDoc := nil; //todo : check this
 end;
 
-procedure TBaseXMLDataSet.DoDeleteRecord;
+procedure TCustomXMLDataSet.DoDeleteRecord;
 begin
 // mark as deleted
   AddXMLRecordToSection(
@@ -432,7 +432,7 @@ begin
     );
 end;
 
-procedure TBaseXMLDataSet.DoCreateFieldDefs;
+procedure TCustomXMLDataSet.DoCreateFieldDefs;
 var i : Integer;
     FieldSize : Word;
     domNode : TDOMElement;
@@ -461,7 +461,7 @@ begin
       end;
 end;
 
-function TBaseXMLDataSet.GetFieldValue(Field: TField): Variant;
+function TCustomXMLDataSet.GetFieldValue(Field: TField): Variant;
 var FieldNode : TDOMElement;
     strValue : String;
 begin
@@ -476,7 +476,7 @@ begin
      else Result := strValue;
 end;
 
-procedure TBaseXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
+procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
 var FieldNode : TDOMElement;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
@@ -493,7 +493,7 @@ begin
      else FieldNode.AttribStrings[cField_Value] := Value;
 end;
 
-procedure TBaseXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
+procedure TCustomXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
 // all blob fields are Base64 encoded
 var LBlob : TDOMElement;
     strTemp : String;
@@ -506,7 +506,7 @@ begin
       else strTemp := LBlob.AttribStrings[cField_Value];
 (*
 {$IFDEF DEBUGXML}
-Log('TBaseXMLDataSet.GetBlobField - strTemp = '+strTemp);
+Log('TCustomXMLDataSet.GetBlobField - strTemp = '+strTemp);
 {$ENDIF}
 *)
     DecodeBase64ToStream(strTemp,Stream);
@@ -515,7 +515,7 @@ Log('TBaseXMLDataSet.GetBlobField - strTemp = '+strTemp);
   end;
 end;
 
-procedure TBaseXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
+procedure TCustomXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
 // all blob fields are Base64 encoded
 var LBlob : TDOMElement;
 begin
@@ -523,7 +523,7 @@ begin
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
 {$IFDEF DEBUGXML}
-Log('TBaseXMLDataSet.SetBlobField - '+EncodeBase64(Stream));
+Log('TCustomXMLDataSet.SetBlobField - '+EncodeBase64(Stream));
 {$ENDIF}
     if Assigned(LBlob) then
       LBlob.AttribStrings[cField_Value] := EncodeBase64(Stream);
@@ -532,17 +532,17 @@ Log('TBaseXMLDataSet.SetBlobField - '+EncodeBase64(Stream));
   end;
 end;
 
-procedure TBaseXMLDataSet.DoFirst;
+procedure TCustomXMLDataSet.DoFirst;
 begin
   FCurRec := -1;
 end;
 
-procedure TBaseXMLDataSet.DoLast;
+procedure TCustomXMLDataSet.DoLast;
 begin
   FCurRec := RecordCount;
 end;
 
-function TBaseXMLDataSet.Navigate(GetMode: TGetMode): TGetResult;
+function TCustomXMLDataSet.Navigate(GetMode: TGetMode): TGetResult;
 begin
   if (RecordCount < 1)
     then Result := grEOF
@@ -562,48 +562,48 @@ begin
       end; // else
 end;
 
-function TBaseXMLDataSet.AllocateRecordID: Pointer;
+function TCustomXMLDataSet.AllocateRecordID: Pointer;
 begin
   Result := Pointer(FCurRec);
 end;
 
-procedure TBaseXMLDataSet.DisposeRecordID(Value: Pointer);
+procedure TCustomXMLDataSet.DisposeRecordID(Value: Pointer);
 begin
   //Do nothing, no need to dispose since pointer is just an integer
 end;
 
-procedure TBaseXMLDataSet.GotoRecordID(Value: Pointer);
+procedure TCustomXMLDataSet.GotoRecordID(Value: Pointer);
 begin
   FCurRec := Integer(Value);
 end;
 
-function TBaseXMLDataSet.GetBookMarkSize: Integer;
+function TCustomXMLDataSet.GetBookMarkSize: Integer;
 begin
   Result := SizeOf(Integer);
 end;
 
-procedure TBaseXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
+procedure TCustomXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
 begin
   PInteger(ABookmark)^:=Integer(RecordID);
 end;
 
-procedure TBaseXMLDataSet.DoGotoBookmark(ABookmark: Pointer);
+procedure TCustomXMLDataSet.DoGotoBookmark(ABookmark: Pointer);
 begin
   GotoRecordID(Pointer(PInteger(ABookmark)^));
 end;
 
-procedure TBaseXMLDataSet.DoBeforeGetFieldValue;
+procedure TCustomXMLDataSet.DoBeforeGetFieldValue;
 begin
   FNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[FCurRec]);
 end;
 
-procedure TBaseXMLDataSet.DoAfterGetFieldValue;
+procedure TCustomXMLDataSet.DoAfterGetFieldValue;
 begin
   if not ((FNode <> nil) and (State = dsInsert)) then
      FNode := nil;
 end;
 
-procedure TBaseXMLDataSet.DoBeforeSetFieldValue(Inserting: Boolean);
+procedure TCustomXMLDataSet.DoBeforeSetFieldValue(Inserting: Boolean);
 var LRecData  : TDOMElement;
     LOldState : Longint;
 begin
@@ -629,7 +629,7 @@ begin
   end;
 end;
 
-procedure TBaseXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
+procedure TCustomXMLDataSet.DoAfterSetFieldValue(Inserting: Boolean);
 // todo : fix this. don't know if it's needed
 var Index : Integer;
 begin
@@ -642,17 +642,17 @@ begin
   FNode := nil;
 end;
 
-function TBaseXMLDataSet.GetCanModify: Boolean;
+function TCustomXMLDataSet.GetCanModify: Boolean;
 begin
   Result := not FReadOnly;
 end;
 
-function TBaseXMLDataSet.GetRecordCount: Integer;
+function TCustomXMLDataSet.GetRecordCount: Integer;
 begin
   Result := FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count;
 end;
 
-function TBaseXMLDataSet.GetRecNo: Integer;
+function TCustomXMLDataSet.GetRecNo: Integer;
 begin
   UpdateCursorPos;
   if (FCurRec = -1) and (RecordCount > 0)
@@ -660,7 +660,7 @@ begin
     else Result := FCurRec + 1;
 end;
 
-procedure TBaseXMLDataSet.SetRecNo(Value: Integer);
+procedure TCustomXMLDataSet.SetRecNo(Value: Integer);
 begin
   if (Value > 0) and (Value < RecordCount) then
     begin
@@ -669,7 +669,7 @@ begin
     end;
 end;
 
-procedure TBaseXMLDataSet.DeleteRecordFromXML(const ANode: TDOMElement);
+procedure TCustomXMLDataSet.DeleteRecordFromXML(const ANode: TDOMElement);
 // removes record from <recorddata> section
 var LRecords : TDOMElement;
 begin
@@ -686,7 +686,7 @@ begin
   end;
 end;
 
-function TBaseXMLDataSet.CreateRowWithFields(const AState : Longint): TDOMElement;
+function TCustomXMLDataSet.CreateRowWithFields(const AState : Longint): TDOMElement;
 // creates a <row> element with corresponding <field> sub-elements
 var i : Integer;
     LField : TDOMElement;
@@ -709,7 +709,7 @@ begin
   end;
 end;
 
-procedure TBaseXMLDataSet.AddXMLRecordToSection(const ANode: TDOMElement; const ASection : String);
+procedure TCustomXMLDataSet.AddXMLRecordToSection(const ANode: TDOMElement; const ASection : String);
 // add record to specified section
 // <insertedrecords>, <modifiedrecords>, <deletedrecords>
 var LSection : TDOMElement;
@@ -744,18 +744,18 @@ begin
   end;
 end;
 
-function TBaseXMLDataSet.nGetNextID: Longint;
+function TCustomXMLDataSet.nGetNextID: Longint;
 begin
   inc(FInternalID);
   Result := FInternalID;
 end;
 
-function TBaseXMLDataSet.sGetNextID: String;
+function TCustomXMLDataSet.sGetNextID: String;
 begin
   Result := IntToStr(nGetNextID);
 end;
 
-procedure TBaseXMLDataSet.AssignInternalIDS;
+procedure TCustomXMLDataSet.AssignInternalIDS;
 var i : Longint;
     domNode : TDOMElement;
 begin
@@ -771,7 +771,7 @@ begin
   end;
 end;
 
-function TBaseXMLDataSet.FindRowIndexInSection(const ARow: TDOMElement; const ASection : String): Longint;
+function TCustomXMLDataSet.FindRowIndexInSection(const ARow: TDOMElement; const ASection : String): Longint;
 var i : Longint;
     LSection : TDOMElement;
 begin
@@ -791,25 +791,25 @@ begin
   end;
 end;
 
-constructor TBaseXMLDataSet.Create(AOwner: TComponent);
+constructor TCustomXMLDataSet.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FXMLDoc := TXMLDocument.Create;
 end;
 
-constructor TBaseXMLDataSet.Create(AOwner: TComponent; AXMLDoc: TXMLDocument);
+constructor TCustomXMLDataSet.Create(AOwner: TComponent; AXMLDoc: TXMLDocument);
 begin
   Self.Create(AOwner);
   FXMLDoc := AXMLDoc;
 end;
 
-constructor TBaseXMLDataSet.Create(AOwner: TComponent; AXML: String);
+constructor TCustomXMLDataSet.Create(AOwner: TComponent; AXML: String);
 begin
   Self.Create(AOwner);
   FXMLDoc.DocumentElement.NodeValue := AXML;
 end;
 
-destructor TBaseXMLDataSet.Destroy;
+destructor TCustomXMLDataSet.Destroy;
 begin
   FXMLDoc.Free;
   inherited Destroy;

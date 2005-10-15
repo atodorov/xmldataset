@@ -1,4 +1,4 @@
-unit sqlconnection;
+unit customsqlconn;
 
 {$mode objfpc}{$H+}
 
@@ -23,15 +23,16 @@ unit sqlconnection;
 
 interface
 
-uses Classes, SysUtils, BaseXMLDataset;
+uses Classes, SysUtils, 
+     CustomXMLDataset;
 
 type
 
   TLoginEvent = procedure(Sender: TObject; Username, Password: string) of object;
   TConnectChangeEvent = procedure(Sender: TObject; Connecting: Boolean) of object;
 
-  { TBaseSQLConnection - connection and transaction handling }
-  TBaseSQLConnection = class(TComponent)
+  { TCustomSQLConnection - connection and transaction handling }
+  TCustomSQLConnection = class(TComponent)
   private
     FConnParams : TStrings;   // Used to handle sending / receiving
     FClients: TList;
@@ -50,7 +51,7 @@ type
     procedure DoConnect; virtual;             // descendants must override this
     procedure DoDisconnect; virtual;          // descendants must override this
     function  GetConnected: Boolean; virtual; // descendants must override this
-    function  GetDataSet(Index: Integer): TBaseXMLDataSet; virtual;
+    function  GetDataSet(Index: Integer): TCustomXMLDataSet; virtual;
     function  GetDataSetCount: Integer; virtual;
     procedure Loaded; override;
     procedure SetConnected(Value: Boolean); virtual;
@@ -74,7 +75,7 @@ type
     property  InTransaction : Boolean read FInTransaction;
     {--------------------------------------------------------------------------}
     property Connected: Boolean read GetConnected write SetConnected default False;
-    property DataSets[Index: Integer]: TBaseXMLDataSet read GetDataSet;
+    property DataSets[Index: Integer]: TCustomXMLDataSet read GetDataSet;
     property DataSetCount: Integer read GetDataSetCount;
     property LoginPrompt: Boolean read FLoginPrompt write FLoginPrompt default False;
     property AfterConnect: TNotifyEvent read FAfterConnect write FAfterConnect;
@@ -91,35 +92,35 @@ implementation
 uses DOM, XMLRead;
 
 (*******************************************************************************
-{ TBaseSQLConnection }
+{ TCustomSQLConnection }
 *******************************************************************************)
 
-procedure TBaseSQLConnection.DoConnect;
+procedure TCustomSQLConnection.DoConnect;
 begin
-  raise Exception.Create('TBaseSQLConnection.DoConnect - not implemented');
+  raise Exception.Create('TCustomSQLConnection.DoConnect - not implemented');
 end;
 
-procedure TBaseSQLConnection.DoDisconnect;
+procedure TCustomSQLConnection.DoDisconnect;
 begin
-  raise Exception.Create('TBaseSQLConnection.DoDisconnect - not implemented');
+  raise Exception.Create('TCustomSQLConnection.DoDisconnect - not implemented');
 end;
 
-function TBaseSQLConnection.GetConnected: Boolean;
+function TCustomSQLConnection.GetConnected: Boolean;
 begin
   Result := False;
 end;
 
-function TBaseSQLConnection.GetDataSet(Index: Integer): TBaseXMLDataSet;
+function TCustomSQLConnection.GetDataSet(Index: Integer): TCustomXMLDataSet;
 begin
-  Result := TBaseXMLDataSet(FDataSets.Items[Index]^);
+  Result := TCustomXMLDataSet(FDataSets.Items[Index]^);
 end;
 
-function TBaseSQLConnection.GetDataSetCount: Integer;
+function TCustomSQLConnection.GetDataSetCount: Integer;
 begin
   Result := FDataSets.Count;
 end;
 
-procedure TBaseSQLConnection.Loaded;
+procedure TCustomSQLConnection.Loaded;
 begin
   inherited Loaded;
   try
@@ -133,20 +134,20 @@ begin
   end;
 end;
 
-procedure TBaseSQLConnection.RegisterClient(Client: TObject; Event: TConnectChangeEvent);
+procedure TCustomSQLConnection.RegisterClient(Client: TObject; Event: TConnectChangeEvent);
 begin
-//todo : fix - possible registration of non TBaseXMLDataset clients
+//todo : fix - possible registration of non TCustomXMLDataset clients
 // FClients and FDataSets are the same
   FClients.Add(Client);
   FConnectEvents.Add(TMethod(Event).Code);
-  if (Client is TBaseXMLDataSet) then
+  if (Client is TCustomXMLDataSet) then
     begin
       FDataSets.Add(Client);
       FTransactXMLList.Add(TXMLDocument.Create);
     end;
 end;
 
-procedure TBaseSQLConnection.SetConnected(Value: Boolean);
+procedure TCustomSQLConnection.SetConnected(Value: Boolean);
 begin
   if (csReading in ComponentState) and Value
    then FStreamedConnected := True
@@ -170,7 +171,7 @@ begin
      end;
 end;
 
-procedure TBaseSQLConnection.SendConnectEvent(Connecting: Boolean);
+procedure TCustomSQLConnection.SendConnectEvent(Connecting: Boolean);
 var i : Integer;
     ConnectEvent: TConnectChangeEvent;
 begin
@@ -185,19 +186,19 @@ begin
 // todo : fix this deConnectChanged
 // A client must re-connect and get new XML ?????
 (*
-      if TObject(FClients.Items[i]^) is TBaseXMLDataSet then
-         TBaseXMLDataSet(FClients.Items[i]^).DataEvent(deConnectChange, Ptrint(Connecting));
+      if TObject(FClients.Items[i]^) is TCustomXMLDataSet then
+         TCustomXMLDataSet(FClients.Items[i]^).DataEvent(deConnectChange, Ptrint(Connecting));
 *)
     end;
 end;
 
-procedure TBaseSQLConnection.UnRegisterClient(Client: TObject);
+procedure TCustomSQLConnection.UnRegisterClient(Client: TObject);
 var Index: Integer;
     P : Pointer;
 begin
-//todo : fix - possible unregistration of non TBaseXMLDataset clients
+//todo : fix - possible unregistration of non TCustomXMLDataset clients
 // FClients and FDataSets are the same
-  if (Client is TBaseXMLDataSet) then
+  if (Client is TCustomXMLDataSet) then
     begin
      Index := FDataSets.IndexOf(Client);
 //todo: check deleting of internal XML documents
@@ -217,7 +218,7 @@ begin
     end;
 end;
 
-constructor TBaseSQLConnection.Create(AOwner: TComponent);
+constructor TCustomSQLConnection.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FDataSets := TList.Create;
@@ -228,7 +229,7 @@ begin
   FTransactXMLList := TList.Create;
 end;
 
-destructor TBaseSQLConnection.Destroy;
+destructor TCustomSQLConnection.Destroy;
 var i : Integer;
 begin
   SetConnected(False);
@@ -245,18 +246,18 @@ begin
   inherited Destroy;
 end;
 
-function TBaseSQLConnection.Open : Boolean;
+function TCustomSQLConnection.Open : Boolean;
 begin
   SetConnected(True);
   Result := true;
 end;
 
-procedure TBaseSQLConnection.Close;
+procedure TCustomSQLConnection.Close;
 begin
   SetConnected(False);
 end;
 
-procedure TBaseSQLConnection.StartTransaction;
+procedure TCustomSQLConnection.StartTransaction;
 var i : Integer;
 begin
   if InTransaction then
@@ -270,21 +271,21 @@ begin
       with TXMLDocument(FTransactXMLList.Items[i]^) do
         begin
           RemoveChild(DocumentElement);
-          AppendChild(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement);
+          AppendChild(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement);
         end;
 
   FInTransaction := true;
 end;
 
-procedure TBaseSQLConnection.Rollback;
+procedure TCustomSQLConnection.Rollback;
 var i : Integer;
 begin
   if (FTransactXMLList.Count <> FDataSets.Count) then
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement) then
-      with TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument do
+    if Assigned(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement) then
+      with TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument do
         begin
           RemoveChild(DocumentElement);
           AppendChild(TXMLDocument(FTransactXMLList.Items[i]^).DocumentElement);
@@ -292,7 +293,7 @@ begin
   FInTransaction := false;
 end;
 
-procedure TBaseSQLConnection.Commit;
+procedure TCustomSQLConnection.Commit;
 //todo : fix time out / connection errors
 
 // todo : N.B. COMMIT always returns a valid XML file
@@ -302,9 +303,9 @@ var i : Integer;
 begin
   for i := 0 to FDataSets.Count - 1 do
     begin // send current xml
-      DataToSend := TBaseXMLDataset(FDataSets.Items[i]^).XMLStringStream;
+      DataToSend := TCustomXMLDataset(FDataSets.Items[i]^).XMLStringStream;
       Open;
-      ReadXMLFile(TBaseXMLDataset(FDataSets.Items[i]^).XMLDocument,ReceivedData);
+      ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument,ReceivedData);
     end;
   FInTransaction := false;
 end;

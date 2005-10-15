@@ -25,7 +25,7 @@ unit httpsqlconn;
 
 interface
 
-uses Classes, SysUtils, SQLConnection
+uses Classes, SysUtils, CustomSQLConn
      {$IFDEF WIN32} //todo : change this to only HTTPClient
      ,HTTPSend in 'synapse/source/lib/httpsend.pas'
      {$ELSE}
@@ -58,7 +58,7 @@ const
 type
 
   { THTTPSQLConnection }
-  THTTPSQLConnection = class(TBaseSQLConnection)
+  THTTPSQLConnection = class(TCustomSQLConnection)
   private
     FHttpClient : {$IFDEF WIN32} THTTPSend;   {$ENDIF}
                   {$IFDEF LINUX} THTTPClient; {$ENDIF}

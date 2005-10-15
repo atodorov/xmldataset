@@ -42,11 +42,11 @@ var
 
 implementation
 
-uses basexmldataset, XMLRead, XMLWrite, HTTPSQLConn, XMLQuery,
-     uXMLDSConsts;
+uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, XMLQuery,
+     XMLRead, XMLWrite;
 
 
-var XMLDS : TBaseXMLDataSet;
+var XMLDS : TCustomXMLDataSet;
     
 { TForm1 }
 
@@ -83,9 +83,9 @@ begin
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
-var XQ : TBaseXMLQuery;
+var XQ : TCustomXMLQuery;
 begin
-   xq := TBaseXMLQuery.Create(Self);
+   xq := TCustomXMLQuery.Create(Self);
    xq.SQL.Text := 'SELECT * FROM COUNTRY';
    xq.ExecSQL(QUERY_SELECT);
    
@@ -109,9 +109,9 @@ end;
 procedure TForm1.Form1Create(Sender: TObject);
 begin
 //{$IFDEF DEBUGXML}
-  baseXMLDataSet.Memo := Memo1;
+  CustomXMLDataSet.Memo := Memo1;
 //{$ENDIF}
-  XMLDS := TBaseXMLDataSet.Create(Self);
+  XMLDS := TCustomXMLDataSet.Create(Self);
   dsMain.DataSet := XMLDS;
 end;
 

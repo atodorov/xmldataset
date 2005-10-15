@@ -1,4 +1,4 @@
-unit gxBaseDataset;
+unit gxbasedataset;
 
 {$mode objfpc}{$H+}
 
