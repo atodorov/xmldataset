@@ -43,6 +43,7 @@ type
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
 // - change all Integer to Longword / Longint N.B. sign / range
+// -  when editing a blob field, oldvalue is stored for wrong field
 
   { TCustomXMLDataSet - dataset that works with XML instead a database }
   TCustomXMLDataSet=class(TGXBaseDataset)
@@ -471,9 +472,7 @@ begin
 {$ELSE}
    strValue := FieldNode.AttribStrings[cField_Value];
 {$ENDIF}
-   if (FieldNode.AttribStrings[cField_DataType] = FIELD_DATATYPE_STRING)
-     then Result := DecodeBase64ToString(strValue)
-     else Result := strValue;
+   Result := DecodeBase64ToString(strValue);
 end;
 
 procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
@@ -488,9 +487,7 @@ begin
       (FieldNode.AttribStrings[cField_OldValue] = '') then
      FieldNode.AttribStrings[cField_OldValue] := FieldNode.AttribStrings[cField_Value];
 
-   if (FieldNode.AttribStrings[cField_DataType] = FIELD_DATATYPE_STRING)
-     then FieldNode.AttribStrings[cField_Value] := EncodeBase64(Value)
-     else FieldNode.AttribStrings[cField_Value] := Value;
+   FieldNode.AttribStrings[cField_Value] := EncodeBase64(Value);
 end;
 
 procedure TCustomXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
@@ -501,14 +498,12 @@ begin
   if not Assigned(FNode) then exit;
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
+{$IFDEF DEBUGXML}
+Log('TCustomXMLDataSet.GetBlobField - Field.Name = '+Field.FieldName);
+{$ENDIF}
     if not Assigned(LBlob)
       then strTemp := ''
       else strTemp := LBlob.AttribStrings[cField_Value];
-(*
-{$IFDEF DEBUGXML}
-Log('TCustomXMLDataSet.GetBlobField - strTemp = '+strTemp);
-{$ENDIF}
-*)
     DecodeBase64ToStream(strTemp,Stream);
   finally
     lBlob := nil; // clear reference

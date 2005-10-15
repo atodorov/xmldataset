@@ -68,8 +68,11 @@ type
     //Internal isOpen property
     property  isOpen: Boolean read FisOpen;
   protected   {TGXBaseDataset Internal functions that can be overriden if needed}
+  
+// todo : add all blob fields in these 2 procedures. not only ftmemo, ftGraphic
     procedure AllocateBLOBPointers(Buffer: PChar); virtual;
     procedure FreeBlobPointers(Buffer: PChar); virtual;
+    
     procedure FreeRecordPointers(Buffer: PChar); virtual;
     function  GetDataSize: Integer; virtual;
     function  GetFieldOffset(Field: TField): Integer; virtual;
@@ -202,7 +205,7 @@ begin
       begin
         Offset := GetFieldOffset(Fields[Index]);
         Stream := TMemoryStream.Create;
-        Move(Pointer(Stream), (Buffer + Offset)^, sizeof(Pointer));
+        Move(Pointer(Stream), (Buffer + Offset)^, SizeOf(Pointer));
       end;
 end;
 
