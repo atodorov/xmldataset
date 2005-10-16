@@ -17,12 +17,12 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    DBImage1: TDBImage;
     DBMemo1: TDBMemo;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
     GroupBox1: TGroupBox;
-    Image1: TImage;
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -101,8 +101,8 @@ begin
    try
      if Execute then
        begin
-         Image1.Picture.LoadFromFile(FileName);
-         TGraphicField(XMLDS.FieldByName('FLAG')).LoadFromFile(FileName);
+         DBImage1.Picture.LoadFromFile(FileName);
+//         TGraphicField(XMLDS.FieldByName('FLAG')).LoadFromFile(FileName);
        end;
    finally
      Free;
