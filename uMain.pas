@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs;
+  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs, ExtCtrls;
 
 type
 
@@ -17,12 +17,12 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
-    DBImage1: TDBImage;
     DBMemo1: TDBMemo;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
     GroupBox1: TGroupBox;
+    Image1: TImage;
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -100,7 +100,10 @@ begin
   with TOpenPictureDialog.Create(Self) do
    try
      if Execute then
-       DBImage1.Picture.LoadFromFile(FileName);
+       begin
+         Image1.Picture.LoadFromFile(FileName);
+         TGraphicField(XMLDS.FieldByName('FLAG')).LoadFromFile(FileName);
+       end;
    finally
      Free;
    end;

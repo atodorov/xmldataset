@@ -43,7 +43,6 @@ type
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
 // - change all Integer to Longword / Longint N.B. sign / range
-// -  when editing a blob field, oldvalue is stored for wrong field
 
   { TCustomXMLDataSet - dataset that works with XML instead a database }
   TCustomXMLDataSet=class(TGXBaseDataset)
@@ -67,10 +66,8 @@ type
     procedure DoCreateFieldDefs; override;
     function  GetFieldValue(Field: TField): Variant; override;
     procedure SetFieldValue(Field: TField; Value: Variant); override;
-//********* todo : fix blob support. sreams not working correct with Base64 yet
     procedure GetBlobField(Field: TField; Stream: TStream); override;
     procedure SetBlobField(Field: TField; Stream: TStream); override;
-//*********
     procedure DoFirst; override;
     procedure DoLast; override;
     function  Navigate(GetMode: TGetMode): TGetResult; override;
@@ -105,6 +102,15 @@ type
     procedure AssignInternalIDS;
     { search and indexing }
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
+    { helper functions }
+    class function GetFieldTypeFromString(FieldType : String) : TFieldType;
+    class function GetStringFromFieldType(const FieldType : TFieldType) : String;
+    class function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
+    class function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+    class function EncodeBase64(const S : String)  : String; overload;
+    class function EncodeBase64(const S : TStream) : String; overload;
+    class function DecodeBase64ToString(const S : String) : String;
+    class procedure DecodeBase64ToStream(const S : String; Output : TStream);
   public
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
@@ -116,15 +122,7 @@ type
     property XMLStringStream : TStringStream read GetXMLStringStream;
   end;
 
-  { helper functions }
-  function GetFieldTypeFromString(FieldType : String) : TFieldType;
-  function GetStringFromFieldType(const FieldType : TFieldType) : String;
-  function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
-  function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
-  function EncodeBase64(const S : String)  : String; overload;
-  function EncodeBase64(const S : TStream) : String; overload;
-  function DecodeBase64ToString(const S : String) : String;
-  procedure DecodeBase64ToStream(const S : String; Output : TStream);
+
   
 implementation
 
@@ -137,11 +135,12 @@ begin
 end;
 {$ENDIF}
 
+
 (*******************************************************************************
-{ helper functions }
+{ TCustomXMLDataSet }
 *******************************************************************************)
 
-function EncodeBase64(const S : String) : String;
+class function TCustomXMLDataSet.EncodeBase64(const S : String) : String;
 var S1, S2 : TStringStream;
 begin
   S1 := TStringStream.Create(S);
@@ -164,7 +163,7 @@ begin
  end;
 end;
 
-function EncodeBase64(const S : TStream) : String;
+class function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
 var strStrm : TStringStream;
 begin
   S.Position := 0;
@@ -176,17 +175,13 @@ begin
       finally
         Free;
       end;
-{$IFDEF DEBUGXML}
- Log('EncodeBase64 - S.Size = '+IntToStr(S.Size));
- Log('EncodeBase64 - strStrm.Size = '+IntToStr(strStrm.Size));
-{$ENDIF}
     Result := strStrm.DataString;
   finally
     strStrm.Free;
   end;
 end;
 
-function DecodeBase64ToString(const S : String) : String;
+class function TCustomXMLDataSet.DecodeBase64ToString(const S : String) : String;
 var S1, S2 : TStringStream;
     b64Decoder : TBase64DecodingStream;
 begin
@@ -207,7 +202,7 @@ begin
  end;
 end;
 
-procedure DecodeBase64ToStream(const S : String; Output : TStream);
+class procedure TCustomXMLDataSet.DecodeBase64ToStream(const S : String; Output : TStream);
 var Strm : TStringStream;
     b64Decoder : TBase64DecodingStream;
 begin
@@ -223,7 +218,7 @@ begin
   end;
 end;
 
-function GetFieldTypeFromString(FieldType : String) : TFieldType;
+class function TCustomXMLDataSet.GetFieldTypeFromString(FieldType : String) : TFieldType;
 //todo : changed this using constant array in new DB.pp
 begin
    FieldType := AnsiUpperCase(FieldType);
@@ -268,54 +263,54 @@ begin
    else if (FieldType = 'FMTBCD')      then Result := ftFMTBcd;
 end;
 
-function GetStringFromFieldType(const FieldType : TFieldType) : String;
+class function TCustomXMLDataSet.GetStringFromFieldType(const FieldType : TFieldType) : String;
 //todo : changed this using constant array in new DB.pp
 begin
    case FieldType of
-     ftUnknown :     Result := 'UNKNOWN';
-     ftString :      Result := 'STRING';
-     ftSmallint :    Result := 'SMALLINT';
-     ftInteger :     Result := 'INTEGER';
-     ftWord :        Result := 'WORD';
-     ftBoolean :     Result := 'BOOLEAN';
-     ftFloat:        Result := 'FLOAT';
-     ftCurrency :    Result := 'CURRENCY';
-     ftBCD :         Result := 'BCD';
-     ftDate :        Result := 'DATE';
-     ftTime :        Result := 'TIME';
-     ftDateTime :    Result := 'DATETIME';
-     ftBytes :       Result := 'BYTES';
-     ftVarBytes :    Result := 'VARBYTES';
-     ftAutoInc :     Result := 'AUTOINC';
-     ftBlob :        Result := 'BLOB';
-     ftMemo :        Result := 'MEMO';
-     ftGraphic :     Result := 'GRAPHIC';
-     ftFmtMemo :     Result := 'FMTMEMO';
-     ftParadoxOle :  Result := 'PARADOXOLE';
-     ftDBaseOle :    Result := 'DBASEOLE';
+     ftUnknown     : Result := 'UNKNOWN';
+     ftString      : Result := 'STRING';
+     ftSmallint    : Result := 'SMALLINT';
+     ftInteger     : Result := 'INTEGER';
+     ftWord        : Result := 'WORD';
+     ftBoolean     : Result := 'BOOLEAN';
+     ftFloat       : Result := 'FLOAT';
+     ftCurrency    : Result := 'CURRENCY';
+     ftBCD         : Result := 'BCD';
+     ftDate        : Result := 'DATE';
+     ftTime        : Result := 'TIME';
+     ftDateTime    : Result := 'DATETIME';
+     ftBytes       : Result := 'BYTES';
+     ftVarBytes    : Result := 'VARBYTES';
+     ftAutoInc     : Result := 'AUTOINC';
+     ftBlob        : Result := 'BLOB';
+     ftMemo        : Result := 'MEMO';
+     ftGraphic     : Result := 'GRAPHIC';
+     ftFmtMemo     : Result := 'FMTMEMO';
+     ftParadoxOle  : Result := 'PARADOXOLE';
+     ftDBaseOle    : Result := 'DBASEOLE';
      ftTypedBinary : Result := 'TYPEDBINARY';
-     ftCursor :      Result := 'CURSOR';
-     ftFixedChar :   Result := 'FIXEDCHAR';
-     ftWideString :  Result := 'WIDESTRING';
-     ftLargeint :    Result := 'LARGEINT';
-     ftADT :         Result := 'ADT';
-     ftArray :       Result := 'ARRAY';
-     ftReference :   Result := 'REFERENCE';
-     ftDataSet :     Result := 'DATASET';
-     ftOraBlob :     Result := 'ORABLOB';
-     ftOraClob :     Result := 'ORACLOB';
-     ftVariant :     Result := 'VARIANT';
-     ftInterface :   Result := 'INTERFACE';
-     ftIDispatch :   Result := 'IDISPATCH';
-     ftGuid :        Result := 'GUID';
-     ftTimeStamp :   Result := 'TIMESTAMP';
-     ftFMTBcd :      Result := 'FMTBCD';
+     ftCursor      : Result := 'CURSOR';
+     ftFixedChar   : Result := 'FIXEDCHAR';
+     ftWideString  : Result := 'WIDESTRING';
+     ftLargeint    : Result := 'LARGEINT';
+     ftADT         : Result := 'ADT';
+     ftArray       : Result := 'ARRAY';
+     ftReference   : Result := 'REFERENCE';
+     ftDataSet     : Result := 'DATASET';
+     ftOraBlob     : Result := 'ORABLOB';
+     ftOraClob     : Result := 'ORACLOB';
+     ftVariant     : Result := 'VARIANT';
+     ftInterface   : Result := 'INTERFACE';
+     ftIDispatch   : Result := 'IDISPATCH';
+     ftGuid        : Result := 'GUID';
+     ftTimeStamp   : Result := 'TIMESTAMP';
+     ftFMTBcd      : Result := 'FMTBCD';
      else            Result := 'UNKNOWN';
    end;
-   Result :=AnsiLowerCase(Result);
+   Result := AnsiLowerCase(Result);
 end;
 
-function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
+class function TCustomXMLDataSet.GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
 begin
     Result := Size;
     case FieldType of
@@ -357,7 +352,7 @@ begin
    end;
 end;
 
-function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+class function TCustomXMLDataSet.GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
 var i : Integer;
 begin
 // AParent = <row> ... </row>
@@ -372,10 +367,6 @@ begin
          exit;
        end;
 end;
-
-(*******************************************************************************
-{ TCustomXMLDataSet }
-*******************************************************************************)
 
 procedure TCustomXMLDataSet.SetReadOnly(Value: Boolean);
 begin
@@ -477,51 +468,53 @@ end;
 
 procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
 var FieldNode : TDOMElement;
+    strEnc64 : String;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
-
+   strEnc64 := EncodeBase64(Value);
    // set old data if we are editing
    if (State = dsEdit) and
       ((StrToInt(FNode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED) and
-      (VarToStr(Value) <> FieldNode.AttribStrings[cField_Value]) and
+      (strEnc64 <> FieldNode.AttribStrings[cField_Value]) and
       (FieldNode.AttribStrings[cField_OldValue] = '') then
      FieldNode.AttribStrings[cField_OldValue] := FieldNode.AttribStrings[cField_Value];
 
-   FieldNode.AttribStrings[cField_Value] := EncodeBase64(Value);
+   FieldNode.AttribStrings[cField_Value] := strEnc64;
 end;
 
 procedure TCustomXMLDataSet.GetBlobField(Field: TField; Stream: TStream);
-// all blob fields are Base64 encoded
 var LBlob : TDOMElement;
     strTemp : String;
 begin
   if not Assigned(FNode) then exit;
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
-{$IFDEF DEBUGXML}
-Log('TCustomXMLDataSet.GetBlobField - Field.Name = '+Field.FieldName);
-{$ENDIF}
     if not Assigned(LBlob)
       then strTemp := ''
       else strTemp := LBlob.AttribStrings[cField_Value];
     DecodeBase64ToStream(strTemp,Stream);
   finally
-    lBlob := nil; // clear reference
+    LBlob := nil; // clear reference
   end;
 end;
 
 procedure TCustomXMLDataSet.SetBlobField(Field: TField; Stream: TStream);
-// all blob fields are Base64 encoded
 var LBlob : TDOMElement;
+    strEnc64 : String;
 begin
   if not Assigned(FNode) then exit;
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
-{$IFDEF DEBUGXML}
-Log('TCustomXMLDataSet.SetBlobField - '+EncodeBase64(Stream));
-{$ENDIF}
-    if Assigned(LBlob) then
-      LBlob.AttribStrings[cField_Value] := EncodeBase64(Stream);
+    strEnc64 := EncodeBase64(Stream);
+    
+    // set old data if we are editing
+    if (State = dsEdit) and
+       ((StrToInt(FNode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED) and
+       (strEnc64 <> LBlob.AttribStrings[cField_Value]) and
+       (LBlob.AttribStrings[cField_OldValue] = '') then
+     LBlob.AttribStrings[cField_OldValue] := LBlob.AttribStrings[cField_Value];
+     
+    LBlob.AttribStrings[cField_Value] := strEnc64;
   finally
     LBlob := nil; // clear reference
   end;

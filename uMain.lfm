@@ -11,19 +11,18 @@ object Form1: TForm1
   Height = 331
   Top = 155
   Width = 459
-  object DBImage1: TDBImage
-    Center = True
-    DataField = 'FLAG'
-    DataSource = dsMain
+  object Image1: TImage
+    BorderSpacing.OnChange = nil
     OnClick = DBImage1Click
     Transparent = True
-    Left = 359
-    Height = 79
-    Top = 25
-    Width = 100
+    Left = 360
+    Height = 72
+    Top = 32
+    Width = 92
   end
   object dbGrid1: TdbGrid
     Align = alLeft
+    BorderSpacing.OnChange = nil
     DataSource = dsMain
     FixedColor = clBtnFace
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -35,7 +34,6 @@ object Form1: TForm1
   end
   object GroupBox1: TGroupBox
     Align = alBottom
-    BorderSpacing.OnChange = nil
     Caption = 'GroupBox1'
     ClientHeight = 129
     ClientWidth = 455
@@ -45,7 +43,6 @@ object Form1: TForm1
     Top = 184
     Width = 459
     object Button1: TButton
-      BorderSpacing.OnChange = nil
       Caption = 'Load From File'
       OnClick = Button1Click
       TabOrder = 0
@@ -55,6 +52,7 @@ object Form1: TForm1
     end
     object Memo1: TMemo
       Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderSpacing.OnChange = nil
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 1
@@ -63,7 +61,6 @@ object Form1: TForm1
       Width = 360
     end
     object Button2: TButton
-      BorderSpacing.OnChange = nil
       Caption = 'Save To File'
       OnClick = Button2Click
       TabOrder = 2
@@ -73,6 +70,7 @@ object Form1: TForm1
       Width = 75
     end
     object Button3: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Send To Url'
       OnClick = Button3Click
       TabOrder = 3
@@ -82,7 +80,6 @@ object Form1: TForm1
       Width = 75
     end
     object Button4: TButton
-      BorderSpacing.OnChange = nil
       Caption = 'Save Query'
       OnClick = Button4Click
       TabOrder = 4

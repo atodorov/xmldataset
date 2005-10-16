@@ -1,35 +1,36 @@
+{ This is an automatically generated lazarus resource file }
+
 LazarusResources.Add('TForm1','FORMDATA',[
   'TPF0'#6'TForm1'#5'Form1'#7'Caption'#6#5'Form1'#12'ClientHeight'#3'K'#1#11'Cl'
   +'ientWidth'#3#203#1#8'OnCreate'#7#11'Form1Create'#9'OnDestroy'#7#12'Form1Des'
   +'troy'#13'PixelsPerInch'#2'`'#18'HorzScrollBar.Page'#3#202#1#18'VertScrollBa'
   +'r.Page'#3'J'#1#4'Left'#3#4#1#6'Height'#3'K'#1#3'Top'#3#155#0#5'Width'#3#203
-  +#1#0#8'TDBImage'#8'DBImage1'#6'Center'#9#9'DataField'#6#4'FLAG'#10'DataSourc'
-  +'e'#7#6'dsMain'#7'OnClick'#7#13'DBImage1Click'#11'Transparent'#9#4'Left'#3'g'
-  +#1#6'Height'#2'O'#3'Top'#2#25#5'Width'#2'd'#0#0#7'TdbGrid'#7'dbGrid1'#5'Alig'
-  +'n'#7#6'alLeft'#10'DataSource'#7#6'dsMain'#10'FixedColor'#7#9'clBtnFace'#7'O'
-  +'ptions'#11#9'dgEditing'#8'dgTitles'#11'dgIndicator'#14'dgColumnResize'#10'd'
-  +'gColLines'#10'dgRowLines'#6'dgTabs'#21'dgAlwaysShowSelection'#15'dgConfirmD'
-  +'elete'#14'dgCancelOnExit'#0#12'OptionsExtra'#11#14'dgeAutoColumns'#17'dgeCh'
-  +'eckboxColumn'#0#10'Scrollbars'#7#6'ssBoth'#6'Height'#3#159#0#3'Top'#2#25#5
-  +'Width'#3'c'#1#0#0#9'TGroupBox'#9'GroupBox1'#5'Align'#7#8'alBottom'#22'Borde'
-  +'rSpacing.OnChange'#13#7'Caption'#6#9'GroupBox1'#12'ClientHeight'#3#129#0#11
-  +'ClientWidth'#3#199#1#11'ParentColor'#9#8'TabOrder'#2#0#6'Height'#3#147#0#3
-  +'Top'#3#184#0#5'Width'#3#203#1#0#7'TButton'#7'Button1'#22'BorderSpacing.OnCh'
-  +'ange'#13#7'Caption'#6#14'Load From File'#7'OnClick'#7#12'Button1Click'#8'Ta'
-  +'bOrder'#2#0#4'Left'#2#6#6'Height'#2#25#5'Width'#2'K'#0#0#5'TMemo'#5'Memo1'#7
-  +'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#8'ReadOnly'#9#10'Sc'
-  +'rollBars'#7#10'ssAutoBoth'#8'TabOrder'#2#1#4'Left'#2'V'#6'Height'#2'z'#5'Wi'
-  +'dth'#3'h'#1#0#0#7'TButton'#7'Button2'#22'BorderSpacing.OnChange'#13#7'Capti'
-  +'on'#6#12'Save To File'#7'OnClick'#7#12'Button2Click'#8'TabOrder'#2#2#4'Left'
-  +#2#6#6'Height'#2#25#3'Top'#2' '#5'Width'#2'K'#0#0#7'TButton'#7'Button3'#7'Ca'
-  +'ption'#6#11'Send To Url'#7'OnClick'#7#12'Button3Click'#8'TabOrder'#2#3#4'Le'
-  +'ft'#2#6#6'Height'#2#25#3'Top'#2'@'#5'Width'#2'K'#0#0#7'TButton'#7'Button4'
-  +#22'BorderSpacing.OnChange'#13#7'Caption'#6#10'Save Query'#7'OnClick'#7#12'B'
-  +'utton4Click'#8'TabOrder'#2#4#4'Left'#2#6#6'Height'#2#25#3'Top'#2'`'#5'Width'
-  +#2'K'#0#0#0#12'TDBNavigator'#12'DBNavigator1'#5'Align'#7#5'alTop'#10'BevelOu'
-  +'ter'#7#6'bvNone'#12'ClientHeight'#2#25#11'ClientWidth'#3#203#1#10'DataSourc'
-  +'e'#7#6'dsMain'#6'Height'#2#25#5'Width'#3#203#1#0#0#7'TDBMemo'#7'DBMemo1'#9
-  +'DataField'#6#5'NOTES'#10'DataSource'#7#6'dsMain'#13'Lines.Strings'#1#6#7'DB'
-  +'Memo1'#0#4'Left'#3'h'#1#6'Height'#2'H'#3'Top'#2'p'#5'Width'#2'^'#0#0#11'TDa'
-  +'tasource'#6'dsMain'#4'left'#3#152#0#3'top'#2'@'#0#0#0
+  +#1#0#6'TImage'#6'Image1'#22'BorderSpacing.OnChange'#13#7'OnClick'#7#13'DBIma'
+  +'ge1Click'#11'Transparent'#9#4'Left'#3'h'#1#6'Height'#2'H'#3'Top'#2' '#5'Wid'
+  +'th'#2'\'#0#0#7'TdbGrid'#7'dbGrid1'#5'Align'#7#6'alLeft'#22'BorderSpacing.On'
+  +'Change'#13#10'DataSource'#7#6'dsMain'#10'FixedColor'#7#9'clBtnFace'#7'Optio'
+  +'ns'#11#9'dgEditing'#8'dgTitles'#11'dgIndicator'#14'dgColumnResize'#10'dgCol'
+  +'Lines'#10'dgRowLines'#6'dgTabs'#21'dgAlwaysShowSelection'#15'dgConfirmDelet'
+  +'e'#14'dgCancelOnExit'#0#12'OptionsExtra'#11#14'dgeAutoColumns'#17'dgeCheckb'
+  +'oxColumn'#0#10'Scrollbars'#7#6'ssBoth'#6'Height'#3#159#0#3'Top'#2#25#5'Widt'
+  +'h'#3'c'#1#0#0#9'TGroupBox'#9'GroupBox1'#5'Align'#7#8'alBottom'#7'Caption'#6
+  +#9'GroupBox1'#12'ClientHeight'#3#129#0#11'ClientWidth'#3#199#1#11'ParentColo'
+  +'r'#9#8'TabOrder'#2#0#6'Height'#3#147#0#3'Top'#3#184#0#5'Width'#3#203#1#0#7
+  +'TButton'#7'Button1'#7'Caption'#6#14'Load From File'#7'OnClick'#7#12'Button1'
+  +'Click'#8'TabOrder'#2#0#4'Left'#2#6#6'Height'#2#25#5'Width'#2'K'#0#0#5'TMemo'
+  +#5'Memo1'#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#22'Borde'
+  +'rSpacing.OnChange'#13#8'ReadOnly'#9#10'ScrollBars'#7#10'ssAutoBoth'#8'TabOr'
+  +'der'#2#1#4'Left'#2'V'#6'Height'#2'z'#5'Width'#3'h'#1#0#0#7'TButton'#7'Butto'
+  +'n2'#7'Caption'#6#12'Save To File'#7'OnClick'#7#12'Button2Click'#8'TabOrder'
+  +#2#2#4'Left'#2#6#6'Height'#2#25#3'Top'#2' '#5'Width'#2'K'#0#0#7'TButton'#7'B'
+  +'utton3'#22'BorderSpacing.OnChange'#13#7'Caption'#6#11'Send To Url'#7'OnClic'
+  +'k'#7#12'Button3Click'#8'TabOrder'#2#3#4'Left'#2#6#6'Height'#2#25#3'Top'#2'@'
+  +#5'Width'#2'K'#0#0#7'TButton'#7'Button4'#7'Caption'#6#10'Save Query'#7'OnCli'
+  +'ck'#7#12'Button4Click'#8'TabOrder'#2#4#4'Left'#2#6#6'Height'#2#25#3'Top'#2
+  +'`'#5'Width'#2'K'#0#0#0#12'TDBNavigator'#12'DBNavigator1'#5'Align'#7#5'alTop'
+  +#10'BevelOuter'#7#6'bvNone'#12'ClientHeight'#2#25#11'ClientWidth'#3#203#1#10
+  +'DataSource'#7#6'dsMain'#6'Height'#2#25#5'Width'#3#203#1#0#0#7'TDBMemo'#7'DB'
+  +'Memo1'#9'DataField'#6#5'NOTES'#10'DataSource'#7#6'dsMain'#13'Lines.Strings'
+  +#1#6#7'DBMemo1'#0#4'Left'#3'h'#1#6'Height'#2'H'#3'Top'#2'p'#5'Width'#2'^'#0#0
+  +#11'TDatasource'#6'dsMain'#4'left'#3#152#0#3'top'#2'@'#0#0#0
 ]);

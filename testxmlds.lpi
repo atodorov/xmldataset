@@ -5,73 +5,141 @@
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
+      <ActiveEditorIndexAtStart Value="0"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
-      <ActiveEditorIndexAtStart Value="2"/>
     </General>
-    <Units Count="14">
+    <JumpHistory Count="15" HistoryIndex="14">
+      <Position1>
+        <Filename Value="uxmldsconsts.pas"/>
+        <Caret Line="149" Column="1" TopLine="139"/>
+      </Position1>
+      <Position2>
+        <Filename Value="HTTPSQLConn.pas"/>
+        <Caret Line="56" Column="15" TopLine="60"/>
+      </Position2>
+      <Position3>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="143" Column="1" TopLine="131"/>
+      </Position3>
+      <Position4>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="46" Column="1" TopLine="33"/>
+      </Position4>
+      <Position5>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="382" Column="9" TopLine="374"/>
+      </Position5>
+      <Position6>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="405" Column="19" TopLine="391"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uxmldsconsts.pas"/>
+        <Caret Line="68" Column="1" TopLine="63"/>
+      </Position7>
+      <Position8>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="506" Column="8" TopLine="500"/>
+      </Position8>
+      <Position9>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="511" Column="1" TopLine="503"/>
+      </Position9>
+      <Position10>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="512" Column="1" TopLine="504"/>
+      </Position10>
+      <Position11>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="513" Column="54" TopLine="505"/>
+      </Position11>
+      <Position12>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="514" Column="1" TopLine="506"/>
+      </Position12>
+      <Position13>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="515" Column="1" TopLine="507"/>
+      </Position13>
+      <Position14>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="517" Column="1" TopLine="509"/>
+      </Position14>
+      <Position15>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="506" Column="1" TopLine="498"/>
+      </Position15>
+    </JumpHistory>
+    <Units Count="15">
       <Unit0>
-        <CursorPos X="3" Y="1"/>
+        <CursorPos X="29" Y="1"/>
         <Filename Value="testxmlds.lpr"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="133"/>
       </Unit0>
       <Unit1>
-        <CursorPos X="8" Y="57"/>
+        <CursorPos X="10" Y="77"/>
+        <EditorIndex Value="2"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="57"/>
+        <TopLine Value="71"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="24"/>
       </Unit1>
       <Unit2>
-        <CursorPos X="65" Y="1"/>
-        <Filename Value="uXMLDSConsts.pas"/>
+        <CursorPos X="55" Y="123"/>
+        <EditorIndex Value="4"/>
+        <Filename Value="uxmldsconsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1"/>
+        <Loaded Value="True"/>
+        <TopLine Value="115"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit2>
       <Unit3>
-        <CursorPos X="1" Y="521"/>
+        <CursorPos X="1" Y="508"/>
         <EditorIndex Value="0"/>
-        <Filename Value="CustomXMLDataset.pas"/>
+        <Filename Value="customxmldataset.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="513"/>
+        <TopLine Value="500"/>
         <UnitName Value="customxmldataset"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit3>
       <Unit4>
-        <CursorPos X="21" Y="19"/>
+        <CursorPos X="3" Y="78"/>
+        <EditorIndex Value="1"/>
         <Filename Value="HTTPSQLConn.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="19"/>
+        <Loaded Value="True"/>
+        <TopLine Value="70"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit4>
       <Unit5>
-        <CursorPos X="14" Y="1"/>
+        <CursorPos X="25" Y="129"/>
+        <EditorIndex Value="5"/>
         <Filename Value="XMLQuery.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1"/>
+        <Loaded Value="True"/>
+        <TopLine Value="116"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="24"/>
       </Unit5>
       <Unit6>
-        <CursorPos X="5" Y="210"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="29" Y="209"/>
         <Filename Value="gxBaseDataset.pas"/>
         <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
         <TopLine Value="209"/>
         <UnitName Value="gxbasedataset"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit6>
       <Unit7>
         <CursorPos X="31" Y="1"/>
@@ -79,7 +147,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="customsqlconn"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="23"/>
       </Unit7>
       <Unit8>
         <CursorPos X="15" Y="186"/>
@@ -107,20 +175,27 @@
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
-        <CursorPos X="1" Y="36"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="14" Y="686"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Loaded Value="True"/>
-        <TopLine Value="40"/>
+        <TopLine Value="686"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
-        <CursorPos X="19" Y="121"/>
+        <CursorPos X="13" Y="301"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\db\db.pp"/>
-        <TopLine Value="121"/>
+        <TopLine Value="301"/>
         <UnitName Value="db"/>
         <UsageCount Value="10"/>
       </Unit13>
+      <Unit14>
+        <CursorPos X="46" Y="301"/>
+        <EditorIndex Value="3"/>
+        <Filename Value="CustomSQLConn.pas"/>
+        <Loaded Value="True"/>
+        <TopLine Value="293"/>
+        <UnitName Value="customsqlconn"/>
+        <UsageCount Value="10"/>
+      </Unit14>
     </Units>
     <PublishOptions>
       <Version Value="2"/>
@@ -144,72 +219,6 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <JumpHistory Count="16" HistoryIndex="15">
-      <Position1>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="141" Column="1" TopLine="133"/>
-      </Position1>
-      <Position2>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="145" Column="10" TopLine="137"/>
-      </Position2>
-      <Position3>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="145" Column="16" TopLine="137"/>
-      </Position3>
-      <Position4>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="37" Column="1" TopLine="32"/>
-      </Position4>
-      <Position5>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="36" Column="1" TopLine="28"/>
-      </Position5>
-      <Position6>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="40" Column="1" TopLine="32"/>
-      </Position6>
-      <Position7>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="41" Column="1" TopLine="33"/>
-      </Position7>
-      <Position8>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="42" Column="1" TopLine="34"/>
-      </Position8>
-      <Position9>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="43" Column="1" TopLine="35"/>
-      </Position9>
-      <Position10>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="44" Column="1" TopLine="36"/>
-      </Position10>
-      <Position11>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="45" Column="1" TopLine="37"/>
-      </Position11>
-      <Position12>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="47" Column="1" TopLine="39"/>
-      </Position12>
-      <Position13>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="51" Column="1" TopLine="43"/>
-      </Position13>
-      <Position14>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="54" Column="1" TopLine="46"/>
-      </Position14>
-      <Position15>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="55" Column="1" TopLine="41"/>
-      </Position15>
-      <Position16>
-        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
-        <Caret Line="35" Column="1" TopLine="27"/>
-      </Position16>
-    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="5"/>
@@ -233,16 +242,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="3">
-      <Item2>
-        <Source Value="CustomXMLDataset.pas"/>
-        <Line Value="481"/>
-      </Item2>
-      <Item3>
-        <Source Value="CustomXMLDataset.pas"/>
-        <Line Value="517"/>
-      </Item3>
-    </BreakPoints>
+    <BreakPoints Count="1"/>
     <Watches Count="3">
       <Item1>
         <Expression Value="s"/>

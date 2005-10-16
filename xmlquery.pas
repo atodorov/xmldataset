@@ -85,31 +85,28 @@ begin
 end;
 
 procedure TCustomXMLQuery.ConstructQuery(const QueryType : String);
-var FNode : TDOMElement;
+var LNode : TDOMElement;
     CDATA : TDOMCDATASection;
 begin
   try
     if Assigned(FSQLXML.DocumentElement) then        // remove previous contents
        FSQLXML.RemoveChild(FSQLXML.DocumentElement); // only one SQL statement at a time
        
-    FNode := FSQLXML.CreateElement(cDocument);
-    FNode.AttribStrings[cDocument_Type] := cDocument_Type_SQL;
-    FSQLXML.AppendChild(FNode);
+    LNode := FSQLXML.CreateElement(cDocument);
+    LNode.AttribStrings[cDocument_Type] := cDocument_Type_SQL;
+    FSQLXML.AppendChild(LNode);
 
     CDATA := FSQLXML.CreateCDATASection(FSQL.Text);
     
-    FNode := FSQLXML.CreateElement(cQuery);
-    FNode.AttribStrings[cQuery_Type] := QueryType;
-    FNode.AppendChild(CDATA);
+    LNode := FSQLXML.CreateElement(cQuery);
+    LNode.AttribStrings[cQuery_Type] := QueryType;
+    LNode.AppendChild(CDATA);
 
-    FSQLXML.DocumentElement.AppendChild(FNode);
+    FSQLXML.DocumentElement.AppendChild(LNode);
   finally
-    FNode := nil; // clear referecne
+    LNode := nil; // clear referecne
     CDATA := nil;
   end;
-  {$IFDEF DEBUGXML}
-     WriteXMLFile(FSQLXML,'query.xml');
-  {$ENDIF}
 end;
 
 constructor TCustomXMLQuery.Create(AOwner: TComponent);
