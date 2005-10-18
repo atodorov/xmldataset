@@ -11,14 +11,15 @@ object Form1: TForm1
   Height = 331
   Top = 155
   Width = 459
-  object Image1: TImage
-    BorderSpacing.OnChange = nil
+  object DBImage1: TDBImage
+    DataField = 'FLAG'
+    DataSource = dsMain
     OnClick = DBImage1Click
     Transparent = True
     Left = 360
-    Height = 72
+    Height = 68
     Top = 32
-    Width = 92
+    Width = 98
   end
   object dbGrid1: TdbGrid
     Align = alLeft

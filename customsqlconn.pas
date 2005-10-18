@@ -30,6 +30,8 @@ type
 
   TLoginEvent = procedure(Sender: TObject; Username, Password: string) of object;
   TConnectChangeEvent = procedure(Sender: TObject; Connecting: Boolean) of object;
+  TBeforeCommitEvent = procedure(Sender : TObject) of object;
+  TBeforeCommitDatasetEvent = procedure(Sender : TObject; Dataset : TCustomXMLDataSet) of object;
 
   { TCustomSQLConnection - connection and transaction handling }
   TCustomSQLConnection = class(TComponent)
@@ -45,6 +47,8 @@ type
     FBeforeConnect: TNotifyEvent;
     FBeforeDisconnect: TNotifyEvent;
     FOnLogin: TLoginEvent;
+    FBeforeCommit : TBeforeCommitEvent;
+    FBeforeCommitDataset : TBeforeCommitDatasetEvent;
   protected
     FInTransaction : Boolean; // transaction handling
     FTransactXMLList : TList; // used for internal cache of XML during transactions
@@ -83,6 +87,8 @@ type
     property AfterDisconnect: TNotifyEvent read FAfterDisconnect write FAfterDisconnect;
     property BeforeDisconnect: TNotifyEvent read FBeforeDisconnect write FBeforeDisconnect;
     property OnLogin: TLoginEvent read FOnLogin write FOnLogin;
+    property BeforeCommit : TBeforeCommitEvent read FBeforeCommit write FBeforeCommit;
+    property BeforeCommitDataset : TBeforeCommitDatasetEvent read FBeforeCommitDataset write FBeforeCommitDataset;
   published
     property ConnParams : TStrings read FConnParams write FConnParams;
   end;
@@ -301,8 +307,14 @@ procedure TCustomSQLConnection.Commit;
 // XML for all datasets is sent step by step
 var i : Integer;
 begin
+  if Assigned(FBeforeCommit) then
+     FBeforeCommit(Self);
+     
   for i := 0 to FDataSets.Count - 1 do
     begin // send current xml
+      if Assigned(FBeforeCommitDataset) then
+         FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]^));
+         
       DataToSend := TCustomXMLDataset(FDataSets.Items[i]^).XMLStringStream;
       Open;
       ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument,ReceivedData);

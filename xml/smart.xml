@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<document type="smart_sql">
+<insert>
+  <query type="select">
+      <![CDATA[
+      SELECT * FROM CITY
+      ]]>
+  </query>
+</insert>  
+<update>
+  <query type="update">
+      <![CDATA[
+      UPDATE COUNTRY SET NAME = "Bulgaria" WHERE id=0
+      ]]>
+  </query>
+</update>
+<delete>
+  <query type="delete">
+      <![CDATA[
+      DELETE FROM COUNTRY WHERE id=10
+      ]]>
+  </query>
+</delete>
+</document>

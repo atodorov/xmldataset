@@ -23,9 +23,8 @@ unit xmlquery;
 
 interface
 
-uses
-  Classes, SysUtils, DOM,
-  CustomXMLDataset, CustomSQLConn;
+uses Classes, SysUtils, DOM,
+     CustomXMLDataset, CustomSQLConn;
 
 type
 
@@ -38,7 +37,6 @@ type
     procedure SetSQL(const AValue: TStrings);
     procedure SetSQLConnection(const AValue: TCustomSQLConnection);
   protected
-
     procedure ConstructQuery(const QueryType : String); virtual;
   public
     constructor Create(AOwner: TComponent); override;
@@ -90,7 +88,7 @@ var LNode : TDOMElement;
 begin
   try
     if Assigned(FSQLXML.DocumentElement) then        // remove previous contents
-       FSQLXML.RemoveChild(FSQLXML.DocumentElement); // only one SQL statement at a time
+       FSQLXML.RemoveChild(FSQLXML.DocumentElement);
        
     LNode := FSQLXML.CreateElement(cDocument);
     LNode.AttribStrings[cDocument_Type] := cDocument_Type_SQL;

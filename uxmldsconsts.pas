@@ -52,9 +52,10 @@ const
   QUERY_DO     = 'do'; // anything else : create table, stored procs, etc
 
 // field data type constants
+(*
   FIELD_DATATYPE_STRING  = 'string';
   FIELD_DATATYPE_INTEGER = 'integer';
-
+*)
 
 // XML node and attribute name constants
 
@@ -64,6 +65,7 @@ const
 {| [DOCUMENT ATTRIBUTES]}
 {|}cDocument_Type = 'type';
 {|}cDocument_Type_SQL = 'sql';
+{|}cDocument_Type_Smart_SQL = 'smart_sql';
 {|}cDocument_Type_Datapacket = 'datapacket';
 {.}
 
@@ -145,6 +147,13 @@ const
 {|---}cQuery = 'query';
 {|    [QUERY ATTRIBUTES] }
 {|   }cQuery_Type = 'type';
+{.}
+
+// smart sql xml constants
+{+ <document type="smart_sql">}
+{|}cInsert = 'insert';
+{|}cUpdate = 'update';
+{|}cDelete = 'delete';
 {.}
 
 implementation

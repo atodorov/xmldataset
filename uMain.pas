@@ -43,6 +43,7 @@ var
 implementation
 
 uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, XMLQuery,
+//     DBCtrlGrid in 'dbcg/dbctrlgrid.pas',
      XMLRead, XMLWrite;
 
 
