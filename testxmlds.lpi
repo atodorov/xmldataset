@@ -5,123 +5,99 @@
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
-      <ActiveEditorIndexAtStart Value="5"/>
+      <ActiveEditorIndexAtStart Value="1"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
     </General>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="56" Column="15" TopLine="51"/>
+        <Caret Line="61" Column="37" TopLine="53"/>
       </Position1>
       <Position2>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="57" Column="1" TopLine="49"/>
+        <Caret Line="125" Column="39" TopLine="113"/>
       </Position2>
       <Position3>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="65" Column="22" TopLine="61"/>
+        <Caret Line="123" Column="1" TopLine="115"/>
       </Position3>
       <Position4>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="48" Column="24" TopLine="40"/>
+        <Caret Line="121" Column="67" TopLine="115"/>
       </Position4>
       <Position5>
-        <Filename Value="XMLQuery.pas"/>
-        <Caret Line="54" Column="14" TopLine="52"/>
+        <Filename Value="smartxmlquery.pas"/>
+        <Caret Line="45" Column="43" TopLine="37"/>
       </Position5>
       <Position6>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="48" Column="24" TopLine="40"/>
+        <Caret Line="121" Column="54" TopLine="121"/>
       </Position6>
       <Position7>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="68" Column="17" TopLine="53"/>
+        <Caret Line="124" Column="15" TopLine="116"/>
       </Position7>
       <Position8>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="79" Column="3" TopLine="71"/>
+        <Caret Line="121" Column="69" TopLine="116"/>
       </Position8>
       <Position9>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="67" Column="28" TopLine="67"/>
+        <Caret Line="55" Column="1" TopLine="45"/>
       </Position9>
       <Position10>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="53" Column="11" TopLine="48"/>
+        <Caret Line="127" Column="11" TopLine="119"/>
       </Position10>
       <Position11>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="105" Column="95" TopLine="96"/>
+        <Caret Line="130" Column="1" TopLine="122"/>
       </Position11>
       <Position12>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="66" Column="22" TopLine="59"/>
+        <Caret Line="121" Column="46" TopLine="117"/>
       </Position12>
       <Position13>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="44" Column="60" TopLine="36"/>
+        <Caret Line="137" Column="38" TopLine="131"/>
       </Position13>
       <Position14>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="49" Column="6" TopLine="36"/>
+        <Filename Value="CustomXMLDataset.pas"/>
+        <Caret Line="109" Column="38" TopLine="101"/>
       </Position14>
       <Position15>
-        <Filename Value="uXMLDSConsts.pas"/>
-        <Caret Line="82" Column="25" TopLine="67"/>
+        <Filename Value="smartxmlquery.pas"/>
+        <Caret Line="119" Column="46" TopLine="113"/>
       </Position15>
       <Position16>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="113" Column="34" TopLine="100"/>
+        <Caret Line="38" Column="3" TopLine="36"/>
       </Position16>
       <Position17>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="109" Column="1" TopLine="101"/>
+        <Caret Line="70" Column="67" TopLine="66"/>
       </Position17>
       <Position18>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="81" Column="1" TopLine="66"/>
+        <Caret Line="157" Column="82" TopLine="149"/>
       </Position18>
       <Position19>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="79" Column="11" TopLine="71"/>
+        <Caret Line="135" Column="18" TopLine="125"/>
       </Position19>
       <Position20>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="45" Column="1" TopLine="35"/>
+        <Caret Line="47" Column="35" TopLine="35"/>
       </Position20>
       <Position21>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="106" Column="1" TopLine="98"/>
+        <Caret Line="217" Column="52" TopLine="209"/>
       </Position21>
       <Position22>
         <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="197" Column="3" TopLine="192"/>
+        <Caret Line="237" Column="54" TopLine="229"/>
       </Position22>
-      <Position23>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="72" Column="5" TopLine="64"/>
-      </Position23>
-      <Position24>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="94" Column="12" TopLine="86"/>
-      </Position24>
-      <Position25>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="96" Column="22" TopLine="86"/>
-      </Position25>
-      <Position26>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="60" Column="1" TopLine="40"/>
-      </Position26>
-      <Position27>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="69" Column="1" TopLine="48"/>
-      </Position27>
-      <Position28>
-        <Filename Value="smartxmlquery.pas"/>
-        <Caret Line="61" Column="37" TopLine="53"/>
-      </Position28>
     </JumpHistory>
     <Units Count="32">
       <Unit0>
@@ -130,7 +106,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="138"/>
+        <UsageCount Value="139"/>
       </Unit0>
       <Unit1>
         <CursorPos X="3" Y="46"/>
@@ -143,27 +119,27 @@
         <ResourceFilename Value="uMain.lrs"/>
         <TopLine Value="35"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
       </Unit1>
       <Unit2>
-        <CursorPos X="11" Y="156"/>
+        <CursorPos X="18" Y="44"/>
         <EditorIndex Value="4"/>
         <Filename Value="uXMLDSConsts.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="143"/>
+        <TopLine Value="35"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
       </Unit2>
       <Unit3>
-        <CursorPos X="14" Y="121"/>
+        <CursorPos X="84" Y="46"/>
         <EditorIndex Value="2"/>
         <Filename Value="CustomXMLDataset.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="113"/>
+        <TopLine Value="33"/>
         <UnitName Value="customxmldataset"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
       </Unit3>
       <Unit4>
         <CursorPos X="7" Y="71"/>
@@ -171,7 +147,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="70"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
       </Unit4>
       <Unit5>
         <CursorPos X="14" Y="54"/>
@@ -181,7 +157,7 @@
         <Loaded Value="True"/>
         <TopLine Value="52"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
       </Unit5>
       <Unit6>
         <CursorPos X="29" Y="209"/>
@@ -189,7 +165,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="209"/>
         <UnitName Value="gxbasedataset"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
       </Unit6>
       <Unit7>
         <CursorPos X="31" Y="1"/>
@@ -197,7 +173,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="customsqlconn"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
       </Unit7>
       <Unit8>
         <CursorPos X="15" Y="186"/>
@@ -231,9 +207,9 @@
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
-        <CursorPos X="37" Y="1128"/>
+        <CursorPos X="16" Y="1052"/>
         <Filename Value="C:\lazarus\fpcsrc\fcl\db\db.pp"/>
-        <TopLine Value="1128"/>
+        <TopLine Value="1052"/>
         <UnitName Value="db"/>
         <UsageCount Value="10"/>
       </Unit13>
@@ -352,14 +328,14 @@
         <UsageCount Value="11"/>
       </Unit30>
       <Unit31>
-        <CursorPos X="37" Y="61"/>
+        <CursorPos X="51" Y="237"/>
         <EditorIndex Value="1"/>
         <Filename Value="smartxmlquery.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="53"/>
+        <TopLine Value="229"/>
         <UnitName Value="smartxmlquery"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit31>
     </Units>
     <PublishOptions>

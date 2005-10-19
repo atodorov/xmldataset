@@ -40,10 +40,10 @@ const
   ROW_MODIFIED     = $00000002;
 
 // update mode constants
-  WHERE_ALL      = 'upWhereAll';
-  WHERE_CHANGED  = 'upWhereChanged';
-  WHERE_KEY_ONLY = 'upWhereKeyOnly';
+type
+  TUpdateMode = (umWHERE_ALL, umWHERE_CHANGED, umWHERE_KEY_ONLY);
 
+const
 // query type constants
   QUERY_INSERT = 'insert';
   QUERY_DELETE = 'delete';

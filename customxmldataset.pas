@@ -43,6 +43,7 @@ type
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
 // - change all Integer to Longword / Longint N.B. sign / range
+// - add 'oldvalue' = 'value' for primary key fields (to be able to handle SmartXML)
 
   { TCustomXMLDataSet - dataset that works with XML instead a database }
   TCustomXMLDataSet=class(TGXBaseDataset)

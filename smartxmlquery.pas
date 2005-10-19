@@ -24,7 +24,7 @@ unit smartxmlquery;
 interface
 
 uses Classes, SysUtils, DOM,
-     XMLQuery, CustomXMLDataset;
+     XMLQuery, CustomXMLDataset, uXMLDSConsts;
 type
 
   {
@@ -33,6 +33,8 @@ type
     at the other side of the connection (e.g. cgi script at a web server).
   }
   TSmartXMLQuery = class(TCustomXMLQuery)
+  private
+    function GetUpdateMode: TUpdateMode;
   protected
     { Constructs sql statements that are saved into XMLDocument instead of standard
       datapacket.xml contents. Everything is sent over the connection with commit.
@@ -42,16 +44,17 @@ type
     }
     procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TCustomXMLDataSet);
     procedure ConstructSQLFromXML; virtual;
+    function ConstructWhereClause(const ARow :TDOMElement) : String;
     function CreateInsertFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
     function CreateUpdateFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
     function CreateDeleteFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
+
+    property UpdateMode : TUpdateMode read GetUpdateMode;
   public
     constructor Create(AOwner : TComponent); override;
   end;
 
 implementation
-
-uses uXMLDSConsts;
 
 { TSmartXMLQuery }
 
@@ -59,6 +62,13 @@ constructor TSmartXMLQuery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   Connection.BeforeCommitDataset := @SQLConnBeforeCommitDataset;
+end;
+
+function TSmartXMLQuery.GetUpdateMode: TUpdateMode;
+begin
+  Result := TUpdateMode(StrToInt(
+            XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cUpdateMode).
+            Attributes.GetNamedItem(cUpdateMode_Value).NodeValue));
 end;
 
 procedure TSmartXMLQuery.SQLConnBeforeCommitDataset(Sender: TObject; Dataset: TCustomXMLDataSet);
@@ -117,6 +127,38 @@ begin
   end;
 end;
 
+function TSmartXMLQuery.ConstructWhereClause(const ARow :TDOMElement) : String;
+// todo : AttribStrings['oldvalue', Def = 'value']
+var i : LongWord;
+begin
+  Result := '';
+
+  case UpdateMode of
+   umWHERE_ALL      :
+     begin
+       Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
+                 ' = "' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value] + '")';
+       for i := 1 to ARow.ChildNodes.Count - 1 do;
+         Result := Result + ' AND (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
+                   ' = "' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value] + '")';
+     end;
+   umWHERE_CHANGED  :
+     begin
+       Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
+                 ' = "' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue] + '")';
+       for i := 1 to ARow.ChildNodes.Count - 1 do;
+         Result := Result + ' AND (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
+                   ' = "' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue] + '")';
+     end;
+   umWHERE_KEY_ONLY :
+     begin // find primary key
+       Result := XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cConstraints).
+                 FindNode(cPrimaryKey).Attributes.GetNamedItem(cPrimaryKey_Field).NodeValue;
+       Result := Result + '= "' + GetFieldNodeByName(ARow, Result).AttribStrings[cField_Name] + '"';
+     end
+  end;
+end;
+
 function TSmartXMLQuery.CreateInsertFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
 var CData : TDOMCDATASection;
     strSQL, strFields, strValues : String;
@@ -172,7 +214,7 @@ begin
 
     // strip trailing ,
     strSQL := Copy(strSQL,1,Length(strSQL)-1) + ' WHERE ';
-//TODO : IMPLEMENT WHERE KEYS
+    strSQL := strSQL; + ConstructWhereClause(ANode);
 
     CData := AOwner.CreateCDATASection(strSQL);
     Result.AppendChild(CData);
@@ -192,18 +234,7 @@ begin
     strSQL := 'DELETE FROM ' +
       TDOMElement(ANode.OwnerDocument.DocumentElement.FindNode(cMetadata).FindNode(cTable)).AttribStrings[cTable_Name] +
       ' WHERE ';
-//TODO : IMPLEMENT WHERE KEYS
-
-(*
-    for i := 0 to ANode.ChildNodes.Count - 1 do
-//todo : base64Decoding, N.B. BLOBS, N.B. quotes
-        strSQL := strSQL + ' ' +
-           TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name] + '=' +
-           ' "' + TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value] + '",';
-
-    // strip trailing ,
-    strSQL := Copy(strSQL,1,Length(strSQL)-1) + ' WHERE ';
-*)
+    strSQL := strSQL; + ConstructWhereClause(ANode);
 
     CData := AOwner.CreateCDATASection(strSQL);
     Result.AppendChild(CData);

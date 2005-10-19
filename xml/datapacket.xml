@@ -17,6 +17,7 @@
        <fielddef name="FLAG"  fieldkind="data" datatype="graphic" fieldsize="2048"  displaylabel="Flag" displaywidth="20" fieldindex="2"  required="false" readonly="false" />
        <fielddef name="NOTES" fieldkind="data" datatype="memo"    fieldsize="1024"  displaylabel="Memo" displaywidth="20" fieldindex="3"  required="false" readonly="false" />
     </fielddefs>
+    <update_mode value="2" />
     <indexdefs count="0"> 
     </indexdefs>
   </metadata>
