@@ -35,8 +35,8 @@ type
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
     FSQLConnection : TCustomSQLConnection; // a connection to retreive XML / execute SQL
     procedure SetSQL(const AValue: TStrings);
-    procedure SetSQLConnection(const AValue: TCustomSQLConnection);
   protected
+    procedure SetSQLConnection(const AValue: TCustomSQLConnection); virtual;
     procedure ConstructQuery(const QueryType : String); virtual;
   public
     constructor Create(AOwner: TComponent); override;

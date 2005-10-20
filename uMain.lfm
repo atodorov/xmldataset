@@ -1,15 +1,15 @@
 object Form1: TForm1
   Caption = 'Form1'
-  ClientHeight = 331
+  ClientHeight = 375
   ClientWidth = 459
   OnCreate = Form1Create
   OnDestroy = Form1Destroy
   PixelsPerInch = 96
   HorzScrollBar.Page = 458
-  VertScrollBar.Page = 330
-  Left = 260
-  Height = 331
-  Top = 155
+  VertScrollBar.Page = 374
+  Left = 245
+  Height = 375
+  Top = 100
   Width = 459
   object DBImage1: TDBImage
     DataField = 'FLAG'
@@ -29,19 +29,19 @@ object Form1: TForm1
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     OptionsExtra = [dgeAutoColumns, dgeCheckboxColumn]
     Scrollbars = ssBoth
-    Height = 159
+    Height = 158
     Top = 25
     Width = 355
   end
   object GroupBox1: TGroupBox
     Align = alBottom
     Caption = 'GroupBox1'
-    ClientHeight = 129
+    ClientHeight = 174
     ClientWidth = 455
     ParentColor = True
     TabOrder = 0
-    Height = 147
-    Top = 184
+    Height = 192
+    Top = 183
     Width = 459
     object Button1: TButton
       Caption = 'Load From File'
@@ -58,7 +58,7 @@ object Form1: TForm1
       ScrollBars = ssAutoBoth
       TabOrder = 1
       Left = 86
-      Height = 122
+      Height = 167
       Width = 360
     end
     object Button2: TButton
@@ -87,6 +87,15 @@ object Form1: TForm1
       Left = 6
       Height = 25
       Top = 96
+      Width = 75
+    end
+    object Button5: TButton
+      Caption = 'Save Smart Q'
+      OnClick = Button5Click
+      TabOrder = 5
+      Left = 6
+      Height = 25
+      Top = 129
       Width = 75
     end
   end

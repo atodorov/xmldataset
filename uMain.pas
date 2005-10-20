@@ -17,6 +17,7 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    Button5: TButton;
     DBImage1: TDBImage;
     DBMemo1: TDBMemo;
     DBNavigator1: TDBNavigator;
@@ -28,6 +29,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure DBImage1Click(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
@@ -42,7 +44,7 @@ var
 
 implementation
 
-uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, XMLQuery,
+uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, XMLQuery, SmartXMLQuery,
 //     DBCtrlGrid in 'dbcg/dbctrlgrid.pas',
      XMLRead, XMLWrite;
 
@@ -94,6 +96,15 @@ begin
    xq.ExecSQL(QUERY_SELECT);
    
    xq.Free;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var sq : TSmartXMLQuery;
+begin
+   sq := TSmartXMLQuery.Create(Self);
+   sq.XMLDocument := XMLDS.XMLDocument;
+   sq.SQLConnBeforeCommitDataset(nil,sq);
+   sq.Free;
 end;
 
 procedure TForm1.DBImage1Click(Sender: TObject);

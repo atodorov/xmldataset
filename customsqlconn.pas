@@ -118,7 +118,7 @@ end;
 
 function TCustomSQLConnection.GetDataSet(Index: Integer): TCustomXMLDataSet;
 begin
-  Result := TCustomXMLDataSet(FDataSets.Items[Index]^);
+  Result := TCustomXMLDataSet(FDataSets.Items[Index]);
 end;
 
 function TCustomSQLConnection.GetDataSetCount: Integer;
@@ -192,8 +192,8 @@ begin
 // todo : fix this deConnectChanged
 // A client must re-connect and get new XML ?????
 (*
-      if TObject(FClients.Items[i]^) is TCustomXMLDataSet then
-         TCustomXMLDataSet(FClients.Items[i]^).DataEvent(deConnectChange, Ptrint(Connecting));
+      if TObject(FClients.Items[i]) is TCustomXMLDataSet then
+         TCustomXMLDataSet(FClients.Items[i]).DataEvent(deConnectChange, Ptrint(Connecting));
 *)
     end;
 end;
@@ -212,7 +212,7 @@ begin
        begin
          P := FTransactXMLList.Items[Index];
          FTransactXMLList.Delete(Index);
-         TXMLDocument(P^).Free;
+         TXMLDocument(P).Free;
        end;
      FDataSets.Remove(Client);
     end;
@@ -246,7 +246,7 @@ begin
 
 //todo : check this out
   for i := 0 to FTransactXMLList.Count - 1 do
-     TXMLDocument(FTransactXMLList.Items[i]^).Free;
+     TXMLDocument(FTransactXMLList.Items[i]).Free;
   FreeAndNil(FTransactXMLList);
   
   inherited Destroy;
@@ -273,11 +273,11 @@ begin
      raise Exception.Create('Can not start transaction. Internal count differs!');
      
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TXMLDocument(FTransactXMLList.Items[i]^).DocumentElement) then
-      with TXMLDocument(FTransactXMLList.Items[i]^) do
+    if Assigned(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement) then
+      with TXMLDocument(FTransactXMLList.Items[i]) do
         begin
           RemoveChild(DocumentElement);
-          AppendChild(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement);
+          AppendChild(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement);
         end;
 
   FInTransaction := true;
@@ -290,11 +290,11 @@ begin
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument.DocumentElement) then
-      with TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument do
+    if Assigned(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement) then
+      with TCustomXMLDataset(FDataSets.Items[i]).XMLDocument do
         begin
           RemoveChild(DocumentElement);
-          AppendChild(TXMLDocument(FTransactXMLList.Items[i]^).DocumentElement);
+          AppendChild(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement);
         end;
   FInTransaction := false;
 end;
@@ -313,11 +313,11 @@ begin
   for i := 0 to FDataSets.Count - 1 do
     begin // send current xml
       if Assigned(FBeforeCommitDataset) then
-         FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]^));
+         FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]));
          
-      DataToSend := TCustomXMLDataset(FDataSets.Items[i]^).XMLStringStream;
+      DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
       Open;
-      ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]^).XMLDocument,ReceivedData);
+      ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument,ReceivedData);
     end;
   FInTransaction := false;
 end;
