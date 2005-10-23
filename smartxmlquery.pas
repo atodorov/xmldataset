@@ -167,24 +167,34 @@ begin
    umWHERE_ALL      :
      begin
        Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
-                 '='+ QuoteChar + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value] + QuoteChar +')';
+                 '='+ QuoteChar +
+                 DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value]) +
+                 QuoteChar +')';
        for i := 1 to ARow.ChildNodes.Count - 1 do;
          Result := Result + ' AND (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
-                   '='+ QuoteChar + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value] + QuoteChar +')';
+                   '='+ QuoteChar +
+                   DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value]) +
+                   QuoteChar +')';
      end;
    umWHERE_CHANGED  :
      begin
        Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
-                 '='+ QuoteChar + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue] + QuoteChar +')';
+                 '='+ QuoteChar +
+                 DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue]) +
+                 QuoteChar +')';
        for i := 1 to ARow.ChildNodes.Count - 1 do;
          Result := Result + ' AND (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
-                   '='+ QuoteChar + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue] + QuoteChar + ')';
+                   '='+ QuoteChar +
+                   DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue]) +
+                   QuoteChar + ')';
      end;
    umWHERE_KEY_ONLY :
      begin // find primary key
-       Result := ' ' + XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cConstraints).FindNode(cKeys).
+       Result := XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cConstraints).FindNode(cKeys).
                  FindNode(cPrimaryKey).Attributes.GetNamedItem(cPrimaryKey_Field).NodeValue;
-       Result := Result + '='+ QuoteChar + GetFieldNodeByName(ARow, Result).AttribStrings[cField_Value] + QuoteChar;
+       Result := ' ' + Result + '='+ QuoteChar +
+                 DecodeBase64ToString(GetFieldNodeByName(ARow, Result).AttribStrings[cField_Value]) +
+                 QuoteChar;
      end
   end;
 end;
@@ -207,10 +217,9 @@ begin
     for i := 0 to ANode.ChildNodes.Count - 1 do
       begin
         strFields := strFields + ' ' + TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name] + ',';
-
-//todo : base64Decoding, N.B. BLOBS, N.B. quotes
         strValues := strValues + ' ' + QuoteChar +
-           TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value] + QuoteChar + ',';
+           DecodeBase64ToString(TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value]) +
+           QuoteChar + ',';
       end;
 
     // strip trailing ,
@@ -237,10 +246,11 @@ begin
       ' SET';
 
     for i := 0 to ANode.ChildNodes.Count - 1 do
-//todo : base64Decoding, N.B. BLOBS, N.B. quotes
         strSQL := strSQL + ' ' +
            TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name] + '=' +
-           QuoteChar + TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value] + QuoteChar + ',';
+           QuoteChar +
+           DecodeBase64ToString(TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value]) +
+           QuoteChar + ',';
 
     // strip trailing ,
     strSQL := Copy(strSQL,1,Length(strSQL)-1) + ' WHERE';
