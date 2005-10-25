@@ -24,7 +24,6 @@ unit smartxmlquery;
 interface
 
 //todo list
-// - convert all data back to normal when constructing sql statements / Base64Decode
 // - how to handle BLOB fields
 // - should QuotedStr be used for string / all field values
 
@@ -50,7 +49,6 @@ type
     }
     procedure SetSQLConnection(const AValue: TCustomSQLConnection); override;
   public
-// todo : debug only
     procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TCustomXMLDataSet);
 
   protected
@@ -68,9 +66,6 @@ type
   end;
 
 implementation
-
-//todo : debug only - remove
-uses XMLWrite;
 
 { TSmartXMLQuery }
 
@@ -92,8 +87,6 @@ procedure TSmartXMLQuery.SQLConnBeforeCommitDataset(Sender: TObject; Dataset: TC
 begin
   if (Dataset is TSmartXMLQuery) then
      TSmartXMLQuery(Dataset).ConstructSQLFromXML;
-//todo - debug only
-  WriteXMLFile(Dataset.XMLDocument,ExtractFilePath(ParamStr(0))+'smart.xml');
 end;
 
 procedure TSmartXMLQuery.ConstructSQLFromXML;
@@ -158,7 +151,6 @@ begin
 end;
 
 function TSmartXMLQuery.ConstructWhereClause(const ARow :TDOMElement) : String;
-// todo : AttribStrings['oldvalue', Def = 'value']
 var i : LongWord;
 begin
   Result := '';
