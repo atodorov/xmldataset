@@ -1,5 +1,5 @@
 program TestXMLDS;
-
+///
 {$mode objfpc}{$H+}
 
 uses
