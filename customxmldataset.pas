@@ -250,6 +250,7 @@ begin
    else if (FieldType = 'FIXEDCHAR')   then Result := ftFixedChar
    else if (FieldType = 'WIDESTRING')  then Result := ftWideString
    else if (FieldType = 'LARGEINT')    then Result := ftLargeint
+   else if (FieldType = 'INT64')       then Result := ftLargeint // in DB.pp Largeint = Int64
    else if (FieldType = 'ADT')         then Result := ftADT
    else if (FieldType = 'ARRAY')       then Result := ftArray
    else if (FieldType = 'REFERENCE')   then Result := ftReference
