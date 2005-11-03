@@ -8,7 +8,7 @@ unit customxmldataset;
 
  (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
- 
+
  *****************************************************************************
  *                                                                           *
  *  See the file COPYING included in this distribution,                      *
@@ -24,7 +24,7 @@ unit customxmldataset;
 // a workaround widestrings. We use this because DOMString = WideString
 {$DEFINE USEWIDESTRINGS}
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
 interface
 
@@ -108,11 +108,13 @@ type
     class function GetStringFromFieldType(const FieldType : TFieldType) : String;
     class function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
     class function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+  public
+    { Base64 encodng / decoding routines }
     class function EncodeBase64(const S : String)  : String; overload;
     class function EncodeBase64(const S : TStream) : String; overload;
     class function DecodeBase64ToString(const S : String) : String;
     class procedure DecodeBase64ToStream(const S : String; Output : TStream);
-  public
+    { constructors / destructor }
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
     constructor Create(AOwner: TComponent; AXML : String); virtual; overload;
@@ -123,8 +125,6 @@ type
     property XMLStringStream : TStringStream read GetXMLStringStream;
   end;
 
-
-  
 implementation
 
 uses uXMLDSConsts, Variants, Base64;
@@ -210,7 +210,7 @@ begin
   try
      Strm := TStringStream.Create(S);
      Strm.Position := 0;
-  
+
      b64Decoder := TBase64DecodingStream.Create(Strm);
      Output.CopyFrom(b64Decoder, b64Decoder.Size);
   finally
@@ -438,7 +438,7 @@ begin
      exit;
   if (XMLDocument.DocumentElement.AttribStrings[cDocument_Type] <> cDocument_Type_Datapacket) then
      raise Exception.Create('Invalid XML Document!');
-     
+
   FieldDefs.Clear;
   for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
       begin   // Add fields
@@ -507,14 +507,14 @@ begin
   try
     LBlob := GetFieldNodeByName(FNode, Field.FieldName);
     strEnc64 := EncodeBase64(Stream);
-    
+
     // set old data if we are editing
     if (State = dsEdit) and
        ((StrToInt(FNode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED) and
        (strEnc64 <> LBlob.AttribStrings[cField_Value]) and
        (LBlob.AttribStrings[cField_OldValue] = '') then
      LBlob.AttribStrings[cField_OldValue] := LBlob.AttribStrings[cField_Value];
-     
+
     LBlob.AttribStrings[cField_Value] := strEnc64;
   finally
     LBlob := nil; // clear reference
@@ -684,7 +684,7 @@ begin
     Result := FXMLDoc.CreateElement(cRow); // create <row>
     Result.AttribStrings[cRow_ID] := sGetNextID;
     Result.AttribStrings[cRow_State] := IntToStr(AState);
-    
+
     for i := 0 to FieldDefs.Count - 1 do
        begin
          LField := FXMLDoc.CreateElement(cField); // create <field>
@@ -805,4 +805,3 @@ begin
 end;
 
 end.
-

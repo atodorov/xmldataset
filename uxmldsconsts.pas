@@ -7,7 +7,7 @@ unit uxmldsconsts;
  This file is part of the XMLDataset suite for the Free Component Library!
 
  Constants describing the xml structure of the format used by XMLDataset componets
- 
+
  (c) 2005 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
 
@@ -38,6 +38,10 @@ const
   ROW_NOT_MODIFIED = $00000000;
   ROW_INSERTED     = $00000001;
   ROW_MODIFIED     = $00000002;
+
+// field kinds
+  FK_DATA = 'data';
+  FK_CALCULATED = 'calculated';
 
 // update mode constants
 type
@@ -159,4 +163,3 @@ const
 implementation
 
 end.
-
