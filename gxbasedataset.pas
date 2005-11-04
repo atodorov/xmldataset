@@ -460,15 +460,22 @@ begin
             Move((Buffer + Offset)^, TempInt, sizeof(Integer));
             SetFieldValue(Fields[Index], TempInt);
           end;
-        ftFloat, ftBCD, ftCurrency, ftDateTime:
+        ftFloat, ftBCD, ftCurrency :
           begin
             Move((Buffer + Offset)^, TempDouble, sizeof(Double));
             SetFieldValue(Fields[Index], TempDouble);
           end;
+        ftDateTime :
+          begin
+            Move((Buffer + Offset)^, TempDouble, sizeof(Double));
+            // todo : call setfieldvalue with string representation of TempDouble
+            SetFieldValue(Fields[Index], TempDouble);
+          end;
         ftBoolean:
           begin
-            Move((Buffer + Offset)^, TempBool, sizeof(WordBool));
-            SetFieldValue(Fields[Index], TempBool);
+            Move((Buffer + Offset)^, TempBool, SizeOf(WordBool));
+            SetFieldValue(Fields[Index], BoolToStr(TempBool));
+//            SetFieldValue(Fields[Index], TempBool);
           end;
         ftGraphic, ftMemo:
           begin
@@ -487,6 +494,7 @@ var
   TempInt: Integer;
   TempDouble: Double;
   TempBool: WordBool;
+  TempDateTime : TDateTime;
   Offset: Integer;
   Index: Integer;
   Stream: TStream;
@@ -523,15 +531,20 @@ begin
             TempInt := Value;
             Move(TempInt, (Buffer + Offset)^, sizeof(TempInt));
           end;
-        ftFloat, ftBCD, ftCurrency, ftDateTime:
+        ftFloat, ftBCD, ftCurrency:
           begin
             TempDouble := Value;
             Move(TempDouble, (Buffer + Offset)^, sizeof(TempDouble));
           end;
+        ftDateTime :
+          begin  // convert Variant (string) to TDateTime and write it to buffer
+            TempDateTime := StrToDateTime(Value);
+            Move(TempDateTime, (Buffer + Offset)^, SizeOf(TempDateTime));
+          end;
         ftBoolean:
           begin
-            TempBool := Value;
-            Move(TempBool, (Buffer + Offset)^, sizeof(TempBool));
+            TempBool := StrToBool(Value);
+            Move(TempBool, (Buffer + Offset)^, SizeOf(TempBool));
           end;
         ftMemo, ftGraphic:
           begin
