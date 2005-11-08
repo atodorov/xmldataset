@@ -266,7 +266,7 @@ begin
 end;
 
 class function TCustomXMLDataSet.GetStringFromFieldType(const FieldType : TFieldType) : String;
-//todo : changed this using constant array in new DB.pp
+//todo : change this using constant array in new DB.pp
 begin
    case FieldType of
      ftUnknown     : Result := 'UNKNOWN';
@@ -339,7 +339,7 @@ begin
      ftCursor            : ;
      ftFixedChar         : ;
      ftWideString        : ;
-     ftLargeint          : ;
+     ftLargeint          : Result := SizeOf(LargeInt); // this is Int64 // todo : check it
      ftADT               : ;
      ftArray             : ;
      ftReference         : ;

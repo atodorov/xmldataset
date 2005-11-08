@@ -22,6 +22,9 @@ interface
 
 uses Classes, SysUtils, DB;
 
+//todo : add all blob types that are supported to this set
+const BLOB_FIELDS = [ftMemo, ftGraphic];
+
 type
   PRecordInfo = ^TRecordInfo;
   TRecordInfo = record
@@ -69,7 +72,6 @@ type
     property  isOpen: Boolean read FisOpen;
   protected   {TGXBaseDataset Internal functions that can be overriden if needed}
   
-// todo : add all blob fields in these 2 procedures. not only ftmemo, ftGraphic
     procedure AllocateBLOBPointers(Buffer: PChar); virtual;
     procedure FreeBlobPointers(Buffer: PChar); virtual;
     
@@ -201,7 +203,7 @@ var
   Stream: TMemoryStream;
 begin
   for Index := 0 to FieldCount - 1 do
-    if Fields[Index].DataType in [ftMemo, ftGraphic] then
+    if Fields[Index].DataType in BLOB_FIELDS then
       begin
         Offset := GetFieldOffset(Fields[Index]);
         Stream := TMemoryStream.Create;
@@ -216,7 +218,7 @@ var
   FreeObject: TObject;
 begin
   for Index := 0 to FieldCount - 1 do
-    if Fields[Index].DataType in [ftMemo, ftGraphic] then
+    if Fields[Index].DataType in BLOB_FIELDS then
       begin
         Offset := GetFieldOffset(Fields[Index]);
         Move((Buffer + Offset)^, Pointer(FreeObject), SizeOf(Pointer));
@@ -331,7 +333,8 @@ begin
       ftInteger, ftSmallInt, ftDate, ftTime: Result := Result + sizeof(Integer);
       ftFloat, ftCurrency, ftBCD, ftDateTime: Result := Result + sizeof(Double);
       ftBoolean: Result := Result + sizeof(WordBool);
-      ftMemo, ftGraphic: Result := Result + sizeof(Pointer);
+      else if Fields[Index].DataType in BLOB_FIELDS then
+              Result := Result + sizeof(Pointer);
     end;
 end;
 
@@ -425,14 +428,13 @@ begin
   Result := 0;
   FPos := FBufferMap.Indexof(Field.FieldName);
   for Index := 0 to FPos - 1 do
-    begin
-      case FieldbyName(FBufferMap[Index]).DataType of
-        ftString: inc(Result, FieldbyName(FBufferMap[Index]).Size + 1);
-        ftInteger, ftSmallInt, ftDate, ftTime: inc(Result, sizeof(Integer));
-        ftDateTime, ftFloat, ftBCD, ftCurrency: inc(Result, sizeof(Double));
-        ftBoolean: inc(Result, sizeof(WordBool));
-        ftGraphic, ftMemo: inc(Result, sizeof(Pointer));
-      end;
+    case FieldbyName(FBufferMap[Index]).DataType of
+      ftString: inc(Result, FieldbyName(FBufferMap[Index]).Size + 1);
+      ftInteger, ftSmallInt, ftDate, ftTime: inc(Result, sizeof(Integer));
+      ftDateTime, ftFloat, ftBCD, ftCurrency: inc(Result, sizeof(Double));
+      ftBoolean: inc(Result, sizeof(WordBool));
+      else if Fields[Index].DataType in BLOB_FIELDS then
+              Result := Result + SizeOf(Pointer);
     end;
 end;
 
@@ -477,12 +479,13 @@ begin
             SetFieldValue(Fields[Index], BoolToStr(TempBool));
 //            SetFieldValue(Fields[Index], TempBool);
           end;
-        ftGraphic, ftMemo:
-          begin
-            Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
-            Stream.Position := 0;
-            SetBlobField(Fields[Index], Stream);
-          end;
+        else
+          if Fields[Index].DataType in BLOB_FIELDS then
+             begin
+               Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
+               Stream.Position := 0;
+               SetBlobField(Fields[Index], Stream);
+             end;
       end;
     end;
 end;
@@ -515,7 +518,7 @@ begin
   DoBeforeGetFieldValue;
   for Index := 0 to FieldCount - 1 do
     begin
-      if not (Fields[Index].DataType in [ftMemo, ftGraphic]) then
+      if not (Fields[Index].DataType in BLOB_FIELDS) then
         Value := GetFieldValue(Fields[Index]);
       Offset := GetFieldOffset(Fields[Index]);
       case Fields[Index].DataType of
@@ -546,13 +549,14 @@ begin
             TempBool := StrToBool(Value);
             Move(TempBool, (Buffer + Offset)^, SizeOf(TempBool));
           end;
-        ftMemo, ftGraphic:
-          begin
-            Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
-            Stream.Size := 0;
-            Stream.Position := 0;
-            GetBlobField(Fields[Index], Stream);
-          end;
+        else
+          if Fields[Index].DataType in BLOB_FIELDS then
+             begin
+               Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
+               Stream.Size := 0;
+               Stream.Position := 0;
+               GetBlobField(Fields[Index], Stream);
+             end;
       end;
     end;
   DoAfterGetFieldValue;
