@@ -24,6 +24,12 @@ unit customxmldataset;
 // a workaround widestrings. We use this because DOMString = WideString
 {$DEFINE USEWIDESTRINGS}
 
+// do we use Base64 encoding or not
+{$DEFINE USE_BASE_64}
+
+// translate character encoding or not
+ {$DEFINE USE_ENCODING}
+
 //{$DEFINE DEBUGXML}
 
 interface
@@ -37,6 +43,12 @@ uses
   ;
   {$ENDIF}
 
+const
+
+  { character encoding constants }
+  FROM_ENCODING = 'UTF8';
+  TO_ENCODING   = 'CP1251';
+
 type
 ////// TODO LIST
 // - add display format for Float and DateTime fields. all variantions (Date, Time, Float, Currency)
@@ -46,6 +58,9 @@ type
 // - add 'oldvalue' = 'value' for primary key fields (to be able to handle SmartXML)
 
   { TCustomXMLDataSet - dataset that works with XML instead a database }
+
+  { TCustomXMLDataSet }
+
   TCustomXMLDataSet=class(TGXBaseDataset)
   private
     FCurRec: Integer;
@@ -60,7 +75,10 @@ type
     function  GetXMLStringStream: TStringStream;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
-  protected {Simplified Dataset methods}
+  protected
+    { override to call SetFieldsProperties }
+    procedure InternalOpen; override;
+    { simplified dataset methods}
     function  DoOpen: Boolean; override;
     procedure DoClose; override;
     procedure DoDeleteRecord; override;
@@ -101,19 +119,24 @@ type
     function  nGetNextID : Longint;
     function  sGetNextID : String;
     procedure AssignInternalIDS;
+    { set fields properties - e.g. visible, required, ... }
+    procedure SetFieldsProperties;
     { search and indexing }
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
     { helper functions }
-    class function GetFieldTypeFromString(FieldType : String) : TFieldType;
-    class function GetStringFromFieldType(const FieldType : TFieldType) : String;
-    class function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
-    class function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+    function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   public
     { Base64 encodng / decoding routines }
     class function EncodeBase64(const S : String)  : String; overload;
     class function EncodeBase64(const S : TStream) : String; overload;
     class function DecodeBase64ToString(const S : String) : String;
     class procedure DecodeBase64ToStream(const S : String; Output : TStream);
+    { character encoding }
+    class function IconvConvert(const FromCode, ToCode, AInput : String) : String;
+    { helper functions }
+    class function GetFieldTypeFromString(FieldType : String) : TFieldType;
+    class function GetStringFromFieldType(const FieldType : TFieldType) : String;
+    class function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
     { constructors / destructor }
     constructor Create(AOwner: TComponent); override; overload;
     constructor Create(AOwner: TComponent; AXMLDoc : TXMLDocument); virtual; overload;
@@ -127,7 +150,15 @@ type
 
 implementation
 
-uses uXMLDSConsts, Variants, Base64;
+uses uXMLDSConsts, Variants
+     {$IFDEF USE_BASE_64}
+     , Base64
+     {$ENDIF}
+     
+     {$IFNDEF WIN32}
+     , LibC
+     {$ENDIF}
+     ;
 
 {$IFDEF DEBUGXML}
 procedure Log(const Msg : String);
@@ -142,8 +173,11 @@ end;
 *******************************************************************************)
 
 class function TCustomXMLDataSet.EncodeBase64(const S : String) : String;
+{$IFDEF USE_BASE_64}
 var S1, S2 : TStringStream;
+{$ENDIF}
 begin
+  {$IFDEF USE_BASE_64}
   S1 := TStringStream.Create(S);
   try
     S1.Position:=0;
@@ -159,9 +193,12 @@ begin
     finally
       S2.Free;
     end;
- finally
-   S1.Free;
- end;
+  finally
+    S1.Free;
+  end;
+  {$ELSE}
+  Result := S;
+  {$ENDIF}
 end;
 
 class function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
@@ -170,12 +207,16 @@ begin
   S.Position := 0;
   strStrm := TStringStream.Create('');
   try
+    {$IFDEF USE_BASE_64}
     with TBase64EncodingStream.Create(strStrm) do
       try
         CopyFrom(S, S.Size);
       finally
         Free;
       end;
+    {$ELSE}
+    strStrm.CopyFrom(S, S.Size);
+    {$ENDIF}
     Result := strStrm.DataString;
   finally
     strStrm.Free;
@@ -183,9 +224,12 @@ begin
 end;
 
 class function TCustomXMLDataSet.DecodeBase64ToString(const S : String) : String;
+{$IFDEF USE_BASE_64}
 var S1, S2 : TStringStream;
     b64Decoder : TBase64DecodingStream;
+{$ENDIF}
 begin
+  {$IFDEF USE_BASE_64}
   S1 := TStringStream.Create(S);
   try
     S1.Position:=0;
@@ -197,24 +241,35 @@ begin
       b64Decoder.Free;
     end;
     Result := S2.DataString;
- finally
-   S2.Free;
-   S1.Free;
- end;
+  finally
+    S2.Free;
+    S1.Free;
+  end;
+  {$ELSE}
+  Result := S;
+  {$ENDIF}
 end;
 
 class procedure TCustomXMLDataSet.DecodeBase64ToStream(const S : String; Output : TStream);
 var Strm : TStringStream;
+{$IFDEF USE_BASE_64}
     b64Decoder : TBase64DecodingStream;
+{$ENDIF}
 begin
   try
      Strm := TStringStream.Create(S);
      Strm.Position := 0;
 
+     {$IFDEF USE_BASE_64}
      b64Decoder := TBase64DecodingStream.Create(Strm);
      Output.CopyFrom(b64Decoder, b64Decoder.Size);
+     {$ELSE}
+     Output.CopyFrom(Strm, Strm.Size);
+     {$ENDIF}
   finally
+    {$IFDEF USE_BASE_64}
     b64Decoder.Free;
+    {$ENDIF}
     Strm.Free;
   end;
 end;
@@ -354,20 +409,26 @@ begin
    end;
 end;
 
-class function TCustomXMLDataSet.GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+function TCustomXMLDataSet.GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
 var i : Integer;
 begin
 // AParent = <row> ... </row>
 // ChildNodes.Item[i] = <field ... />
   Result := nil;
-  AFieldName := AnsiUpperCase(AFieldName);
+  // convert AFieldName using specified encoding
+  AFieldName := AnsiUpperCase( IconvConvert(FROM_ENCODING, TO_ENCODING, AFieldName) );
 
-  for i := 0 to AParent.ChildNodes.Count - 1 do
-    if (AnsiUpperCase(TDOMElement(AParent.ChildNodes.Item[i]).AttribStrings[cField_Name]) = AFieldName) then
-      begin
-         Result := TDOMElement(AParent.ChildNodes.Item[i]);
-         exit;
-       end;
+  if AParent.HasChildNodes then
+    for i := 0 to AParent.ChildNodes.Count - 1 do
+      if (AnsiUpperCase(
+            IconvConvert(FROM_ENCODING, TO_ENCODING,
+                         TDOMElement(AParent.ChildNodes.Item[i]).AttribStrings[cField_Name]
+            )
+          ) = AFieldName) then // make fieldname comparison dependent on character encoding
+        begin
+           Result := TDOMElement(AParent.ChildNodes.Item[i]);
+           exit;
+        end;
 end;
 
 procedure TCustomXMLDataSet.SetReadOnly(Value: Boolean);
@@ -391,6 +452,13 @@ begin
   FXMLDoc := AValue;
 end;
 
+procedure TCustomXMLDataSet.InternalOpen;
+begin
+ inherited InternalOpen;
+ if Fields.Count > 0 then
+    SetFieldsProperties;
+end;
+
 function TCustomXMLDataSet.DoOpen: Boolean;
 begin
   if not Assigned(FXMLDoc) then
@@ -402,7 +470,7 @@ begin
   FModifiedCount := 0;
   FInternalID    := -1;
   AssignInternalIDS;
-  
+
   Result := true; //todo : true or <rowdata>.childs.count > 0 ?
 end;
 
@@ -444,14 +512,16 @@ begin
   for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
       begin   // Add fields
         domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i]);
-        FieldName := Trim(domNode.AttribStrings[cFieldDef_Name]);
+        // convert FieldName using specified encodings
+        FieldName := IconvConvert(FROM_ENCODING, TO_ENCODING, Trim(domNode.AttribStrings[cFieldDef_Name]));
         ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]));
         Required := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Required]) = cTrue;
         // determine field size
         FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.AttribStrings[cFieldDef_FieldSize]));
 
         FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
-        FieldDefs.Items[i].DisplayName := domNode.AttribStrings[cFieldDef_DisplayLabel];
+        // convert DisplayName using specified encodings
+        FieldDefs.Items[i].DisplayName := IconvConvert(FROM_ENCODING, TO_ENCODING, domNode.AttribStrings[cFieldDef_DisplayLabel]);
       end;
 end;
 
@@ -465,15 +535,17 @@ begin
 {$ELSE}
    strValue := FieldNode.AttribStrings[cField_Value];
 {$ENDIF}
-   Result := DecodeBase64ToString(strValue);
+// get result using character encoding
+   Result := IconvConvert(FROM_ENCODING, TO_ENCODING, DecodeBase64ToString(strValue));
 end;
 
 procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
+// todo : do we need to use encoding when modifying a field ???
 var FieldNode : TDOMElement;
     strEnc64 : String;
 begin
    FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
-   strEnc64 := EncodeBase64(Value);
+   strEnc64 := EncodeBase64(VarToStr(Value));
    // set old data if we are editing
    if (State = dsEdit) and
       ((StrToInt(FNode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED) and
@@ -761,6 +833,23 @@ begin
   end;
 end;
 
+procedure TCustomXMLDataSet.SetFieldsProperties;
+var i : Integer;
+    domNode : TDOMElement;
+begin
+  // N.B. no checking for valid xml is done. If it is not valid DoCreateFieldDefs will blow away first!
+  for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
+      begin
+        domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i]);
+        // do not use FindField / FieldByName - don't work with fieldnames
+        if (i < Fields.Count) and (Fields[i] <> nil) then
+          begin
+            Fields[i].ReadOnly := AnsiLowerCase(domNode.AttribStrings[cFieldDef_ReadOnly]) = cTrue;
+            Fields[i].Visible  := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Visible]) = cTrue;
+          end;
+      end;
+end;
+
 function TCustomXMLDataSet.FindRowIndexInSection(const ARow: TDOMElement; const ASection : String): Longint;
 var i : Longint;
     LSection : TDOMElement;
@@ -803,6 +892,46 @@ destructor TCustomXMLDataSet.Destroy;
 begin
   FXMLDoc.Free;
   inherited Destroy;
+end;
+
+
+class function TCustomXMLDataSet.IconvConvert(const FromCode, ToCode, AInput : String) : String;
+{$IFNDEF WIN32}
+var id : iconv_t;
+    ib, ob : PChar;
+    ix, ox, cc : size_t;
+{$ENDIF}
+begin
+  Result := AInput;
+  {$IFNDEF WIN32}
+    {$IFDEF USE_ENCODING}
+    try
+      id := iconv_open(PChar(ToCode),PChar(FromCode));
+      if id = iconv_t(-1) then
+         raise Exception.Create('TCustomXMLDataSet.IconvConvert - '+strerror(errno));
+
+      SetLength(Result, Length(AInput) * 4); // voodoo magick here
+
+      ib := Pointer(AInput);
+      ob := Pointer(Result);
+      ix := Length(AInput);
+      ox := Length(Result);
+
+      cc := iconv(id, ib, ix, ob, ox);
+
+      if cc = size_t(-1) then
+         raise Exception.Create('IconvConvert - '+strerror(errno));
+
+      SetLength(Result, Length(Result) - ox);
+
+      iconv_close(id); // don't handle close errors
+
+    except
+      on E : Exception do
+        Result := AInput;
+    end;
+    {$ENDIF USE_ENCODING}
+  {$ENDIF}
 end;
 
 end.

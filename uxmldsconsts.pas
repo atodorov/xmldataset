@@ -130,6 +130,7 @@ const
 {|  |}      cFieldDef_FieldIndex    = 'fieldindex';
 {|  |}      cFieldDef_Required      = 'required';
 {|  |}      cFieldDef_ReadOnly      = 'readonly';
+{|  |}      cFieldDef_Visible       = 'visible';
 {|  +---}cIndexDefs = 'indexdefs';
 {+--+}cRecordData = 'recorddata';
 {|  +--+}cRow = 'row';

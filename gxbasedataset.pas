@@ -51,10 +51,10 @@ type
     procedure GetBlobField(Field: TField; Stream: TStream); virtual; abstract;
     procedure SetBlobField(Field: TField; Stream: TStream); virtual; abstract;
     //Called before and after getting a set of field values
-    procedure DoBeforeGetFieldValue; virtual;
-    procedure DoAfterGetFieldValue; virtual;
-    procedure DoBeforeSetFieldValue(Inserting: Boolean); virtual;
-    procedure DoAfterSetFieldValue(Inserting: Boolean); virtual;
+    procedure DoBeforeGetFieldValue; virtual; abstract;
+    procedure DoAfterGetFieldValue; virtual; abstract;
+    procedure DoBeforeSetFieldValue(Inserting: Boolean); virtual; abstract;
+    procedure DoAfterSetFieldValue(Inserting: Boolean); virtual; abstract;
     //Handle buffer ID
     function  AllocateRecordID: Pointer; virtual; abstract;
     procedure DisposeRecordID(Value: Pointer); virtual; abstract;
@@ -709,27 +709,7 @@ begin
   Result := TGXBlobStream.Create(Field as TBlobField, Mode);
 end;
 
-procedure TGXBaseDataset.DoAfterGetFieldValue;
-begin
-
-end;
-
-procedure TGXBaseDataset.DoBeforeGetFieldValue;
-begin
-
-end;
-
-procedure TGXBaseDataset.DoAfterSetFieldValue(Inserting: Boolean);
-begin
-
-end;
-
-procedure TGXBaseDataset.DoBeforeSetFieldValue(Inserting: Boolean);
-begin
-
-end;
-
-//************************** TOBlobStream ***************************************
+//************************** TGXBlobStream ***************************************
 
 constructor TGXBlobStream.Create(Field: TBlobField; Mode: TBlobStreamMode);
 begin
