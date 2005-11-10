@@ -102,13 +102,13 @@ type
     function  GetCanModify: Boolean; override;
     procedure ClearCalcFields(Buffer: PChar); override;
     function  GetActiveRecordBuffer: PChar; virtual;
+    function  GetFieldData(Field: TField; Buffer: Pointer): Boolean; override;
     procedure SetFieldData(Field: TField; Buffer: Pointer); override;
     procedure GetBookmarkData(Buffer: PChar; Data: Pointer); override;
     function  GetBookmarkFlag(Buffer: PChar): TBookmarkFlag; override;
     procedure SetBookmarkFlag(Buffer: PChar; Value: TBookmarkFlag); override;
     procedure SetBookmarkData(Buffer: PChar; Data: Pointer); override;
     procedure InternalGotoBookmark(ABookmark: Pointer); override;
-    function  GetFieldData(Field: TField; Buffer: Pointer): Boolean; override;
     function  CreateBlobStream(Field: TField; Mode: TBlobStreamMode): TStream; override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -497,7 +497,6 @@ var
   TempInt: Integer;
   TempDouble: Double;
   TempBool: WordBool;
-  TempDateTime : TDateTime;
   Offset: Integer;
   Index: Integer;
   Stream: TStream;
@@ -541,8 +540,13 @@ begin
           end;
         ftDateTime :
           begin  // convert Variant (string) to TDateTime and write it to buffer
-            TempDateTime := StrToDateTime(Value);
-            Move(TempDateTime, (Buffer + Offset)^, SizeOf(TempDateTime));
+            TempDouble := StrToDateTime(Value);
+(*
+            writeln('****************** TempDateTime = ',FormatDateTime('DD.MM.YYYY HH:NN:SS', TempDouble));
+            writeln('****************** Fields[',Index,'].DisplayFormat = ',TDateTimeField(Fields[Index]).DisplayFormat);
+            writeln('****************** Fields[',Index,'].AsString = ',Fields[Index].AsString);
+*)
+            Move(TempDouble, (Buffer + Offset)^, SizeOf(TempDouble));
           end;
         ftBoolean:
           begin
@@ -612,10 +616,12 @@ begin
         ftCurrency, ftFloat: Move((RecBuffer + Offset)^, Double(Buffer^), sizeof(Double));
         ftDateTime:
           begin
-            Move((RecBuffer + Offset)^, TempDouble, sizeof(Double));
+            Move((RecBuffer + Offset)^, TempDouble, SizeOf(Double));
             TimeStamp := DateTimeToTimeStamp(TempDouble);
             Data.DateTime := TimeStampToMSecs(TimeStamp);
-            Move(Data, Buffer^, sizeof(TDateTimeRec));
+            Move(Data, Buffer^, SizeOf(TDateTimeRec));
+            
+//            writeln('***** GetFieldData - ',DateTimeToStr(TempDouble));
           end;
       end;
     end;

@@ -126,7 +126,7 @@ const
 {|  |}      cFieldDef_FieldSize     = 'fieldsize';
 {|  |}      cFieldDef_DisplayLabel  = 'displaylabel';
 {|  |}      cFieldDef_DisplayWidth  = 'displaywidth';
-{|  |}      cFieldDef_DisplayFormat = 'displayformat'; //float and date fields  // todo : fix this
+{|  |}      cFieldDef_DisplayFormat = 'displayformat';
 {|  |}      cFieldDef_FieldIndex    = 'fieldindex';
 {|  |}      cFieldDef_Required      = 'required';
 {|  |}      cFieldDef_ReadOnly      = 'readonly';

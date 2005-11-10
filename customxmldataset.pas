@@ -24,12 +24,6 @@ unit customxmldataset;
 // a workaround widestrings. We use this because DOMString = WideString
 {$DEFINE USEWIDESTRINGS}
 
-// do we use Base64 encoding or not
-{$DEFINE USE_BASE_64}
-
-// translate character encoding or not
- {$DEFINE USE_ENCODING}
-
 //{$DEFINE DEBUGXML}
 
 interface
@@ -42,12 +36,6 @@ uses
   {$ELSE}
   ;
   {$ENDIF}
-
-const
-
-  { character encoding constants }
-  FROM_ENCODING = 'UTF8';
-  TO_ENCODING   = 'CP1251';
 
 type
 ////// TODO LIST
@@ -63,6 +51,10 @@ type
 
   TCustomXMLDataSet=class(TGXBaseDataset)
   private
+    FUseCharacterEncoding : Boolean;
+    FUseBase64 : Boolean;
+    FFROM_ENCODING : String;
+    FTO_ENCODING   : String;
     FCurRec: Integer;
     FReadOnly: Boolean;
     FXMLDoc : TXMLDocument;
@@ -127,12 +119,12 @@ type
     function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   public
     { Base64 encodng / decoding routines }
-    class function EncodeBase64(const S : String)  : String; overload;
-    class function EncodeBase64(const S : TStream) : String; overload;
-    class function DecodeBase64ToString(const S : String) : String;
-    class procedure DecodeBase64ToStream(const S : String; Output : TStream);
+    function  EncodeBase64(const S : String)  : String; overload;
+    function  EncodeBase64(const S : TStream) : String; overload;
+    function  DecodeBase64ToString(const S : String) : String;
+    procedure DecodeBase64ToStream(const S : String; Output : TStream);
     { character encoding }
-    class function IconvConvert(const FromCode, ToCode, AInput : String) : String;
+    function IconvConvert(const FromCode, ToCode, AInput : String) : String;
     { helper functions }
     class function GetFieldTypeFromString(FieldType : String) : TFieldType;
     class function GetStringFromFieldType(const FieldType : TFieldType) : String;
@@ -146,15 +138,18 @@ type
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
     property XMLStringStream : TStringStream read GetXMLStringStream;
+    { use character encoding / decoding }
+    property UseCharacterEncoding : Boolean read FUseCharacterEncoding write FUseCharacterEncoding;
+    { use base64 encoding / decoding }
+    property UseBase64 : Boolean read FUsebase64 write FUseBase64;
+    { character encoding constants }
+    property FROM_ENCODING : String read FFROM_ENCODING write FFROM_ENCODING;
+    property TO_ENCODING   : String read FTO_ENCODING   write FTO_ENCODING;
   end;
 
 implementation
 
-uses uXMLDSConsts, Variants
-     {$IFDEF USE_BASE_64}
-     , Base64
-     {$ENDIF}
-     
+uses uXMLDSConsts, Variants, Base64
      {$IFNDEF WIN32}
      , LibC
      {$ENDIF}
@@ -172,104 +167,95 @@ end;
 { TCustomXMLDataSet }
 *******************************************************************************)
 
-class function TCustomXMLDataSet.EncodeBase64(const S : String) : String;
-{$IFDEF USE_BASE_64}
+function TCustomXMLDataSet.EncodeBase64(const S : String) : String;
 var S1, S2 : TStringStream;
-{$ENDIF}
 begin
-  {$IFDEF USE_BASE_64}
-  S1 := TStringStream.Create(S);
-  try
-    S1.Position:=0;
-    S2 := TStringStream.Create('');
-    try
-      with TBase64EncodingStream.Create(S2) do
+  if UseBase64 then
+    begin
+      S1 := TStringStream.Create(S);
+      try
+        S1.Position:=0;
+        S2 := TStringStream.Create('');
         try
-          CopyFrom(S1, S1.Size);
+          with TBase64EncodingStream.Create(S2) do
+            try
+              CopyFrom(S1, S1.Size);
+            finally
+              Free;
+            end;
+          Result := S2.DataString;
         finally
-          Free;
+          S2.Free;
         end;
-      Result := S2.DataString;
-    finally
-      S2.Free;
-    end;
-  finally
-    S1.Free;
-  end;
-  {$ELSE}
-  Result := S;
-  {$ENDIF}
+      finally
+        S1.Free;
+      end;
+    end
+  else Result := S;
 end;
 
-class function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
+function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
 var strStrm : TStringStream;
 begin
   S.Position := 0;
   strStrm := TStringStream.Create('');
   try
-    {$IFDEF USE_BASE_64}
-    with TBase64EncodingStream.Create(strStrm) do
-      try
-        CopyFrom(S, S.Size);
-      finally
-        Free;
-      end;
-    {$ELSE}
-    strStrm.CopyFrom(S, S.Size);
-    {$ENDIF}
+    if UseBase64 then
+       with TBase64EncodingStream.Create(strStrm) do
+         try
+           CopyFrom(S, S.Size);
+         finally
+           Free;
+         end
+    else strStrm.CopyFrom(S, S.Size);
     Result := strStrm.DataString;
   finally
     strStrm.Free;
   end;
 end;
 
-class function TCustomXMLDataSet.DecodeBase64ToString(const S : String) : String;
-{$IFDEF USE_BASE_64}
+function TCustomXMLDataSet.DecodeBase64ToString(const S : String) : String;
 var S1, S2 : TStringStream;
     b64Decoder : TBase64DecodingStream;
-{$ENDIF}
 begin
-  {$IFDEF USE_BASE_64}
-  S1 := TStringStream.Create(S);
-  try
-    S1.Position:=0;
-    S2 := TStringStream.Create('');
-    try
-      b64Decoder := TBase64DecodingStream.Create(S1);
-      S2.CopyFrom(b64Decoder, b64Decoder.Size);
-    finally
-      b64Decoder.Free;
-    end;
-    Result := S2.DataString;
-  finally
-    S2.Free;
-    S1.Free;
-  end;
-  {$ELSE}
-  Result := S;
-  {$ENDIF}
+  if UseBase64 then
+    begin
+      S1 := TStringStream.Create(S);
+      try
+        S1.Position:=0;
+        S2 := TStringStream.Create('');
+        try
+          b64Decoder := TBase64DecodingStream.Create(S1);
+          S2.CopyFrom(b64Decoder, b64Decoder.Size);
+        finally
+          b64Decoder.Free;
+        end;
+        Result := S2.DataString;
+      finally
+        S2.Free;
+        S1.Free;
+      end;
+    end
+  else Result := S;
 end;
 
-class procedure TCustomXMLDataSet.DecodeBase64ToStream(const S : String; Output : TStream);
+procedure TCustomXMLDataSet.DecodeBase64ToStream(const S : String; Output : TStream);
 var Strm : TStringStream;
-{$IFDEF USE_BASE_64}
     b64Decoder : TBase64DecodingStream;
-{$ENDIF}
 begin
   try
      Strm := TStringStream.Create(S);
      Strm.Position := 0;
 
-     {$IFDEF USE_BASE_64}
-     b64Decoder := TBase64DecodingStream.Create(Strm);
-     Output.CopyFrom(b64Decoder, b64Decoder.Size);
-     {$ELSE}
-     Output.CopyFrom(Strm, Strm.Size);
-     {$ENDIF}
+     if UseBase64 then
+       begin
+         b64Decoder := TBase64DecodingStream.Create(Strm);
+         Output.CopyFrom(b64Decoder, b64Decoder.Size);
+       end
+     else Output.CopyFrom(Strm, Strm.Size);
   finally
-    {$IFDEF USE_BASE_64}
-    b64Decoder.Free;
-    {$ENDIF}
+    if UseBase64 then
+       b64Decoder.Free;
     Strm.Free;
   end;
 end;
@@ -537,6 +523,9 @@ begin
 {$ENDIF}
 // get result using character encoding
    Result := IconvConvert(FROM_ENCODING, TO_ENCODING, DecodeBase64ToString(strValue));
+   
+   
+//   writeln('TCustomXMLDataSet.GetFieldValue --- ',Field.FieldName,' = ',Result);
 end;
 
 procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
@@ -845,7 +834,12 @@ begin
         if (i < Fields.Count) and (Fields[i] <> nil) then
           begin
             Fields[i].ReadOnly := AnsiLowerCase(domNode.AttribStrings[cFieldDef_ReadOnly]) = cTrue;
-            Fields[i].Visible  := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Visible]) = cTrue;
+            Fields[i].Visible  := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Visible]) <> cFalse;
+            // set display format if we need it otherwise ignore
+            if Fields[i] is TNumericField
+               then TNumericField(Fields[i]).DisplayFormat := domNode.AttribStrings[cFieldDef_DisplayFormat]
+               else if Fields[i] is TDateTimeField then
+                       TDateTimeField(Fields[i]).DisplayFormat := domNode.AttribStrings[cFieldDef_DisplayFormat];
           end;
       end;
 end;
@@ -874,6 +868,10 @@ constructor TCustomXMLDataSet.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FXMLDoc := TXMLDocument.Create;
+  FROM_ENCODING := '';
+  TO_ENCODING   := '';
+  UseCharacterEncoding := true;
+  UseBase64 := true;
 end;
 
 constructor TCustomXMLDataSet.Create(AOwner: TComponent; AXMLDoc: TXMLDocument);
@@ -895,7 +893,7 @@ begin
 end;
 
 
-class function TCustomXMLDataSet.IconvConvert(const FromCode, ToCode, AInput : String) : String;
+function TCustomXMLDataSet.IconvConvert(const FromCode, ToCode, AInput : String) : String;
 {$IFNDEF WIN32}
 var id : iconv_t;
     ib, ob : PChar;
@@ -904,33 +902,36 @@ var id : iconv_t;
 begin
   Result := AInput;
   {$IFNDEF WIN32}
-    {$IFDEF USE_ENCODING}
-    try
-      id := iconv_open(PChar(ToCode),PChar(FromCode));
-      if id = iconv_t(-1) then
-         raise Exception.Create('TCustomXMLDataSet.IconvConvert - '+strerror(errno));
+    if UseCharacterEncoding and (FROM_ENCODING <> '') and (TO_ENCODING <> '') then
+       try
+         id := iconv_open(PChar(ToCode),PChar(FromCode));
+         if id = iconv_t(-1) then
+            raise Exception.Create('TCustomXMLDataSet.IconvConvert - '+strerror(errno));
 
-      SetLength(Result, Length(AInput) * 4); // voodoo magick here
+         SetLength(Result, Length(AInput) * 4); // voodoo magick here
 
-      ib := Pointer(AInput);
-      ob := Pointer(Result);
-      ix := Length(AInput);
-      ox := Length(Result);
+         ib := Pointer(AInput);
+         ob := Pointer(Result);
+         ix := Length(AInput);
+         ox := Length(Result);
 
-      cc := iconv(id, ib, ix, ob, ox);
+         cc := iconv(id, ib, ix, ob, ox);
 
-      if cc = size_t(-1) then
-         raise Exception.Create('IconvConvert - '+strerror(errno));
+         if cc = size_t(-1) then
+//            raise Exception.Create('IconvConvert - '+strerror(errno));
+           begin
+            Result := AInput;
+            exit;
+           end;
 
-      SetLength(Result, Length(Result) - ox);
+         SetLength(Result, Length(Result) - ox);
 
-      iconv_close(id); // don't handle close errors
+         iconv_close(id); // don't handle close errors
 
-    except
-      on E : Exception do
-        Result := AInput;
-    end;
-    {$ENDIF USE_ENCODING}
+       except
+         on E : Exception do
+           Result := AInput;
+       end;
   {$ENDIF}
 end;
 
