@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs, ExtCtrls;
+  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs, ExtCtrls, EditBtn;
 
 type
 
@@ -18,8 +18,7 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
-    DBImage1: TDBImage;
-    DBMemo1: TDBMemo;
+    DateEdit1: TDateEdit;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -31,6 +30,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure DBImage1Click(Sender: TObject);
+    procedure DateEdit1Exit(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -55,6 +55,7 @@ var XMLDS : TCustomXMLDataSet;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
+  XMLDS.Close;
   ReadXMLFile(XMLDS.XMLDocument,ExtractFilePath(Application.ExeName)+PathDelim+'data.xml');
   XMLDS.ReadOnly := false;// true;
   XMLDS.Open;
@@ -72,7 +73,7 @@ begin
   try
     Memo1.Lines.Clear;
     Conn := THTTPSQLConnection.Create(Self);
-    Conn.ConnParams.Add(HTTP_URL+'=http://localhost/cgi-bin/showparams.pl');
+    Conn.ConnParams.Add(HTTP_URL+'=http://alexx.itafree.com/cgi-bin/showupload.pl');
     Conn.ConnParams.Add(HTTP_POST_FILENAME+'=file.xml');
     Conn.ConnParams.Add(HTTP_POST_FIELDNAME+'=xml_file');
     Conn.DataToSend := XMLDS.XMLStringStream;
@@ -113,12 +114,17 @@ begin
    try
      if Execute then
        begin
-         DBImage1.Picture.LoadFromFile(FileName);
+//         DBImage1.Picture.LoadFromFile(FileName);
 //         TGraphicField(XMLDS.FieldByName('FLAG')).LoadFromFile(FileName);
        end;
    finally
      Free;
    end;
+end;
+
+procedure TForm1.DateEdit1Exit(Sender: TObject);
+begin
+  XMLDS.FieldByName('Дата').AsDateTime := DateEdit1.Date;
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);
@@ -127,6 +133,7 @@ begin
   CustomXMLDataSet.Memo := Memo1;
 //{$ENDIF}
   XMLDS := TCustomXMLDataSet.Create(Self);
+  XMLDS.UseBase64 := false;
   dsMain.DataSet := XMLDS;
 end;
 
