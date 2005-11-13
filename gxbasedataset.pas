@@ -18,9 +18,21 @@ unit gxbasedataset;
 
 *******************************************************************************}
 
+// todo : TimeStampToMSecs / MSecsToTimeStamp doesn't work for date fields.
+// todo : test them and remove if everything is fine
+
+
+{$DEFINE DEBUGXML}
+
 interface
 
-uses Classes, SysUtils, DB;
+uses Classes, SysUtils, DB
+  {$IFDEF DEBUGXML}
+    ,StdCtrls;
+    var Memo : TMemo;
+  {$ELSE}
+  ;
+  {$ENDIF}
 
 //todo : add all blob types that are supported to this set
 const BLOB_FIELDS = [ftMemo, ftGraphic];
@@ -132,6 +144,15 @@ type
   end;
 
 implementation
+
+var OldTimeSeparator, OldDateSeparator : Char;
+
+{$IFDEF DEBUGXML}
+procedure Log(const Msg : String);
+begin
+  Memo.Lines.Add(DateTimeToStr(Now)+' : '+Msg);
+end;
+{$ENDIF}
 
 { TGXBaseDataset }
 
@@ -330,8 +351,8 @@ begin
   for Index := 0 to FieldCount - 1 do
     case Fields[Index].DataType of
       ftString: Result := Result + Fields[Index].Size + 1; //Leave space for terminating null
-      ftInteger, ftSmallInt, ftDate, ftTime: Result := Result + sizeof(Integer);
-      ftFloat, ftCurrency, ftBCD, ftDateTime: Result := Result + sizeof(Double);
+      ftInteger, ftSmallInt, ftDate, ftTime  : Result := Result + SizeOf(Integer);
+      ftFloat, ftCurrency, ftBCD, ftDateTime : Result := Result + SizeOf(Double);
       ftBoolean: Result := Result + sizeof(WordBool);
       else if Fields[Index].DataType in BLOB_FIELDS then
               Result := Result + sizeof(Pointer);
@@ -355,7 +376,7 @@ end;
 procedure TGXBaseDataset.InternalEdit;
 begin
   if GetActiveRecordBuffer <> nil then
-    InternalSetToRecord(GetActiveRecordBuffer);
+     InternalSetToRecord(GetActiveRecordBuffer);
 end;
 
 procedure TGXBaseDataset.InternalFirst;
@@ -469,9 +490,8 @@ begin
           end;
         ftDateTime :
           begin
-            Move((Buffer + Offset)^, TempDouble, sizeof(Double));
-            // todo : call setfieldvalue with string representation of TempDouble
-            SetFieldValue(Fields[Index], TempDouble);
+            Move((Buffer + Offset)^, TempDouble, SizeOf(Double));
+            SetFieldValue(Fields[Index], DateTimeToStr(TempDouble));
           end;
         ftBoolean:
           begin
@@ -541,11 +561,6 @@ begin
         ftDateTime :
           begin  // convert Variant (string) to TDateTime and write it to buffer
             TempDouble := StrToDateTime(Value);
-(*
-            writeln('****************** TempDateTime = ',FormatDateTime('DD.MM.YYYY HH:NN:SS', TempDouble));
-            writeln('****************** Fields[',Index,'].DisplayFormat = ',TDateTimeField(Fields[Index]).DisplayFormat);
-            writeln('****************** Fields[',Index,'].AsString = ',Fields[Index].AsString);
-*)
             Move(TempDouble, (Buffer + Offset)^, SizeOf(TempDouble));
           end;
         ftBoolean:
@@ -618,10 +633,9 @@ begin
           begin
             Move((RecBuffer + Offset)^, TempDouble, SizeOf(Double));
             TimeStamp := DateTimeToTimeStamp(TempDouble);
-            Data.DateTime := TimeStampToMSecs(TimeStamp);
+//orig.            Data.DateTime := TimeStampToMSecs(TimeStamp);
+            Data.DateTime := TempDouble;
             Move(Data, Buffer^, SizeOf(TDateTimeRec));
-            
-//            writeln('***** GetFieldData - ',DateTimeToStr(TempDouble));
           end;
       end;
     end;
@@ -667,8 +681,9 @@ begin
           begin
             Data := TDateTimeRec(Buffer^);
             TimeStamp := MSecsToTimeStamp(Data.DateTime);
-            TempDouble := TimeStampToDateTime(TimeStamp);
-            Move(TempDouble, (RecBuffer + Offset)^, sizeof(TempDouble));
+//orig.            TempDouble := TimeStampToDateTime(TimeStamp);
+            TempDouble := Data.DateTime;
+            Move(TempDouble, (RecBuffer + Offset)^, SizeOf(TempDouble));
           end;
         ftFloat, ftCurrency: Move(Double(Buffer^), (RecBuffer + Offset)^, sizeof(Double));
       end;
@@ -787,5 +802,21 @@ begin
   First;
 end;
 
+initialization
+
+   OldTimeSeparator := TimeSeparator;
+   OldDateSeparator := DateSeparator;
+
+   if TimeSeparator <> ':' then
+      TimeSeparator := ':';
+
+   if DateSeparator <> '.' then
+      DateSeparator := '.';
+      
+finalization
+
+   TimeSeparator := OldTimeSeparator;
+   DateSeparator := OldDateSeparator;
+   
 end.
 
