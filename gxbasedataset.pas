@@ -632,7 +632,7 @@ begin
         ftDateTime:
           begin
             Move((RecBuffer + Offset)^, TempDouble, SizeOf(Double));
-            TimeStamp := DateTimeToTimeStamp(TempDouble);
+//orig.            TimeStamp := DateTimeToTimeStamp(TempDouble);
 //orig.            Data.DateTime := TimeStampToMSecs(TimeStamp);
             Data.DateTime := TempDouble;
             Move(Data, Buffer^, SizeOf(TDateTimeRec));
@@ -680,7 +680,7 @@ begin
         ftDateTime:
           begin
             Data := TDateTimeRec(Buffer^);
-            TimeStamp := MSecsToTimeStamp(Data.DateTime);
+//orig.            TimeStamp := MSecsToTimeStamp(Data.DateTime);
 //orig.            TempDouble := TimeStampToDateTime(TimeStamp);
             TempDouble := Data.DateTime;
             Move(TempDouble, (RecBuffer + Offset)^, SizeOf(TempDouble));
