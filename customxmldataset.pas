@@ -64,7 +64,8 @@ type
     FInsertedCount : Longint;
     FModifiedCount : Longint;
     FInternalID : Longint;
-    function  GetXMLStringStream: TStringStream;
+    function  GetXML: String;
+    function GetXMLStringStream: TStringStream;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
   protected
@@ -137,6 +138,7 @@ type
   published
     property ReadOnly: Boolean read FReadOnly write SetReadOnly;
     property XMLDocument : TXMLDocument read FXMLDoc write SetXMLDoc;
+    property XML : String read GetXML;
     property XMLStringStream : TStringStream read GetXMLStringStream;
     { use character encoding / decoding }
     property UseCharacterEncoding : Boolean read FUseCharacterEncoding write FUseCharacterEncoding;
@@ -149,7 +151,7 @@ type
 
 implementation
 
-uses uXMLDSConsts, Variants, Base64
+uses uXMLDSConsts, Variants, Base64, XMLWrite
      {$IFNDEF WIN32}
      , LibC
      {$ENDIF}
@@ -426,9 +428,25 @@ begin
     end;
 end;
 
+function TCustomXMLDataSet.GetXML : String;
+var strm : TStringStream;
+begin
+  try
+    strm := TStringStream.Create('');
+    WriteXML(XMLDocument.DocumentElement, strm);
+    Result := '<?xml version="1.0"'+
+              ' encoding="'+TO_ENCODING+'"'+
+              '?>'+
+              strm.DataString;
+  finally
+    strm.Free;
+  end;
+end;
+
 function TCustomXMLDataSet.GetXMLStringStream: TStringStream;
-begin //todo : possible memory leaks
-  Result := TStringStream.Create(XMLDocument.NodeValue);
+begin
+// todo : check for memory leaks
+  Result := TStringStream.Create(XML);
 end;
 
 procedure TCustomXMLDataSet.SetXMLDoc(const AValue: TXMLDocument);
