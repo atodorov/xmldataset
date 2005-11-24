@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <document type="smart_sql">
 <insert>
-  <query type="select">
+  <query type="insert">
       <![CDATA[
-      SELECT * FROM CITY
+      INSERT INTO CITY (ID, NAME) VALUES (1, "Sofia")
       ]]>
   </query>
 </insert>  
