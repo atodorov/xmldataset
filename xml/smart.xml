@@ -20,15 +20,5 @@
       DELETE FROM COUNTRY WHERE id=10
       ]]>
   </query>
-</delete>
-<query type="select">
-  <![CDATA[
-  SELECT * FROM CITY
-  ]]>
-</query>
-<query type="select">
-  <![CDATA[
-  SELECT * FROM CITY
-  ]]>
-</query>  
+</delete> 
 </document>
