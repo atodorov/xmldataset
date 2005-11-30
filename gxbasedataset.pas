@@ -632,6 +632,7 @@ begin
         ftDateTime:
           begin
             Move((RecBuffer + Offset)^, TempDouble, SizeOf(Double));
+// leave this. it is fixed in new versions of FCL            
 //orig.            TimeStamp := DateTimeToTimeStamp(TempDouble);
 //orig.            Data.DateTime := TimeStampToMSecs(TimeStamp);
             Data.DateTime := TempDouble;
@@ -680,6 +681,7 @@ begin
         ftDateTime:
           begin
             Data := TDateTimeRec(Buffer^);
+// leave this. it is fixed in new versions of FCL            
 //orig.            TimeStamp := MSecsToTimeStamp(Data.DateTime);
 //orig.            TempDouble := TimeStampToDateTime(TimeStamp);
             TempDouble := Data.DateTime;
