@@ -87,6 +87,7 @@ begin
     S := '<?xml version="1.0" encoding="'+TO_ENCODING+'"?>'+strm.DataString;
   finally
     strm.Free;
+// todo : fix memory leaks
     Result := TStringStream.Create(S);
   end;
 end;
@@ -145,6 +146,9 @@ procedure TCustomXMLQuery.ExecSQL(const QueryType : String);
 begin
   ConstructQuery(QueryType);
   FSQLConnection.DataToSend := SQLXMLStringStream; // send current sql xml
+//todo : check if this is working
+  if FSQLConnection.DataToSend.Size = 0 then exit;
+  
   if not FSQLConnection.Open then
      raise Exception.Create('TCustomXMLQuery.ExecSQL - connection failed!');
      
