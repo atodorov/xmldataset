@@ -29,11 +29,15 @@ uses Classes, SysUtils, DOM,
 type
 
   { TCustomXMLQuery - adds sql states execution to the dataset and uses a connection }
+
+  { TCustomXMLQuery }
+
   TCustomXMLQuery = class(TCustomXMLDataSet)
   private
     FSQL : TStrings;
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
     FSQLConnection : TCustomSQLConnection; // a connection to retreive XML / execute SQL
+    function GetSQLXMLStringStream: TStringStream;
     procedure SetSQL(const AValue: TStrings);
   protected
     procedure SetSQLConnection(const AValue: TCustomSQLConnection); virtual;
@@ -44,6 +48,7 @@ type
     procedure ExecSQL(const QueryType : String); // executes FSQL
   published
     property SQL : TStrings read FSQL write SetSQL;
+    property SQLXMLStringStream : TStringStream read GetSQLXMLStringStream;
     property Connection : TCustomSQLConnection read FSQLConnection write SetSQLConnection;
   end;
   
@@ -69,6 +74,20 @@ begin
     SQL.Assign(AValue);
   finally
     SQL.EndUpdate;
+  end;
+end;
+
+function TCustomXMLQuery.GetSQLXMLStringStream: TStringStream;
+var strm : TStringStream;
+    S : String;
+begin
+  try
+    strm   := TStringStream.Create('');
+    WriteXML(FSQLXML.DocumentElement, strm);
+    S := '<?xml version="1.0" encoding="'+TO_ENCODING+'"?>'+strm.DataString;
+  finally
+    strm.Free;
+    Result := TStringStream.Create(S);
   end;
 end;
 
@@ -125,8 +144,10 @@ end;
 procedure TCustomXMLQuery.ExecSQL(const QueryType : String);
 begin
   ConstructQuery(QueryType);
-  FSQLConnection.DataToSend := XMLStringStream;   // send current xml
-  FSQLConnection.Open;
+  FSQLConnection.DataToSend := SQLXMLStringStream; // send current sql xml
+  if not FSQLConnection.Open then
+     raise Exception.Create('TCustomXMLQuery.ExecSQL - connection failed!');
+     
   if (QueryType = QUERY_SELECT) then // and get a new one
     begin
       Close;
