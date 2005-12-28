@@ -128,7 +128,11 @@ begin
   FSQLConnection.DataToSend := XMLStringStream;   // send current xml
   FSQLConnection.Open;
   if (QueryType = QUERY_SELECT) then // and get a new one
-    ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
+    begin
+      Close;
+      ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
+      Open; // reopen dataset
+    end;
 end;
 
 end.
