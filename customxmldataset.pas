@@ -24,7 +24,7 @@ unit customxmldataset;
 // a workaround widestrings. We use this because DOMString = WideString
 {$DEFINE USEWIDESTRINGS}
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
 interface
 

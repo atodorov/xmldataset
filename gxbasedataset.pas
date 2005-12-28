@@ -22,7 +22,7 @@ unit gxbasedataset;
 // todo : test them and remove if everything is fine
 
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
 interface
 
