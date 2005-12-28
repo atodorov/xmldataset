@@ -61,6 +61,9 @@ type
     procedure SetConnected(Value: Boolean); virtual;
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
+    {--------------------------------------------------------------------------}
+    function  Open : Boolean;  virtual;
+    procedure Close; virtual;
   public
     DataToSend   : TStream;     // data that is being passed over the connection
     ReceivedData : TStream;
@@ -69,9 +72,6 @@ type
     {--------------------------------------------------------------------------}
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    {--------------------------------------------------------------------------}
-    function  Open : Boolean;  virtual;
-    procedure Close; virtual;
     { ----- transaction handling ----- }
     procedure StartTransaction; virtual;
     procedure Rollback; virtual;
@@ -290,12 +290,14 @@ begin
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement) then
-      with TCustomXMLDataset(FDataSets.Items[i]).XMLDocument do
-        begin
-          RemoveChild(DocumentElement);
-          AppendChild(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement);
-        end;
+    with TCustomXMLDataset(FDataSets.Items[i]) do
+      if Assigned(XMLDocument.DocumentElement) then
+         begin
+           Close;
+           XMLDocument.RemoveChild(XMLDocument.DocumentElement);
+           XMLDocument.AppendChild(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement);
+           Open; // reopen dataset
+         end;
   FInTransaction := false;
 end;
 
@@ -317,7 +319,9 @@ begin
          
       DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
       Open;
+      TCustomXMLDataset(FDataSets.Items[i]).Close;
       ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument,ReceivedData);
+      TCustomXMLDataset(FDataSets.Items[i]).Open; // reopen dataset after new data is present
     end;
   FInTransaction := false;
 end;

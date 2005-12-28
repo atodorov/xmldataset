@@ -71,10 +71,10 @@ type
     procedure DoDisconnect; override;
     function  GetConnected: Boolean; override;
     function  HttpPostFile: Boolean;
+    function Open : Boolean;  override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Open : Boolean;  override;
     //todo : remove if not needed
 //    property Cookies : TStringList // http connection cookies - session management
   end;
