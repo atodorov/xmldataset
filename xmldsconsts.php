@@ -7,10 +7,12 @@
  Constants describing the xml structure of the format used by XMLDataset componets
  This file is intended for use inside php scripts that work with xml
  produced by any of XMLDataset componet.
+ 
+ file location : https://svn.openfmi.net/xmldataset/xmldsconsts.php
 
  (c) Alexander Todorov
  e-mail: alexx.todorov@gmail.com
-
+ 
  *****************************************************************************
  *                                                                           *
  *  See the file COPYING included in this distribution,                      *
