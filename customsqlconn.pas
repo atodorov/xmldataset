@@ -61,9 +61,6 @@ type
     procedure SetConnected(Value: Boolean); virtual;
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
-    {--------------------------------------------------------------------------}
-    function  Open : Boolean;  virtual;
-    procedure Close; virtual;
   public
     DataToSend   : TStream;     // data that is being passed over the connection
     ReceivedData : TStream;
@@ -72,6 +69,9 @@ type
     {--------------------------------------------------------------------------}
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    {--------------------------------------------------------------------------}
+    function  Open : Boolean;  virtual;
+    procedure Close; virtual;
     { ----- transaction handling ----- }
     procedure StartTransaction; virtual;
     procedure Rollback; virtual;

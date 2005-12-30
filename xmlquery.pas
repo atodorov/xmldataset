@@ -143,21 +143,28 @@ begin
 end;
 
 procedure TCustomXMLQuery.ExecSQL(const QueryType : String);
+var ssResult : TStringStream;
 begin
   ConstructQuery(QueryType);
   FSQLConnection.DataToSend := SQLXMLStringStream; // send current sql xml
 //todo : check if this is working
   if FSQLConnection.DataToSend.Size = 0 then exit;
   
-  if not FSQLConnection.Open then
-     raise Exception.Create('TCustomXMLQuery.ExecSQL - connection failed!');
-     
-  if (QueryType = QUERY_SELECT) then // and get a new one
-    begin
-      Close;
-      ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
-      Open; // reopen dataset
-    end;
+  try
+     ssResult := TStringStream.Create('');
+     FSQLConnection.ReceivedData := ssResult;
+     if not FSQLConnection.Open then
+        raise Exception.Create('TCustomXMLQuery.ExecSQL - connection failed!');
+
+     if (QueryType = QUERY_SELECT) then // and get a new one
+       begin
+         Close;
+         ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
+         Open; // reopen dataset
+       end;
+  finally
+     ssResult.Free;
+  end;
 end;
 
 end.

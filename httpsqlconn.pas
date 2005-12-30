@@ -204,7 +204,8 @@ begin
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
   Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
-  ReceivedData.CopyFrom(FHttpClient.Document,0);
+  if Assigned(ReceivedData) then
+     ReceivedData.CopyFrom(FHttpClient.Document,0);
 end;
 
 end.

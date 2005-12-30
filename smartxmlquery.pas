@@ -258,7 +258,6 @@ end;
 function TSmartXMLQuery.CreateDeleteFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
 var CData : TDOMCDATASection;
     strSQL : String;
-    i : LongWord;
 begin
   try
     Result := AOwner.CreateElement(cQuery);
