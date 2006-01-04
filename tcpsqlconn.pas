@@ -31,6 +31,7 @@ uses Classes, SysUtils, CustomSQLConn, TCPBase;
 const
   TCP_HOST = 'host';
   TCP_PORT = 'port';
+  TCP_TIMEOUT = 'timeout';
 
 type
 
@@ -78,6 +79,11 @@ begin
   if (index > -1)
     then FTCPClient.Port := StrToInt(ConnParams.ValueFromIndex[index])
     else raise Exception.Create('Required parameter '+TCP_PORT+' is missing!');
+    
+// TCP_TIMEOUT
+  index := ConnParams.IndexOfName(TCP_TIMEOUT);
+  if (index > -1) then
+     FTimeOut := StrToInt(ConnParams.ValueFromIndex[index]);
 end;
 
 procedure TTCPSQLConnection.DoConnect;
