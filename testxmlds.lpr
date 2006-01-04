@@ -4,7 +4,7 @@ program TestXMLDS;
 
 uses
   Interfaces, // this includes the LCL widgetset
-  Forms, uMain, smartxmlquery;
+  Forms, uMain, smartxmlquery, tcpsqlconn;
 
 begin
   Application.Initialize;

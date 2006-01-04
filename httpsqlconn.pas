@@ -5,8 +5,9 @@ unit httpsqlconn;
 {*******************************************************************************
 
  This file is part of the XMLDataset suite for the Free Component Library!
+ Connection class that sends data over HTTP.
 
- (c) 2005 by Alexander Todorov.
+ (c) 2005-2006 by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
 
  *****************************************************************************

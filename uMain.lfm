@@ -13,7 +13,6 @@ object Form1: TForm1
   Width = 459
   object dbGrid1: TdbGrid
     Align = alTop
-    BorderSpacing.OnChange = nil
     DataSource = dsMain
     FixedColor = clBtnFace
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -25,6 +24,7 @@ object Form1: TForm1
   end
   object GroupBox1: TGroupBox
     Align = alBottom
+    BorderSpacing.OnChange = nil
     Caption = 'GroupBox1'
     ClientHeight = 174
     ClientWidth = 455
@@ -34,6 +34,7 @@ object Form1: TForm1
     Top = 183
     Width = 459
     object Button1: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Load From File'
       OnClick = Button1Click
       TabOrder = 0
@@ -43,7 +44,6 @@ object Form1: TForm1
     end
     object Memo1: TMemo
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.OnChange = nil
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 1
@@ -52,6 +52,7 @@ object Form1: TForm1
       Width = 360
     end
     object Button2: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Save To File'
       OnClick = Button2Click
       TabOrder = 2
@@ -61,7 +62,6 @@ object Form1: TForm1
       Width = 75
     end
     object Button3: TButton
-      BorderSpacing.OnChange = nil
       Caption = 'Send To Url'
       OnClick = Button3Click
       TabOrder = 3
@@ -71,6 +71,7 @@ object Form1: TForm1
       Width = 75
     end
     object Button4: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Save Query'
       OnClick = Button4Click
       TabOrder = 4
@@ -80,6 +81,7 @@ object Form1: TForm1
       Width = 75
     end
     object Button5: TButton
+      BorderSpacing.OnChange = nil
       Caption = 'Save Smart Q'
       OnClick = Button5Click
       TabOrder = 5
@@ -93,7 +95,6 @@ object Form1: TForm1
       OKCaption = 'OK'
       CancelCaption = 'Cancel'
       Date = 38669
-      BorderSpacing.OnChange = nil
       ButtonWidth = 23
       Color = clBtnFace
       Glyph.Data = {
@@ -120,7 +121,6 @@ object Form1: TForm1
       OnExit = DateEdit1Exit
       ReadOnly = True
       TabOrder = 6
-      BorderSpacing.OnChange = nil
       Color = clBtnFace
       OnExit = DateEdit1Exit
       ReadOnly = True

@@ -129,9 +129,9 @@ end;
 
 procedure TForm1.Form1Create(Sender: TObject);
 begin
-//{$IFDEF DEBUGXML}
+{$IFDEF DEBUGXML}
   CustomXMLDataSet.Memo := Memo1;
-//{$ENDIF}
+{$ENDIF}
   XMLDS := TCustomXMLDataSet.Create(Self);
   XMLDS.UseBase64 := false;
   dsMain.DataSet := XMLDS;
