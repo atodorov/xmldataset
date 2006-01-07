@@ -2,6 +2,12 @@ unit gxbasedataset;
 
 {$mode objfpc}{$H+}
 
+{$IF ((FPC_VERSION = 2) and (FPC_RELEASE = 0) and (FPC_PATCH = 1))}
+   {$DEFINE FPC_VER_201}
+   {$WARNINGS ON}
+{$ENDIF}
+
+
 {*******************************************************************************
 
  This file is part of the XMLDataset suite for the Free Component Library!
@@ -15,11 +21,24 @@ unit gxbasedataset;
 
  FPC modifications and additional improvements made by Alexander Todorov.
  e-mail: alexx.todorov@gmail.com
-
+ 
+ *****************************************************************************
+ *                                                                           *
+ *  Since I could not contact the original author and found that this source *
+ *  is used in other TDataset implementations (see TjanXMLDataset)           *
+ *  it is distributed under modified Library GNU General Public License!     *
+ *  See the file COPYING included in this distribution,                      *
+ *  for details about the copyright.                                         *
+ *                                                                           *
+ *  This program is distributed in the hope that it will be useful,          *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+ *                                                                           *
+ *****************************************************************************
 *******************************************************************************}
 
 // todo : TimeStampToMSecs / MSecsToTimeStamp doesn't work for date fields.
-// todo : test them and remove if everything is fine
+// todo : add IFDEFS for different FPC versions
 
 
 //{$DEFINE DEBUGXML}
@@ -54,6 +73,13 @@ type
     function  _GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
     function  RecordFilter: Boolean;
   protected   {My simplified methods to override}
+
+// todo : clean up this dirty hack
+    {$IFDEF FPC_VER_201}
+    {$WARNING This is a dirty hack! Be careful. NOT tested!}
+    function TempBuffer: PChar;
+    {$ENDIF}
+
     function  DoOpen: Boolean; virtual; abstract;
     procedure DoClose; virtual; abstract;
     procedure DoDeleteRecord; virtual;
@@ -82,8 +108,8 @@ type
     procedure SetFiltered(Value: Boolean); override;
     //Internal isOpen property
     property  isOpen: Boolean read FisOpen;
-  protected   {TGXBaseDataset Internal functions that can be overriden if needed}
-  
+
+    { TGXBaseDataset Internal functions that can be overriden if needed }
     procedure AllocateBLOBPointers(Buffer: PChar); virtual;
     procedure FreeBlobPointers(Buffer: PChar); virtual;
     
@@ -92,7 +118,7 @@ type
     function  GetFieldOffset(Field: TField): Integer; virtual;
     procedure BufferToRecord(Buffer: PChar); virtual;
     procedure RecordToBuffer(Buffer: PChar); virtual;
-  protected
+
     function  AllocRecordBuffer: PChar; override;
     procedure FreeRecordBuffer(var Buffer: PChar); override;
     function  GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult; override;
@@ -122,6 +148,7 @@ type
     procedure SetBookmarkData(Buffer: PChar; Data: Pointer); override;
     procedure InternalGotoBookmark(ABookmark: Pointer); override;
     function  CreateBlobStream(Field: TField; Mode: TBlobStreamMode): TStream; override;
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -156,6 +183,13 @@ end;
 
 { TGXBaseDataset }
 
+{$IFDEF FPC_VER_201}
+function TGXBaseDataset.TempBuffer : PChar;
+begin
+  Result := ActiveBuffer;
+end;
+{$ENDIF}
+    
 constructor TGXBaseDataset.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -806,19 +840,19 @@ end;
 
 initialization
 
-   OldTimeSeparator := TimeSeparator;
-   OldDateSeparator := DateSeparator;
+  OldTimeSeparator := TimeSeparator;
+  OldDateSeparator := DateSeparator;
 
-   if TimeSeparator <> ':' then
-      TimeSeparator := ':';
+  if TimeSeparator <> ':' then
+     TimeSeparator := ':';
 
-   if DateSeparator <> '.' then
-      DateSeparator := '.';
+  if DateSeparator <> '.' then
+     DateSeparator := '.';
       
 finalization
 
-   TimeSeparator := OldTimeSeparator;
-   DateSeparator := OldDateSeparator;
+  TimeSeparator := OldTimeSeparator;
+  DateSeparator := OldDateSeparator;
    
 end.
 
