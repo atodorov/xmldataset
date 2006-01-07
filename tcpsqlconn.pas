@@ -38,7 +38,9 @@ type
   { TTCPSQLConnection }
   TTCPSQLConnection = class(TCustomSQLConnection)
   private
-    FTCPClient : TTCPClient;
+    FSocket : TTextInetSocket;
+    FHost : String;
+    FPort : Word;
     FTimeOut : Integer;
     procedure DoSetConnectionParams;
   protected
@@ -71,13 +73,13 @@ begin
 // TCP_HOST
   index := ConnParams.IndexOfName(TCP_HOST);
   if (index > -1)
-    then FTCPClient.Host := ConnParams.ValueFromIndex[index]
+    then FHost := ConnParams.ValueFromIndex[index]
     else raise Exception.Create('Required parameter '+TCP_HOST+' is missing!');
 
 // TCP_PORT
   index := ConnParams.IndexOfName(TCP_PORT);
   if (index > -1)
-    then FTCPClient.Port := StrToInt(ConnParams.ValueFromIndex[index])
+    then FPort := StrToInt(ConnParams.ValueFromIndex[index])
     else raise Exception.Create('Required parameter '+TCP_PORT+' is missing!');
     
 // TCP_TIMEOUT
@@ -89,25 +91,31 @@ end;
 procedure TTCPSQLConnection.DoConnect;
 begin
   DoSetConnectionParams;
-  FTCPClient.Connect(FTimeOut);
+  if not Assigned(FSocket) then
+     FSocket := TTextInetSocket.Create(FHost, FPort); // connection is made upon creation
 end;
 
 procedure TTCPSQLConnection.DoDisconnect;
 begin
-   FTCPClient.Disconnect;
+   if Assigned(FSocket) then
+      FSocket.Free;
+   FSocket := nil;
+   
    DataToSend   := nil;
    ReceivedData := nil;
 end;
 
 function TTCPSQLConnection.GetConnected: Boolean;
 begin
-  Result := FTCPClient.Connected;
+  Result := (FSocket <> nil) and Assigned(FSocket);
 end;
 
 constructor TTCPSQLConnection.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FTCPClient := TTCPClient.Create;
+  FSocket := nil;
+  FHost := '127.0.0.1';
+  FPort := 0;
   FTimeOut := 60;
 end;
 
@@ -115,7 +123,6 @@ destructor TTCPSQLConnection.Destroy;
 begin
   if Connected then
      Close;
-  FTCPClient.Free;
   inherited Destroy;
 end;
 
@@ -138,10 +145,10 @@ begin
     ssDataToSend := TStringStream.Create('');
     ssDataToSend.CopyFrom(DataToSend, 0);
 
-    FTCPClient.SendText(ssDataToSend.DataString);
-    // wait until data is processed
-    sleep(10);
-    strResponse := FTCPClient.ReceiveText;
+    FSocket.SendText(ssDataToSend.DataString);
+//todo : do we have to wait until data is processed
+//    sleep(10);
+    strResponse := FSocket.RecvText;
     
     ssResult := TStringStream.Create(strResponse);
     
