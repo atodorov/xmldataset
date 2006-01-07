@@ -233,7 +233,7 @@ begin
      Host := '127.0.0.1';
 
   FSocket := Socket(AF_INET, SOCK_STREAM, 0); // create socket descriptor
-  if (FSocket <= 0) then
+  if (FSocket <= 0) or (SocketError <> 0) then
     raise Exception.Create(GetErrMsg('Connect','Creating socket failed - ERROR'));
 
   // construct address
