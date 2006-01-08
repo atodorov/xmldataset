@@ -1,0 +1,546 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>synautil</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit synautil</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td><a class="section" href="#@Variables">Variables</a></td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Support procedures and functions<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#TimeZoneBias"><b>TimeZoneBias</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TimeZone"><b>TimeZone</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Rfc822DateTime"><b>Rfc822DateTime</b></a>(t: TDateTime): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#CDateTime"><b>CDateTime</b></a>(t: TDateTime): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SimpleDateTime"><b>SimpleDateTime</b></a>(t: TDateTime): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#AnsiCDateTime"><b>AnsiCDateTime</b></a>(t: TDateTime): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetMonthNumber"><b>GetMonthNumber</b></a>(Value: AnsiString): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetTimeFromStr"><b>GetTimeFromStr</b></a>(Value: string): TDateTime;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetDateMDYFromStr"><b>GetDateMDYFromStr</b></a>(Value: string): TDateTime;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeRfcDateTime"><b>DecodeRfcDateTime</b></a>(Value: string): TDateTime;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetUTTime"><b>GetUTTime</b></a>: TDateTime;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#SetUTTime"><b>SetUTTime</b></a>(Newdt: TDateTime): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetTick"><b>GetTick</b></a>: ULong;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TickDelta"><b>TickDelta</b></a>(TickOld, TickNew: ULong): ULong;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#CodeInt"><b>CodeInt</b></a>(Value: Word): Ansistring;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeInt"><b>DecodeInt</b></a>(const Value: Ansistring; Index: Integer): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#CodeLongInt"><b>CodeLongInt</b></a>(Value: LongInt): Ansistring;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeLongInt"><b>DecodeLongInt</b></a>(const Value: Ansistring; Index: Integer): LongInt;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsIP"><b>IsIP</b></a>(const Value: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsIP6"><b>IsIP6</b></a>(const Value: string): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IPToID"><b>IPToID</b></a>(Host: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DumpStr"><b>DumpStr</b></a>(const Buffer: Ansistring): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DumpExStr"><b>DumpExStr</b></a>(const Buffer: Ansistring): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#Dump"><b>Dump</b></a>(const Buffer: AnsiString; DumpFile: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#DumpEx"><b>DumpEx</b></a>(const Buffer: AnsiString; DumpFile: string);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TrimSPLeft"><b>TrimSPLeft</b></a>(const S: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TrimSPRight"><b>TrimSPRight</b></a>(const S: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TrimSP"><b>TrimSP</b></a>(const S: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SeparateLeft"><b>SeparateLeft</b></a>(const Value, Delimiter: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#SeparateRight"><b>SeparateRight</b></a>(const Value, Delimiter: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetParameter"><b>GetParameter</b></a>(const Value, Parameter: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#ParseParametersEx"><b>ParseParametersEx</b></a>(Value, Delimiter: string; const Parameters: TStrings);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#ParseParameters"><b>ParseParameters</b></a>(Value: string; const Parameters: TStrings);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IndexByBegin"><b>IndexByBegin</b></a>(Value: string; const List: TStrings): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetEmailAddr"><b>GetEmailAddr</b></a>(const Value: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetEmailDesc"><b>GetEmailDesc</b></a>(Value: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#StrToHex"><b>StrToHex</b></a>(const Value: Ansistring): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IntToBin"><b>IntToBin</b></a>(Value: Integer; Digits: Byte): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#BinToInt"><b>BinToInt</b></a>(const Value: string): Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ParseURL"><b>ParseURL</b></a>(URL: string; var Prot, User, Pass, Host, Port, Path, Para: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ReplaceString"><b>ReplaceString</b></a>(Value, Search, Replace: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#RPosEx"><b>RPosEx</b></a>(const Sub, Value: string; From: integer): Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#RPos"><b>RPos</b></a>(const Sub, Value: String): Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FetchBin"><b>FetchBin</b></a>(var Value: string; const Delimiter: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Fetch"><b>Fetch</b></a>(var Value: string; const Delimiter: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FetchEx"><b>FetchEx</b></a>(var Value: string; const Delimiter, Quotation: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsBinaryString"><b>IsBinaryString</b></a>(const Value: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#PosCRLF"><b>PosCRLF</b></a>(const Value: AnsiString; var Terminator: AnsiString): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>Procedure <a class="normal" href="#StringsTrim"><b>StringsTrim</b></a>(const value: TStrings);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#PosFrom"><b>PosFrom</b></a>(const SubStr, Value: String; From: integer): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IncPoint"><b>IncPoint</b></a>(const p: pointer; Value: integer): pointer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetBetween"><b>GetBetween</b></a>(const PairBegin, PairEnd, Value: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#CountOfChar"><b>CountOfChar</b></a>(const Value: string; Chr: char): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#UnquoteStr"><b>UnquoteStr</b></a>(Value: string; Quote: Char): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#HeadersToList"><b>HeadersToList</b></a>(const Value: TStrings);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#ListToHeaders"><b>ListToHeaders</b></a>(const Value: TStrings);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SwapBytes"><b>SwapBytes</b></a>(Value: integer): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ReadStrFromStream"><b>ReadStrFromStream</b></a>(const Stream: TStream; len: integer): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#WriteStrToStream"><b>WriteStrToStream</b></a>(const Stream: TStream; Value: AnsiString);</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="AnsiCDateTime"></a><code>function <b>AnsiCDateTime</b>(t: TDateTime): string;</code></td>
+</tr>
+</table>
+<p><p>Returns date and time in format defined in ANSI C compilers in format
+ &quot;ddd mmm d hh:nn:ss yyyy&quot;</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="BinToInt"></a><code>function <b>BinToInt</b>(const Value: string): Integer;</code></td>
+</tr>
+</table>
+<p><p>Returns an integer equivalent of the binary string in &quot;Value&quot;.
+ (i.e. ('10001010') returns 138)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CDateTime"></a><code>function <b>CDateTime</b>(t: TDateTime): string;</code></td>
+</tr>
+</table>
+<p><p>Returns date and time in format defined in C compilers in format &quot;mmm dd hh:nn:ss&quot;</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CodeInt"></a><code>function <b>CodeInt</b>(Value: Word): Ansistring;</code></td>
+</tr>
+</table>
+<p><p>Return two characters, which ordinal values represents the value in byte
+ format. (High-endian)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CodeLongInt"></a><code>function <b>CodeLongInt</b>(Value: LongInt): Ansistring;</code></td>
+</tr>
+</table>
+<p><p>Return four characters, which ordinal values represents the value in byte
+ format. (High-endian)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CountOfChar"></a><code>function <b>CountOfChar</b>(const Value: string; Chr: char): integer;</code></td>
+</tr>
+</table>
+<p><p>Return count of Chr in Value string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeInt"></a><code>function <b>DecodeInt</b>(const Value: Ansistring; Index: Integer): Word;</code></td>
+</tr>
+</table>
+<p><p>Decodes two characters located at &quot;Index&quot; offset position of the &quot;Value&quot;
+ string to Word values.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeLongInt"></a><code>function <b>DecodeLongInt</b>(const Value: Ansistring; Index: Integer): LongInt;</code></td>
+</tr>
+</table>
+<p><p>Decodes four characters located at &quot;Index&quot; offset position of the &quot;Value&quot;
+ string to LongInt values.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeRfcDateTime"></a><code>function <b>DecodeRfcDateTime</b>(Value: string): TDateTime;</code></td>
+</tr>
+</table>
+<p><p>Decode various string representations of date and time to Tdatetime type.
+ This function do all timezone corrections too! This function can decode lot of
+  formats like:
+ <pre><code>
+ ddd, d mmm yyyy hh:mm:ss
+ ddd, d mmm yy hh:mm:ss
+ ddd, mmm d yyyy hh:mm:ss
+ ddd mmm dd hh:mm:ss yyyy</pre></code> </p><p>and more with lot of modifications, include:
+<pre><code>
+Sun, 06 Nov 1994 08:49:37 GMT    ; RFC 822, updated by RFC 1123
+Sunday, 06-Nov-94 08:49:37 GMT   ; RFC 850, obsoleted by RFC 1036
+Sun Nov  6 08:49:37 1994         ; ANSI C</pre></code> 
+Timezone corrections known lot of symbolic timezone names (like CEST, EDT, etc.)
+or numeric representation (like +0200). By convention defined in RFC timezone
+ +0000 is GMT and -0000 is current your system timezone.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Dump"></a><code>procedure <b>Dump</b>(const Buffer: AnsiString; DumpFile: string);</code></td>
+</tr>
+</table>
+<p><p>Dump binary buffer stored in a string to a file with DumpFile filename.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DumpEx"></a><code>procedure <b>DumpEx</b>(const Buffer: AnsiString; DumpFile: string);</code></td>
+</tr>
+</table>
+<p><p>Dump binary buffer stored in a string to a file with DumpFile filename. All
+ bytes with code of character is written as character, not as hexadecimal value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DumpExStr"></a><code>function <b>DumpExStr</b>(const Buffer: Ansistring): string;</code></td>
+</tr>
+</table>
+<p><p>Dump binary buffer stored in a string to a result string. All bytes with code
+ of character is written as character, not as hexadecimal value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DumpStr"></a><code>function <b>DumpStr</b>(const Buffer: Ansistring): string;</code></td>
+</tr>
+</table>
+<p><p>Dump binary buffer stored in a string to a result string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Fetch"></a><code>function <b>Fetch</b>(var Value: string; const Delimiter: string): string;</code></td>
+</tr>
+</table>
+<p><p>Fetch string from left of Value string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FetchBin"></a><code>function <b>FetchBin</b>(var Value: string; const Delimiter: string): string;</code></td>
+</tr>
+</table>
+<p><p>Like <a class="normal" href="synautil.html#Fetch">Fetch</a>, but working with binary strings, not with text.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FetchEx"></a><code>function <b>FetchEx</b>(var Value: string; const Delimiter, Quotation: string): string;</code></td>
+</tr>
+</table>
+<p><p>Fetch string from left of Value string. This function ignore delimitesr inside
+ quotations.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetBetween"></a><code>function <b>GetBetween</b>(const PairBegin, PairEnd, Value: string): string;</code></td>
+</tr>
+</table>
+<p><p>Get string between PairBegin and PairEnd. This function respect nesting.
+ For example:
+ <pre><code>
+ Value <b>is</b>: <font color = "#000080">'Hi! (hello(yes!))' </font>
+ pairbegin <b>is</b>: <font color = "#000080">'(' </font>
+ pairend <b>is</b>: <font color = "#000080">')' </font>
+ <b>In</b> this <b>case</b> result <b>is</b>: <font color = "#000080">'hello(yes!)' </font></pre></code></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetDateMDYFromStr"></a><code>function <b>GetDateMDYFromStr</b>(Value: string): TDateTime;</code></td>
+</tr>
+</table>
+<p><p>Decode string in format &quot;m-d-y&quot; to TDateTime type.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetEmailAddr"></a><code>function <b>GetEmailAddr</b>(const Value: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns only the e-mail portion of an address from the full address format.
+ i.e. returns 'nobody@somewhere.com' from '&quot;someone&quot; &lt;nobody@somewhere.com&gt;'</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetEmailDesc"></a><code>function <b>GetEmailDesc</b>(Value: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns only the description part from a full address format. i.e. returns
+ 'someone' from '&quot;someone&quot; &lt;nobody@somewhere.com&gt;'</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetMonthNumber"></a><code>function <b>GetMonthNumber</b>(Value: AnsiString): integer;</code></td>
+</tr>
+</table>
+<p><p>Decode three-letter string with name of month to their month number. If string
+ not match any month name, then is returned 0. For parsing are used predefined
+ names for English, French and German and names from system locale too.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetParameter"></a><code>function <b>GetParameter</b>(const Value, Parameter: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns parameter value from string in format:
+ parameter1=&quot;value1&quot;; parameter2=value2</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetTick"></a><code>function <b>GetTick</b>: ULong;</code></td>
+</tr>
+</table>
+<p><p>Return current value of system timer with precizion 1 millisecond. Good for
+ measure time difference.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetTimeFromStr"></a><code>function <b>GetTimeFromStr</b>(Value: string): TDateTime;</code></td>
+</tr>
+</table>
+<p><p>Return decoded time from given string. Time must be witch separator ':'. You
+ can use &quot;hh:mm&quot; or &quot;hh:mm:ss&quot;.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetUTTime"></a><code>function <b>GetUTTime</b>: TDateTime;</code></td>
+</tr>
+</table>
+<p><p>Return current system date and time in UTC timezone.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HeadersToList"></a><code>procedure <b>HeadersToList</b>(const Value: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Convert lines in stringlist from 'name: value' form to 'name=value' form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncPoint"></a><code>function <b>IncPoint</b>(const p: pointer; Value: integer): pointer;</code></td>
+</tr>
+</table>
+<p><p>Increase pointer by value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IndexByBegin"></a><code>function <b>IndexByBegin</b>(Value: string; const List: TStrings): integer;</code></td>
+</tr>
+</table>
+<p><p>Index of string in stringlist with same beginning as Value is returned.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IntToBin"></a><code>function <b>IntToBin</b>(Value: Integer; Digits: Byte): string;</code></td>
+</tr>
+</table>
+<p><p>Returns a string of binary &quot;Digits&quot; representing &quot;Value&quot;.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IPToID"></a><code>function <b>IPToID</b>(Host: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns a string with the &quot;Host&quot; ip address converted to binary form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsBinaryString"></a><code>function <b>IsBinaryString</b>(const Value: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>If string is binary string (contains non-printable characters), then is
+ returned true.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsIP"></a><code>function <b>IsIP</b>(const Value: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Returns <code>True</code>, if &quot;Value&quot; is a valid IPv4 address. Cannot be a symbolic Name!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsIP6"></a><code>function <b>IsIP6</b>(const Value: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Returns <code>True</code>, if &quot;Value&quot; is a valid IPv6 address. Cannot be a symbolic Name!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ListToHeaders"></a><code>procedure <b>ListToHeaders</b>(const Value: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Convert lines in stringlist from 'name=value' form to 'name: value' form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ParseParameters"></a><code>procedure <b>ParseParameters</b>(Value: string; const Parameters: TStrings);</code></td>
+</tr>
+</table>
+<p><p>parse value string with elements differed by ';' into stringlist.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ParseParametersEx"></a><code>procedure <b>ParseParametersEx</b>(Value, Delimiter: string; const Parameters: TStrings);</code></td>
+</tr>
+</table>
+<p><p>parse value string with elements differed by Delimiter into stringlist.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ParseURL"></a><code>function <b>ParseURL</b>(URL: string; var Prot, User, Pass, Host, Port, Path, Para: string): string;</code></td>
+</tr>
+</table>
+<p><p>Parses a URL to its various components.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="PosCRLF"></a><code>function <b>PosCRLF</b>(const Value: AnsiString; var Terminator: AnsiString): integer;</code></td>
+</tr>
+</table>
+<p><p>return position of string terminator in string. If terminator found, then is
+ returned in terminator parameter.
+ Possible line terminators are: CRLF, LFCR, CR, LF</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="PosFrom"></a><code>function <b>PosFrom</b>(const SubStr, Value: String; From: integer): integer;</code></td>
+</tr>
+</table>
+<p><p>Like Pos function, buf from given string possition.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ReadStrFromStream"></a><code>function <b>ReadStrFromStream</b>(const Stream: TStream; len: integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>read string with requested length form stream.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ReplaceString"></a><code>function <b>ReplaceString</b>(Value, Search, Replace: string): string;</code></td>
+</tr>
+</table>
+<p><p>Replaces all &quot;Search&quot; string values found within &quot;Value&quot; string, with the
+ &quot;Replace&quot; string value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Rfc822DateTime"></a><code>function <b>Rfc822DateTime</b>(t: TDateTime): string;</code></td>
+</tr>
+</table>
+<p><p>Returns current time in format defined in RFC-822. Useful for SMTP messages,
+ but other protocols use this time format as well. Results contains the timezone
+ specification. Four digit year is used to break any Y2K concerns. (Example
+ 'Fri, 15 Oct 1999 21:14:56 +0200')</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="RPos"></a><code>function <b>RPos</b>(const Sub, Value: String): Integer;</code></td>
+</tr>
+</table>
+<p><p>It is like POS function, but from right side of Value string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="RPosEx"></a><code>function <b>RPosEx</b>(const Sub, Value: string; From: integer): Integer;</code></td>
+</tr>
+</table>
+<p><p>It is like RPos, but search is from specified possition.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SeparateLeft"></a><code>function <b>SeparateLeft</b>(const Value, Delimiter: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns a portion of the &quot;Value&quot; string located to the left of the &quot;Delimiter&quot;
+ string. If a delimiter is not found, results is original string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SeparateRight"></a><code>function <b>SeparateRight</b>(const Value, Delimiter: string): string;</code></td>
+</tr>
+</table>
+<p><p>Returns the portion of the &quot;Value&quot; string located to the right of the
+ &quot;Delimiter&quot; string. If a delimiter is not found, results is original string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SetUTTime"></a><code>function <b>SetUTTime</b>(Newdt: TDateTime): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Set Newdt as current system date and time in UTC timezone. This function work
+ only if you have administrator rights!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SimpleDateTime"></a><code>function <b>SimpleDateTime</b>(t: TDateTime): string;</code></td>
+</tr>
+</table>
+<p><p>Returns date and time in format defined in format 'yymmdd hhnnss'</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="StringsTrim"></a><code>Procedure <b>StringsTrim</b>(const value: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Delete empty strings from end of stringlist.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="StrToHex"></a><code>function <b>StrToHex</b>(const Value: Ansistring): string;</code></td>
+</tr>
+</table>
+<p><p>Returns a string with hexadecimal digits representing the corresponding values
+ of the bytes found in &quot;Value&quot; string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SwapBytes"></a><code>function <b>SwapBytes</b>(Value: integer): integer;</code></td>
+</tr>
+</table>
+<p><p>swap bytes in integer.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TickDelta"></a><code>function <b>TickDelta</b>(TickOld, TickNew: ULong): ULong;</code></td>
+</tr>
+</table>
+<p><p>Return difference between two timestamps. It working fine only for differences
+ smaller then maxint. (difference must be smaller then 24 days.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TimeZone"></a><code>function <b>TimeZone</b>: string;</code></td>
+</tr>
+</table>
+<p><p>Return your timezone bias from UTC time in string representation like &quot;+0200&quot;.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TimeZoneBias"></a><code>function <b>TimeZoneBias</b>: integer;</code></td>
+</tr>
+</table>
+<p><p>Return your timezone bias from UTC time in minutes.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TrimSP"></a><code>function <b>TrimSP</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p><p>Like Trim, but remove only spaces, not control characters!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TrimSPLeft"></a><code>function <b>TrimSPLeft</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p><p>Like TrimLeft, but remove only spaces, not control characters!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TrimSPRight"></a><code>function <b>TrimSPRight</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p><p>Like TrimRight, but remove only spaces, not control characters!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="UnquoteStr"></a><code>function <b>UnquoteStr</b>(Value: string; Quote: Char): string;</code></td>
+</tr>
+</table>
+<p><p>Remove quotation from Value string. If Value is not quoted, then return same
+ string without any modification.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="WriteStrToStream"></a><code>procedure <b>WriteStrToStream</b>(const Stream: TStream; Value: AnsiString);</code></td>
+</tr>
+</table>
+<p><p>write string to stream.</p>
+</p>
+<a name="@Types"></a><a name="@Constants"></a><a name="@Variables"></a><h2>Variables</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="CustomMonthNames"></a>CustomMonthNames<code>: array[1..12] of string;</code></td>
+<td><p>can be used for your own months strings for <a class="normal" href="synautil.html#GetMonthNumber">GetMonthNumber</a></p>
+</td>
+</tr>
+</table><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:20</em>
+</body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>blcksock: Class TUDPBlockSocket</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TUDPBlockSocket"></a><h1>Class TUDPBlockSocket</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="blcksock.html">blcksock</a><br/><h2>Declaration</h2>
+<p><code>type TUDPBlockSocket = class(<a class="normal" href="blcksock.TDgramBlockSocket.html">TDgramBlockSocket</a>)</code></p>
+<h2>Description</h2>
+Implementation of UDP socket.<p>NOTE: in this class is all receiving redirected to RecvBufferFrom. You can
+   use for reading any receive function. Preffered is RecvPacket! Similary all
+   sending is redirected to SendbufferTo. You can use for sending UDP packet any
+   sending function, like SendString.</p><p>Supported features: IPv4, IPv6, unicasts, broadcasts, multicasts, SOCKS5
+   proxy (only unicasts! Outgoing and incomming.)</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TUDPBlockSocket&nbsp;&gt; <a class="normal" href="blcksock.TDgramBlockSocket.html">TDgramBlockSocket</a>&nbsp;&gt; <a class="normal" href="blcksock.TSocksBlockSocket.html">TSocksBlockSocket</a>&nbsp;&gt; <a class="normal" href="blcksock.TBlockSocket.html">TBlockSocket</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>destructor <a class="normal" href="blcksock.TUDPBlockSocket.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TUDPBlockSocket.html#AddMulticast"><b>AddMulticast</b></a>(MCastIP:string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TUDPBlockSocket.html#DropMulticast"><b>DropMulticast</b></a>(MCastIP:string);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TUDPBlockSocket.html#EnableBroadcast"><b>EnableBroadcast</b></a>(Value: Boolean);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TUDPBlockSocket.html#EnableMulticastLoop"><b>EnableMulticastLoop</b></a>(Value: Boolean);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TUDPBlockSocket.html#GetSocketProtocol"><b>GetSocketProtocol</b></a>: integer; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TUDPBlockSocket.html#GetSocketType"><b>GetSocketType</b></a>: integer; override;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TUDPBlockSocket.html#RecvBufferFrom"><b>RecvBufferFrom</b></a>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TUDPBlockSocket.html#SendBufferTo"><b>SendBufferTo</b></a>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="AddMulticast"></a><code>procedure <b>AddMulticast</b>(MCastIP:string);</code></td>
+</tr>
+</table>
+<p><p>Add this socket to given multicast group. You cannot use Multicasts in
+     SOCKS mode!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DropMulticast"></a><code>procedure <b>DropMulticast</b>(MCastIP:string);</code></td>
+</tr>
+</table>
+<p><p>Remove this socket from given multicast group.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EnableBroadcast"></a><code>procedure <b>EnableBroadcast</b>(Value: Boolean);</code></td>
+</tr>
+</table>
+<p><p>Enable or disable sending of broadcasts. If seting OK, result is <code>True</code>.
+     This method is not supported in SOCKS5 mode! IPv6 does not support
+     broadcasts! In this case you must use Multicasts instead.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EnableMulticastLoop"></a><code>procedure <b>EnableMulticastLoop</b>(Value: Boolean);</code></td>
+</tr>
+</table>
+<p><p>All sended multicast datagrams is loopbacked to your interface too. (you
+     can read your sended datas.) You can disable this feature by this function.
+     This function not working on some Windows systems!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSocketProtocol"></a><code>function <b>GetSocketProtocol</b>: integer; override;</code></td>
+</tr>
+</table>
+<p><p>Return value of protocol type for socket creation. For UDP return
+     IPPROTO_UDP.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSocketType"></a><code>function <b>GetSocketType</b>: integer; override;</code></td>
+</tr>
+</table>
+<p><p>Return value of socket type. For UDP return SOCK_DGRAM.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferFrom"></a><code>function <b>RecvBufferFrom</b>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+</table>
+<p><p>See <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferFrom">RecvBufferFrom</a></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBufferTo"></a><code>function <b>SendBufferTo</b>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+</table>
+<p><p>See <a class="normal" href="blcksock.TBlockSocket.html#SendBufferTo">SendBufferTo</a></p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>property <a class="normal" href="blcksock.TUDPBlockSocket.html#MulticastTTL"><b>MulticastTTL</b></a>: Integer;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MulticastTTL"></a><code>property <b>MulticastTTL</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Set Time-to-live value for multicasts packets. It define number of routers
+     for transfer of datas. If you set this to 1 (dafault system value), then
+     multicasts packet goes only to you local network. If you need transport
+     multicast packet to worldwide, then increase this value, but be carefull,
+     lot of routers on internet does not transport multicasts packets!</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

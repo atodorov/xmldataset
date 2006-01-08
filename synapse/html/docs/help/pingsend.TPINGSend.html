@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>pingsend: Class TPINGSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TPINGSend"></a><h1>Class TPINGSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="pingsend.html">pingsend</a><br/><h2>Declaration</h2>
+<p><code>type TPINGSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of ICMP PING and ICMPv6 PING.<p>Note: Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TPINGSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="pingsend.TPINGSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="pingsend.TPINGSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pingsend.TPINGSend.html#Ping"><b>Ping</b></a>(const Host: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Ping"></a><code>function <b>Ping</b>(const Host: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send ICMP ping to host and count <a class="normal" href="pingsend.TPINGSend.html#PingTime">PingTime</a>. If ping OK, result is
+     <code>True</code>.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="pingsend.TPINGSend.html#PacketSize"><b>PacketSize</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#PingTime"><b>PingTime</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#ReplyCode"><b>ReplyCode</b></a>: byte;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#ReplyError"><b>ReplyError</b></a>: <a class="normal" href="pingsend.html#TICMPError">TICMPError</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#ReplyErrorDesc"><b>ReplyErrorDesc</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#ReplyFrom"><b>ReplyFrom</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#ReplyType"><b>ReplyType</b></a>: byte;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pingsend.TPINGSend.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TICMPBlockSocket.html">TICMPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PacketSize"></a><code>property <b>PacketSize</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Size of PING packet. Default size is 32 bytes.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PingTime"></a><code>property <b>PingTime</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Time between request and reply.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyCode"></a><code>property <b>ReplyCode</b>: byte;</code></td>
+</tr>
+</table>
+<p>ICMP code of PING reply. Each protocol using another values! For IPv4 and
+     IPv6 are used different values! For protocol independent value look to
+     <a class="normal" href="pingsend.TPINGSend.html#ReplyError">ReplyError</a></p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyError"></a><code>property <b>ReplyError</b>: <a class="normal" href="pingsend.html#TICMPError">TICMPError</a>;</code></td>
+</tr>
+</table>
+<p>Return type of returned ICMP message. This value is independent on used
+     protocol!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyErrorDesc"></a><code>property <b>ReplyErrorDesc</b>: string;</code></td>
+</tr>
+</table>
+<p>Return human readable description of returned packet type.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyFrom"></a><code>property <b>ReplyFrom</b>: string;</code></td>
+</tr>
+</table>
+<p>From this address is sended reply for your PING request. It maybe not your
+     requested destination, when some error occured!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyType"></a><code>property <b>ReplyType</b>: byte;</code></td>
+</tr>
+</table>
+<p>ICMP type of PING reply. Each protocol using another values! For IPv4 and
+     IPv6 are used different values!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TICMPBlockSocket.html">TICMPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

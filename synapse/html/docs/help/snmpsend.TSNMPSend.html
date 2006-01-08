@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>snmpsend: Class TSNMPSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TSNMPSend"></a><h1>Class TSNMPSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="snmpsend.html">snmpsend</a><br/><h2>Declaration</h2>
+<p><code>type TSNMPSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of SNMP protocol.<p>Note: Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TSNMPSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="snmpsend.TSNMPSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="snmpsend.TSNMPSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPSend.html#DoIt"><b>DoIt</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPSend.html#RecvTrap"><b>RecvTrap</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPSend.html#SendRequest"><b>SendRequest</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPSend.html#SendTrap"><b>SendTrap</b></a>: Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DoIt"></a><code>function <b>DoIt</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Mapped to <a class="normal" href="snmpsend.TSNMPSend.html#SendRequest">SendRequest</a> internally. This function is only for
+     backward compatibility.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvTrap"></a><code>function <b>RecvTrap</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Receive SNMP packet only. Good for receiving traps.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendRequest"></a><code>function <b>SendRequest</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Connects to a Host and send there query. If in timeout SNMP server send
+     back query, result is <code>True</code>. If is used SNMPv3, then it synchronize self
+     with SNMPv3 agent first. (It is needed for SNMPv3 auhorization!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendTrap"></a><code>function <b>SendTrap</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send SNMP packet only, but not waits for reply. Good for sending traps.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="snmpsend.TSNMPSend.html#Buffer"><b>Buffer</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPSend.html#HostIP"><b>HostIP</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPSend.html#Query"><b>Query</b></a>: <a class="normal" href="snmpsend.TSNMPRec.html">TSNMPRec</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPSend.html#Reply"><b>Reply</b></a>: <a class="normal" href="snmpsend.TSNMPRec.html">TSNMPRec</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPSend.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TUDPBlockSocket.html">TUDPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Buffer"></a><code>property <b>Buffer</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>contains raw binary form of SNMP packet. Good for debugging.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="HostIP"></a><code>property <b>HostIP</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>After SNMP operation hold IP address of remote side.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Query"></a><code>property <b>Query</b>: <a class="normal" href="snmpsend.TSNMPRec.html">TSNMPRec</a>;</code></td>
+</tr>
+</table>
+<p>Data object contains SNMP query.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Reply"></a><code>property <b>Reply</b>: <a class="normal" href="snmpsend.TSNMPRec.html">TSNMPRec</a>;</code></td>
+</tr>
+</table>
+<p>Data object contains SNMP reply.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TUDPBlockSocket.html">TUDPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

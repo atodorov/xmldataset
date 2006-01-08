@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>tlntsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit tlntsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td>Functions and Procedures</td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Telnet script client<p>Used RFC: RFC-854</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="tlntsend.TTelnetSend.html"><code>TTelnetSend</code></a></td>
+<td width="100%">Class with implementation of Telnet script client.</td>
+</tr>
+</table>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TTelnetState"></a>TTelnetState<code></code></td>
+<td>State of telnet protocol<p>. Used internaly by TTelnetSend.</p>
+<ul>
+<li>
+tsDATA: </li>
+<li>
+tsIAC: </li>
+<li>
+tsIAC_SB: </li>
+<li>
+tsIAC_WILL: </li>
+<li>
+tsIAC_DO: </li>
+<li>
+tsIAC_WONT: </li>
+<li>
+tsIAC_DONT: </li>
+<li>
+tsIAC_SBIAC: </li>
+<li>
+tsIAC_SBDATA: </li>
+<li>
+tsSBDATA_IAC: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cTelnetProtocol"></a>cTelnetProtocol<code> = 'telnet';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_EOR"></a>TLNT_EOR<code>                = #239;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_SE"></a>TLNT_SE<code>                 = #240;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_NOP"></a>TLNT_NOP<code>                = #241;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_DATA_MARK"></a>TLNT_DATA_MARK<code>          = #242;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_BREAK"></a>TLNT_BREAK<code>              = #243;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_IP"></a>TLNT_IP<code>                 = #244;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_AO"></a>TLNT_AO<code>                 = #245;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_AYT"></a>TLNT_AYT<code>                = #246;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_EC"></a>TLNT_EC<code>                 = #247;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_EL"></a>TLNT_EL<code>                 = #248;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_GA"></a>TLNT_GA<code>                 = #249;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_SB"></a>TLNT_SB<code>                 = #250;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_WILL"></a>TLNT_WILL<code>               = #251;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_WONT"></a>TLNT_WONT<code>               = #252;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_DO"></a>TLNT_DO<code>                 = #253;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TLNT_DONT"></a>TLNT_DONT<code>               = #254;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLNT_IAC"></a>TLNT_IAC<code>                = #255;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:20</em>
+</body></html>

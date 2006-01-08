@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>asn1util</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit asn1util</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Utilities for handling ASN.1 BER encoding<p>By this unit you can parse ASN.1 BER encoded data to elements or build back any
+ elements to ASN.1 BER encoded buffer. You can dump ASN.1 BER encoded data to
+ human readable form for easy debugging, too.</p><p>Supported element types are: ASN1_BOOL, ASN1_INT, ASN1_OCTSTR, ASN1_NULL,
+ ASN1_OBJID, ASN1_ENUM, ASN1_SEQ, ASN1_SETOF, ASN1_IPADDR, ASN1_COUNTER,
+ ASN1_GAUGE, ASN1_TIMETICKS, ASN1_OPAQUE</p><p>For sample of using, look to <a class="normal" href="snmpsend.TSNMPSend.html">TSNMPSend</a> class.</p>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#ASNEncOIDItem"><b>ASNEncOIDItem</b></a>(Value: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ASNDecOIDItem"><b>ASNDecOIDItem</b></a>(var Start: Integer; const Buffer: AnsiString): Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ASNEncLen"><b>ASNEncLen</b></a>(Len: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ASNDecLen"><b>ASNDecLen</b></a>(var Start: Integer; const Buffer: AnsiString): Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ASNEncInt"><b>ASNEncInt</b></a>(Value: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ASNEncUInt"><b>ASNEncUInt</b></a>(Value: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ASNObject"><b>ASNObject</b></a>(const Data: AnsiString; ASNType: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ASNItem"><b>ASNItem</b></a>(var Start: Integer; const Buffer: AnsiString; var ValueType: Integer): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#MibToId"><b>MibToId</b></a>(Mib: String): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IdToMib"><b>IdToMib</b></a>(const Id: AnsiString): String;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IntMibToStr"><b>IntMibToStr</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ASNdump"><b>ASNdump</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNDecLen"></a><code>function <b>ASNDecLen</b>(var Start: Integer; const Buffer: AnsiString): Integer;</code></td>
+</tr>
+</table>
+<p><p>Decodes length of next element in &quot;Buffer&quot; from the &quot;Start&quot; position.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNDecOIDItem"></a><code>function <b>ASNDecOIDItem</b>(var Start: Integer; const Buffer: AnsiString): Integer;</code></td>
+</tr>
+</table>
+<p><p>Decodes an OID item of the next element in the &quot;Buffer&quot; from the &quot;Start&quot;
+ position.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNdump"></a><code>function <b>ASNdump</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Convert ASN.1 BER encoded buffer to human readable form for debugging.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNEncInt"></a><code>function <b>ASNEncInt</b>(Value: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a signed integer to ASN.1 binary</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNEncLen"></a><code>function <b>ASNEncLen</b>(Len: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes the length of ASN.1 element to binary.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNEncOIDItem"></a><code>function <b>ASNEncOIDItem</b>(Value: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes OID item to binary form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNEncUInt"></a><code>function <b>ASNEncUInt</b>(Value: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes unsigned integer into ASN.1 binary</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNItem"></a><code>function <b>ASNItem</b>(var Start: Integer; const Buffer: AnsiString; var ValueType: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Beginning with the &quot;Start&quot; position, decode the ASN.1 item of the next element
+ in &quot;Buffer&quot;. Type of item is stored in &quot;ValueType.&quot;</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ASNObject"></a><code>function <b>ASNObject</b>(const Data: AnsiString; ASNType: Integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes ASN.1 object to binary form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IdToMib"></a><code>function <b>IdToMib</b>(const Id: AnsiString): String;</code></td>
+</tr>
+</table>
+<p><p>Decodes MIB OID from binary form to string form.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IntMibToStr"></a><code>function <b>IntMibToStr</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes an one number from MIB OID to binary form. (used internally from
+<a class="normal" href="asn1util.html#MibToId">MibToId</a>)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="MibToId"></a><code>function <b>MibToId</b>(Mib: String): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes an MIB OID string to binary form.</p>
+</p>
+<a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_BOOL"></a>ASN1_BOOL<code> = $01;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_INT"></a>ASN1_INT<code> = $02;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_OCTSTR"></a>ASN1_OCTSTR<code> = $04;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_NULL"></a>ASN1_NULL<code> = $05;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_OBJID"></a>ASN1_OBJID<code> = $06;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_ENUM"></a>ASN1_ENUM<code> = $0a;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_SEQ"></a>ASN1_SEQ<code> = $30;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_SETOF"></a>ASN1_SETOF<code> = $31;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_IPADDR"></a>ASN1_IPADDR<code> = $40;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_COUNTER"></a>ASN1_COUNTER<code> = $41;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_GAUGE"></a>ASN1_GAUGE<code> = $42;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ASN1_TIMETICKS"></a>ASN1_TIMETICKS<code> = $43;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ASN1_OPAQUE"></a>ASN1_OPAQUE<code> = $44;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

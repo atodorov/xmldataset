@@ -1,0 +1,387 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>snmpsend: Class TSNMPRec</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TSNMPRec"></a><h1>Class TSNMPRec</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="snmpsend.html">snmpsend</a><br/><h2>Declaration</h2>
+<p><code>type TSNMPRec = class(TObject)</code></p>
+<h2>Description</h2>
+Data object abstracts SNMP data packet<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TSNMPRec&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="snmpsend.TSNMPRec.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="snmpsend.TSNMPRec.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="snmpsend.TSNMPRec.html#Clear"><b>Clear</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPRec.html#DecodeBuf"><b>DecodeBuf</b></a>(const Buffer: AnsiString): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPRec.html#EncodeBuf"><b>EncodeBuf</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="snmpsend.TSNMPRec.html#MIBAdd"><b>MIBAdd</b></a>(const MIB, Value: AnsiString; ValueType: Integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPRec.html#MIBByIndex"><b>MIBByIndex</b></a>(Index: Integer): <a class="normal" href="snmpsend.TSNMPMib.html">TSNMPMib</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPRec.html#MIBCount"><b>MIBCount</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="snmpsend.TSNMPRec.html#MIBDelete"><b>MIBDelete</b></a>(Index: Integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="snmpsend.TSNMPRec.html#MIBGet"><b>MIBGet</b></a>(const MIB: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>;</code></td>
+</tr>
+</table>
+<p><p>Clears all object properties to default values.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodeBuf"></a><code>function <b>DecodeBuf</b>(const Buffer: AnsiString): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Decode SNMP packet in buffer to object properties.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EncodeBuf"></a><code>function <b>EncodeBuf</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encode obeject properties to SNMP packet.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MIBAdd"></a><code>procedure <b>MIBAdd</b>(const MIB, Value: AnsiString; ValueType: Integer);</code></td>
+</tr>
+</table>
+<p><p>Add entry to <a class="normal" href="snmpsend.TSNMPRec.html#SNMPMibList">SNMPMibList</a>. For queries use value as empty string,
+     and ValueType as ASN1_NULL.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MIBByIndex"></a><code>function <b>MIBByIndex</b>(Index: Integer): <a class="normal" href="snmpsend.TSNMPMib.html">TSNMPMib</a>;</code></td>
+</tr>
+</table>
+<p><p>Return MIB information from given row of MIB array.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MIBCount"></a><code>function <b>MIBCount</b>: integer;</code></td>
+</tr>
+</table>
+<p><p>return number of entries in MIB array.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MIBDelete"></a><code>procedure <b>MIBDelete</b>(Index: Integer);</code></td>
+</tr>
+</table>
+<p><p>Delete entry from <a class="normal" href="snmpsend.TSNMPRec.html#SNMPMibList">SNMPMibList</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MIBGet"></a><code>function <b>MIBGet</b>(const MIB: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Search <a class="normal" href="snmpsend.TSNMPRec.html#SNMPMibList">SNMPMibList</a> list for MIB and return correspond value.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthEngineBoots"><b>AuthEngineBoots</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthEngineID"><b>AuthEngineID</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthEngineTime"><b>AuthEngineTime</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthEngineTimeStamp"><b>AuthEngineTimeStamp</b></a>: Cardinal;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthKey"><b>AuthKey</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#AuthMode"><b>AuthMode</b></a>: <a class="normal" href="snmpsend.html#TV3Auth">TV3Auth</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#Community"><b>Community</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#ContextEngineID"><b>ContextEngineID</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#ContextName"><b>ContextName</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#ErrorIndex"><b>ErrorIndex</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#ErrorStatus"><b>ErrorStatus</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#FlagReportable"><b>FlagReportable</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#Flags"><b>Flags</b></a>: <a class="normal" href="snmpsend.html#TV3Flags">TV3Flags</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#ID"><b>ID</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#MaxRepetitions"><b>MaxRepetitions</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#MaxSize"><b>MaxSize</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#NonRepeaters"><b>NonRepeaters</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#OldTrapEnterprise"><b>OldTrapEnterprise</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#OldTrapGen"><b>OldTrapGen</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#OldTrapHost"><b>OldTrapHost</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#OldTrapSpec"><b>OldTrapSpec</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#OldTrapTimeTicks"><b>OldTrapTimeTicks</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#Password"><b>Password</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#PDUType"><b>PDUType</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#PrivKey"><b>PrivKey</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#SNMPMibList"><b>SNMPMibList</b></a>: TList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#UserName"><b>UserName</b></a>: AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="snmpsend.TSNMPRec.html#Version"><b>Version</b></a>: Integer;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthEngineBoots"></a><code>property <b>AuthEngineBoots</b>: Integer;</code></td>
+</tr>
+</table>
+<p>value used by SNMPv3 authorisation for synchronization with SNMP agent.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthEngineID"></a><code>property <b>AuthEngineID</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>value used by SNMPv3 authorisation for synchronization with SNMP agent.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthEngineTime"></a><code>property <b>AuthEngineTime</b>: Integer;</code></td>
+</tr>
+</table>
+<p>value used by SNMPv3 authorisation for synchronization with SNMP agent.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthEngineTimeStamp"></a><code>property <b>AuthEngineTimeStamp</b>: Cardinal;</code></td>
+</tr>
+</table>
+<p>value used by SNMPv3 authorisation for synchronization with SNMP agent.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthKey"></a><code>property <b>AuthKey</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>For SNMPv3. Computed Athorization key from <a class="normal" href="snmpsend.TSNMPRec.html#Password">Password</a>.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthMode"></a><code>property <b>AuthMode</b>: <a class="normal" href="snmpsend.html#TV3Auth">TV3Auth</a>;</code></td>
+</tr>
+</table>
+<p>For SNMPv3. Specify Authorization mode. (specify used hash for
+     authorization)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Community"></a><code>property <b>Community</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>Community string for autorize access to SNMP server. (Case sensitive!)
+     Community string is not used in SNMPv3! Use <a class="normal" href="snmpsend.TSNMPRec.html#UserName">UserName</a> and
+     <a class="normal" href="snmpsend.TSNMPRec.html#Password">Password</a> instead!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ContextEngineID"></a><code>property <b>ContextEngineID</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>For SNMPv3. If not specified, is used value from <a class="normal" href="snmpsend.TSNMPRec.html#AuthEngineID">AuthEngineID</a></p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ContextName"></a><code>property <b>ContextName</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>For SNMPv3.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ErrorIndex"></a><code>property <b>ErrorIndex</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Point to error position in reply packet. Not usefull for users. It only
+     good for debugging!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ErrorStatus"></a><code>property <b>ErrorStatus</b>: Integer;</code></td>
+</tr>
+</table>
+<p>When packet is reply, contains error code. Supported values are defined by
+     E* constants.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FlagReportable"></a><code>property <b>FlagReportable</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>For SNMPv3.... If is <code>True</code>, SNMP agent must send reply (at least with some
+     error).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Flags"></a><code>property <b>Flags</b>: <a class="normal" href="snmpsend.html#TV3Flags">TV3Flags</a>;</code></td>
+</tr>
+</table>
+<p>Specify if message is authorised or encrypted. Used only in SNMPv3, and
+     encryption is not yet supported!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ID"></a><code>property <b>ID</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Contains ID number. Not need to use.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxRepetitions"></a><code>property <b>MaxRepetitions</b>: Integer;</code></td>
+</tr>
+</table>
+<p>special value for GetBulkRequest of SNMPv2 and v3.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxSize"></a><code>property <b>MaxSize</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Maximum message size in bytes for SNMPv3. For sending is default 1472 bytes.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="NonRepeaters"></a><code>property <b>NonRepeaters</b>: Integer;</code></td>
+</tr>
+</table>
+<p>special value for GetBulkRequest of SNMPv2 and v3.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OldTrapEnterprise"></a><code>property <b>OldTrapEnterprise</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>MIB value to identify the object that sent the TRAPv1.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OldTrapGen"></a><code>property <b>OldTrapGen</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Generic TRAPv1 identification.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OldTrapHost"></a><code>property <b>OldTrapHost</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>Address of TRAPv1 sender (IP address).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OldTrapSpec"></a><code>property <b>OldTrapSpec</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Specific TRAPv1 identification.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OldTrapTimeTicks"></a><code>property <b>OldTrapTimeTicks</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Number of 1/100th of seconds since last reboot or power up. (for TRAPv1)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Password"></a><code>property <b>Password</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>SNMPv3 authorization password</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PDUType"></a><code>property <b>PDUType</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Define type of SNMP operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PrivKey"></a><code>property <b>PrivKey</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>For SNMPv3. Encryption key for message encryption. Not yet used!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SNMPMibList"></a><code>property <b>SNMPMibList</b>: TList;</code></td>
+</tr>
+</table>
+<p>List of <a class="normal" href="snmpsend.TSNMPMib.html">TSNMPMib</a> objects.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="UserName"></a><code>property <b>UserName</b>: AnsiString;</code></td>
+</tr>
+</table>
+<p>SNMPv3 authorization username</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Version"></a><code>property <b>Version</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Version of SNMP packet. Default value is 0 (SNMP ver. 1). You can use
+     value 1 for SNMPv2c or value 3 for SNMPv3.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

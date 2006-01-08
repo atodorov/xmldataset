@@ -1,0 +1,911 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>synaser: Class TBlockSerial</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TBlockSerial"></a><h1>Class TBlockSerial</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td><a class="section" href="#@Fields">Fields</a></td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="synaser.html">synaser</a><br/><h2>Declaration</h2>
+<p><code>type TBlockSerial = class(TObject)</code></p>
+<h2>Description</h2>
+Main class implementing all communication routines<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TBlockSerial&nbsp;&gt; TObject<a name="@Fields"></a><h2>Fields</h2>
+<table class="fields" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th>&nbsp;</th><th>Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td class="itemname" nowrap="nowrap"><a name="DCB"></a><code>DCB</code></td>
+<td width="100%"><p>data Control Block with communication parameters. Usable only when you
+     need to call API directly.</p>
+</td>
+</tr>
+</table><a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="synaser.TBlockSerial.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="synaser.TBlockSerial.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>class function <a class="normal" href="synaser.TBlockSerial.html#GetErrorDesc"><b>GetErrorDesc</b></a>(ErrorCode: integer): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#ATCommand"><b>ATCommand</b></a>(value: string): string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#ATConnect"><b>ATConnect</b></a>(value: string): string; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#CanRead"><b>CanRead</b></a>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#CanReadEx"><b>CanReadEx</b></a>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#CanWrite"><b>CanWrite</b></a>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#CloseSocket"><b>CloseSocket</b></a>; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#Config"><b>Config</b></a>(baud, bits: integer; parity: char; stop: integer; softflow, hardflow: boolean); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#Connect"><b>Connect</b></a>(comport: string); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#EnableRTSToggle"><b>EnableRTSToggle</b></a>(value: boolean); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#ExceptCheck"><b>ExceptCheck</b></a>; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#Flush"><b>Flush</b></a>; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#GetCommState"><b>GetCommState</b></a>; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>class function <a class="normal" href="synaser.TBlockSerial.html#GetVersion"><b>GetVersion</b></a>: string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#ModemStatus"><b>ModemStatus</b></a>: integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#Purge"><b>Purge</b></a>; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#RaiseSynaError"><b>RaiseSynaError</b></a>(ErrNumber: integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvBlock"><b>RecvBlock</b></a>(Timeout: Integer): string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvBuffer"><b>RecvBuffer</b></a>(buffer: pointer; length: integer): integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvBufferEx"><b>RecvBufferEx</b></a>(buffer: pointer; length: integer; timeout: integer): integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvBufferStr"><b>RecvBufferStr</b></a>(Length: Integer; Timeout: Integer): string; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvByte"><b>RecvByte</b></a>(timeout: integer): byte; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvInteger"><b>RecvInteger</b></a>(Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvPacket"><b>RecvPacket</b></a>(Timeout: Integer): string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#RecvStream"><b>RecvStream</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#RecvStreamIndy"><b>RecvStreamIndy</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#RecvStreamRaw"><b>RecvStreamRaw</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#RecvStreamSize"><b>RecvStreamSize</b></a>(const Stream: TStream; Timeout: Integer; Size: Integer); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#Recvstring"><b>Recvstring</b></a>(timeout: integer): string; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#RecvTerminated"><b>RecvTerminated</b></a>(Timeout: Integer; const Terminator: string): string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendBlock"><b>SendBlock</b></a>(const Data: string); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#SendBuffer"><b>SendBuffer</b></a>(buffer: pointer; length: integer): integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendByte"><b>SendByte</b></a>(data: byte); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#SendingData"><b>SendingData</b></a>: integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendInteger"><b>SendInteger</b></a>(Data: integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendStream"><b>SendStream</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendStreamIndy"><b>SendStreamIndy</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendStreamRaw"><b>SendStreamRaw</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SendString"><b>SendString</b></a>(data: string); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#SerialCheck"><b>SerialCheck</b></a>(SerialResult: integer): integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SetBreak"><b>SetBreak</b></a>(Duration: integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SetCommState"><b>SetCommState</b></a>; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="synaser.TBlockSerial.html#SetSynaError"><b>SetSynaError</b></a>(ErrNumber: integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#WaitingData"><b>WaitingData</b></a>: integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="synaser.TBlockSerial.html#WaitingDataEx"><b>WaitingDataEx</b></a>: integer; virtual;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ATCommand"></a><code>function <b>ATCommand</b>(value: string): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>This function is designed to send AT commands to the modem. The AT command
+     is sent in the Value parameter and the response is returned in the function
+     return value (may contain multiple lines!).
+     If the AT command is processed successfully (modem returns OK), then the
+     <a class="normal" href="synaser.TBlockSerial.html#ATResult">ATResult</a> property is set to True.</p><p>This function is designed only for AT commands that return OK or ERROR
+     response! To call connection commands the <a class="normal" href="synaser.TBlockSerial.html#ATConnect">ATConnect</a> method.
+     Remember, when you connect to a modem device, it is in AT command mode.
+     Now you can send AT commands to the modem. If you need to transfer data to
+     the modem on the other side of the line, you must first switch to data mode
+     using the <a class="normal" href="synaser.TBlockSerial.html#ATConnect">ATConnect</a> method.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ATConnect"></a><code>function <b>ATConnect</b>(value: string): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>This function is used to send connect type AT commands to the modem. It is
+     for commands to switch to connected state. (ATD, ATA, ATO,...)
+     It sends the AT command in the Value parameter and returns the modem's
+     response (may be multiple lines - usually with connection parameters info).
+     If the AT command is processed successfully (the modem returns CONNECT),
+     then the ATResult property is set to <code>True</code>.</p><p>This function is designed only for AT commands which respond by CONNECT,
+     BUSY, NO DIALTONE NO CARRIER or ERROR. For other AT commands use the
+     <a class="normal" href="synaser.TBlockSerial.html#ATCommand">ATCommand</a> method.</p><p>The connect timeout is 90*<a class="normal" href="synaser.TBlockSerial.html#AtTimeout">AtTimeout</a>. If this command is successful
+     (<a class="normal" href="synaser.TBlockSerial.html#ATResult">ATResult</a> is <code>True</code>), then the modem is in data state. When you now
+     send or receive some data, it is not to or from your modem, but from the
+     modem on other side of the line. Now you can transfer your data.
+     If the connection attempt failed (<a class="normal" href="synaser.TBlockSerial.html#ATResult">ATResult</a> is <code>False</code>), then the
+     modem is still in AT command mode.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanRead"></a><code>function <b>CanRead</b>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns <code>True</code>, if you can from read any data from the port. Status is
+     tested for a period of time given by the Timeout parameter (in milliseconds).
+     If the value of the Timeout parameter is 0, the status is tested only once
+     and the function returns immediately. If the value of the Timeout parameter
+     is set to -1, the function returns only after it detects data on the port
+     (this may cause the process to hang).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanReadEx"></a><code>function <b>CanReadEx</b>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="synaser.TBlockSerial.html#CanRead">CanRead</a>, but the test is against data in the internal
+    <a class="normal" href="synaser.TBlockSerial.html#LineBuffer">LineBuffer</a> too.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanWrite"></a><code>function <b>CanWrite</b>(Timeout: integer): boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns <code>True</code>, if you can write any data to the port (this function is not
+     sending the contents of the buffer). Status is tested for a period of time
+     given by the Timeout parameter (in milliseconds). If the value of
+     the Timeout parameter is 0, the status is tested only once and the function
+     returns immediately. If the value of the  Timeout parameter is set to -1,
+     the function returns only after it detects that it can write data to
+     the port (this may cause the process to hang).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CloseSocket"></a><code>procedure <b>CloseSocket</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Destroy handle in use. It close connection to serial port.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Config"></a><code>procedure <b>Config</b>(baud, bits: integer; parity: char; stop: integer; softflow, hardflow: boolean); virtual;</code></td>
+</tr>
+</table>
+<p><p>Reconfigure communication parameters on the fly. You must be connected to
+     port before!</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+baud</dt>
+<dd class="parameters">
+Define connection speed. Baud rate can be from 50 to 4000000
+      bits per second. (it depends on your hardware!)</dd>
+<dt class="parameters">
+bits</dt>
+<dd class="parameters">
+Number of bits in communication.</dd>
+<dt class="parameters">
+parity</dt>
+<dd class="parameters">
+Define communication parity (N - None, O - Odd, E - Even, M - Mark or S - Space).</dd>
+<dt class="parameters">
+stop</dt>
+<dd class="parameters">
+Define number of stopbits. Use constants <a class="normal" href="synaser.html#SB1">SB1</a>,
+      <a class="normal" href="synaser.html#SB1andHalf">SB1andHalf</a> and <a class="normal" href="synaser.html#SB2">SB2</a>.</dd>
+<dt class="parameters">
+softflow</dt>
+<dd class="parameters">
+Enable XON/XOFF handshake.</dd>
+<dt class="parameters">
+hardflow</dt>
+<dd class="parameters">
+Enable CTS/RTS handshake.</dd>
+</dl>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Connect"></a><code>procedure <b>Connect</b>(comport: string); virtual;</code></td>
+</tr>
+</table>
+<p><p>Connects to the port indicated by comport. Comport can be used in Windows
+     style (COM2), or in Linux style (/dev/ttyS1). When you use windows style
+     in Linux, then it will be converted to Linux name. And vice versa! However
+     you can specify any device name! (other device names then standart is not
+     converted!)</p><p>After successfull connection the DTR signal is set (if you not set hardware
+     handshake, then the RTS signal is set, too!)</p><p>Connection parameters is predefined by your system configuration. If you
+     need use another parameters, then you can use Config method after.
+     Notes:</p><p>- Remember, the commonly used serial Laplink cable does not support
+       hardware handshake.</p><p>- Before setting any handshake you must be sure that it is supported by
+       your hardware.</p><p>- Some serial devices are slow. In some cases you must wait up to a few
+       seconds after connection for the device to respond.</p><p>- when you connect to a modem device, then is best to test it by an empty
+       AT command. (call ATCommand('AT'))</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p><p>Object constructor.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p><p>Object destructor.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EnableRTSToggle"></a><code>procedure <b>EnableRTSToggle</b>(value: boolean); virtual;</code></td>
+</tr>
+</table>
+<p><p>Enable or disable RTS driven communication (half-duplex). It can be used
+     to communicate with RS485 converters, or other special equipment. If you
+     enable this feature, the system automatically controls the RTS signal.</p><p>Notes:</p><p>- On Windows NT (or higher) ir RTS signal driven by system driver.</p><p>- On Win9x family is used special code for waiting until last byte is
+      sended from your UART.</p><p>- On Linux you must have kernel 2.1 or higher!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ExceptCheck"></a><code>procedure <b>ExceptCheck</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>If <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is not 0 and exceptions are enabled, then this procedure
+     raises an exception. This method is used internally. You may need it only
+     in special cases.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Flush"></a><code>procedure <b>Flush</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Waits until all data to is sent and buffers are emptied.
+     Warning: On Windows systems is this method returns when all buffers are
+     flushed to the serial port controller, before the last byte is sent!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetCommState"></a><code>procedure <b>GetCommState</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Read communication parameters into the DCB structure (DCB structure is
+     simulated under Linux).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="GetErrorDesc"></a><code>class function <b>GetErrorDesc</b>(ErrorCode: integer): string;</code></td>
+</tr>
+</table>
+<p><p>Returns the descriptive text associated with ErrorCode. You need this
+     method only in special cases. Description of LastError is now accessible
+     through the LastErrorDesc property.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetVersion"></a><code>class function <b>GetVersion</b>: string; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns a string containing the version number of the library.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ModemStatus"></a><code>function <b>ModemStatus</b>: integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns the status word of the modem. Decoding the status word could yield
+     the status of carrier detect signaland other signals. This method is used
+     internally by the modem status reading properties. You usually do not need
+     to call this method directly.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Purge"></a><code>procedure <b>Purge</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Unconditionally empty all buffers. It is good when you need to interrupt
+     communication and for cleanups.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RaiseSynaError"></a><code>procedure <b>RaiseSynaError</b>(ErrNumber: integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Raise Synaser error with ErrNumber code. Usually used by internal routines.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBlock"></a><code>function <b>RecvBlock</b>(Timeout: Integer): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>Waits until one data block is received. See <a class="normal" href="synaser.TBlockSerial.html#SendBlock">SendBlock</a>. If no data
+     is received within the Timeout (in milliseconds) period, <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a>
+     is set to <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBuffer"></a><code>function <b>RecvBuffer</b>(buffer: pointer; length: integer): integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Waits until the allocated buffer is filled by received data. Returns number
+     of data bytes received, which equals to the Length value under normal
+     operation. If it is not equal, the communication channel is possibly broken.</p><p>This method not using any internal buffering, like all others receiving
+     methods. You cannot freely combine this method with all others receiving
+     methods!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferEx"></a><code>function <b>RecvBufferEx</b>(buffer: pointer; length: integer; timeout: integer): integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Method waits until data is received. If no data is received within
+     the Timeout (in milliseconds) period, <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is set to
+     <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>. This method is used to read any amount of data
+     (e. g. 1MB), and may be freely combined with all receviving methods what
+     have Timeout parameter, like the <a class="normal" href="synaser.TBlockSerial.html#Recvstring">Recvstring</a>, <a class="normal" href="synaser.TBlockSerial.html#RecvByte">RecvByte</a> or
+     <a class="normal" href="synaser.TBlockSerial.html#RecvTerminated">RecvTerminated</a> methods.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferStr"></a><code>function <b>RecvBufferStr</b>(Length: Integer; Timeout: Integer): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>It is like recvBufferEx, but data is readed to dynamicly allocated binary
+     string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvByte"></a><code>function <b>RecvByte</b>(timeout: integer): byte; virtual;</code></td>
+</tr>
+</table>
+<p><p>Waits until one data byte is received which is returned as the function
+     result. If no data is received within the Timeout (in milliseconds) period,
+     <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is set to <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvInteger"></a><code>function <b>RecvInteger</b>(Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Waits until four data bytes are received which is returned as the function
+     integer result. If no data is received within the Timeout (in milliseconds) period,
+     <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is set to <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvPacket"></a><code>function <b>RecvPacket</b>(Timeout: Integer): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>Read all available data and return it in the function result string. This
+     function may be combined with <a class="normal" href="synaser.TBlockSerial.html#Recvstring">Recvstring</a>, <a class="normal" href="synaser.TBlockSerial.html#RecvByte">RecvByte</a> or related
+     methods.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStream"></a><code>procedure <b>RecvStream</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>receive block of data to stream. (Data can be sended by <a class="normal" href="synaser.TBlockSerial.html#SendStream">SendStream</a></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamIndy"></a><code>procedure <b>RecvStreamIndy</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>receive block of data to stream. (Data can be sended by <a class="normal" href="synaser.TBlockSerial.html#SendStreamIndy">SendStreamIndy</a></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamRaw"></a><code>procedure <b>RecvStreamRaw</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Receive all data to stream, until some error occured. (for example timeout)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamSize"></a><code>procedure <b>RecvStreamSize</b>(const Stream: TStream; Timeout: Integer; Size: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>receive requested count of bytes to stream</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Recvstring"></a><code>function <b>Recvstring</b>(timeout: integer): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>This method waits until a terminated data string is received. The string
+     is terminated by a CR/LF sequence. The resulting string is returned without
+     the terminator (CR/LF)! If no data is received within the Timeout (in
+     milliseconds) period, <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is set to <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>.</p><p>If <a class="normal" href="synaser.TBlockSerial.html#ConvertLineEnd">ConvertLineEnd</a> is used, then the CR/LF sequence may not be exactly
+     CR/LF. See the description of <a class="normal" href="synaser.TBlockSerial.html#ConvertLineEnd">ConvertLineEnd</a>.</p><p>This method serves for line protocol implementation and uses its own
+     buffers to maximize performance. Therefore do NOT use this method with the
+     <a class="normal" href="synaser.TBlockSerial.html#RecvBuffer">RecvBuffer</a> method to receive data as it may cause data loss.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvTerminated"></a><code>function <b>RecvTerminated</b>(Timeout: Integer; const Terminator: string): string; virtual;</code></td>
+</tr>
+</table>
+<p><p>This method waits until a terminated data string is received. This string
+     is terminated by the Terminator string. The resulting string is returned
+     without this termination string! If no data is received within the Timeout
+     (in milliseconds) period, <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> is set to <a class="normal" href="synaser.html#ErrTimeout">ErrTimeout</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBlock"></a><code>procedure <b>SendBlock</b>(const Data: string); virtual;</code></td>
+</tr>
+</table>
+<p><p>send data as one block. Each block begins with integer value with Length
+     of block.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBuffer"></a><code>function <b>SendBuffer</b>(buffer: pointer; length: integer): integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Sends Length bytes of data from Buffer through the connected port.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendByte"></a><code>procedure <b>SendByte</b>(data: byte); virtual;</code></td>
+</tr>
+</table>
+<p><p>One data BYTE is sent.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendingData"></a><code>function <b>SendingData</b>: integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns the number of bytes waiting to be sent in the output buffer.
+     0 is returned when the output buffer is empty.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendInteger"></a><code>procedure <b>SendInteger</b>(Data: integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>send four bytes as integer.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStream"></a><code>procedure <b>SendStream</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>send content of stream as block. see <a class="normal" href="synaser.TBlockSerial.html#SendBlock">SendBlock</a></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStreamIndy"></a><code>procedure <b>SendStreamIndy</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>send content of stream as block, but this is compatioble with Indy library.
+     (it have swapped lenght of block). See <a class="normal" href="synaser.TBlockSerial.html#SendStream">SendStream</a></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStreamRaw"></a><code>procedure <b>SendStreamRaw</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>send content of stream from current position</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendString"></a><code>procedure <b>SendString</b>(data: string); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send the string in the data parameter. No terminator is appended by this
+     method. If you need to send a string with CR/LF terminator, you must append
+     the CR/LF characters to the data string!</p><p>Since no terminator is appended, you can use this function for sending
+     binary data too.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SerialCheck"></a><code>function <b>SerialCheck</b>(SerialResult: integer): integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>If you &quot;manually&quot; call API functions, forward their return code in
+     the SerialResult parameter to this function, which evaluates it and sets
+     <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> and <a class="normal" href="synaser.TBlockSerial.html#LastErrorDesc">LastErrorDesc</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetBreak"></a><code>procedure <b>SetBreak</b>(Duration: integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send a break signal to the communication device for Duration milliseconds.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetCommState"></a><code>procedure <b>SetCommState</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Set communication parameters from the DCB structure (the DCB structure is
+     simulated under Linux).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetSynaError"></a><code>procedure <b>SetSynaError</b>(ErrNumber: integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Set Synaser to error state with ErrNumber code. Usually used by internal
+     routines.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WaitingData"></a><code>function <b>WaitingData</b>: integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Returns the number of received bytes waiting for reading. 0 is returned
+     when there is no data waiting.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WaitingDataEx"></a><code>function <b>WaitingDataEx</b>: integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="synaser.TBlockSerial.html#WaitingData">WaitingData</a>, but in respect to data in the internal
+     <a class="normal" href="synaser.TBlockSerial.html#LineBuffer">LineBuffer</a>.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>property <a class="normal" href="synaser.TBlockSerial.html#ATResult"><b>ATResult</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#AtTimeout"><b>AtTimeout</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#Carrier"><b>Carrier</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#ConvertLineEnd"><b>ConvertLineEnd</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#CTS"><b>CTS</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#DeadlockTimeout"><b>DeadlockTimeout</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#Device"><b>Device</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#DSR"><b>DSR</b></a>: boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#DTR"><b>DTR</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#Handle"><b>Handle</b></a>: THandle;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#InstanceActive"><b>InstanceActive</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#InterPacketTimeout"><b>InterPacketTimeout</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#LastError"><b>LastError</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#LastErrorDesc"><b>LastErrorDesc</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#LineBuffer"><b>LineBuffer</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#LinuxLock"><b>LinuxLock</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#MaxBandwidth"><b>MaxBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#MaxLineLength"><b>MaxLineLength</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#MaxRecvBandwidth"><b>MaxRecvBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#MaxSendBandwidth"><b>MaxSendBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#OnStatus"><b>OnStatus</b></a>: <a class="normal" href="synaser.html#THookSerialStatus">THookSerialStatus</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#RaiseExcept"><b>RaiseExcept</b></a>: boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#Ring"><b>Ring</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#RTS"><b>RTS</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#SizeRecvBuffer"><b>SizeRecvBuffer</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#Tag"><b>Tag</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#TestCTS"><b>TestCTS</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="synaser.TBlockSerial.html#TestDSR"><b>TestDSR</b></a>: boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ATResult"></a><code>property <b>ATResult</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>Indicates if the last <a class="normal" href="synaser.TBlockSerial.html#ATCommand">ATCommand</a> or <a class="normal" href="synaser.TBlockSerial.html#ATConnect">ATConnect</a> method was successful</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AtTimeout"></a><code>property <b>AtTimeout</b>: integer;</code></td>
+</tr>
+</table>
+<p>Timeout for AT modem based operations</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Carrier"></a><code>property <b>Carrier</b>: boolean;</code></td>
+</tr>
+</table>
+<p>Indicates the presence of the Carrier signal</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ConvertLineEnd"></a><code>property <b>ConvertLineEnd</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>Indicates if non-standard line terminators should be converted to a CR/LF pair
+     (standard DOS line terminator). If <code>True</code>, line terminators CR, single LF
+     or LF/CR are converted to CR/LF. Defaults to <code>False</code>.
+     This property has effect only on the behavior of the RecvString method.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CTS"></a><code>property <b>CTS</b>: boolean;</code></td>
+</tr>
+</table>
+<p>Indicates the presence of the CTS signal</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="DeadlockTimeout"></a><code>property <b>DeadlockTimeout</b>: Integer;</code></td>
+</tr>
+</table>
+<p>This timeout value is used as deadlock protection when trying to send data
+     to (or receive data from) a device that stopped communicating during data
+     transmission (e.g. by physically disconnecting the device).
+     The timeout value is in milliseconds. The default value is 30,000 (30 seconds).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Device"></a><code>property <b>Device</b>: string;</code></td>
+</tr>
+</table>
+<p>True device name of currently used port</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DSR"></a><code>property <b>DSR</b>: boolean;</code></td>
+</tr>
+</table>
+<p>Exposes the status of the DSR signal.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DTR"></a><code>property <b>DTR</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>Use this property to set the value of the DTR signal.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Handle"></a><code>property <b>Handle</b>: THandle;</code></td>
+</tr>
+</table>
+<p>Contains the handle of the open communication port.
+    You may need this value to directly call communication functions outside
+    SynaSer.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="InstanceActive"></a><code>property <b>InstanceActive</b>: boolean;</code></td>
+</tr>
+</table>
+<p>indicates if this instance of SynaSer is active. (Connected to some port)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="InterPacketTimeout"></a><code>property <b>InterPacketTimeout</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code> (default), then all timeouts is timeout between two characters.
+     If <code>False</code>, then timeout is overall for whoole reading operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LastError"></a><code>property <b>LastError</b>: integer;</code></td>
+</tr>
+</table>
+<p>Error code of last operation. Value is defined by the host operating
+     system, but value 0 is always OK.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LastErrorDesc"></a><code>property <b>LastErrorDesc</b>: string;</code></td>
+</tr>
+</table>
+<p>Human readable description of LastError code.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="LineBuffer"></a><code>property <b>LineBuffer</b>: string;</code></td>
+</tr>
+</table>
+<p>Internally used read buffer.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="LinuxLock"></a><code>property <b>LinuxLock</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If set to <code>True</code> (default value), port locking is enabled (under Linux only).
+     WARNING: To use this feature, the application must run by a user with full
+     permission to the /var/lock directory!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MaxBandwidth"></a><code>property <b>MaxBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Defines maximum bandwidth for all sending and receiving operations
+     in bytes per second. If this value is set to 0 (default), bandwidth
+     limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxLineLength"></a><code>property <b>MaxLineLength</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Use this property you to limit the maximum size of LineBuffer
+     (as a protection against unlimited memory allocation for LineBuffer).
+     Default value is 0 - no limit.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MaxRecvBandwidth"></a><code>property <b>MaxRecvBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Defines maximum bandwidth for all receiving operations in bytes per second.
+     If this value is set to 0 (default), bandwidth limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MaxSendBandwidth"></a><code>property <b>MaxSendBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Defines maximum bandwidth for all sending operations in bytes per second.
+     If this value is set to 0 (default), bandwidth limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnStatus"></a><code>property <b>OnStatus</b>: <a class="normal" href="synaser.html#THookSerialStatus">THookSerialStatus</a>;</code></td>
+</tr>
+</table>
+<p>This event is triggered when the communication status changes. It can be
+     used to monitor communication status.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RaiseExcept"></a><code>property <b>RaiseExcept</b>: boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, communication errors raise exceptions. If <code>False</code> (default), only
+     the <a class="normal" href="synaser.TBlockSerial.html#LastError">LastError</a> value is set.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Ring"></a><code>property <b>Ring</b>: boolean;</code></td>
+</tr>
+</table>
+<p>Reflects the status of the Ring signal.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RTS"></a><code>property <b>RTS</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>Read the value of the RTS signal.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SizeRecvBuffer"></a><code>property <b>SizeRecvBuffer</b>: integer;</code></td>
+</tr>
+</table>
+<p>Size of the Windows internal receive buffer. Default value is usually
+     4096 bytes. Note: Valid only in Windows versions!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Tag"></a><code>property <b>Tag</b>: integer;</code></td>
+</tr>
+</table>
+<p>Freely usable property</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="TestCTS"></a><code>property <b>TestCTS</b>: boolean;</code></td>
+</tr>
+</table>
+<p>If you set this property to <code>True</code>, then the value of the CTS signal
+     is tested before every data transfer. It can be used to detect the presence
+     of a communications device. Warning: This property cannot be used if you
+     need hardware handshake!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="TestDSR"></a><code>property <b>TestDSR</b>: boolean;</code></td>
+</tr>
+</table>
+<p>If you set this property to <code>True</code>, then the value of the DSR signal
+     is tested before every data transfer. It can be used to detect the presence
+     of a communications device.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:20</em>
+</body></html>

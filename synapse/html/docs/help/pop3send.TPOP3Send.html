@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>pop3send: Class TPOP3Send</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TPOP3Send"></a><h1>Class TPOP3Send</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="pop3send.html">pop3send</a><br/><h2>Declaration</h2>
+<p><code>type TPOP3Send = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of POP3 client protocol.<p>Note: Are you missing properties for setting Username and Password? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> object!</p><p>Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TPOP3Send&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="pop3send.TPOP3Send.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="pop3send.TPOP3Send.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Capability"><b>Capability</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Dele"><b>Dele</b></a>(Value: Integer): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#FindCap"><b>FindCap</b></a>(const Value: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#List"><b>List</b></a>(Value: Integer): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Login"><b>Login</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Logout"><b>Logout</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#NoOp"><b>NoOp</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Reset"><b>Reset</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Retr"><b>Retr</b></a>(Value: Integer): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#StartTLS"><b>StartTLS</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Stat"><b>Stat</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Top"><b>Top</b></a>(Value, Maxlines: Integer): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="pop3send.TPOP3Send.html#Uidl"><b>Uidl</b></a>(Value: Integer): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Capability"></a><code>function <b>Capability</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Call CAPA command for get POP3 server capabilites.
+     note: not all servers support this command!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Dele"></a><code>function <b>Dele</b>(Value: Integer): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send DELE command for delete specified message. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="FindCap"></a><code>function <b>FindCap</b>(const Value: string): string;</code></td>
+</tr>
+</table>
+<p><p>Try to find given capabily in capabilty string returned from POP3 server
+     by CAPA command.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="List"></a><code>function <b>List</b>(Value: Integer): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send LIST command. If Value is 0, LIST is for all messages. After
+     successful operation is listing in FullResult. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Login"></a><code>function <b>Login</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Connect to remote POP3 host. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Logout"></a><code>function <b>Logout</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Disconnects from POP3 server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="NoOp"></a><code>function <b>NoOp</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send NOOP command. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Reset"></a><code>function <b>Reset</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send RSET command. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Retr"></a><code>function <b>Retr</b>(Value: Integer): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send RETR command. After successful operation dowloaded message in
+     <a class="normal" href="pop3send.TPOP3Send.html#FullResult">FullResult</a>. If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="StartTLS"></a><code>function <b>StartTLS</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Call STLS command for upgrade connection to SSL/TLS mode.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Stat"></a><code>function <b>Stat</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send STAT command and fill <a class="normal" href="pop3send.TPOP3Send.html#StatCount">StatCount</a> and <a class="normal" href="pop3send.TPOP3Send.html#StatSize">StatSize</a> property.
+     If all OK, result is <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Top"></a><code>function <b>Top</b>(Value, Maxlines: Integer): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send TOP command. After successful operation dowloaded headers of message
+     and maxlines count of message in <a class="normal" href="pop3send.TPOP3Send.html#FullResult">FullResult</a>. If all OK, result is
+     <code>True</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Uidl"></a><code>function <b>Uidl</b>(Value: Integer): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send UIDL command. If Value is 0, UIDL is for all messages. After
+     successful operation is listing in FullResult. If all OK, result is <code>True</code>.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="pop3send.TPOP3Send.html#AuthType"><b>AuthType</b></a>: <a class="normal" href="pop3send.html#TPOP3AuthType">TPOP3AuthType</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#AutoTLS"><b>AutoTLS</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#FullResult"><b>FullResult</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#FullSSL"><b>FullSSL</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#ResultCode"><b>ResultCode</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#ResultString"><b>ResultString</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#StatCount"><b>StatCount</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#StatSize"><b>StatSize</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="pop3send.TPOP3Send.html#TimeStamp"><b>TimeStamp</b></a>: string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AuthType"></a><code>property <b>AuthType</b>: <a class="normal" href="pop3send.html#TPOP3AuthType">TPOP3AuthType</a>;</code></td>
+</tr>
+</table>
+<p>Type of authorisation for login to POP3 server. Dafault is autodetect one
+     of possible authorisation. Autodetect do this:</p><p>If remote POP3 server support APOP, try login by APOP method. If APOP is
+     not supported, or if APOP login failed, try classic USER+PASS login method.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AutoTLS"></a><code>property <b>AutoTLS</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If is set to <code>True</code>, then upgrade to SSL/TLS mode if remote server support it.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FullResult"></a><code>property <b>FullResult</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Stringlist with full lines returned as result of POP3 operation. I.e. if
+     operation is LIST, this property is filled by list of messages. If
+     operation is RETR, this property have downloaded message.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FullSSL"></a><code>property <b>FullSSL</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>SSL/TLS mode is used from first contact to server. Servers with full
+     SSL/TLS mode usualy using non-standard TCP port!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultCode"></a><code>property <b>ResultCode</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Result code of last POP3 operation. 0 - error, 1 - OK.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultString"></a><code>property <b>ResultString</b>: string;</code></td>
+</tr>
+</table>
+<p>Result string of last POP3 operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="StatCount"></a><code>property <b>StatCount</b>: Integer;</code></td>
+</tr>
+</table>
+<p>After STAT command is there count of messages in inbox.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="StatSize"></a><code>property <b>StatSize</b>: Integer;</code></td>
+</tr>
+</table>
+<p>After STAT command is there size of all messages in inbox.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="TimeStamp"></a><code>property <b>TimeStamp</b>: string;</code></td>
+</tr>
+</table>
+<p>If server support this, after comnnect is in this property timestamp of
+     remote server.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

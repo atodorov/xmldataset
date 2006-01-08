@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>mimepart</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit mimepart</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+MIME part handling<p>Handling with MIME parts.</p><p>Used RFC: RFC-2045</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="mimepart.TMimePart.html"><code>TMimePart</code></a></td>
+<td width="100%">Object for working with parts of MIME e-mail.</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#NormalizeHeader"><b>NormalizeHeader</b></a>(Value: TStrings; var Index: Integer): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GenerateBoundary"><b>GenerateBoundary</b></a>: string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GenerateBoundary"></a><code>function <b>GenerateBoundary</b>: string;</code></td>
+</tr>
+</table>
+<p><p>Generates a unique boundary string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="NormalizeHeader"></a><code>function <b>NormalizeHeader</b>(Value: TStrings; var Index: Integer): string;</code></td>
+</tr>
+</table>
+<p><p>Read header from &quot;Value&quot; stringlist beginning at &quot;Index&quot; position. If header
+ is Splitted into multiple lines, then this procedure de-split it into one line.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="THookWalkPart"></a>THookWalkPart</td>
+<td>Procedural type for <a class="normal" href="mimepart.TMimePart.html#WalkPart">WalkPart</a> hook<p>. This hook is used for
+   easy walking through MIME subparts.</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TMimePrimary"></a>TMimePrimary<code></code></td>
+<td><p>The four types of MIME parts. (textual, multipart, message or any other
+   binary data.)</p>
+<ul>
+<li>
+MP_TEXT: </li>
+<li>
+MP_MULTIPART: </li>
+<li>
+MP_MESSAGE: </li>
+<li>
+MP_BINARY: </li>
+</ul>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TMimeEncoding"></a>TMimeEncoding<code></code></td>
+<td><p>The various types of possible part encodings.</p>
+<ul>
+<li>
+ME_7BIT: </li>
+<li>
+ME_8BIT: </li>
+<li>
+ME_QUOTED_PRINTABLE: </li>
+<li>
+ME_BASE64: </li>
+<li>
+ME_UU: </li>
+<li>
+ME_XX: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="MaxMimeType"></a>MaxMimeType<code> = 25;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="MimeType"></a>MimeType<code>: array[0..<a class="normal" href="mimepart.html#MaxMimeType">MaxMimeType</a>, 0..2] of string =
+  (
+    ('AU', 'audio', 'basic'),
+    ('AVI', 'video', 'x-msvideo'),
+    ('BMP', 'image', 'BMP'),
+    ('DOC', 'application', 'MSWord'),
+    ('EPS', 'application', 'Postscript'),
+    ('GIF', 'image', 'GIF'),
+    ('JPEG', 'image', 'JPEG'),
+    ('JPG', 'image', 'JPEG'),
+    ('MID', 'audio', 'midi'),
+    ('MOV', 'video', 'quicktime'),
+    ('MPEG', 'video', 'MPEG'),
+    ('MPG', 'video', 'MPEG'),
+    ('MP2', 'audio', 'mpeg'),
+    ('MP3', 'audio', 'mpeg'),
+    ('PDF', 'application', 'PDF'),
+    ('PNG', 'image', 'PNG'),
+    ('PS', 'application', 'Postscript'),
+    ('QT', 'video', 'quicktime'),
+    ('RA', 'audio', 'x-realaudio'),
+    ('RTF', 'application', 'RTF'),
+    ('SND', 'audio', 'basic'),
+    ('TIF', 'image', 'TIFF'),
+    ('TIFF', 'image', 'TIFF'),
+    ('WAV', 'audio', 'x-wav'),
+    ('WPD', 'application', 'Wordperfect5.1'),
+    ('ZIP', 'application', 'ZIP')
+    );</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

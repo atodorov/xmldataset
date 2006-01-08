@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>mimemess: Class TMessHeader</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TMessHeader"></a><h1>Class TMessHeader</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="mimemess.html">mimemess</a><br/><h2>Declaration</h2>
+<p><code>type TMessHeader = class(TObject)</code></p>
+<h2>Description</h2>
+Object for basic e-mail header fields.<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TMessHeader&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="mimemess.TMessHeader.html#Create"><b>Create</b></a>; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="mimemess.TMessHeader.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimemess.TMessHeader.html#Clear"><b>Clear</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimemess.TMessHeader.html#DecodeHeaders"><b>DecodeHeaders</b></a>(const Value: TStrings);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimemess.TMessHeader.html#EncodeHeaders"><b>EncodeHeaders</b></a>(const Value: TStrings); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="mimemess.TMessHeader.html#FindHeader"><b>FindHeader</b></a>(Value: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimemess.TMessHeader.html#FindHeaderList"><b>FindHeaderList</b></a>(Value: string; const HeaderList: TStrings);</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>;</code></td>
+</tr>
+</table>
+<p><p>Clears all data fields.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>; virtual;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodeHeaders"></a><code>procedure <b>DecodeHeaders</b>(const Value: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Parse header from Value to this object.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EncodeHeaders"></a><code>procedure <b>EncodeHeaders</b>(const Value: TStrings); virtual;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="FindHeader"></a><code>function <b>FindHeader</b>(Value: string): string;</code></td>
+</tr>
+</table>
+<p><p>Try find specific header in CustomHeader. Search is case insensitive.
+     This is good for reading any non-parsed header.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="FindHeaderList"></a><code>procedure <b>FindHeaderList</b>(Value: string; const HeaderList: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Try find specific headers in CustomHeader. This metod is for repeatly used
+     headers like 'received' header, etc. Search is case insensitive.
+     This is good for reading ano non-parsed header.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="mimemess.TMessHeader.html#CCList"><b>CCList</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#CharsetCode"><b>CharsetCode</b></a>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#CustomHeaders"><b>CustomHeaders</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#Date"><b>Date</b></a>: TDateTime;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#From"><b>From</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#MessageID"><b>MessageID</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#Organization"><b>Organization</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#Priority"><b>Priority</b></a>: <a class="normal" href="mimemess.html#TMessPriority">TMessPriority</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#ReplyTo"><b>ReplyTo</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#Subject"><b>Subject</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#ToList"><b>ToList</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimemess.TMessHeader.html#XMailer"><b>XMailer</b></a>: string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="CCList"></a><code>property <b>CCList</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Stringlist with Carbon Copy receivers of message. (one per line)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="CharsetCode"></a><code>property <b>CharsetCode</b>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+</table>
+<p>Specify base charset. By default is used system charset.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="CustomHeaders"></a><code>property <b>CustomHeaders</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>After decoding contains all headers lines witch not have parsed to any
+     other structures in this object. It mean: this conatins all other headers
+     except:</p><p>X-MAILER, FROM, SUBJECT, ORGANIZATION, TO, CC, DATE, MIME-VERSION,
+     CONTENT-TYPE, CONTENT-DESCRIPTION, CONTENT-DISPOSITION, CONTENT-ID,
+     CONTENT-TRANSFER-ENCODING, REPLY-TO, MESSAGE-ID, X-MSMAIL-PRIORITY,
+     X-PRIORITY, PRIORITY</p><p>When you encode headers, all this lines is added as headers. Be carefull
+     for duplicites!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Date"></a><code>property <b>Date</b>: TDateTime;</code></td>
+</tr>
+</table>
+<p>Date and time of message.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="From"></a><code>property <b>From</b>: string;</code></td>
+</tr>
+</table>
+<p>Sender of message.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MessageID"></a><code>property <b>MessageID</b>: string;</code></td>
+</tr>
+</table>
+<p>message indetifier</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Organization"></a><code>property <b>Organization</b>: string;</code></td>
+</tr>
+</table>
+<p>Organization string.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Priority"></a><code>property <b>Priority</b>: <a class="normal" href="mimemess.html#TMessPriority">TMessPriority</a>;</code></td>
+</tr>
+</table>
+<p>message priority</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ReplyTo"></a><code>property <b>ReplyTo</b>: string;</code></td>
+</tr>
+</table>
+<p>Address for replies</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Subject"></a><code>property <b>Subject</b>: string;</code></td>
+</tr>
+</table>
+<p>Subject of message.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ToList"></a><code>property <b>ToList</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Stringlist with receivers of message. (one per line)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="XMailer"></a><code>property <b>XMailer</b>: string;</code></td>
+</tr>
+</table>
+<p>Mailer identification.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>mimepart: Class TMimePart</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TMimePart"></a><h1>Class TMimePart</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="mimepart.html">mimepart</a><br/><h2>Declaration</h2>
+<p><code>type TMimePart = class(TObject)</code></p>
+<h2>Description</h2>
+Object for working with parts of MIME e-mail.<p>Each TMimePart object can handle any number of nested subparts as new
+   TMimepart objects. It can handle any tree hierarchy structure of nested MIME
+   subparts itself.</p><p>Basic tasks are:</p><p>Decoding of MIME message:
+   - store message into Lines property
+   - call DecomposeParts. Now you have decomposed MIME parts in all nested levels!
+   - now you can explore all properties and subparts. (You can use WalkPart method)
+   - if you need decode part, call DecodePart.</p><p>Encoding of MIME message:</p><p>- if you need multipart message, you must create subpart by AddSubPart.
+   - set all properties of all parts.
+   - set content of part into DecodedLines stream
+   - encode this stream by EncodePart.
+   - compose full message by ComposeParts. (it build full MIME message from all subparts. Do not call this method for each subpart! It is needed on root part!)
+   - encoded MIME message is stored in Lines property.</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TMimePart&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="mimepart.TMimePart.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="mimepart.TMimePart.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="mimepart.TMimePart.html#AddSubPart"><b>AddSubPart</b></a>: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#Assign"><b>Assign</b></a>(Value: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#AssignSubParts"><b>AssignSubParts</b></a>(Value: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="mimepart.TMimePart.html#CanSubPart"><b>CanSubPart</b></a>: boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#Clear"><b>Clear</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#ClearSubParts"><b>ClearSubParts</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#ComposeParts"><b>ComposeParts</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#DecodePart"><b>DecodePart</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#DecodePartHeader"><b>DecodePartHeader</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#DecomposeParts"><b>DecomposeParts</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#DeleteSubPart"><b>DeleteSubPart</b></a>(index: integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#EncodePart"><b>EncodePart</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#EncodePartHeader"><b>EncodePartHeader</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="mimepart.TMimePart.html#GetSubPart"><b>GetSubPart</b></a>(index: integer): <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="mimepart.TMimePart.html#GetSubPartCount"><b>GetSubPartCount</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#MimeTypeFromExt"><b>MimeTypeFromExt</b></a>(Value: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="mimepart.TMimePart.html#WalkPart"><b>WalkPart</b></a>;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="AddSubPart"></a><code>function <b>AddSubPart</b>: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>;</code></td>
+</tr>
+</table>
+<p><p>Add and create new subpart.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Assign"></a><code>procedure <b>Assign</b>(Value: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>);</code></td>
+</tr>
+</table>
+<p><p>Assign content of another object to this object. (Only this part,
+     not subparts!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="AssignSubParts"></a><code>procedure <b>AssignSubParts</b>(Value: <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>);</code></td>
+</tr>
+</table>
+<p><p>Assign content of another object to this object. (With all subparts!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanSubPart"></a><code>function <b>CanSubPart</b>: boolean;</code></td>
+</tr>
+</table>
+<p><p>Return <code>True</code> when is possible create next subpart. (<a class="normal" href="mimepart.TMimePart.html#MaxSubLevel">MaxSubLevel</a>
+     is still not reached)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>;</code></td>
+</tr>
+</table>
+<p><p>Clear all data values to default values. It also call <a class="normal" href="mimepart.TMimePart.html#ClearSubParts">ClearSubParts</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ClearSubParts"></a><code>procedure <b>ClearSubParts</b>;</code></td>
+</tr>
+</table>
+<p><p>Clear and destroy all subpart TMimePart objects.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ComposeParts"></a><code>procedure <b>ComposeParts</b>;</code></td>
+</tr>
+</table>
+<p><p>This part and all subparts is composed into one MIME message stored in
+     <a class="normal" href="mimepart.TMimePart.html#Lines">Lines</a> property.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodePart"></a><code>procedure <b>DecodePart</b>;</code></td>
+</tr>
+</table>
+<p><p>Decode Mime part from <a class="normal" href="mimepart.TMimePart.html#Lines">Lines</a> to <a class="normal" href="mimepart.TMimePart.html#DecodedLines">DecodedLines</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodePartHeader"></a><code>procedure <b>DecodePartHeader</b>;</code></td>
+</tr>
+</table>
+<p><p>Parse header lines from Headers property into another properties.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecomposeParts"></a><code>procedure <b>DecomposeParts</b>;</code></td>
+</tr>
+</table>
+<p><p>E-mail message in <a class="normal" href="mimepart.TMimePart.html#Lines">Lines</a> property is parsed into this object.
+     E-mail headers are stored in <a class="normal" href="mimepart.TMimePart.html#Headers">Headers</a> property and is parsed into
+     another properties automaticly. Not need call <a class="normal" href="mimepart.TMimePart.html#DecodePartHeader">DecodePartHeader</a>!
+     Content of message (part) is stored into <a class="normal" href="mimepart.TMimePart.html#PartBody">PartBody</a> property. This
+     part is in undecoded form! If you need decode it, then you must call
+     <a class="normal" href="mimepart.TMimePart.html#DecodePart">DecodePart</a> method by your hands. Lot of another properties is filled
+     also.</p><p>Decoding of parts you must call separately due performance reasons. (Not
+     needed to decode all parts in all reasons.)</p><p>For each MIME subpart is created new TMimepart object (accessible via
+     method <a class="normal" href="mimepart.TMimePart.html#GetSubPart">GetSubPart</a>).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DeleteSubPart"></a><code>procedure <b>DeleteSubPart</b>(index: integer);</code></td>
+</tr>
+</table>
+<p><p>delete subpart on given index.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EncodePart"></a><code>procedure <b>EncodePart</b>;</code></td>
+</tr>
+</table>
+<p><p>Encode mime part from <a class="normal" href="mimepart.TMimePart.html#DecodedLines">DecodedLines</a> to <a class="normal" href="mimepart.TMimePart.html#Lines">Lines</a> and build mime
+     headers.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EncodePartHeader"></a><code>procedure <b>EncodePartHeader</b>;</code></td>
+</tr>
+</table>
+<p><p>Build header lines in Headers property from another properties.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSubPart"></a><code>function <b>GetSubPart</b>(index: integer): <a class="normal" href="mimepart.TMimePart.html">TMimePart</a>;</code></td>
+</tr>
+</table>
+<p><p>Get nested subpart object as new TMimePart. For getting maximum possible
+     index you can use <a class="normal" href="mimepart.TMimePart.html#GetSubPartCount">GetSubPartCount</a> method.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSubPartCount"></a><code>function <b>GetSubPartCount</b>: integer;</code></td>
+</tr>
+</table>
+<p><p>Return number of decomposed subparts. (On this level! Each of this
+     subparts can hold any number of their own nested subparts!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="MimeTypeFromExt"></a><code>procedure <b>MimeTypeFromExt</b>(Value: string);</code></td>
+</tr>
+</table>
+<p><p>generate primary and secondary mime type from filename extension in value.
+     If type not recognised, it return 'Application/octet-string' type.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WalkPart"></a><code>procedure <b>WalkPart</b>;</code></td>
+</tr>
+</table>
+<p><p>By calling this method is called <a class="normal" href="mimepart.TMimePart.html#OnWalkPart">OnWalkPart</a> event for each part
+     and their subparts. It is very good for calling some code for each part in
+     MIME message</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="mimepart.TMimePart.html#AttachInside"><b>AttachInside</b></a>: boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Boundary"><b>Boundary</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Charset"><b>Charset</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#CharsetCode"><b>CharsetCode</b></a>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#ContentID"><b>ContentID</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#DecodedLines"><b>DecodedLines</b></a>: TMemoryStream;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#DefaultCharset"><b>DefaultCharset</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Description"><b>Description</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Disposition"><b>Disposition</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Encoding"><b>Encoding</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#EncodingCode"><b>EncodingCode</b></a>: <a class="normal" href="mimepart.html#TMimeEncoding">TMimeEncoding</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#FileName"><b>FileName</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Headers"><b>Headers</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Lines"><b>Lines</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#MaxLineLength"><b>MaxLineLength</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#MaxSubLevel"><b>MaxSubLevel</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#OnWalkPart"><b>OnWalkPart</b></a>: <a class="normal" href="mimepart.html#THookWalkPart">THookWalkPart</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#PartBody"><b>PartBody</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#PostPart"><b>PostPart</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#PrePart"><b>PrePart</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Primary"><b>Primary</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#PrimaryCode"><b>PrimaryCode</b></a>: <a class="normal" href="mimepart.html#TMimePrimary">TMimePrimary</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#Secondary"><b>Secondary</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#SubLevel"><b>SubLevel</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="mimepart.TMimePart.html#TargetCharset"><b>TargetCharset</b></a>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AttachInside"></a><code>property <b>AttachInside</b>: boolean;</code></td>
+</tr>
+</table>
+<p>When is <code>True</code>, then this part maybe(!) have included some uuencoded binary
+    data.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Boundary"></a><code>property <b>Boundary</b>: string;</code></td>
+</tr>
+</table>
+<p>Boundary delimiter of multipart Mime part. Used only in multipart part.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Charset"></a><code>property <b>Charset</b>: string;</code></td>
+</tr>
+</table>
+<p>String representation of used Mime charset in part. (i.e. 'iso-8859-1')
+     Writing to this property automaticly generate value of <a class="normal" href="mimepart.TMimePart.html#CharsetCode">CharsetCode</a>.
+     Charset is used only for text parts.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="CharsetCode"></a><code>property <b>CharsetCode</b>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+</table>
+<p>Decoded charset type. Possible values are defined in <a class="normal" href="synachar.html">synachar</a> unit.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ContentID"></a><code>property <b>ContentID</b>: string;</code></td>
+</tr>
+</table>
+<p>Content ID.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="DecodedLines"></a><code>property <b>DecodedLines</b>: TMemoryStream;</code></td>
+</tr>
+</table>
+<p>Stream with decoded form of budy part.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="DefaultCharset"></a><code>property <b>DefaultCharset</b>: string;</code></td>
+</tr>
+</table>
+<p>Define default charset for decoding text MIME parts without charset
+     specification. Default value is 'ISO-8859-1' by RCF documents.
+     But Microsoft Outlook use windows codings as default. This property allows
+     properly decode textual parts from some broken versions of Microsoft
+     Outlook. (this is bad software!)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Description"></a><code>property <b>Description</b>: string;</code></td>
+</tr>
+</table>
+<p>Description of Mime part.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Disposition"></a><code>property <b>Disposition</b>: string;</code></td>
+</tr>
+</table>
+<p>Value of content disposition field. (i.e. 'inline' or 'attachment')</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Encoding"></a><code>property <b>Encoding</b>: string;</code></td>
+</tr>
+</table>
+<p>String representation of used Mime encoding in part. (i.e. 'base64')
+     Writing to this property automaticly generate value of <a class="normal" href="mimepart.TMimePart.html#EncodingCode">EncodingCode</a>.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="EncodingCode"></a><code>property <b>EncodingCode</b>: <a class="normal" href="mimepart.html#TMimeEncoding">TMimeEncoding</a>;</code></td>
+</tr>
+</table>
+<p>Decoded encoding type. Possible values are: ME_7BIT, ME_8BIT,
+     ME_QUOTED_PRINTABLE and ME_BASE64. If type not recognised, result is
+     ME_7BIT.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FileName"></a><code>property <b>FileName</b>: string;</code></td>
+</tr>
+</table>
+<p>Filename of file in binary part.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Headers"></a><code>property <b>Headers</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>All header lines of MIME part.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Lines"></a><code>property <b>Lines</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>String list with lines contains mime part (It can be a full message).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxLineLength"></a><code>property <b>MaxLineLength</b>: integer;</code></td>
+</tr>
+</table>
+<p>Here you can specify maximum line length for encoding of MIME part.
+     If line is longer, then is splitted by standard of MIME. Correct MIME
+     mailers can de-split this line into original length.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxSubLevel"></a><code>property <b>MaxSubLevel</b>: integer;</code></td>
+</tr>
+</table>
+<p>Specify maximum sublevel value for decomposing.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnWalkPart"></a><code>property <b>OnWalkPart</b>: <a class="normal" href="mimepart.html#THookWalkPart">THookWalkPart</a>;</code></td>
+</tr>
+</table>
+<p>Here you can assign hook procedure for walking through all part and their
+     subparts.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PartBody"></a><code>property <b>PartBody</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Encoded form of MIME part data.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PostPart"></a><code>property <b>PostPart</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>On multipart this contains part of message between last boundary and end
+     of message.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PrePart"></a><code>property <b>PrePart</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>On multipart this contains part of message between first line of message
+     and first boundary.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Primary"></a><code>property <b>Primary</b>: string;</code></td>
+</tr>
+</table>
+<p>Primary Mime type of part. (i.e. 'application') Writing to this property
+     automaticly generate value of <a class="normal" href="mimepart.TMimePart.html#PrimaryCode">PrimaryCode</a>.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PrimaryCode"></a><code>property <b>PrimaryCode</b>: <a class="normal" href="mimepart.html#TMimePrimary">TMimePrimary</a>;</code></td>
+</tr>
+</table>
+<p>Decoded primary type. Possible values are: MP_TEXT, MP_MULTIPART,
+     MP_MESSAGE and MP_BINARY. If type not recognised, result is MP_BINARY.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Secondary"></a><code>property <b>Secondary</b>: string;</code></td>
+</tr>
+</table>
+<p>Secondary Mime type of part. (i.e. 'mixed')</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SubLevel"></a><code>property <b>SubLevel</b>: integer;</code></td>
+</tr>
+</table>
+<p>Show nested level in subpart tree. Value 0 means root part. 1 means
+     subpart from this root. etc.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="TargetCharset"></a><code>property <b>TargetCharset</b>: <a class="normal" href="synachar.html#TMimeChar">TMimeChar</a>;</code></td>
+</tr>
+</table>
+<p>System charset type. Default value is charset used by default in your
+     operating system.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

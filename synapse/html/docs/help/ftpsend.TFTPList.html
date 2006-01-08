@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>ftpsend: Class TFTPList</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TFTPList"></a><h1>Class TFTPList</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="ftpsend.html">ftpsend</a><br/><h2>Declaration</h2>
+<p><code>type TFTPList = class(TObject)</code></p>
+<h2>Description</h2>
+This is TList of TFTPListRec objects.<p>This object is used for holding lististing of all files information in listed
+   directory on FTP server.</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TFTPList&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="ftpsend.TFTPList.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="ftpsend.TFTPList.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="ftpsend.TFTPList.html#Assign"><b>Assign</b></a>(Value: <a class="normal" href="ftpsend.TFTPList.html">TFTPList</a>); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="ftpsend.TFTPList.html#Clear"><b>Clear</b></a>; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftpsend.TFTPList.html#Count"><b>Count</b></a>: integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="ftpsend.TFTPList.html#ParseLines"><b>ParseLines</b></a>; virtual;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Assign"></a><code>procedure <b>Assign</b>(Value: <a class="normal" href="ftpsend.TFTPList.html">TFTPList</a>); virtual;</code></td>
+</tr>
+</table>
+<p><p>Assigns one list to another</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Clear list.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Count"></a><code>function <b>Count</b>: integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>count of holded <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a> objects</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p><p>Constructor. You not need create this object, it is created by TFTPSend
+     class as their property.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ParseLines"></a><code>procedure <b>ParseLines</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>try to parse raw directory listing in <a class="normal" href="ftpsend.TFTPList.html#Lines">Lines</a> to list of
+     <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>property <a class="normal" href="ftpsend.TFTPList.html#Items"><b>Items</b></a>[Index: Integer]: <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPList.html#Lines"><b>Lines</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPList.html#List"><b>List</b></a>: TList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPList.html#Masks"><b>Masks</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPList.html#UnparsedLines"><b>UnparsedLines</b></a>: TStringList;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Items"></a><code>property <b>Items</b>[Index: Integer]: <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>;</code></td>
+</tr>
+</table>
+<p>By this property you have access to list of <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Lines"></a><code>property <b>Lines</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Set of lines with RAW directory listing for <a class="normal" href="ftpsend.TFTPList.html#ParseLines">ParseLines</a></p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="List"></a><code>property <b>List</b>: TList;</code></td>
+</tr>
+</table>
+<p>By this property you have access to list of <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>.
+     This is for compatibility only. Please, use <a class="normal" href="ftpsend.TFTPList.html#Items">Items</a> instead.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Masks"></a><code>property <b>Masks</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Set of masks for directory listing parser. It is predefined by default,
+    however you can modify it as you need. (for example, you can add your own
+    definition mask.) Mask is same as mask used in TotalCommander.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="UnparsedLines"></a><code>property <b>UnparsedLines</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>After <a class="normal" href="ftpsend.TFTPList.html#ParseLines">ParseLines</a> it holding lines what was not sucessfully parsed.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

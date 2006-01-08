@@ -1,0 +1,1118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>blcksock: Class TBlockSocket</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TBlockSocket"></a><h1>Class TBlockSocket</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="blcksock.html">blcksock</a><br/><h2>Declaration</h2>
+<p><code>type TBlockSocket = class(TObject)</code></p>
+<h2>Description</h2>
+Basic IP object.<p>This is parent class for other class with protocol implementations. Do not
+   use this class directly! Use <a class="normal" href="blcksock.TICMPBlockSocket.html">TICMPBlockSocket</a>, <a class="normal" href="blcksock.TRAWBlockSocket.html">TRAWBlockSocket</a>,
+   <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a> or <a class="normal" href="blcksock.TUDPBlockSocket.html">TUDPBlockSocket</a> instead.</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TBlockSocket&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="blcksock.TBlockSocket.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>constructor <a class="normal" href="blcksock.TBlockSocket.html#CreateAlternate"><b>CreateAlternate</b></a>(Stub: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="blcksock.TBlockSocket.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>class function <a class="normal" href="blcksock.TBlockSocket.html#GetErrorDesc"><b>GetErrorDesc</b></a>(ErrorCode: Integer): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#AbortSocket"><b>AbortSocket</b></a>; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#Bind"><b>Bind</b></a>(IP, Port: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#CanRead"><b>CanRead</b></a>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#CanReadEx"><b>CanReadEx</b></a>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#CanWrite"><b>CanWrite</b></a>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#CloseSocket"><b>CloseSocket</b></a>; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#Connect"><b>Connect</b></a>(IP, Port: string); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#CreateSocket"><b>CreateSocket</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#CreateSocketByName"><b>CreateSocketByName</b></a>(const Value: String);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#EnableReuse"><b>EnableReuse</b></a>(Value: Boolean);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#ExceptCheck"><b>ExceptCheck</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetLocalSinIP"><b>GetLocalSinIP</b></a>: string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetLocalSinPort"><b>GetLocalSinPort</b></a>: Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetRemoteSinIP"><b>GetRemoteSinIP</b></a>: string; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetRemoteSinPort"><b>GetRemoteSinPort</b></a>: Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#GetSinLocal"><b>GetSinLocal</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#GetSinRemote"><b>GetSinRemote</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#GetSins"><b>GetSins</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetSocketProtocol"><b>GetSocketProtocol</b></a>: integer; Virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GetSocketType"><b>GetSocketType</b></a>: integer; Virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#GroupCanRead"><b>GroupCanRead</b></a>(const SocketList: TList; Timeout: Integer; const CanReadList: TList): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#IP6ToStr"><b>IP6ToStr</b></a>(const value: TSockAddrIn6): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#LocalName"><b>LocalName</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#PeekBuffer"><b>PeekBuffer</b></a>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#PeekByte"><b>PeekByte</b></a>(Timeout: Integer): Byte; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#Purge"><b>Purge</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvBlock"><b>RecvBlock</b></a>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvBuffer"><b>RecvBuffer</b></a>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferEx"><b>RecvBufferEx</b></a>(Buffer: Tmemory; Len: Integer; Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferFrom"><b>RecvBufferFrom</b></a>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferStr"><b>RecvBufferStr</b></a>(Length: Integer; Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvByte"><b>RecvByte</b></a>(Timeout: Integer): Byte; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvInteger"><b>RecvInteger</b></a>(Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvPacket"><b>RecvPacket</b></a>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#RecvStream"><b>RecvStream</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#RecvStreamIndy"><b>RecvStreamIndy</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#RecvStreamRaw"><b>RecvStreamRaw</b></a>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#RecvStreamSize"><b>RecvStreamSize</b></a>(const Stream: TStream; Timeout: Integer; Size: Integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvString"><b>RecvString</b></a>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#RecvTerminated"><b>RecvTerminated</b></a>(Timeout: Integer; const Terminator: AnsiString): AnsiString; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#ResolveIPToName"><b>ResolveIPToName</b></a>(IP: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#ResolveName"><b>ResolveName</b></a>(Name: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#ResolveNameToIP"><b>ResolveNameToIP</b></a>(Name: string; const IPList: TStrings);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#ResolvePort"><b>ResolvePort</b></a>(Port: string): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendBlock"><b>SendBlock</b></a>(const Data: AnsiString); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#SendBuffer"><b>SendBuffer</b></a>(Buffer: Tmemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#SendBufferTo"><b>SendBufferTo</b></a>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendByte"><b>SendByte</b></a>(Data: Byte); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendInteger"><b>SendInteger</b></a>(Data: integer); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendStream"><b>SendStream</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendStreamIndy"><b>SendStreamIndy</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendStreamRaw"><b>SendStreamRaw</b></a>(const Stream: TStream); virtual;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SendString"><b>SendString</b></a>(Data: AnsiString); virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SetLinger"><b>SetLinger</b></a>(Enable: Boolean; Linger: Integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SetRecvTimeout"><b>SetRecvTimeout</b></a>(Timeout: Integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SetRemoteSin"><b>SetRemoteSin</b></a>(IP, Port: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SetSendTimeout"><b>SetSendTimeout</b></a>(Timeout: Integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="blcksock.TBlockSocket.html#SetTimeout"><b>SetTimeout</b></a>(Timeout: Integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#SockCheck"><b>SockCheck</b></a>(SockResult: Integer): Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#StrToIP6"><b>StrToIP6</b></a>(const value: string): TSockAddrIn6;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#WaitingData"><b>WaitingData</b></a>: Integer; virtual;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="blcksock.TBlockSocket.html#WaitingDataEx"><b>WaitingDataEx</b></a>: Integer;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="AbortSocket"></a><code>procedure <b>AbortSocket</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Abort any work on Socket and destroy them.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Bind"></a><code>procedure <b>Bind</b>(IP, Port: string);</code></td>
+</tr>
+</table>
+<p><p>Connects socket to local IP address and PORT. IP address may be numeric or
+     symbolic ('192.168.74.50', 'cosi.nekde.cz', 'ff08::1'). The same for PORT
+     - it may be number or mnemonic port ('23', 'telnet').</p><p>If port value is '0', system chooses itself and conects unused port in the
+     range 1024 to 4096 (this depending by operating system!). Structure
+     LocalSin is filled after calling this method.</p><p>Note: If you call this on non-created socket, then socket is created
+     automaticly.</p><p>Warning: when you call : Bind('0.0.0.0','0'); then is nothing done! In this
+     case is used implicit system bind instead.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanRead"></a><code>function <b>CanRead</b>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Return <code>True</code>, if you can read any data from socket or is incoming
+     connection on TCP based socket. Status is tested for time Timeout (in
+     milliseconds). If value in Timeout is 0, status is only tested and
+     continue. If value in Timeout is -1, run is breaked and waiting for read
+     data maybe forever.</p><p>This function is need only on special cases, when you need use
+     <a class="normal" href="blcksock.TBlockSocket.html#RecvBuffer">RecvBuffer</a> function directly!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanReadEx"></a><code>function <b>CanReadEx</b>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="blcksock.TBlockSocket.html#CanRead">CanRead</a>, but additionally return <code>True</code> if is some data in
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CanWrite"></a><code>function <b>CanWrite</b>(Timeout: Integer): Boolean; virtual;</code></td>
+</tr>
+</table>
+<p><p>Return <code>True</code>, if you can to socket write any data (not full sending
+     buffer). Status is tested for time Timeout (in milliseconds). If value in
+     Timeout is 0, status is only tested and continue. If value in Timeout is
+     -1, run is breaked and waiting for write data maybe forever.</p><p>This function is need only on special cases!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CloseSocket"></a><code>procedure <b>CloseSocket</b>; virtual;</code></td>
+</tr>
+</table>
+<p><p>Destroy socket in use. This method is also automatically called from
+     object destructor.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Connect"></a><code>procedure <b>Connect</b>(IP, Port: string); virtual;</code></td>
+</tr>
+</table>
+<p><p>Connects socket to remote IP address and PORT. The same rules as with
+     <a class="normal" href="blcksock.TBlockSocket.html#Bind">Bind</a> method are valid. The only exception is that PORT with 0 value
+     will not be connected!</p><p>Structures LocalSin and RemoteSin will be filled with valid values.</p><p>When you call this on non-created socket, then socket is created
+     automaticly. Type of created socket is by <a class="normal" href="blcksock.TBlockSocket.html#Family">Family</a> property. If is
+     used SF_IP4, then is created socket for IPv4. If is used SF_IP6, then is
+     created socket for IPv6. When you have family on SF_Any (default!), then
+     type of created socket is determined by address resolving of destination
+     address. (Not work properly on prilimitary winsock IPv6 support!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CreateAlternate"></a><code>constructor <b>CreateAlternate</b>(Stub: string);</code></td>
+</tr>
+</table>
+<p><p>Create object and load all necessary socket library. What library is
+     loaded is described by STUB parameter. If STUB is empty string, then is
+     loaded default libraries.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CreateSocket"></a><code>procedure <b>CreateSocket</b>;</code></td>
+</tr>
+</table>
+<p><p>If <a class="normal" href="blcksock.TBlockSocket.html#Family">Family</a> is not SF_Any, then create socket with type defined in
+     <a class="normal" href="blcksock.TBlockSocket.html#Family">Family</a> property. If family is SF_Any, then do nothing! (socket is
+     created automaticly when you know what type of socket you need to create.
+     (i.e. inside <a class="normal" href="blcksock.TBlockSocket.html#Connect">Connect</a> or <a class="normal" href="blcksock.TBlockSocket.html#Bind">Bind</a> call.) When socket is created,
+     then is aplyed all stored delayed socket options.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="CreateSocketByName"></a><code>procedure <b>CreateSocketByName</b>(const Value: String);</code></td>
+</tr>
+</table>
+<p><p>It create socket. Address resolving of Value tells what type of socket is
+     created. If Value is resolved as IPv4 IP, then is created IPv4 socket. If
+     value is resolved as IPv6 address, then is created IPv6 socket.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EnableReuse"></a><code>procedure <b>EnableReuse</b>(Value: Boolean);</code></td>
+</tr>
+</table>
+<p><p>By this method you may turn address reuse mode for local <a class="normal" href="blcksock.TBlockSocket.html#Bind">Bind</a>. It
+     is good specially for UDP protocol. Using this with TCP protocol is
+     hazardous!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ExceptCheck"></a><code>procedure <b>ExceptCheck</b>;</code></td>
+</tr>
+</table>
+<p><p>If <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> contains some error code and <a class="normal" href="blcksock.TBlockSocket.html#RaiseExcept">RaiseExcept</a>
+     property is <code>True</code>, raise adequate exception.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="GetErrorDesc"></a><code>class function <b>GetErrorDesc</b>(ErrorCode: Integer): string;</code></td>
+</tr>
+</table>
+<p><p>Return descriptive string for given error code. This is class function.
+     You may call it without created object!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetLocalSinIP"></a><code>function <b>GetLocalSinIP</b>: string; virtual;</code></td>
+</tr>
+</table>
+<p><p>Picks IP socket address from <a class="normal" href="blcksock.TBlockSocket.html#LocalSin">LocalSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetLocalSinPort"></a><code>function <b>GetLocalSinPort</b>: Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Picks socket PORT number from <a class="normal" href="blcksock.TBlockSocket.html#LocalSin">LocalSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetRemoteSinIP"></a><code>function <b>GetRemoteSinIP</b>: string; virtual;</code></td>
+</tr>
+</table>
+<p><p>Picks IP socket address from <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetRemoteSinPort"></a><code>function <b>GetRemoteSinPort</b>: Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Picks socket PORT number from <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSinLocal"></a><code>procedure <b>GetSinLocal</b>;</code></td>
+</tr>
+</table>
+<p><p>Actualize values in <a class="normal" href="blcksock.TBlockSocket.html#LocalSin">LocalSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSinRemote"></a><code>procedure <b>GetSinRemote</b>;</code></td>
+</tr>
+</table>
+<p><p>Actualize values in <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSins"></a><code>procedure <b>GetSins</b>;</code></td>
+</tr>
+</table>
+<p><p>Actualize values in <a class="normal" href="blcksock.TBlockSocket.html#LocalSin">LocalSin</a> and <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSocketProtocol"></a><code>function <b>GetSocketProtocol</b>: integer; Virtual;</code></td>
+</tr>
+</table>
+<p><p>Return value of protocol type for socket creation.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSocketType"></a><code>function <b>GetSocketType</b>: integer; Virtual;</code></td>
+</tr>
+</table>
+<p><p>Return value of socket type.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GroupCanRead"></a><code>function <b>GroupCanRead</b>(const SocketList: TList; Timeout: Integer; const CanReadList: TList): Boolean;</code></td>
+</tr>
+</table>
+<p><p>This function is for check for incoming data on set of sockets. Whitch
+    sockets is checked is decribed by SocketList Tlist with TBlockSocket
+    objects. TList may have maximal number of objects defined by FD_SETSIZE
+    constant. Return <code>True</code>, if you can from some socket read any data or is
+    incoming connection on TCP based socket. Status is tested for time Timeout
+    (in milliseconds). If value in Timeout is 0, status is only tested and
+    continue. If value in Timeout is -1, run is breaked and waiting for read
+    data maybe forever. If is returned <code>True</code>, CanReadList TList is filled by all
+    TBlockSocket objects what waiting for read.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="IP6ToStr"></a><code>function <b>IP6ToStr</b>(const value: TSockAddrIn6): string;</code></td>
+</tr>
+</table>
+<p><p>Convert IPv6 address from binary to string form. This function working
+     only on systems with IPv6 support!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LocalName"></a><code>function <b>LocalName</b>: string;</code></td>
+</tr>
+</table>
+<p><p>Returns local computer name as numerical or symbolic value. It try get
+     fully qualified domain name. Name is returned in the format acceptable by
+     functions demanding IP as input parameter.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="PeekBuffer"></a><code>function <b>PeekBuffer</b>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="blcksock.TBlockSocket.html#RecvBuffer">RecvBuffer</a>, but readed data stays in system input buffer.
+    Warning: this function not respect data in <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a>! Is not
+    recommended to use this function!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="PeekByte"></a><code>function <b>PeekByte</b>(Timeout: Integer): Byte; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="blcksock.TBlockSocket.html#RecvByte">RecvByte</a>, but readed data stays in input system buffer.
+     Warning: this function not respect data in <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a>! Is not
+    recommended to use this function!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Purge"></a><code>procedure <b>Purge</b>;</code></td>
+</tr>
+</table>
+<p><p>Clear all waiting data for read from buffers.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBlock"></a><code>function <b>RecvBlock</b>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+</table>
+<p><p>Read one block of data from socket. Each block begin with 4 bytes with
+     length of data in block. This function read first 4 bytes for get lenght,
+     then it wait for reported count of bytes.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBuffer"></a><code>function <b>RecvBuffer</b>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is low-level receive function. You must be sure if data is
+     waiting for read before call this function for avoid deadlock!</p><p>Waits until allocated buffer is filled by received data. Returns number of
+     data received, which equals to LENGTH value under normal operation. If it
+     is not equal the communication channel is possibly broken.</p><p>On stream oriented sockets if is received 0 bytes, it mean 'socket is
+     closed!&quot;</p><p>On datagram socket is readed first waiting datagram.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferEx"></a><code>function <b>RecvBufferEx</b>(Buffer: Tmemory; Len: Integer; Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions!</p><p>Method waits until data is received. If no data is received within TIMEOUT
+     (in milliseconds) period, <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set to WSAETIMEDOUT. Methods
+     serves for reading any size of data (i.e. one megabyte...). This method is
+     preffered for reading from stream sockets (like TCP).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferFrom"></a><code>function <b>RecvBufferFrom</b>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is low-lever receive function. You must be sure if data is
+     waiting for read before call this function for avoid deadlock!</p><p>Receives first waiting datagram to allocated buffer. If there is no waiting
+     one, then waits until one comes. Returns length of datagram stored in
+     BUFFER. If length exceeds buffer datagram is truncated. After this
+     <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a> structure contains information about sender of UDP packet.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvBufferStr"></a><code>function <b>RecvBufferStr</b>(Length: Integer; Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+</table>
+<p><p>Similar to <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferEx">RecvBufferEx</a>, but readed data is stored in binary
+     string, not in memory buffer.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvByte"></a><code>function <b>RecvByte</b>(Timeout: Integer): Byte; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions.</p><p>Waits until one data byte is received which is also returned as function
+     result. If no data is received within TIMEOUT (in milliseconds)period,
+     <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set to WSAETIMEDOUT and result have value 0.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvInteger"></a><code>function <b>RecvInteger</b>(Timeout: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions.</p><p>Waits until one four bytes are received and return it as one Ineger Value.
+     If no data is received within TIMEOUT (in milliseconds)period,
+     <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set to WSAETIMEDOUT and result have value 0.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvPacket"></a><code>function <b>RecvPacket</b>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions.</p><p>Method reads all data waiting for read. If no data is received within
+     TIMEOUT (in milliseconds) period, <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set to WSAETIMEDOUT.
+     Methods serves for reading unknown size of data. Because before call this
+     function you don't know size of received data, returned data is stored in
+     dynamic size binary string. This method is preffered for reading from
+     stream sockets (like TCP). It is very goot for receiving datagrams too!
+     (UDP protocol)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStream"></a><code>procedure <b>RecvStream</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Receive data to stream. It using <a class="normal" href="blcksock.TBlockSocket.html#RecvBlock">RecvBlock</a> method.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamIndy"></a><code>procedure <b>RecvStreamIndy</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Receive data to stream. This function is compatible with similar function
+    in Indy library. It using <a class="normal" href="blcksock.TBlockSocket.html#RecvBlock">RecvBlock</a> method.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamRaw"></a><code>procedure <b>RecvStreamRaw</b>(const Stream: TStream; Timeout: Integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Read all data from socket to stream until socket is closed (or any error
+     occured.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvStreamSize"></a><code>procedure <b>RecvStreamSize</b>(const Stream: TStream; Timeout: Integer; Size: Integer);</code></td>
+</tr>
+</table>
+<p><p>Read requested count of bytes from socket to stream.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvString"></a><code>function <b>RecvString</b>(Timeout: Integer): AnsiString; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions.</p><p>Method waits until data string is received. This string is terminated by
+     CR-LF characters. The resulting string is returned without this termination
+     (CR-LF)! If <a class="normal" href="blcksock.TBlockSocket.html#ConvertLineEnd">ConvertLineEnd</a> is used, then CR-LF sequence may not be
+     exactly CR-LF. See <a class="normal" href="blcksock.TBlockSocket.html#ConvertLineEnd">ConvertLineEnd</a> description. If no data is
+     received within TIMEOUT (in milliseconds) period, <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set
+     to WSAETIMEDOUT. You may also specify maximum length of reading data by
+     <a class="normal" href="blcksock.TBlockSocket.html#MaxLineLength">MaxLineLength</a> property.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvTerminated"></a><code>function <b>RecvTerminated</b>(Timeout: Integer; const Terminator: AnsiString): AnsiString; virtual;</code></td>
+</tr>
+</table>
+<p><p>Note: This is high-level receive function. It using internal
+     <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> and you can combine this function freely with other
+     high-level functions.</p><p>Method waits until data string is received. This string is terminated by
+     Terminator string. The resulting string is returned without this
+     termination. If no data is received within TIMEOUT (in milliseconds)
+     period, <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> is set to WSAETIMEDOUT. You may also specify
+     maximum length of reading data by <a class="normal" href="blcksock.TBlockSocket.html#MaxLineLength">MaxLineLength</a> property.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ResolveIPToName"></a><code>function <b>ResolveIPToName</b>(IP: string): string;</code></td>
+</tr>
+</table>
+<p><p>Try resolve IP to their primary domain name. If IP not have domain name,
+     then is returned original IP.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ResolveName"></a><code>function <b>ResolveName</b>(Name: string): string;</code></td>
+</tr>
+</table>
+<p><p>Try resolve name to primary IP address. i.e. If you pass as name result of
+     <a class="normal" href="blcksock.TBlockSocket.html#LocalName">LocalName</a> method, you get primary IP addresses used by local system.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ResolveNameToIP"></a><code>procedure <b>ResolveNameToIP</b>(Name: string; const IPList: TStrings);</code></td>
+</tr>
+</table>
+<p><p>Try resolve name to all possible IP address. i.e. If you pass as name
+     result of <a class="normal" href="blcksock.TBlockSocket.html#LocalName">LocalName</a> method, you get all IP addresses used by local
+     system.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ResolvePort"></a><code>function <b>ResolvePort</b>(Port: string): Word;</code></td>
+</tr>
+</table>
+<p><p>Try resolve symbolic port name to port number. (i.e. 'Echo' to 8)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBlock"></a><code>procedure <b>SendBlock</b>(const Data: AnsiString); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send data as one block to socket. Each block begin with 4 bytes with
+     length of data in block. This 4 bytes is added automaticly by this
+     function.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBuffer"></a><code>function <b>SendBuffer</b>(Buffer: Tmemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Sends data of LENGTH from BUFFER address via connected socket. System
+     automatically splits data to packets.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendBufferTo"></a><code>function <b>SendBufferTo</b>(Buffer: TMemory; Length: Integer): Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="blcksock.TBlockSocket.html#SendBuffer">SendBuffer</a>, but send datagram to address from
+     <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin">RemoteSin</a>. Usefull for sending reply to datagram received by
+     function <a class="normal" href="blcksock.TBlockSocket.html#RecvBufferFrom">RecvBufferFrom</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendByte"></a><code>procedure <b>SendByte</b>(Data: Byte); virtual;</code></td>
+</tr>
+</table>
+<p><p>One data BYTE is sent via connected socket.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendInteger"></a><code>procedure <b>SendInteger</b>(Data: integer); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send integer as four bytes to socket.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStream"></a><code>procedure <b>SendStream</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send content of stream to socket. It using <a class="normal" href="blcksock.TBlockSocket.html#SendBlock">SendBlock</a> method</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStreamIndy"></a><code>procedure <b>SendStreamIndy</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send content of stream to socket. It using <a class="normal" href="blcksock.TBlockSocket.html#SendBlock">SendBlock</a> method and
+    this is compatible with streams in Indy library.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendStreamRaw"></a><code>procedure <b>SendStreamRaw</b>(const Stream: TStream); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send data from stream to socket.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendString"></a><code>procedure <b>SendString</b>(Data: AnsiString); virtual;</code></td>
+</tr>
+</table>
+<p><p>Send data string via connected socket. Any terminator is not added! If you
+     need send true string with CR-LF termination, you must add CR-LF characters
+     to sended string! Because any termination is not added automaticly, you can
+     use this function for sending any binary data in binary string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetLinger"></a><code>procedure <b>SetLinger</b>(Enable: Boolean; Linger: Integer);</code></td>
+</tr>
+</table>
+<p><p>Sets linger. Enabled linger means that the system waits another LINGER
+     (in milliseconds) time for delivery of sent data. This function is only for
+     stream type of socket! (TCP)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetRecvTimeout"></a><code>procedure <b>SetRecvTimeout</b>(Timeout: Integer);</code></td>
+</tr>
+</table>
+<p><p>Try set timeout for all receiving operations, if socket provider can do
+     it. (It not supported by all socket providers!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetRemoteSin"></a><code>procedure <b>SetRemoteSin</b>(IP, Port: string);</code></td>
+</tr>
+</table>
+<p><p>Set information about remote side socket. It is good for seting remote
+     side for sending UDP packet, etc.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetSendTimeout"></a><code>procedure <b>SetSendTimeout</b>(Timeout: Integer);</code></td>
+</tr>
+</table>
+<p><p>Try set timeout for all sending operations, if socket provider can do it.
+     (It not supported by all socket providers!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SetTimeout"></a><code>procedure <b>SetTimeout</b>(Timeout: Integer);</code></td>
+</tr>
+</table>
+<p><p>Try set timeout for all sending and receiving operations, if socket
+     provider can do it. (It not supported by all socket providers!)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SockCheck"></a><code>function <b>SockCheck</b>(SockResult: Integer): Integer;</code></td>
+</tr>
+</table>
+<p><p>If you &quot;manually&quot; call Socket API functions, forward their return code as
+     parameter to this function, which evaluates it, eventually calls
+     GetLastError and found error code returns and stores to <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="StrToIP6"></a><code>function <b>StrToIP6</b>(const value: string): TSockAddrIn6;</code></td>
+</tr>
+</table>
+<p><p>Convert IPv6 address from their string form to binary. This function
+     working only on systems with IPv6 support!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WaitingData"></a><code>function <b>WaitingData</b>: Integer; virtual;</code></td>
+</tr>
+</table>
+<p><p>On stream sockets it returns number of received bytes waiting for picking.
+     0 is returned when there is no such data. On datagram socket it returns
+     length of the first waiting datagram. Returns 0 if no datagram is waiting.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WaitingDataEx"></a><code>function <b>WaitingDataEx</b>: Integer;</code></td>
+</tr>
+</table>
+<p><p>Same as <a class="normal" href="blcksock.TBlockSocket.html#WaitingData">WaitingData</a>, but if exists some of data in <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a>,
+     return their length instead.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="blcksock.TBlockSocket.html#ConvertLineEnd"><b>ConvertLineEnd</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#Family"><b>Family</b></a>: <a class="normal" href="blcksock.html#TSocketFamily">TSocketFamily</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#InterPacketTimeout"><b>InterPacketTimeout</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#IP6used"><b>IP6used</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#LastError"><b>LastError</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#LastErrorDesc"><b>LastErrorDesc</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer"><b>LineBuffer</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#LocalSin"><b>LocalSin</b></a>: TVarSin;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#MaxBandwidth"><b>MaxBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#MaxLineLength"><b>MaxLineLength</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#MaxRecvBandwidth"><b>MaxRecvBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#MaxSendBandwidth"><b>MaxSendBandwidth</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#NonBlockMode"><b>NonBlockMode</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#OnCreateSocket"><b>OnCreateSocket</b></a>: <a class="normal" href="blcksock.html#THookCreateSocket">THookCreateSocket</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#OnReadFilter"><b>OnReadFilter</b></a>: <a class="normal" href="blcksock.html#THookDataFilter">THookDataFilter</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#OnStatus"><b>OnStatus</b></a>: <a class="normal" href="blcksock.html#THookSocketStatus">THookSocketStatus</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#OnWriteFilter"><b>OnWriteFilter</b></a>: <a class="normal" href="blcksock.html#THookDataFilter">THookDataFilter</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#PreferIP4"><b>PreferIP4</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#RaiseExcept"><b>RaiseExcept</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#RecvCounter"><b>RecvCounter</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#RemoteSin"><b>RemoteSin</b></a>: TVarSin;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#SendCounter"><b>SendCounter</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#SendMaxChunk"><b>SendMaxChunk</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#SizeRecvBuffer"><b>SizeRecvBuffer</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#SizeSendBuffer"><b>SizeSendBuffer</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#Socket"><b>Socket</b></a>: TSocket;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#StopFlag"><b>StopFlag</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#Tag"><b>Tag</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#TTL"><b>TTL</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="blcksock.TBlockSocket.html#WSAData"><b>WSAData</b></a>: TWSADATA;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ConvertLineEnd"></a><code>property <b>ConvertLineEnd</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>Do a conversion of non-standard line terminators to CRLF. (Off by default)
+     If <code>True</code>, then terminators like sigle CR, single LF or LFCR are converted
+     to CRLF internally. This have effect only in <a class="normal" href="blcksock.TBlockSocket.html#RecvString">RecvString</a> method!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Family"></a><code>property <b>Family</b>: <a class="normal" href="blcksock.html#TSocketFamily">TSocketFamily</a>;</code></td>
+</tr>
+</table>
+<p>Specified Family of this socket. When you are using Windows preliminary
+     support for IPv6, then I recommend to set this property!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="InterPacketTimeout"></a><code>property <b>InterPacketTimeout</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>By dafault (<code>False</code>) is all timeouts used as timeout between two packets in
+     reading operations. If you set this to <code>True</code>, then Timeouts is for overall
+     reading operation!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="IP6used"></a><code>property <b>IP6used</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If is <code>True</code>, then class in in IPv6 mode.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LastError"></a><code>property <b>LastError</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Last socket operation error code. Error codes are described in socket
+     documentation. Human readable error description is stored in
+     <a class="normal" href="blcksock.TBlockSocket.html#LastErrorDesc">LastErrorDesc</a> property.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LastErrorDesc"></a><code>property <b>LastErrorDesc</b>: string;</code></td>
+</tr>
+</table>
+<p>Human readable error description of <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> code.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LineBuffer"></a><code>property <b>LineBuffer</b>: string;</code></td>
+</tr>
+</table>
+<p>Buffer used by all high-level receiving functions. This buffer is used for
+     optimized reading of data from socket. In normal cases you not need access
+     to this buffer directly!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="LocalSin"></a><code>property <b>LocalSin</b>: TVarSin;</code></td>
+</tr>
+</table>
+<p>Structure describing local socket side.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxBandwidth"></a><code>property <b>MaxBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Define maximal bandwidth for all sending and receiving operations in bytes
+     per second. If value is 0 (default), bandwidth limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxLineLength"></a><code>property <b>MaxLineLength</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Define maximum length in bytes of <a class="normal" href="blcksock.TBlockSocket.html#LineBuffer">LineBuffer</a> for high-level
+     receiving functions. If this functions try to read more data then this
+     limit, error is returned! If value is 0 (default), no limitation is used.
+     This is very good protection for stupid attacks to your server by sending
+     lot of data without proper terminator... until all your memory is allocated
+     by LineBuffer!</p><p>Note: This maximum length is checked only in functions, what read unknown
+     number of bytes! (like <a class="normal" href="blcksock.TBlockSocket.html#RecvString">RecvString</a> or <a class="normal" href="blcksock.TBlockSocket.html#RecvTerminated">RecvTerminated</a>)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxRecvBandwidth"></a><code>property <b>MaxRecvBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Define maximal bandwidth for all receiving operations in bytes per second.
+     If value is 0 (default), bandwidth limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxSendBandwidth"></a><code>property <b>MaxSendBandwidth</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Define maximal bandwidth for all sending operations in bytes per second.
+     If value is 0 (default), bandwidth limitation is not used.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="NonBlockMode"></a><code>property <b>NonBlockMode</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, turn class to non-blocking mode. Not all functions are working
+     properly in this mode, you must know exactly what you are doing! However
+     when you have big experience with non-blocking programming, then you can
+     optimise your program by non-block mode!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnCreateSocket"></a><code>property <b>OnCreateSocket</b>: <a class="normal" href="blcksock.html#THookCreateSocket">THookCreateSocket</a>;</code></td>
+</tr>
+</table>
+<p>This event is called after real socket creation for setting special socket
+     options, because you not know when socket is created. (it is depended on
+     Ipv4, IPv6 or automatic mode)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnReadFilter"></a><code>property <b>OnReadFilter</b>: <a class="normal" href="blcksock.html#THookDataFilter">THookDataFilter</a>;</code></td>
+</tr>
+</table>
+<p>this event is good for some internal thinks about filtering readed datas.
+     It is used by telnet client by example.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnStatus"></a><code>property <b>OnStatus</b>: <a class="normal" href="blcksock.html#THookSocketStatus">THookSocketStatus</a>;</code></td>
+</tr>
+</table>
+<p>This event is called by various reasons. It is good for monitoring socket,
+     create gauges for data transfers, etc.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OnWriteFilter"></a><code>property <b>OnWriteFilter</b>: <a class="normal" href="blcksock.html#THookDataFilter">THookDataFilter</a>;</code></td>
+</tr>
+</table>
+<p>This event is good for some internal thinks about filtering writed datas.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PreferIP4"></a><code>property <b>PreferIP4</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>When resolving of domain name return both IPv4 and IPv6 addresses, then
+     specify if is used IPv4 (dafault - <code>True</code>) or IPv6.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RaiseExcept"></a><code>property <b>RaiseExcept</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, winsock errors raises exception. Otherwise is setted
+    <a class="normal" href="blcksock.TBlockSocket.html#LastError">LastError</a> value only and you must check it from your program! Default
+    value is <code>False</code>.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvCounter"></a><code>property <b>RecvCounter</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Return count of received bytes on this socket from begin of current
+     connection.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RemoteSin"></a><code>property <b>RemoteSin</b>: TVarSin;</code></td>
+</tr>
+</table>
+<p>Structure describing remote socket side.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendCounter"></a><code>property <b>SendCounter</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Return count of sended bytes on this socket from begin of current
+     connection.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SendMaxChunk"></a><code>property <b>SendMaxChunk</b>: Integer;</code></td>
+</tr>
+</table>
+<p>All sended datas was splitted by this value.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SizeRecvBuffer"></a><code>property <b>SizeRecvBuffer</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Size of Winsock receive buffer. If it is not supported by socket provider,
+     it return as size one kilobyte.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SizeSendBuffer"></a><code>property <b>SizeSendBuffer</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Size of Winsock send buffer. If it is not supported by socket provider, it
+     return as size one kilobyte.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Socket"></a><code>property <b>Socket</b>: TSocket;</code></td>
+</tr>
+</table>
+<p>Socket handler. Suitable for &quot;manual&quot; calls to socket API or manual
+     connection of socket to a previously created socket (i.e by Accept method
+     on TCP socket)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="StopFlag"></a><code>property <b>StopFlag</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>By setting this property to <code>True</code> you can stop any communication. You can
+     use this property for soft abort of communication.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Tag"></a><code>property <b>Tag</b>: Integer;</code></td>
+</tr>
+</table>
+<p>this value is for free use.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="TTL"></a><code>property <b>TTL</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Set Time-to-live value. (if system supporting it!)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WSAData"></a><code>property <b>WSAData</b>: TWSADATA;</code></td>
+</tr>
+</table>
+<p>WSA structure with information about socket provider. On linux is this
+     structure simulated!</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

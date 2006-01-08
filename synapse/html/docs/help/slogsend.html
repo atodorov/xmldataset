@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>slogsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit slogsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+BSD SYSLOG protocol<p>Used RFC: RFC-3164</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="slogsend.TSyslogMessage.html"><code>TSyslogMessage</code></a></td>
+<td width="100%">encoding or decoding of SYSLOG message</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="slogsend.TSyslogSend.html"><code>TSyslogSend</code></a></td>
+<td>This object implement BSD SysLog client</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#ToSysLog"><b>ToSysLog</b></a>(const SyslogServer: string; Facil: Byte; Sever: <a class="normal" href="slogsend.html#TSyslogSeverity">TSyslogSeverity</a>; const Content: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ToSysLog"></a><code>function <b>ToSysLog</b>(const SyslogServer: string; Facil: Byte; Sever: <a class="normal" href="slogsend.html#TSyslogSeverity">TSyslogSeverity</a>; const Content: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Simply send packet to specified Syslog server.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TSyslogSeverity"></a>TSyslogSeverity<code></code></td>
+<td>Define possible priority of Syslog message<ul>
+<li>
+Emergency: </li>
+<li>
+Alert: </li>
+<li>
+Critical: </li>
+<li>
+Error: </li>
+<li>
+Warning: </li>
+<li>
+Notice: </li>
+<li>
+Info: </li>
+<li>
+Debug: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cSysLogProtocol"></a>cSysLogProtocol<code> = '514';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Kernel"></a>FCL_Kernel<code> = 0;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_UserLevel"></a>FCL_UserLevel<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_MailSystem"></a>FCL_MailSystem<code> = 2;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_System"></a>FCL_System<code> = 3;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Security"></a>FCL_Security<code> = 4;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Syslogd"></a>FCL_Syslogd<code> = 5;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Printer"></a>FCL_Printer<code> = 6;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_News"></a>FCL_News<code> = 7;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_UUCP"></a>FCL_UUCP<code> = 8;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Clock"></a>FCL_Clock<code> = 9;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Authorization"></a>FCL_Authorization<code> = 10;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_FTP"></a>FCL_FTP<code> = 11;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_NTP"></a>FCL_NTP<code> = 12;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_LogAudit"></a>FCL_LogAudit<code> = 13;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_LogAlert"></a>FCL_LogAlert<code> = 14;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Time"></a>FCL_Time<code> = 15;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Local0"></a>FCL_Local0<code> = 16;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Local1"></a>FCL_Local1<code> = 17;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Local2"></a>FCL_Local2<code> = 18;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Local3"></a>FCL_Local3<code> = 19;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Local4"></a>FCL_Local4<code> = 20;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Local5"></a>FCL_Local5<code> = 21;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FCL_Local6"></a>FCL_Local6<code> = 22;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FCL_Local7"></a>FCL_Local7<code> = 23;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

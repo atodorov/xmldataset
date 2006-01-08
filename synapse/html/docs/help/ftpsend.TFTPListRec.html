@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>ftpsend: Class TFTPListRec</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TFTPListRec"></a><h1>Class TFTPListRec</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="ftpsend.html">ftpsend</a><br/><h2>Declaration</h2>
+<p><code>type TFTPListRec = class(TObject)</code></p>
+<h2>Description</h2>
+Object for holding file information<p>parsed from directory
+   listing of FTP server.</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TFTPListRec&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>procedure <a class="normal" href="ftpsend.TFTPListRec.html#Assign"><b>Assign</b></a>(Value: <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>); virtual;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Assign"></a><code>procedure <b>Assign</b>(Value: <a class="normal" href="ftpsend.TFTPListRec.html">TFTPListRec</a>); virtual;</code></td>
+</tr>
+</table>
+<p><p>You can assign another TFTPListRec to this object.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="ftpsend.TFTPListRec.html#Directory"><b>Directory</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#FileName"><b>FileName</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#FileSize"><b>FileSize</b></a>: Longint;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#FileTime"><b>FileTime</b></a>: TDateTime;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#Mask"><b>Mask</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#OriginalLine"><b>OriginalLine</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#Permission"><b>Permission</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftpsend.TFTPListRec.html#Readable"><b>Readable</b></a>: Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Directory"></a><code>property <b>Directory</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>if name is subdirectory not file.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FileName"></a><code>property <b>FileName</b>: string;</code></td>
+</tr>
+</table>
+<p>name of file</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FileSize"></a><code>property <b>FileSize</b>: Longint;</code></td>
+</tr>
+</table>
+<p>size of file in bytes</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FileTime"></a><code>property <b>FileTime</b>: TDateTime;</code></td>
+</tr>
+</table>
+<p>date and time of file. Local server timezone is used. Any timezone
+     conversions was not done!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Mask"></a><code>property <b>Mask</b>: string;</code></td>
+</tr>
+</table>
+<p>mask what was used for parsing</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="OriginalLine"></a><code>property <b>OriginalLine</b>: string;</code></td>
+</tr>
+</table>
+<p>original unparsed line</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Permission"></a><code>property <b>Permission</b>: string;</code></td>
+</tr>
+</table>
+<p>permission string (depending on used mask!)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Readable"></a><code>property <b>Readable</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>if you have rights to read</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

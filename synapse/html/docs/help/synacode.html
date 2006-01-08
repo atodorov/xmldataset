@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>synacode</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit synacode</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Various encoding and decoding support<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#DecodeTriplet"><b>DecodeTriplet</b></a>(const Value: AnsiString; Delimiter: AnsiChar): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeQuotedPrintable"><b>DecodeQuotedPrintable</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DecodeURL"><b>DecodeURL</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#EncodeTriplet"><b>EncodeTriplet</b></a>(const Value: AnsiString; Delimiter: AnsiChar; Specials: <a class="normal" href="synacode.html#TSpecials">TSpecials</a>): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EncodeQuotedPrintable"><b>EncodeQuotedPrintable</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#EncodeSafeQuotedPrintable"><b>EncodeSafeQuotedPrintable</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EncodeURLElement"><b>EncodeURLElement</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#EncodeURL"><b>EncodeURL</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Decode4to3"><b>Decode4to3</b></a>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#Decode4to3Ex"><b>Decode4to3Ex</b></a>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Encode3to4"><b>Encode3to4</b></a>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeBase64"><b>DecodeBase64</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EncodeBase64"><b>EncodeBase64</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeBase64mod"><b>DecodeBase64mod</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EncodeBase64mod"><b>EncodeBase64mod</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeUU"><b>DecodeUU</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EncodeUU"><b>EncodeUU</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DecodeXX"><b>DecodeXX</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DecodeYEnc"><b>DecodeYEnc</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#UpdateCrc32"><b>UpdateCrc32</b></a>(Value: Byte; Crc32: Integer): Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Crc32"><b>Crc32</b></a>(const Value: AnsiString): Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#UpdateCrc16"><b>UpdateCrc16</b></a>(Value: Byte; Crc16: Word): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Crc16"><b>Crc16</b></a>(const Value: AnsiString): Word;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#MD5"><b>MD5</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#HMAC_MD5"><b>HMAC_MD5</b></a>(Text, Key: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#MD5LongHash"><b>MD5LongHash</b></a>(const Value: AnsiString; Len: integer): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SHA1"><b>SHA1</b></a>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#HMAC_SHA1"><b>HMAC_SHA1</b></a>(Text, Key: AnsiString): AnsiString;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SHA1LongHash"><b>SHA1LongHash</b></a>(const Value: AnsiString; Len: integer): AnsiString;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Crc16"></a><code>function <b>Crc16</b>(const Value: AnsiString): Word;</code></td>
+</tr>
+</table>
+<p><p>return CRC16 from a value string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Crc32"></a><code>function <b>Crc32</b>(const Value: AnsiString): Integer;</code></td>
+</tr>
+</table>
+<p><p>return CRC32 from a value string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Decode4to3"></a><code>function <b>Decode4to3</b>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decode 4to3 encoding with given table. If some element is not found in table,
+ first item from table is used. This is good for buggy coded items by Microsoft
+ Outlook. This software sometimes using wrong table for UUcode, where is used
+ ' ' instead '`'.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Decode4to3Ex"></a><code>function <b>Decode4to3Ex</b>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decode 4to3 encoding with given REVERSE table. Using this function with
+reverse table is much faster then <a class="normal" href="synacode.html#Decode4to3">Decode4to3</a>. This function is used
+internally for Base64, UU or XX decoding.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeBase64"></a><code>function <b>DecodeBase64</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decode string from base64 format.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeBase64mod"></a><code>function <b>DecodeBase64mod</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decode string from modified base64 format. (used in IMAP, for example.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeQuotedPrintable"></a><code>function <b>DecodeQuotedPrintable</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decodes a string from quoted printable form. (also decodes triplet sequences
+ like '=7F')</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeTriplet"></a><code>function <b>DecodeTriplet</b>(const Value: AnsiString; Delimiter: AnsiChar): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decodes triplet encoding with a given character delimiter. It is used for
+ decoding quoted-printable or URL encoding.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeURL"></a><code>function <b>DecodeURL</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decodes a string of URL encoding. (also decodes triplet sequences like '%7F')</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeUU"></a><code>function <b>DecodeUU</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decodes a string from UUcode format.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeXX"></a><code>function <b>DecodeXX</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Decodes a string from XXcode format.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeYEnc"></a><code>function <b>DecodeYEnc</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>decode line with Yenc code. This code is sometimes used in newsgroups.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Encode3to4"></a><code>function <b>Encode3to4</b>(const Value, Table: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encode by system 3to4 (used by Base64, UU coding, etc) by given table.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeBase64"></a><code>function <b>EncodeBase64</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to base64 format.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeBase64mod"></a><code>function <b>EncodeBase64mod</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to  modified base64 format. (used in IMAP, for example.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeQuotedPrintable"></a><code>function <b>EncodeQuotedPrintable</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to triplet quoted printable form. All <a class="normal" href="synacode.html#NonAsciiChar">NonAsciiChar</a>
+ are encoded.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeSafeQuotedPrintable"></a><code>function <b>EncodeSafeQuotedPrintable</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to triplet quoted printable form. All <a class="normal" href="synacode.html#NonAsciiChar">NonAsciiChar</a> and
+ <a class="normal" href="synacode.html#SpecialChar">SpecialChar</a> are encoded.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeTriplet"></a><code>function <b>EncodeTriplet</b>(const Value: AnsiString; Delimiter: AnsiChar; Specials: <a class="normal" href="synacode.html#TSpecials">TSpecials</a>): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Performs triplet encoding with a given character delimiter. Used for encoding
+ quoted-printable or URL encoding.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeURL"></a><code>function <b>EncodeURL</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to URL format. Used to encode critical characters in all
+ URLs.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeURLElement"></a><code>function <b>EncodeURLElement</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Encodes a string to URL format. Used for encoding data from a form field in
+ HTTP, etc. (Encodes all critical characters including characters used as URL
+ delimiters ('/',':', etc.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EncodeUU"></a><code>function <b>EncodeUU</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>encode UUcode. it encode only datas, you must also add header and footer for
+ proper encode.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HMAC_MD5"></a><code>function <b>HMAC_MD5</b>(Text, Key: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with HMAC-MD5 hash.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HMAC_SHA1"></a><code>function <b>HMAC_SHA1</b>(Text, Key: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with HMAC-SHA1 hash.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="MD5"></a><code>function <b>MD5</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with a RSA-MD5 hashing of &quot;Value&quot; string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="MD5LongHash"></a><code>function <b>MD5LongHash</b>(const Value: AnsiString; Len: integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with a RSA-MD5 hashing of string what is constructed
+ by repeating &quot;value&quot; until length is &quot;Len&quot;.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SHA1"></a><code>function <b>SHA1</b>(const Value: AnsiString): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with a SHA-1 hashing of &quot;Value&quot; string.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SHA1LongHash"></a><code>function <b>SHA1LongHash</b>(const Value: AnsiString; Len: integer): AnsiString;</code></td>
+</tr>
+</table>
+<p><p>Returns a binary string with a SHA-1 hashing of string what is constructed
+ by repeating &quot;value&quot; until length is &quot;Len&quot;.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="UpdateCrc16"></a><code>function <b>UpdateCrc16</b>(Value: Byte; Crc16: Word): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns a new CRC16 value after adding a new byte of data.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="UpdateCrc32"></a><code>function <b>UpdateCrc32</b>(Value: Byte; Crc32: Integer): Integer;</code></td>
+</tr>
+</table>
+<p><p>Returns a new CRC32 value after adding a new byte of data.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TSpecials"></a>TSpecials<code> = set of AnsiChar;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="SpecialChar"></a>SpecialChar<code>: <a class="normal" href="synacode.html#TSpecials">TSpecials</a> =
+  ['=', '(', ')', '[', ']', '&lt;', '&gt;', ':', ';', ',', '@', '/', '?', '\',
+    '&quot;', '_'];</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="NonAsciiChar"></a>NonAsciiChar<code>: <a class="normal" href="synacode.html#TSpecials">TSpecials</a> =
+  [Char(0)..Char(31), Char(127)..Char(255)];</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="URLFullSpecialChar"></a>URLFullSpecialChar<code>: <a class="normal" href="synacode.html#TSpecials">TSpecials</a> =
+  [';', '/', '?', ':', '@', '=', '&amp;', '#'];</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="URLSpecialChar"></a>URLSpecialChar<code>: <a class="normal" href="synacode.html#TSpecials">TSpecials</a> =
+  [#$00..#$20, '_', '&lt;', '&gt;', '&quot;', '%', '{', '}', '|', '\', '^', '~', '[', ']',
+    '`', #$7F..#$FF];</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TableBase64"></a>TableBase64<code> =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TableBase64mod"></a>TableBase64mod<code> =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+,=';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TableUU"></a>TableUU<code> =
+    '`!&quot;#$%&amp;''()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TableXX"></a>TableXX<code> =
+    '+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ReTablebase64"></a>ReTablebase64<code> =
+    #$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$3E +#$40
+    +#$40 +#$40 +#$3F +#$34 +#$35 +#$36 +#$37 +#$38 +#$39 +#$3A +#$3B +#$3C
+    +#$3D +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$00 +#$01 +#$02 +#$03
+    +#$04 +#$05 +#$06 +#$07 +#$08 +#$09 +#$0A +#$0B +#$0C +#$0D +#$0E +#$0F
+    +#$10 +#$11 +#$12 +#$13 +#$14 +#$15 +#$16 +#$17 +#$18 +#$19 +#$40 +#$40
+    +#$40 +#$40 +#$40 +#$40 +#$1A +#$1B +#$1C +#$1D +#$1E +#$1F +#$20 +#$21
+    +#$22 +#$23 +#$24 +#$25 +#$26 +#$27 +#$28 +#$29 +#$2A +#$2B +#$2C +#$2D
+    +#$2E +#$2F +#$30 +#$31 +#$32 +#$33 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ReTableUU"></a>ReTableUU<code> =
+    #$01 +#$02 +#$03 +#$04 +#$05 +#$06 +#$07 +#$08 +#$09 +#$0A +#$0B +#$0C
+    +#$0D +#$0E +#$0F +#$10 +#$11 +#$12 +#$13 +#$14 +#$15 +#$16 +#$17 +#$18
+    +#$19 +#$1A +#$1B +#$1C +#$1D +#$1E +#$1F +#$20 +#$21 +#$22 +#$23 +#$24
+    +#$25 +#$26 +#$27 +#$28 +#$29 +#$2A +#$2B +#$2C +#$2D +#$2E +#$2F +#$30
+    +#$31 +#$32 +#$33 +#$34 +#$35 +#$36 +#$37 +#$38 +#$39 +#$3A +#$3B +#$3C
+    +#$3D +#$3E +#$3F +#$00 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40
+    +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40
+    +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ReTableXX"></a>ReTableXX<code> =
+    #$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$00 +#$40
+    +#$01 +#$40 +#$40 +#$02 +#$03 +#$04 +#$05 +#$06 +#$07 +#$08 +#$09 +#$0A
+    +#$0B +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$40 +#$0C +#$0D +#$0E +#$0F
+    +#$10 +#$11 +#$12 +#$13 +#$14 +#$15 +#$16 +#$17 +#$18 +#$19 +#$1A +#$1B
+    +#$1C +#$1D +#$1E +#$1F +#$20 +#$21 +#$22 +#$23 +#$24 +#$25 +#$40 +#$40
+    +#$40 +#$40 +#$40 +#$40 +#$26 +#$27 +#$28 +#$29 +#$2A +#$2B +#$2C +#$2D
+    +#$2E +#$2F +#$30 +#$31 +#$32 +#$33 +#$34 +#$35 +#$36 +#$37 +#$38 +#$39
+    +#$3A +#$3B +#$3C +#$3D +#$3E +#$3F +#$40 +#$40 +#$40 +#$40 +#$40 +#$40;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

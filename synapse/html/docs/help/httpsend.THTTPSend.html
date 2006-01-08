@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>httpsend: Class THTTPSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="THTTPSend"></a><h1>Class THTTPSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="httpsend.html">httpsend</a><br/><h2>Declaration</h2>
+<p><code>type THTTPSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+<p>abstract(Implementation of HTTP protocol.)</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+THTTPSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="httpsend.THTTPSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="httpsend.THTTPSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="httpsend.THTTPSend.html#Abort"><b>Abort</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="httpsend.THTTPSend.html#Clear"><b>Clear</b></a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="httpsend.THTTPSend.html#DecodeStatus"><b>DecodeStatus</b></a>(const Value: string);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="httpsend.THTTPSend.html#HTTPMethod"><b>HTTPMethod</b></a>(const Method, URL: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Abort"></a><code>procedure <b>Abort</b>;</code></td>
+</tr>
+</table>
+<p><p>You can call this method from OnStatus event for break current data
+     transfer. (or from another thread.)</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>;</code></td>
+</tr>
+</table>
+<p><p>Reset headers and document and Mimetype.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodeStatus"></a><code>procedure <b>DecodeStatus</b>(const Value: string);</code></td>
+</tr>
+</table>
+<p><p>Decode ResultCode and ResultString from Value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="HTTPMethod"></a><code>function <b>HTTPMethod</b>(const Method, URL: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Connects to host define in URL and access to resource defined in URL by
+     method. If Document is not empty, send it to server as part of HTTP request.
+     Server response is in Document and headers. Connection may be authorised
+     by username and password in URL. If you define proxy properties, connection
+     is made by this proxy. If all OK, result is <code>True</code>, else result is <code>False</code>.</p><p>If you use in URL 'https:' instead only 'http:', then your request is made
+     by SSL/TLS connection (if you not specify port, then port 443 is used
+     instead standard port 80). If you use SSL/TLS request and you have defined
+     HTTP proxy, then HTTP-tunnel mode is automaticly used .</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="httpsend.THTTPSend.html#Cookies"><b>Cookies</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#Document"><b>Document</b></a>: TMemoryStream;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#DownloadSize"><b>DownloadSize</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#Headers"><b>Headers</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#KeepAlive"><b>KeepAlive</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#MimeType"><b>MimeType</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#Protocol"><b>Protocol</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ProxyHost"><b>ProxyHost</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ProxyPass"><b>ProxyPass</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ProxyPort"><b>ProxyPort</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ProxyUser"><b>ProxyUser</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#RangeEnd"><b>RangeEnd</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#RangeStart"><b>RangeStart</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ResultCode"><b>ResultCode</b></a>: Integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#ResultString"><b>ResultString</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#Status100"><b>Status100</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#UploadSize"><b>UploadSize</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="httpsend.THTTPSend.html#UserAgent"><b>UserAgent</b></a>: string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Cookies"></a><code>property <b>Cookies</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>This is stringlist with name-value stringlist pairs. Each this pair is one
+     cookie. After HTTP request is returned cookies parsed to this stringlist.
+     You can leave this cookies untouched for next HTTP request. You can also
+     save this stringlist for later use.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Document"></a><code>property <b>Document</b>: TMemoryStream;</code></td>
+</tr>
+</table>
+<p>Stream with document to send (before request, or with document received
+     from HTTP server (after request).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="DownloadSize"></a><code>property <b>DownloadSize</b>: integer;</code></td>
+</tr>
+</table>
+<p>if this value is not 0, then data download pending. In this case you have
+     here total sice of downloaded data. It is good for draw download
+     progressbar from OnStatus event.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Headers"></a><code>property <b>Headers</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>Before HTTP operation you may define any non-standard headers for HTTP
+     request, except of: 'Expect: 100-continue', 'Content-Length', 'Content-Type',
+     'Connection', 'Authorization', 'Proxy-Authorization' and 'Host' headers.
+     After HTTP operation contains full headers of returned document.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="KeepAlive"></a><code>property <b>KeepAlive</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code> (default value), keepalives in HTTP protocol 1.1 is enabled.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MimeType"></a><code>property <b>MimeType</b>: string;</code></td>
+</tr>
+</table>
+<p>Mime type of sending data. Default is: 'text/html'.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Protocol"></a><code>property <b>Protocol</b>: string;</code></td>
+</tr>
+</table>
+<p>Define protocol version. Possible values are: '1.1', '1.0' (default)
+     and '0.9'.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ProxyHost"></a><code>property <b>ProxyHost</b>: string;</code></td>
+</tr>
+</table>
+<p>Address of proxy server (IP address or domain name) where you want to
+     connect in <a class="normal" href="httpsend.THTTPSend.html#HTTPMethod">HTTPMethod</a> method.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ProxyPass"></a><code>property <b>ProxyPass</b>: string;</code></td>
+</tr>
+</table>
+<p>Password for connect to proxy server where you want to connect in
+     HTTPMethod method.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ProxyPort"></a><code>property <b>ProxyPort</b>: string;</code></td>
+</tr>
+</table>
+<p>Port number for proxy connection. Default value is 8080.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ProxyUser"></a><code>property <b>ProxyUser</b>: string;</code></td>
+</tr>
+</table>
+<p>Username for connect to proxy server where you want to connect in
+     HTTPMethod method.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RangeEnd"></a><code>property <b>RangeEnd</b>: integer;</code></td>
+</tr>
+</table>
+<p>If you need download only part of requested document, here specify
+     possition of subpart end. If here 0, then is requested document from
+     rangeStart to end of document. (for broken download restoration,
+     for example.)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RangeStart"></a><code>property <b>RangeStart</b>: integer;</code></td>
+</tr>
+</table>
+<p>If you need download only part of requested document, here specify
+     possition of subpart begin. If here 0, then is requested full document.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultCode"></a><code>property <b>ResultCode</b>: Integer;</code></td>
+</tr>
+</table>
+<p>After successful <a class="normal" href="httpsend.THTTPSend.html#HTTPMethod">HTTPMethod</a> method contains result code of
+     operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultString"></a><code>property <b>ResultString</b>: string;</code></td>
+</tr>
+</table>
+<p>After successful <a class="normal" href="httpsend.THTTPSend.html#HTTPMethod">HTTPMethod</a> method contains string after result code.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Status100"></a><code>property <b>Status100</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>if <code>True</code>, then server is requested for 100status capability when uploading
+     data. Default is <code>False</code> (off).</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="UploadSize"></a><code>property <b>UploadSize</b>: integer;</code></td>
+</tr>
+</table>
+<p>if this value is not 0, then data upload pending. In this case you have
+     here total sice of uploaded data. It is good for draw upload progressbar
+     from OnStatus event.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="UserAgent"></a><code>property <b>UserAgent</b>: string;</code></td>
+</tr>
+</table>
+<p>Here you can specify custom User-Agent indentification. By default is
+     used: 'Mozilla/4.0 (compatible; Synapse)'</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

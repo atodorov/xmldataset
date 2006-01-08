@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>ftpsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit ftpsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+FTP client protocol<p>Used RFC: RFC-959, RFC-2228, RFC-2428</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="ftpsend.TFTPListRec.html"><code>TFTPListRec</code></a></td>
+<td width="100%">Object for holding file information</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="ftpsend.TFTPList.html"><code>TFTPList</code></a></td>
+<td>This is TList of TFTPListRec objects.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="ftpsend.TFTPSend.html"><code>TFTPSend</code></a></td>
+<td>Implementation of FTP protocol.</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#FtpGetFile"><b>FtpGetFile</b></a>(const IP, Port, FileName, LocalFile, User, Pass: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FtpPutFile"><b>FtpPutFile</b></a>(const IP, Port, FileName, LocalFile, User, Pass: string): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#FtpInterServerTransfer"><b>FtpInterServerTransfer</b></a>( const FromIP, FromPort, FromFile, FromUser, FromPass: string; const ToIP, ToPort, ToFile, ToUser, ToPass: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FtpGetFile"></a><code>function <b>FtpGetFile</b>(const IP, Port, FileName, LocalFile, User, Pass: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the TFtpSend object.
+ Dowload specified file from FTP server to LocalFile.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FtpInterServerTransfer"></a><code>function <b>FtpInterServerTransfer</b>( const FromIP, FromPort, FromFile, FromUser, FromPass: string; const ToIP, ToPort, ToFile, ToUser, ToPass: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the TFtpSend object.
+ Initiate transfer of file between two FTP servers.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FtpPutFile"></a><code>function <b>FtpPutFile</b>(const IP, Port, FileName, LocalFile, User, Pass: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the TFtpSend object.
+ Upload specified LocalFile to FTP server.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TLogonActions"></a>TLogonActions<code> = array [0..17] of byte;</code></td>
+<td><p>Array for holding definition of logon sequence.</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TFTPStatus"></a>TFTPStatus</td>
+<td><p>Procedural type for OnStatus event. Sender is calling <a class="normal" href="ftpsend.TFTPSend.html">TFTPSend</a> object.
+   Value is FTP command or reply to this comand. (if it is reply, Response
+   is <code>True</code>).</p>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="cFtpProtocol"></a>cFtpProtocol<code> = 'ftp';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cFtpDataProtocol"></a>cFtpDataProtocol<code> = 'ftp-data';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="FTP_OK"></a>FTP_OK<code> = 255;</code></td>
+<td><p>Terminating value for TLogonActions</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="FTP_ERR"></a>FTP_ERR<code> = 254;</code></td>
+<td><p>Terminating value for TLogonActions</p>
+</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

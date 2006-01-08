@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>slogsend: Class TSyslogMessage</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TSyslogMessage"></a><h1>Class TSyslogMessage</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="slogsend.html">slogsend</a><br/><h2>Declaration</h2>
+<p><code>type TSyslogMessage = class(TObject)</code></p>
+<h2>Description</h2>
+encoding or decoding of SYSLOG message<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TSyslogMessage&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>procedure <a class="normal" href="slogsend.TSyslogMessage.html#Clear"><b>Clear</b></a>;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Clear"></a><code>procedure <b>Clear</b>;</code></td>
+</tr>
+</table>
+<p><p>Reset values to defaults</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="slogsend.TSyslogMessage.html#DateTime"><b>DateTime</b></a>: TDateTime;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#Facility"><b>Facility</b></a>: Byte;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#LocalIP"><b>LocalIP</b></a>: String;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#LogMessage"><b>LogMessage</b></a>: String;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#PacketBuf"><b>PacketBuf</b></a>: String;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#Severity"><b>Severity</b></a>: <a class="normal" href="slogsend.html#TSyslogSeverity">TSyslogSeverity</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="slogsend.TSyslogMessage.html#Tag"><b>Tag</b></a>: String;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="DateTime"></a><code>property <b>DateTime</b>: TDateTime;</code></td>
+</tr>
+</table>
+<p>date and time of Syslog message</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Facility"></a><code>property <b>Facility</b>: Byte;</code></td>
+</tr>
+</table>
+<p>Define facilicity of Syslog message. For specify you may use predefined
+     FCL_* constants. Default is &quot;FCL_Local0&quot;.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="LocalIP"></a><code>property <b>LocalIP</b>: String;</code></td>
+</tr>
+</table>
+<p>IP address of message sender.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="LogMessage"></a><code>property <b>LogMessage</b>: String;</code></td>
+</tr>
+</table>
+<p>Text of your message for log.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="PacketBuf"></a><code>property <b>PacketBuf</b>: String;</code></td>
+</tr>
+</table>
+<p>This property holds encoded binary SYSLOG packet</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Severity"></a><code>property <b>Severity</b>: <a class="normal" href="slogsend.html#TSyslogSeverity">TSyslogSeverity</a>;</code></td>
+</tr>
+</table>
+<p>Define possible priority of Syslog message. Default is &quot;Debug&quot;.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Tag"></a><code>property <b>Tag</b>: String;</code></td>
+</tr>
+</table>
+<p>This is used for identify process of this message. Default is filename
+     of your executable file.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

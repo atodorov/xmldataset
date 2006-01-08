@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>ldapsend: Class TLDAPSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TLDAPSend"></a><h1>Class TLDAPSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="ldapsend.html">ldapsend</a><br/><h2>Declaration</h2>
+<p><code>type TLDAPSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of LDAP client<p>(version 2 and 3)</p><p>Note: Are you missing properties for setting Username and Password? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> object!</p><p>Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TLDAPSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="ldapsend.TLDAPSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="ldapsend.TLDAPSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Add"><b>Add</b></a>(obj: string; const Value: <a class="normal" href="ldapsend.TLDAPAttributeList.html">TLDAPAttributeList</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Bind"><b>Bind</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#BindSasl"><b>BindSasl</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Compare"><b>Compare</b></a>(obj, AttributeValue: string): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Delete"><b>Delete</b></a>(obj: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Extended"><b>Extended</b></a>(const Name, Value: string): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Login"><b>Login</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Logout"><b>Logout</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Modify"><b>Modify</b></a>(obj: string; Op: <a class="normal" href="ldapsend.html#TLDAPModifyOp">TLDAPModifyOp</a>; const Value: <a class="normal" href="ldapsend.TLDAPAttribute.html">TLDAPAttribute</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#ModifyDN"><b>ModifyDN</b></a>(obj, newRDN, newSuperior: string; DeleteoldRDN: Boolean): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#Search"><b>Search</b></a>(obj: string; TypesOnly: Boolean; Filter: string; const Attributes: TStrings): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ldapsend.TLDAPSend.html#StartTLS"><b>StartTLS</b></a>: Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Add"></a><code>function <b>Add</b>(obj: string; const Value: <a class="normal" href="ldapsend.TLDAPAttributeList.html">TLDAPAttributeList</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Add list of attributes to specified object.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Bind"></a><code>function <b>Bind</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Try to bind to LDAP server with <a class="normal" href="blcksock.TSynaClient.html#UserName">UserName</a> and
+     <a class="normal" href="blcksock.TSynaClient.html#Password">Password</a>. If this is empty strings, then it do annonymous
+     Bind. When you not call Bind on LDAPv3, then is automaticly used anonymous
+     mode.</p><p>This method using plaintext transport of password! It is not secure!</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="BindSasl"></a><code>function <b>BindSasl</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Try to bind to LDAP server with <a class="normal" href="blcksock.TSynaClient.html#UserName">UserName</a> and
+     <a class="normal" href="blcksock.TSynaClient.html#Password">Password</a>. If this is empty strings, then it do annonymous
+     Bind. When you not call Bind on LDAPv3, then is automaticly used anonymous
+     mode.</p><p>This method using SASL with DIGEST-MD5 method for secure transfer of your
+     password.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Compare"></a><code>function <b>Compare</b>(obj, AttributeValue: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Try to compare Attribute value with this LDAP object.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Delete"></a><code>function <b>Delete</b>(obj: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Delete this LDAP object from server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Extended"></a><code>function <b>Extended</b>(const Name, Value: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Call any LDAPv3 extended command.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Login"></a><code>function <b>Login</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Try to connect to LDAP server and start secure channel, when it is required.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Logout"></a><code>function <b>Logout</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Close connection to LDAP server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Modify"></a><code>function <b>Modify</b>(obj: string; Op: <a class="normal" href="ldapsend.html#TLDAPModifyOp">TLDAPModifyOp</a>; const Value: <a class="normal" href="ldapsend.TLDAPAttribute.html">TLDAPAttribute</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Modify content of LDAP attribute on this object.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ModifyDN"></a><code>function <b>ModifyDN</b>(obj, newRDN, newSuperior: string; DeleteoldRDN: Boolean): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Modify object name of this LDAP object.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Search"></a><code>function <b>Search</b>(obj: string; TypesOnly: Boolean; Filter: string; const Attributes: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Search LDAP base for LDAP objects by Filter.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="StartTLS"></a><code>function <b>StartTLS</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Try to start SSL/TLS connection to LDAP server.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="ldapsend.TLDAPSend.html#AutoTLS"><b>AutoTLS</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#ExtName"><b>ExtName</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#ExtValue"><b>ExtValue</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#FullResult"><b>FullResult</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#FullSSL"><b>FullSSL</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#Referals"><b>Referals</b></a>: TStringList;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#ResultCode"><b>ResultCode</b></a>: Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#ResultString"><b>ResultString</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#SearchAliases"><b>SearchAliases</b></a>: <a class="normal" href="ldapsend.html#TLDAPSearchAliases">TLDAPSearchAliases</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#SearchResult"><b>SearchResult</b></a>: <a class="normal" href="ldapsend.TLDAPResultList.html">TLDAPResultList</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#SearchScope"><b>SearchScope</b></a>: <a class="normal" href="ldapsend.html#TLDAPSearchScope">TLDAPSearchScope</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#SearchSizeLimit"><b>SearchSizeLimit</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#SearchTimeLimit"><b>SearchTimeLimit</b></a>: integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#Seq"><b>Seq</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ldapsend.TLDAPSend.html#Version"><b>Version</b></a>: integer;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="AutoTLS"></a><code>property <b>AutoTLS</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, then try to start TSL mode in Login procedure.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ExtName"></a><code>property <b>ExtName</b>: string;</code></td>
+</tr>
+</table>
+<p>When you call <a class="normal" href="ldapsend.TLDAPSend.html#Extended">Extended</a> operation, then here is result Name returned
+     by server.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ExtValue"></a><code>property <b>ExtValue</b>: string;</code></td>
+</tr>
+</table>
+<p>When you call <a class="normal" href="ldapsend.TLDAPSend.html#Extended">Extended</a> operation, then here is result Value returned
+     by server.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FullResult"></a><code>property <b>FullResult</b>: string;</code></td>
+</tr>
+</table>
+<p>Binary string with full last response of LDAP server. This string is
+     encoded by ASN.1 BER encoding! You need this only for debugging.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="FullSSL"></a><code>property <b>FullSSL</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, then use connection to LDAP server through SSL/TLS tunnel.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Referals"></a><code>property <b>Referals</b>: TStringList;</code></td>
+</tr>
+</table>
+<p>On each LDAP operation can LDAP server return some referals URLs. Here is
+     their list.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultCode"></a><code>property <b>ResultCode</b>: Integer;</code></td>
+</tr>
+</table>
+<p>Result code of last LDAP operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ResultString"></a><code>property <b>ResultString</b>: string;</code></td>
+</tr>
+</table>
+<p>Human readable description of result code of last LDAP operation.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SearchAliases"></a><code>property <b>SearchAliases</b>: <a class="normal" href="ldapsend.html#TLDAPSearchAliases">TLDAPSearchAliases</a>;</code></td>
+</tr>
+</table>
+<p>Specify how to handle aliases in search command.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SearchResult"></a><code>property <b>SearchResult</b>: <a class="normal" href="ldapsend.TLDAPResultList.html">TLDAPResultList</a>;</code></td>
+</tr>
+</table>
+<p>Here is result of search command.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SearchScope"></a><code>property <b>SearchScope</b>: <a class="normal" href="ldapsend.html#TLDAPSearchScope">TLDAPSearchScope</a>;</code></td>
+</tr>
+</table>
+<p>Specify what search scope is used in search command.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SearchSizeLimit"></a><code>property <b>SearchSizeLimit</b>: integer;</code></td>
+</tr>
+</table>
+<p>Specify result size limit in search command. Value 0 means without limit.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SearchTimeLimit"></a><code>property <b>SearchTimeLimit</b>: integer;</code></td>
+</tr>
+</table>
+<p>Specify search time limit in search command (seconds). Value 0 means
+     without limit.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Seq"></a><code>property <b>Seq</b>: integer;</code></td>
+</tr>
+</table>
+<p>Sequence number of last LDAp command. It is incremented by any LDAP command.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TTCPBlockSocket.html">TTCPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>TCP socket used by all LDAP operations.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Version"></a><code>property <b>Version</b>: integer;</code></td>
+</tr>
+</table>
+<p>Specify version of used LDAP protocol. Default value is 3.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

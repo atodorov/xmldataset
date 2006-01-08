@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!--#include virtual="../meta.txt"-->
+</head>
+<body BGCOLOR="#FFFAEC" LINK="Red" ALINK="Blue" VLINK="Purple">
+
+<!--#include virtual="../navrcholu.txt"-->
+<!--#config timefmt="%Y-%m-%d"-->
+
+<CENTER>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue">
+<B>SYNAPSE - Synchronous TCP/IP Library for Delphi and Kylix</B>
+</FONT>
+<br>
+Other related information can be found at <A HREF="http://www.ararat.cz/synapse/">http://www.ararat.cz/synapse/</A>
+</CENTER>
+<hr>
+
+<p>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue"><B>History:</B></FONT>
+<P>
+<FONT COLOR="Blue">Description:</FONT><br>
+    + added property<br>
+    - removed property<br>
+    * modification<br>
+    # bug fix
+<p>
+<hr>
+<font COLOR="Blue"><B>SYNAPSE library core</B></font>
+
+<p><font COLOR="Blue">Version 8.3.7 released 2005-01-23</font><br>
+# false exception on closing of TCP cocket (when raiseexcept is true)<br>
+* on closing of TCP SSL socket do only unidirectional shutdown<br>
+
+<p><font COLOR="Blue">Version 8.3.5 released 2004-09-18</font><br>
+# SSL errors<br>
+# loading CA-budle file<br>
+
+<p><font COLOR="Blue">Version 8.3.4 released 2004-08-23</font><br>
++ Tag property<br>
++ TSynaClient holds Username and Password property<br>
+* new code for address resolving.<br>
++ StopFlag propety for easy stoppong of data transfers.<br>
+* Sendbuffer splitting large datas before sending.<br>
++ new SendInteger, SendStreamRaw and SendStreamIndy.<br>
++ new RecvInteger, RecvStreamRaw, RecvStreamSize and RecvStreamIndy.<br>
++ SSLverifycert for client too. (it verifying server certificate on SSLDoConnect)<br>
+# Fixed shutdown of SSL socket<br>
+
+<p><font COLOR="Blue">Version 7.9.1 released 2003-07-21</font><br>
++ FPC compatibility<br>
++ New OnStatus event HR_Error<br>
+* TSynaSin is replaced by TVarSin<br>
++ byte counters for received and sended bytes.<br>
++ AbortSocket function<br>
++ RecvBlock and SendBlock functions<br>
++ RecvStream and SendStream functions<br>
++ Purge function<br>
++ SSLGetPeerName function<br>
++ SSLGetCertInfo function<br>
++ SSLGetCiphername function<br>
++ SSLGetCipherBits function<br>
++ SSLGetCipherAlgBits function<br>
++ SSLGetVerifyCert function<br>
++ SSLType for specify SSL/TLS protocol version.<br>
++ SSLLoaded property<br>
++ HTTPTunnelTimeout<br>
++ New TDgramBlockSocket class with implememntation of datagram communication style instead stream based style.<br>
++ TICMPBlockSocket is now based on datagram communication.<br>
+# RaiseExcept allways fill LastErrorDesc property<br>
+# Waitingdata fix for avoid 'Out of memory' errors<br>
+# ResolvePort<br>
++ Timeout for SOCKS<br>
+# Fixed SOCKS4 code<br>
+# UDP on SOCKS5 authenticification<br>
+* Better error handling on SSL connect<br>
+# Correct SSL shudown sequence<br>
+
+<p><font COLOR="Blue">Version 7.2.14 released 2003-03-24</font><br>
+* Better support for C++Builder<br>
+- weakpackageunit<br>
++ Constatnt SynapseRelease with idetifier of current release<br>
++ Support for IPv6<br>
++ Hook called after Socket creation<br>
++ Support for Socks4 and Socks4a<br>
+* If available new socket API, then use it! (improve performance!)<br>
+* can swith timeout from 'interpacket' to 'overall'<br>
++ CreateSocketByname<br>
++ GetSinLocal<br>
++ GetSinRemote<br>
+- property protocol. Use getSocketprotocol function instead!<br>
++ Lot of stuff for IPv6 support!<br>
+* Minimize calls of Synsock.select in RecvPacket<br>
++ ResolveIPToName<br>
+* Optimised work with TFDSet<br>
+* Call GetSins after assigning new value to Socket property<br>
++ StrToIP6 and IP6ToStr<br>
+# decoding port number from SOCKS response<br>
++ IPv6 support in SOCKS5<br>
+# Call SSLDoShutdown properly inside CloseSocket (from Destroy too)<br>
+# Do proper shutdown of TCP socket<br>
+# resolve symbolic port names in HTTP tunnel requests<br>
++ support for IPv6 URLs inside HTTP tunnel requests<br>
+<p><font COLOR="Blue">Version 6.6.1 released 2003-01-01</font><br>
+* Socket interface is initialised only once per application by default<br>
++ new Event 'wait' if sending or receiving is stopped by bandwidth limitation<br>
++ Can filter readed or sended data<br>
++ RecvBufferStr<br>
++ can set TTL<br>
++ can set TTL for multicasts packets<br>
++ can set multicast loop<br>
+# name resolving functions is thread safe. (on some system s is problems with this!)<br>
+* Optimised RecvBufferEx.<br>
+# do not call explicit socket shutdown.<br>
+# RecvPacket call error when connection terminates.<br>
+# recvterminated working correctly when Convertlineend is true and packets is splited inside line terminator.<br>
+# SOCKS5 handshake working correctly with splitted packets.<br>
+# SOCKS5 UDP support working correctly with unbinded socket<br>
+
+<p><font COLOR="Blue">Version 6.1.4 released 2002-08-20</font><br>
++ Property LastErrorDesc with human readable description of lastError<br>
++ Limiting of bandwidth for both, reading and sending<br>
++ ConvertLineEbnd property for RecvString with any line terminator<br>
++ SSLLastError and SSLLastErrorDesc<br>
++ handling of verify client SSL certificate<br>
++ TSynaClient class as parent of any other client protocol classes<br>
+# Recvpacket not allocate huge memory in some cases<br>
+# SocksDecode<br>
+# setting SSL certificate password<br>
+# WaitigData working properly in SSL mode<br>
++ Error checking of SSL code<br>
+# RecvBuffer and SendBuffer in SSL mode<br>
+<p><font COLOR="Blue">Version 5.7.0 released 2002-05-05</font><br>
++ AutoCreate socket capability. If you call Bind or Connect on non-created socket, then is socket created<br>
++ Support for setting keys and certificates for SSL/TLS<br>
++ Support for setting ciphers for SSL/TLS<br>
++ Support for SSL/TLS server mode<br>
+# Fixed LimitBandwidth<br>
+* Optimized RecvPacket<br>
+* RecvByte now using LineBuffer<br>
+* Optimized RecvTerminated<br>
+# Fixed HTTP tunnel mode<br>
+
+<p><font COLOR="Blue">Version 5.2.0 released 2002-02-10</font><br>
++ WaitingDataEx<br>
++ CanReadEx<br>
++ TCP HTTP Tunneling support<br>
++ TCP SSL/TLS support<br>
+
+<p><font COLOR="Blue">Version 4.4.0 released 2001-12-10</font><br>
++ Limited support for non-blocking mode.<br>
++ Can limit outgoing bandwidth.<br>
++ RecvTerminated for receiving string with defined terminator.<br>
++ Local address bind can be reused.<br>
++ Can limit maximum length of received string.<br>
++ Support for UDP multicast.<br>
+# UDP now support status monitoring.<br>
+# TCP under SOCKS5 now works fine with all SOCKS5 servers.
+
+<p><font COLOR="Blue">Version 4.0.0 released 2001-09-24</font><br>
++ Support for SOCKS5 proxy on TCP and UDP sockets.<br>
++ RecvPacket<br>
++ ResolveName<br>
++ ResolvePort<br>
++ SetRemoteSin<br>
++ SetSendTimeout<br>
++ SetRecvTimeout<br>
+* all send methods use internally SendBuffer - you may use all send method for sending datagrams.<br>
+# UDP not working on all systems<br>
+* Response UDP may income from different IP then where previously UDP is sended.
+<p><font COLOR="Blue">Version 3.3.0 released 2001-08-27</font><br>
+# Dynamic loading of Winsock (under Windows) is now thread safe!<br>
+* Default is used static mapping of Winsock.<br>
+# Winsock is correctly closed on destructor.<br>
++ OnStatus event for monitoring status od socket or for monitoring how much data is reading or sending.
+<p><font COLOR="Blue">Version 3.2.0 released 2001-07-23</font><br>
++ merged with blcksck2.pas unit.<br>
+* optimalizations.<br>
++ SetTimeout method for setting timeout on Winsock2 or Linux systems.<br>
++ GroupCanRead method is as CanRead method on set of sockets.<br>
+* GetErrorDesc is nor class function.<br>
+# CloseSocket on TCP socket do graceful disconnect.
+<p><font COLOR="Blue">Version 3.1.0 released 2001-05-13</font><br>
+# Fixed RecvString for bug in Win2000<br>
+* RecvString now correctly strip CRLF sequence under Linux
+<p><font COLOR="Blue">Version 3.0.0 released 2001-05-13</font><br>
++ Compatibility with Kylix<br>
++ New constructor CreateAlternate. It allows under Windows use another DLL then wsock32.dll<br>
++ method ResolveNameToIP for resolve computer name to set of their IPs.
+<p><font COLOR="Blue">Version 2.1.1 released 2001-04-07</font><br>
+# fixed result on RecvBufferEx.
+<p><font COLOR="Blue">Version 2.1.0 released 2001-03-12</font><br>
++ RecvBuffEx for very powerful receive any size of data. Only this function may be freely combined with RecvString!<br>
+# improved compatibily with C++ Builder.<br>
++ SizerecvBuff and SizeSendBuff Property for control winsock buffers. Usable for performance tuning.
+<p><font COLOR="Blue">Version 2.0.1 released 2001-02-10</font><br>
+* Recvstring uses better dynamic buffer for better performance and robust solution when you try reading binary data.<br>
++ Property LineBuffer contains prebufferred data after Recvstring. it usefull when you need swith between line and binary mode.
+<p><font COLOR="Blue">Version 2.0.0 released 2000-09-18</font><br>
++ optional exception handling<br>
+* SendBuffer is now function<br>
+* SendBufferTo is now function<br>
+* all times is now in millisecond!
+<p><font COLOR="Blue">Version 1.1.1 released 2000-03-17</font><br>
+# reading by RecvBuffer from unconnected socket cause WSAENOTCONN error.
+<p><font COLOR="Blue">Version 1.1.0 released 2000-02-14</font><br>
+# name resolving work OK on Delphi 4 and more.<br>
++ support for broadcast on UDP socket.
+<p><font COLOR="Blue">Version 1.0.2 released 1999-11-08</font><br>
+# method RecvString - fixed reading from unconnected socket.
+<p><font COLOR="Blue">Version 1.0.1 released 1999-10-16</font><br>
+* only any descriptions.
+<p><font COLOR="Blue">Version 1.0.0 released 1999-09-19</font><br>
++ Class TBlockSocket wrapping Winsock socket.<br>
++ Class TUDPBlockSocket (ancestor of TBlockSocket) implementing UDP protocol.<br>
++ Class TTCPBlockSocket (ancestor of TBlockSocket) implementing TCP protocol.
+
+<hr>
+</body>
+</html>
+

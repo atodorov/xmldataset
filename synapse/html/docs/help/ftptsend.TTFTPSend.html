@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>ftptsend: Class TTFTPSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TTFTPSend"></a><h1>Class TTFTPSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="ftptsend.html">ftptsend</a><br/><h2>Declaration</h2>
+<p><code>type TTFTPSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of TFTP client and server<p>Note: Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TTFTPSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="ftptsend.TTFTPSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="ftptsend.TTFTPSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftptsend.TTFTPSend.html#RecvFile"><b>RecvFile</b></a>(const Filename: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="ftptsend.TTFTPSend.html#ReplyError"><b>ReplyError</b></a>(Error: word; Description: string);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftptsend.TTFTPSend.html#ReplyRecv"><b>ReplyRecv</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftptsend.TTFTPSend.html#ReplySend"><b>ReplySend</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftptsend.TTFTPSend.html#SendFile"><b>SendFile</b></a>(const Filename: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="ftptsend.TTFTPSend.html#WaitForRequest"><b>WaitForRequest</b></a>(var Req: word; var filename: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="RecvFile"></a><code>function <b>RecvFile</b>(const Filename: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Download file from TFTP server to <a class="normal" href="ftptsend.TTFTPSend.html#Data">Data</a>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ReplyError"></a><code>procedure <b>ReplyError</b>(Error: word; Description: string);</code></td>
+</tr>
+</table>
+<p><p>send error to TFTP client, when you acts as TFTP server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ReplyRecv"></a><code>function <b>ReplyRecv</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Accept uploaded file from TFTP client to <a class="normal" href="ftptsend.TTFTPSend.html#Data">Data</a>, when you acts as
+     TFTP server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="ReplySend"></a><code>function <b>ReplySend</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Accept download request file from TFTP client and send content of
+     <a class="normal" href="ftptsend.TTFTPSend.html#Data">Data</a>, when you acts as TFTP server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="SendFile"></a><code>function <b>SendFile</b>(const Filename: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Upload <a class="normal" href="ftptsend.TTFTPSend.html#Data">Data</a> as file to TFTP server.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="WaitForRequest"></a><code>function <b>WaitForRequest</b>(var Req: word; var filename: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Acts as TFTP server and wait for client request. When some request
+     incoming within Timeout, result is <code>True</code> and parametres is filled with
+     information from request. You must handle this request, validate it, and
+     call <a class="normal" href="ftptsend.TTFTPSend.html#ReplyError">ReplyError</a>, <a class="normal" href="ftptsend.TTFTPSend.html#ReplyRecv">ReplyRecv</a> or <a class="normal" href="ftptsend.TTFTPSend.html#ReplySend">ReplySend</a> for send reply
+     to TFTP Client.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="ftptsend.TTFTPSend.html#Data"><b>Data</b></a>: TMemoryStream;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftptsend.TTFTPSend.html#ErrorCode"><b>ErrorCode</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftptsend.TTFTPSend.html#ErrorString"><b>ErrorString</b></a>: string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftptsend.TTFTPSend.html#RequestIP"><b>RequestIP</b></a>: string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="ftptsend.TTFTPSend.html#RequestPort"><b>RequestPort</b></a>: string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Data"></a><code>property <b>Data</b>: TMemoryStream;</code></td>
+</tr>
+</table>
+<p>MemoryStream with datas for sending or receiving</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ErrorCode"></a><code>property <b>ErrorCode</b>: integer;</code></td>
+</tr>
+</table>
+<p>Code of TFTP error.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="ErrorString"></a><code>property <b>ErrorString</b>: string;</code></td>
+</tr>
+</table>
+<p>Human readable decription of TFTP error. (if is sended by remote side)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RequestIP"></a><code>property <b>RequestIP</b>: string;</code></td>
+</tr>
+</table>
+<p>Address of TFTP remote side.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="RequestPort"></a><code>property <b>RequestPort</b>: string;</code></td>
+</tr>
+</table>
+<p>Port of TFTP remote side.</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

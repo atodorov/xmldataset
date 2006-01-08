@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!--#include virtual="../meta.txt"-->
+</head>
+<body BGCOLOR="#FFFAEC" LINK="Red" ALINK="Blue" VLINK="Purple">
+
+<!--#include virtual="../navrcholu.txt"-->
+<!--#config timefmt="%Y-%m-%d"-->
+
+<CENTER>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue">
+<B>SYNAPSE - Synchronous TCP/IP Library for Delphi and Kylix</B>
+</FONT>
+<br>
+Other related information can be found at <A HREF="http://www.ararat.cz/synapse/">http://www.ararat.cz/synapse/</A>
+</CENTER>
+<hr>
+
+<p>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue"><B>History:</B></FONT>
+<P>
+<FONT COLOR="Blue">Description:</FONT><br>
+    + added property<br>
+    - removed property<br>
+    * modification<br>
+    # bug fix
+<p>
+<hr>
+
+<font COLOR="Blue"><B>SynaUtil</B></font>
+
+<p><font COLOR="Blue">Version 4.6.9 released 2005-09-23</font><br>
+# functions generating formated strings from time using right time separators.<br>
+* imrpovements of decodeRFCdateTime<br>
++ Added compatibility with FPC-1.9.7<br>
+# UnquoteStr can unquote empty quoted string.
+
+
+<p><font COLOR="Blue">Version 4.6.4 released 2004-08-23</font><br>
+* GetMonthNummer supporting English, German, French, Czech and custom month names<br>
+* GetTimeFromstr return -1 when string is invalid!<br>
++ CodeLongint and DecodeLongint<br>
+# TrimSP, TrimSPleft and TrimSPRight for trimming spaces only.<br>
+# Better GetParameter function<br>
++ FetchBin function<br>
+# UnquoteStr with workaround for bug in AnsiExtractQuotedStr<br>
++ HeadersToList function<br>
++ ListToHeaders function<br>
++ SwapBytes<br>
++ ReadStrFromStream<br>
++ WriteStrToStream<br>
+
+<p><font COLOR="Blue">Version 4.0.2 released 2003-07-21</font><br>
++ FPC compatibility<br>
++ DumpStr function<br>
++ DumpStrEx function<br>
++ ParseParameterEx function<br>
++ FetchEx function<br>
++ GetBetween function<br>
++ CountOfChar function<br>
++ UnquoteStr function<br>
+<p><font COLOR="Blue">Version 3.5.1 released 2003-03-24</font><br>
+* GetTick return ULong<br>
++ TickDelta for compute time differencies<br>
+- ReverseIP (moved directly to DNSSend)<br>
++ IsIP6<br>
+<p><font COLOR="Blue">Version 3.3.0 released 2003-01-01</font><br>
+* Stringreplace is renamet do replaceStrig (because name conflict with same named function in newer delphi)<br>
++ IncPoint function<br>
+* DecodeRfcDateTime using default year 1980<br>
+# ParseUrl<br>
+<p><font COLOR="Blue">Version 3.2.1 released 2002-08-20</font><br>
++ ParseParameters<br>
++ IndexByBegin<br>
++ IsBinaryString<br>
++ PosCRLF<br>
++ StringsTrim<br>
++ PosFrom<br>
+# date and time functions now thread safe<br>
+# DecodeRFCDateTime now more resistent for broken input<br>
+* modified IsIP<br>
+<p><font COLOR="Blue">Version 2.11.1 released 2002-05-05</font><br>
++ AnsiCDateTime<br>
++ GetMonthNumber<br>
++ GetTimeFromStr<br>
++ GetDateMDYFromStr<br>
++ RposEx
+<p><font COLOR="Blue">Version 2.8.0 released 2002-02-10</font><br>
+# Better implementation of IsIP<br>
+* ParseURL respect new https protocol<br>
+<p><font COLOR="Blue">Version 2.7.1 released 2001-12-10</font><br>
++ TimeZoneBias<br>
++ DecodeRFCDateTime for decoding various textual date and time formats<br>
++ GetUTCTime and SetUTCTime<br>
+# Fixed Fetch<br>
+<p><font COLOR="Blue">Version 2.3.0 released 2001-09-24</font><br>
++ CDateTime<br>
++ IPtoID
+<p><font COLOR="Blue">Version 2.1.0 released 2001-08-27</font><br>
++ RPos function (like Pos, but from right side of string)<br>
++ Fetch function for fetching string from left.
+<p><font COLOR="Blue">Version 2.0.1 released 2001-07-23</font><br>
+* optimalizations
+<p><font COLOR="Blue">Version 2.0.0 released 2001-05-13</font><br>
++ Compatibility with Kylix
+<p><font COLOR="Blue">Version 1.8.0 released 2001-03-12</font><br>
++ function StringReplace
+<p><font COLOR="Blue">Version 1.7.0 released 2001-01-22</font><br>
++ function ParseURL.
+<p><font COLOR="Blue">Version 1.6.0 released 2000-12-10</font><br>
++ function IntToBin.<br>
++ function BinToInt.
+<p><font COLOR="Blue">Version 1.5.0 released 2000-11-27</font><br>
+- all ASN functions moved to ASN1util unit.<br>
+* Separateright work with any separator lenght.
+<p><font COLOR="Blue">Version 1.4.0 released 2000-10-24</font><br>
++ Function StrToHex.
+<p><font COLOR="Blue">Version 1.3.0 released 2000-10-09</font><br>
++ function SeparateLeft<br>
++ function SeparateRight<br>
++ function getparameter<br>
++ function GetEmailAddr<br>
++ function GetEmailDesc<br>
+<p><font COLOR="Blue">Version 1.2.1 released 2000-09-18</font><br>
+# TimeZone not work correctly with daylight saving<br>
+# MIBtoID now works with element grater then 255<br>
+# IDtoMIB now works with element grater then 255
+<p><font COLOR="Blue">Version 1.2.0 released 2000-02-01</font><br>
++ Function IPToId.
+<p><font COLOR="Blue">Version 1.1.0 released 2000-01-10</font><br>
++ Function IsIP.<br>
++ Function ReverseIP.<br>
++ Function MibToId.<br>
++ Function IdToMib.<br>
++ Function IntMibToStr.
+<p><font COLOR="Blue">Version 1.0.0 released 1999-10-30</font><br>
++ many misc. utils. See documentation.
+<hr>
+</body>
+</html>
+

@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>blcksock</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit blcksock</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td>Functions and Procedures</td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Synapse's library core<p>Core with implementation basic socket classes.</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.ESynapseError.html"><code>ESynapseError</code></a></td>
+<td width="100%">Exception clas used by Synapse</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TSynaOption.html"><code>TSynaOption</code></a></td>
+<td>this object is used for remember delayed socket option set.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TBlockSocket.html"><code>TBlockSocket</code></a></td>
+<td>Basic IP object.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TSocksBlockSocket.html"><code>TSocksBlockSocket</code></a></td>
+<td>Support for SOCKS4 and SOCKS5 proxy</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TTCPBlockSocket.html"><code>TTCPBlockSocket</code></a></td>
+<td>Implementation of TCP socket.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TDgramBlockSocket.html"><code>TDgramBlockSocket</code></a></td>
+<td>Datagram based communication</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TUDPBlockSocket.html"><code>TUDPBlockSocket</code></a></td>
+<td>Implementation of UDP socket.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TICMPBlockSocket.html"><code>TICMPBlockSocket</code></a></td>
+<td>Implementation of RAW ICMP socket.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TRAWBlockSocket.html"><code>TRAWBlockSocket</code></a></td>
+<td>Implementation of RAW socket.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">record&nbsp;<a class="bold" href="blcksock.TIPHeader.html"><code>TIPHeader</code></a></td>
+<td>Record with definition of IP packet header.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="blcksock.TSynaClient.html"><code>TSynaClient</code></a></td>
+<td>Parent class of application protocol implementations.</td>
+</tr>
+</table>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="THookSocketReason"></a>THookSocketReason<code></code></td>
+<td><p>Types of OnStatus events</p>
+<ul>
+<li>
+HR_ResolvingBegin: Resolving is begin. Resolved IP and port is in parameter in format like:
+     'localhost.somewhere.com:25'.</li>
+<li>
+HR_ResolvingEnd: Resolving is done. Resolved IP and port is in parameter in format like:
+     'localhost.somewhere.com:25'. It is always same as in HR_ResolvingBegin!</li>
+<li>
+HR_SocketCreate: Socket created by CreateSocket method. It reporting Family of created
+     socket too!</li>
+<li>
+HR_SocketClose: Socket closed by CloseSocket method.</li>
+<li>
+HR_Bind: Socket binded to IP and Port. Binded IP and Port is in parameter in format
+     like: 'localhost.somewhere.com:25'.</li>
+<li>
+HR_Connect: Socket connected to IP and Port. Connected IP and Port is in parameter in
+     format like: 'localhost.somewhere.com:25'.</li>
+<li>
+HR_CanRead: Called when CanRead method is used with <code>True</code> result.</li>
+<li>
+HR_CanWrite: Called when CanWrite method is used with <code>True</code> result.</li>
+<li>
+HR_Listen: Socket is swithed to Listen mode. (TCP socket only)</li>
+<li>
+HR_Accept: Socket Accepting client connection. (TCP socket only)</li>
+<li>
+HR_ReadCount: report count of bytes readed from socket. Number is in parameter string.
+     If you need is in integer, you must use StrToInt function!</li>
+<li>
+HR_WriteCount: report count of bytes writed to socket. Number is in parameter string. If
+     you need is in integer, you must use StrToInt function!</li>
+<li>
+HR_Wait: If is limiting of bandwidth on, then this reason is called when sending or
+     receiving is stopped for satisfy bandwidth limit. Parameter is count of
+     waiting milliseconds.</li>
+<li>
+HR_Error: report situation where communication error occured. When raiseexcept is
+     <code>True</code>, then exception is called after this Hook reason.</li>
+</ul>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="THookSocketStatus"></a>THookSocketStatus</td>
+<td><p>Procedural type for OnStatus event. Sender is calling TBlockSocket object,
+   Reason is one of set Status events and value is optional data.</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="THookDataFilter"></a>THookDataFilter</td>
+<td><p>this procedural type is used for dataFilter hooks.</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="THookCreateSocket"></a>THookCreateSocket</td>
+<td><p>This procedural type is used for hook OnCreateSocket. By this hook you can
+   insert your code after initialisation of socket. (you can set special socket
+   options, etc.)</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TSocketFamily"></a>TSocketFamily<code></code></td>
+<td><p>Specify family of socket.</p>
+<ul>
+<li>
+SF_Any: Default mode. Socket family is defined by target address for connection.
+     It allows instant access to IPv4 and IPv6 nodes. When you need IPv6 address
+     as destination, then is used IPv6 mode. othervise is used IPv4 mode.
+     However this mode not working properly with preliminary IPv6 supports!</li>
+<li>
+SF_IP4: Turn this class to pure IPv4 mode. This mode is totally compatible with
+     previous Synapse releases.</li>
+<li>
+SF_IP6: Turn to only IPv6 mode.</li>
+</ul>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TSocksType"></a>TSocksType<code></code></td>
+<td><p>specify possible values of SOCKS modes.</p>
+<ul>
+<li>
+ST_Socks5: </li>
+<li>
+ST_Socks4: </li>
+</ul>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TSSLType"></a>TSSLType<code></code></td>
+<td><p>Specify requested SSL/TLS version for secure connection.</p>
+<ul>
+<li>
+LT_SSLv2: </li>
+<li>
+LT_SSLv3: </li>
+<li>
+LT_TLSv1: </li>
+<li>
+LT_all: </li>
+</ul>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="TSynaOptionType"></a>TSynaOptionType<code></code></td>
+<td><p>Specify type of socket delayed option.</p>
+<ul>
+<li>
+SOT_Linger: </li>
+<li>
+SOT_RecvBuff: </li>
+<li>
+SOT_SendBuff: </li>
+<li>
+SOT_NonBlock: </li>
+<li>
+SOT_RecvTimeout: </li>
+<li>
+SOT_SendTimeout: </li>
+<li>
+SOT_Reuse: </li>
+<li>
+SOT_TTL: </li>
+<li>
+SOT_Broadcast: </li>
+<li>
+SOT_MulticastTTL: </li>
+<li>
+SOT_MulticastLoop: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="SynapseRelease"></a>SynapseRelease<code> = '35';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cLocalhost"></a>cLocalhost<code> = '127.0.0.1';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="cAnyHost"></a>cAnyHost<code> = '0.0.0.0';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cBroadcast"></a>cBroadcast<code> = '255.255.255.255';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="c6Localhost"></a>c6Localhost<code> = '::1';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="c6AnyHost"></a>c6AnyHost<code> = '::0';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="c6Broadcast"></a>c6Broadcast<code> = 'ffff::1';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cAnyPort"></a>cAnyPort<code> = '0';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="CR"></a>CR<code> = #$0d;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="LF"></a>LF<code> = #$0a;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="CRLF"></a>CRLF<code> = <a class="normal" href="blcksock.html#CR">CR</a> + <a class="normal" href="blcksock.html#LF">LF</a>;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="c64k"></a>c64k<code> = 65535;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

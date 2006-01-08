@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>smtpsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit smtpsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+SMTP client<p>Used RFC: RFC-1869, RFC-1870, RFC-1893, RFC-2034, RFC-2104, RFC-2195, RFC-2487,
+ RFC-2554, RFC-2821</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="smtpsend.TSMTPSend.html"><code>TSMTPSend</code></a></td>
+<td width="100%">Implementation of SMTP and ESMTP procotol</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#SendToRaw"><b>SendToRaw</b></a>(const MailFrom, MailTo, SMTPHost: string; const MailData: TStrings; const Username, Password: string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#SendTo"><b>SendTo</b></a>(const MailFrom, MailTo, Subject, SMTPHost: string; const MailData: TStrings): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SendToEx"><b>SendToEx</b></a>(const MailFrom, MailTo, Subject, SMTPHost: string; const MailData: TStrings; const Username, Password: string): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SendTo"></a><code>function <b>SendTo</b>(const MailFrom, MailTo, Subject, SMTPHost: string; const MailData: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function and example of its use would be found in the TSMTPsend
+ object. Send &quot;Maildata&quot; (text of e-mail without any SMTP headers!) from
+ &quot;MailFrom&quot; e-mail address to &quot;MailTo&quot; e-mail address with &quot;Subject&quot;.  (If you
+ need more then one receiver, then separate their addresses by comma).</p><p>This function constructs all needed SMTP headers (with DATE header) and sends
+ the e-mail to the SMTP server defined in the &quot;SMTPhost&quot; parameter. If the
+ e-mail message is successfully sent, the result will be <code>True</code>.</p><p>If you need use different port number then standard, then add this port number
+ to SMTPhost after colon. (i.e. '127.0.0.1:1025')</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SendToEx"></a><code>function <b>SendToEx</b>(const MailFrom, MailTo, Subject, SMTPHost: string; const MailData: TStrings; const Username, Password: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function and example of its use would be found in the TSMTPsend
+ object. Sends &quot;MailData&quot; (text of e-mail without any SMTP headers!) from
+ &quot;MailFrom&quot; e-mail address to &quot;MailTo&quot; e-mail address (If you need more then one
+ receiver, then separate their addresses by comma).</p><p>This function sends the e-mail to the SMTP server defined in the &quot;SMTPhost&quot;
+ parameter. Username and password are used for authorization to the &quot;SMTPhost&quot;.
+ If you dont want authorization, set &quot;Username&quot; and &quot;Password&quot; to empty Strings.
+ If the e-mail message is successfully sent, the result will be <code>True</code>.</p><p>If you need use different port number then standard, then add this port number
+ to SMTPhost after colon. (i.e. '127.0.0.1:1025')</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SendToRaw"></a><code>function <b>SendToRaw</b>(const MailFrom, MailTo, SMTPHost: string; const MailData: TStrings; const Username, Password: string): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function and example of its use would be found in the TSMTPsend
+ object. Send maildata (text of e-mail with all SMTP headers! For example when
+ text of message is created by <a class="normal" href="mimemess.TMimeMess.html">TMimeMess</a> object) from &quot;MailFrom&quot; e-mail
+ address to &quot;MailTo&quot; e-mail address (If you need more then one receiver, then
+ separate their addresses by comma).</p><p>Function sends e-mail to a SMTP server defined in &quot;SMTPhost&quot; parameter.
+ Username and password are used for authorization to the &quot;SMTPhost&quot;. If you
+ don't want authorization, set &quot;Username&quot; and &quot;Password&quot; to empty strings. If
+ e-mail message is successfully sent, the result returns <code>True</code>.</p><p>If you need use different port number then standard, then add this port number
+ to SMTPhost after colon. (i.e. '127.0.0.1:1025')</p>
+</p>
+<a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="cSmtpProtocol"></a>cSmtpProtocol<code> = 'smtp';</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>

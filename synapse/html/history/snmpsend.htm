@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!--#include virtual="../meta.txt"-->
+</head>
+<body BGCOLOR="#FFFAEC" LINK="Red" ALINK="Blue" VLINK="Purple">
+
+<!--#include virtual="../navrcholu.txt"-->
+<!--#config timefmt="%Y-%m-%d"-->
+
+<CENTER>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue">
+<B>SYNAPSE - Synchronous TCP/IP Library for Delphi and Kylix</B>
+</FONT>
+<br>
+Other related information can be found at <A HREF="http://www.ararat.cz/synapse/">http://www.ararat.cz/synapse/</A>
+</CENTER>
+<hr>
+
+<p>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue"><B>History:</B></FONT>
+<P>
+<FONT COLOR="Blue">Description:</FONT><br>
+    + added property<br>
+    - removed property<br>
+    * modification<br>
+    # bug fix
+<p>
+<hr>
+<font COLOR="Blue"><B>SNMP client</B></font>
+
+<p><font COLOR="Blue">Version 3.0.7 released 2004-08-23</font><br>
+* merged with SnmpTrap unit<br>
++ Added support for SNMPv2c and SNMPv3<br>
+
+<p><font COLOR="Blue">Version 2.6.4 released 2003-07-21</font><br>
++ FPC compatibility<br>
+<p><font COLOR="Blue">Version 2.6.2 released 2003-03-24</font><br>
+- weakpackageunit<br>
+<p><font COLOR="Blue">Version 2.6.0 released 2003-01-01</font><br>
++ MibCount<br>
++ MibByIndex<br>
+* better SNMGetTable<br>
+<p><font COLOR="Blue">Version 2.5.0 released 2002-08-20</font><br>
+* adaption to TSynaClient<br>
++ can specify outgoing IP interface<br>
++ function SNMPGetNext<br>
++ function SNMPGetTable for very easy reading of SNMP tables<br>
++ function SNMPGetTableElement for very easy reading of SNMP table cell<br>
+<p><font COLOR="Blue">Version 2.3.3 released 2001-08-27</font><br>
+* published sock property
+<p><font COLOR="Blue">Version 2.3.2 released 2001-07-23</font><br>
+* optimalizations.
+<p><font COLOR="Blue">Version 2.3.1 released 2001-06-17</font><br>
+# fixed encoding of SNMP packet
+<p><font COLOR="Blue">Version 2.3.0 released 2001-02-10</font><br>
+* chceck for consistency of decoded data. More robust when reply data is incomplete or broken.<br>
+# fixed small memory leak.
+<p><font COLOR="Blue">Version 2.2.0 released 2000-10-24</font><br>
+# handling signed and unsigned integer values<br>
+* Clear not reset ID
+<p><font COLOR="Blue">Version 2.1.0 released 2000-09-18</font><br>
+* all times is now in millisecond!<br>
+- TSNMPMIBValueType<br>
+- ConvertvalueType<br>
+* All MIB type uses ASN1_* constants (before uses TSNMPMIBValueType)<br>
++ TSNMPRec.DecodeBuf automaticly detect value type<br>
++ TSNMPRec.EncodeBuf now support all possible value types
+<p><font COLOR="Blue">Version 2.0.0 released 2000-08-20</font><br>
++ Major update: full support of SNMP protocol (reading and writing values).
+<p><font COLOR="Blue">Version 1.1.0 released 2000-02-01</font><br>
+- ASN.1 support routines moved to separate unit.
+<p><font COLOR="Blue">Version 1.0.0 released 2000-01-10</font><br>
++ Class TSNMPSend implementing SNMP protocol.
+
+<hr>
+</body>
+</html>
+

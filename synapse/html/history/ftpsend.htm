@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!--#include virtual="../meta.txt"-->
+</head>
+<body BGCOLOR="#FFFAEC" LINK="Red" ALINK="Blue" VLINK="Purple">
+
+<!--#include virtual="../navrcholu.txt"-->
+<!--#config timefmt="%Y-%m-%d"-->
+
+<CENTER>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue">
+<B>SYNAPSE - Synchronous TCP/IP Library for Delphi and Kylix</B>
+</FONT>
+<br>
+Other related information can be found at <A HREF="http://www.ararat.cz/synapse/">http://www.ararat.cz/synapse/</A>
+</CENTER>
+<hr>
+
+<p>
+<FONT FACE="sans-serif" SIZE="+1" COLOR="Blue"><B>History:</B></FONT>
+<P>
+<FONT COLOR="Blue">Description:</FONT><br>
+    + added property<br>
+    - removed property<br>
+    * modification<br>
+    # bug fix
+<p>
+<hr>
+
+<font COLOR="Blue"><B>FTP client</B></font>
+
+<p><font COLOR="Blue">Version 3.1.0 released 2004-09-18</font><br>
++ directory listing contains permission string<br>
+
+<p><font COLOR="Blue">Version 3.0.3 released 2004-08-23</font><br>
++ ForceOldport property for disabling new EPRT and EPSV commands<br>
+* DoStatus can report multiline replyes<br>
+# Fixed ReadResult<br>
+# Server can reply by 100 based reply before welcomme string<br>
+# Call PBSZ before PROT command<br>
+# data connection usinfg same interface as control connection.<br>
+* Totally new directory list parsing!<br>
+# Fixed uploading of zero-lenght files.<br>
+
+
+<p><font COLOR="Blue">Version 2.7.0 released 2003-07-21</font><br>
++ FPC compatibility<br>
++ StreamSecII support<br>
++ can turn off SSl/TLS on data channel<br>
+# correct handling of date 2-29 in FTP directory parsing
+<p><font COLOR="Blue">Version 2.6.6 released 2003-03-24</font><br>
+- weakpackageunit<br>
+* DataRead and datawrite moved to public section for your special functions<br>
+# typo error in name of RetrieveFile method<br>
++ If it is possible, then use EPSV or EPRT instead PASV or PORT<br>
+<p><font COLOR="Blue">Version 2.5.4 released 2003-01-01</font><br>
++ SSL/TLS support<br>
++ ASCII transfers<br>
+# fixed parsing of long file names<br>
+# fixed FtpInterServerTransfer<br>
+<p><font COLOR="Blue">Version 2.3.1 released 2002-08-20</font><br>
+* adaption to TSynaClient<br>
++ can specify outgoing IP interface<br>
++ aborting of data transfers<br>
+* test only class of return code from FTP server<br>
+# fixed closing of datareading channel<br>
+# fixed unix style listing decoding<br>
++ parsing of long names from directory listing
+<p><font COLOR="Blue">Version 2.0.0 released 2002-05-05</font><br>
++ parsing of directory list<br>
+* better autodetection of REST support<br>
+<p><font COLOR="Blue">Version 1.2.2 released 2002-02-10</font><br>
++ Fixed LIST<br>
+<p><font COLOR="Blue">Version 1.2.0 released 2001-09-24</font><br>
++ hook for FTP status<br>
++ can be used on SOCKS5
+<p><font COLOR="Blue">Version 1.0.0 released 2001-08-27</font><br>
++ Class TFTPSend implementing FTP protocol.
+
+<hr>
+</body>
+</html>
+

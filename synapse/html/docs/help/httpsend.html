@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>httpsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit httpsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+HTTP protocol client<p>Used RFC: RFC-1867, RFC-1947, RFC-2388, RFC-2616</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="httpsend.THTTPSend.html"><code>THTTPSend</code></a></td>
+<td width="100%">&nbsp;</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#HttpGetText"><b>HttpGetText</b></a>(const URL: string; const Response: TStrings): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#HttpGetBinary"><b>HttpGetBinary</b></a>(const URL: string; const Response: TStream): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#HttpPostBinary"><b>HttpPostBinary</b></a>(const URL: string; const Data: TStream): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#HttpPostURL"><b>HttpPostURL</b></a>(const URL, URLData: string; const Data: TStream): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#HttpPostFile"><b>HttpPostFile</b></a>(const URL, FieldName, FileName: string; const Data: TStream; const ResultData: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HttpGetBinary"></a><code>function <b>HttpGetBinary</b>(const URL: string; const Response: TStream): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very usefull function, and example of use can be found in the THTTPSend
+ object. It implements the GET method of the HTTP protocol. This function sends
+ the GET method for URL document to an HTTP server. Returned document is in the
+ &quot;Response&quot; stream. Returns boolean TRUE if all went well.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HttpGetText"></a><code>function <b>HttpGetText</b>(const URL: string; const Response: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very usefull function, and example of use can be found in the THTTPSend
+ object. It implements the GET method of the HTTP protocol. This function sends
+ the GET method for URL document to an HTTP server. Returned document is in the
+ &quot;Response&quot; stringlist (without any headers). Returns boolean TRUE if all went
+ well.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HttpPostBinary"></a><code>function <b>HttpPostBinary</b>(const URL: string; const Data: TStream): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the THTTPSend
+ object. It implements the POST method of the HTTP protocol. This function sends
+ the SEND method for a URL document to an HTTP server. The document to be sent
+ is located in &quot;Data&quot; stream. The returned document is in the &quot;Data&quot; stream.
+ Returns boolean TRUE if all went well.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HttpPostFile"></a><code>function <b>HttpPostFile</b>(const URL, FieldName, FileName: string; const Data: TStream; const ResultData: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the THTTPSend
+ object. It implements the POST method of the HTTP protocol. This function sends
+ the POST method for a URL document to an HTTP server. This function simulate
+ posting of file by HTML form used method 'multipart/form-data'. Posting file
+ is in DATA stream. Its name is Filename string. Fieldname is for name of
+ formular field with file. (simulate HTML INPUT FILE) The returned document is
+ in the ResultData Stringlist. Returns boolean TRUE if all went well.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HttpPostURL"></a><code>function <b>HttpPostURL</b>(const URL, URLData: string; const Data: TStream): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of use can be found in the THTTPSend
+ object. It implements the POST method of the HTTP protocol. This function is
+ good for POSTing form data. It sends the POST method for a URL document to
+ an HTTP server. You must prepare the form data in the same manner as you would
+ the URL data, and pass this prepared data to &quot;URLdata&quot;. The following is
+ a sample of how the data would appear: 'name=Lukas&amp;field1=some%20data'.
+ The information in the field must be encoded by EncodeURLElement function.
+ The returned document is in the &quot;Data&quot; stream. Returns boolean TRUE if all
+ went well.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TTransferEncoding"></a>TTransferEncoding<code></code></td>
+<td><p>These encoding types are used internally by the THTTPSend object to identify
+   the transfer data types.</p>
+<ul>
+<li>
+TE_UNKNOWN: </li>
+<li>
+TE_IDENTITY: </li>
+<li>
+TE_CHUNKED: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="cHttpProtocol"></a>cHttpProtocol<code> = '80';</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>pingsend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit pingsend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+ICMP PING implementation.<p>Allows create PING and TRACEROUTE. Or you can diagnose your network.</p><p>Warning: this unit using RAW sockets. On some systems you must have special
+ rights for using this sort of sockets. So, it working allways when you have
+ administator/root rights. Otherwise you can have problems!</p><p>Note: IPv6 not working under .NET. It is lack of Microsoft's .NET framework.</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">record&nbsp;<a class="bold" href="pingsend.TIcmpEchoHeader.html"><code>TIcmpEchoHeader</code></a></td>
+<td width="100%">&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap">record&nbsp;<a class="bold" href="pingsend.TICMP6Packet.html"><code>TICMP6Packet</code></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="pingsend.TPINGSend.html"><code>TPINGSend</code></a></td>
+<td>Implementation of ICMP PING and ICMPv6 PING.</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#PingHost"><b>PingHost</b></a>(const Host: string): Integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TraceRouteHost"><b>TraceRouteHost</b></a>(const Host: string): string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="PingHost"></a><code>function <b>PingHost</b>(const Host: string): Integer;</code></td>
+</tr>
+</table>
+<p><p>A very useful function and example of its use would be found in the TPINGSend
+ object. Use it to ping to any host. If successful, returns the ping time in
+ milliseconds.  Returns -1 if an error occurred.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TraceRouteHost"></a><code>function <b>TraceRouteHost</b>(const Host: string): string;</code></td>
+</tr>
+</table>
+<p><p>A very useful function and example of its use would be found in the TPINGSend
+ object. Use it to TraceRoute to any host.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="TICMPError"></a>TICMPError<code></code></td>
+<td><p>List of possible ICMP reply packet types.</p>
+<ul>
+<li>
+IE_NoError: </li>
+<li>
+IE_Other: </li>
+<li>
+IE_TTLExceed: </li>
+<li>
+IE_UnreachOther: </li>
+<li>
+IE_UnreachRoute: </li>
+<li>
+IE_UnreachAdmin: </li>
+<li>
+IE_UnreachAddr: </li>
+<li>
+IE_UnreachPort: </li>
+</ul>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ICMP_ECHO"></a>ICMP_ECHO<code> = 8;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ICMP_ECHOREPLY"></a>ICMP_ECHOREPLY<code> = 0;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ICMP_UNREACH"></a>ICMP_UNREACH<code> = 3;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ICMP_TIME_EXCEEDED"></a>ICMP_TIME_EXCEEDED<code> = 11;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ICMP6_ECHO"></a>ICMP6_ECHO<code> = 128;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ICMP6_ECHOREPLY"></a>ICMP6_ECHOREPLY<code> = 129;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="ICMP6_UNREACH"></a>ICMP6_UNREACH<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="ICMP6_TIME_EXCEEDED"></a>ICMP6_TIME_EXCEEDED<code> = 3;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:18</em>
+</body></html>

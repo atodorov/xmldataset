@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>dnssend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit dnssend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td><a class="section" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+DNS client by UDP or TCP<p>Support for sending DNS queries by UDP or TCP protocol. It can retrieve zone
+ transfers too!</p><p>Used RFC: RFC-1035, RFC-1183, RFC1706, RFC1712, RFC2163, RFC2230</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap">Class&nbsp;<a class="bold" href="dnssend.TDNSSend.html"><code>TDNSSend</code></a></td>
+<td width="100%">Implementation of DNS protocol by UDP or TCP protocol.</td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#GetMailServers"><b>GetMailServers</b></a>(const DNSHost, Domain: AnsiString; const Servers: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetMailServers"></a><code>function <b>GetMailServers</b>(const DNSHost, Domain: AnsiString; const Servers: TStrings): Boolean;</code></td>
+</tr>
+</table>
+<p><p>A very useful function, and example of it's use is found in the TDNSSend object.
+ This function is used to get mail servers for a domain and sort them by
+ preference numbers. &quot;Servers&quot; contains only the domain names of the mail
+ servers in the right order (without preference number!). The first domain name
+ will always be the highest preferenced mail server. Returns boolean <code>True</code> if
+ all went well.</p>
+</p>
+<a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="cDnsProtocol"></a>cDnsProtocol<code> = 'domain';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_A"></a>QTYPE_A<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_NS"></a>QTYPE_NS<code> = 2;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_MD"></a>QTYPE_MD<code> = 3;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_MF"></a>QTYPE_MF<code> = 4;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_CNAME"></a>QTYPE_CNAME<code> = 5;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_SOA"></a>QTYPE_SOA<code> = 6;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_MB"></a>QTYPE_MB<code> = 7;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_MG"></a>QTYPE_MG<code> = 8;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_MR"></a>QTYPE_MR<code> = 9;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_NULL"></a>QTYPE_NULL<code> = 10;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_WKS"></a>QTYPE_WKS<code> = 11;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_PTR"></a>QTYPE_PTR<code> = 12;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_HINFO"></a>QTYPE_HINFO<code> = 13;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_MINFO"></a>QTYPE_MINFO<code> = 14;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_MX"></a>QTYPE_MX<code> = 15;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_TXT"></a>QTYPE_TXT<code> = 16;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_RP"></a>QTYPE_RP<code> = 17;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_AFSDB"></a>QTYPE_AFSDB<code> = 18;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_X25"></a>QTYPE_X25<code> = 19;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_ISDN"></a>QTYPE_ISDN<code> = 20;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_RT"></a>QTYPE_RT<code> = 21;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_NSAP"></a>QTYPE_NSAP<code> = 22;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_NSAPPTR"></a>QTYPE_NSAPPTR<code> = 23;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_SIG"></a>QTYPE_SIG<code> = 24;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_KEY"></a>QTYPE_KEY<code> = 25;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_PX"></a>QTYPE_PX<code> = 26;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_GPOS"></a>QTYPE_GPOS<code> = 27;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_AAAA"></a>QTYPE_AAAA<code> = 28;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_LOC"></a>QTYPE_LOC<code> = 29;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_NXT"></a>QTYPE_NXT<code> = 30;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_SRV"></a>QTYPE_SRV<code> = 33;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_NAPTR"></a>QTYPE_NAPTR<code> = 35;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_KX"></a>QTYPE_KX<code> = 36;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_AXFR"></a>QTYPE_AXFR<code> = 252;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_MAILB"></a>QTYPE_MAILB<code> = 253;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="QTYPE_MAILA"></a>QTYPE_MAILA<code> = 254;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="QTYPE_ALL"></a>QTYPE_ALL<code> = 255;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:17</em>
+</body></html>

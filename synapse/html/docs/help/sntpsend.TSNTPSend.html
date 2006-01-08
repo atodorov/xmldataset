@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.2"/>
+<title>sntpsend: Class TSNTPSend</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TSNTPSend"></a><h1>Class TSNTPSend</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td><a class="section" href="#@Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section" href="#@Methods">Methods</a></td><td><a class="section" href="#@Properties">Properties</a></td></tr></table>
+<a name="@Description"></a><h2>Unit</h2>
+<a class="bold" href="sntpsend.html">sntpsend</a><br/><h2>Declaration</h2>
+<p><code>type TSNTPSend = class(<a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>)</code></p>
+<h2>Description</h2>
+Implementation of NTP and SNTP client protocol<p>,
+   include time synchronisation. It can send NTP or SNTP time queries, or it
+   can receive NTP broadcasts too.</p><p>Note: Are you missing properties for specify server address and port? Look to
+   parent <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a> too!</p>
+<a name="@Hierarchy"></a><h2>Hierarchy</h2>
+TSNTPSend&nbsp;&gt; <a class="normal" href="blcksock.TSynaClient.html">TSynaClient</a>&nbsp;&gt; TObject<a name="@Methods"></a><h2>Methods</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><code>constructor <a class="normal" href="sntpsend.TSNTPSend.html#Create"><b>Create</b></a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>destructor <a class="normal" href="sntpsend.TSNTPSend.html#Destroy"><b>Destroy</b></a>; override;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="sntpsend.TSNTPSend.html#DecodeTs"><b>DecodeTs</b></a>(Nsec, Nfrac: Longint): TDateTime;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>procedure <a class="normal" href="sntpsend.TSNTPSend.html#EncodeTs"><b>EncodeTs</b></a>(dt: TDateTime; var Nsec, Nfrac: Longint);</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="sntpsend.TSNTPSend.html#GetBroadcastNTP"><b>GetBroadcastNTP</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="sntpsend.TSNTPSend.html#GetNTP"><b>GetNTP</b></a>: Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>function <a class="normal" href="sntpsend.TSNTPSend.html#GetSNTP"><b>GetSNTP</b></a>: Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="DecodeTs"></a><code>function <b>DecodeTs</b>(Nsec, Nfrac: Longint): TDateTime;</code></td>
+</tr>
+</table>
+<p><p>Decode 128 bit timestamp used in NTP packet to TDateTime type.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="EncodeTs"></a><code>procedure <b>EncodeTs</b>(dt: TDateTime; var Nsec, Nfrac: Longint);</code></td>
+</tr>
+</table>
+<p><p>Decode TDateTime type to 128 bit timestamp used in NTP packet.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetBroadcastNTP"></a><code>function <b>GetBroadcastNTP</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Wait for broadcast NTP packet. If all OK, result is <code>True</code> and
+     <a class="normal" href="sntpsend.TSNTPSend.html#NTPReply">NTPReply</a> and <a class="normal" href="sntpsend.TSNTPSend.html#NTPTime">NTPTime</a> are valid.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetNTP"></a><code>function <b>GetNTP</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send request to <a class="normal" href="blcksock.TSynaClient.html#TargetHost">TargetHost</a> and wait for reply. If all
+     is OK, then result is <code>True</code> and <a class="normal" href="sntpsend.TSNTPSend.html#NTPReply">NTPReply</a> and <a class="normal" href="sntpsend.TSNTPSend.html#NTPTime">NTPTime</a> are
+     valid. Result time is after all needed corrections.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="GetSNTP"></a><code>function <b>GetSNTP</b>: Boolean;</code></td>
+</tr>
+</table>
+<p><p>Send request to <a class="normal" href="blcksock.TSynaClient.html#TargetHost">TargetHost</a> and wait for reply. If all
+     is OK, then result is <code>True</code> and <a class="normal" href="sntpsend.TSNTPSend.html#NTPReply">NTPReply</a> and <a class="normal" href="sntpsend.TSNTPSend.html#NTPTime">NTPTime</a> are
+     valid.</p>
+</p>
+<a name="@Properties"></a><h2>Properties</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><code>property <a class="normal" href="sntpsend.TSNTPSend.html#MaxSyncDiff"><b>MaxSyncDiff</b></a>: double;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#NTPDelay"><b>NTPDelay</b></a>: Double;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#NTPOffset"><b>NTPOffset</b></a>: Double;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#NTPReply"><b>NTPReply</b></a>: <a class="normal" href="sntpsend.TNtp.html">TNtp</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#NTPTime"><b>NTPTime</b></a>: TDateTime;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#Sock"><b>Sock</b></a>: <a class="normal" href="blcksock.TUDPBlockSocket.html">TUDPBlockSocket</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td><code>property <a class="normal" href="sntpsend.TSNTPSend.html#SyncTime"><b>SyncTime</b></a>: Boolean;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="MaxSyncDiff"></a><code>property <b>MaxSyncDiff</b>: double;</code></td>
+</tr>
+</table>
+<p>Define allowed maximum difference between your time and remote time for
+     synchronising time. If difference is bigger, your system time is not
+     changed!</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="NTPDelay"></a><code>property <b>NTPDelay</b>: Double;</code></td>
+</tr>
+</table>
+<p>Delay between your computer and remote NTP or SNTP server.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="NTPOffset"></a><code>property <b>NTPOffset</b>: Double;</code></td>
+</tr>
+</table>
+<p>Offset between your computer and remote NTP or SNTP server.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="public.gif" alt="Public"/></a></td>
+<td width="100%"><a name="NTPReply"></a><code>property <b>NTPReply</b>: <a class="normal" href="sntpsend.TNtp.html">TNtp</a>;</code></td>
+</tr>
+</table>
+<p>Holds last received NTP packet.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="NTPTime"></a><code>property <b>NTPTime</b>: TDateTime;</code></td>
+</tr>
+</table>
+<p>Date and time of remote NTP or SNTP server. (UTC time!!!)</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="Sock"></a><code>property <b>Sock</b>: <a class="normal" href="blcksock.TUDPBlockSocket.html">TUDPBlockSocket</a>;</code></td>
+</tr>
+</table>
+<p>Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td><a class="normal" href="legend.html"><img border="0" src="published.gif" alt="Published"/></a></td>
+<td width="100%"><a name="SyncTime"></a><code>property <b>SyncTime</b>: Boolean;</code></td>
+</tr>
+</table>
+<p>If <code>True</code>, after successfull getting time is local computer clock
+     synchronised to given time.
+     For synchronising time you must have proper rights! (Usually Administrator)</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.2</a> on 2005-01-19 20:01:19</em>
+</body></html>
