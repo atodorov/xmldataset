@@ -434,10 +434,10 @@ begin
   try
     strm := TStringStream.Create('');
     WriteXML(XMLDocument.DocumentElement, strm);
-    Result := '<?xml version="1.0"'+
-              ' encoding="'+TO_ENCODING+'"'+
-              '?>'+
-              strm.DataString;
+    Result := '<?xml version="1.0"';
+    if UseCharacterEncoding then
+       Result := Result + ' encoding="'+TO_ENCODING+'"';
+    Result := Result + ' ?>'+strm.DataString;
   finally
     strm.Free;
   end;

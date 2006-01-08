@@ -80,10 +80,13 @@ begin
   try
     strm   := TStringStream.Create('');
     WriteXML(FSQLXML.DocumentElement, strm);
-    S := '<?xml version="1.0" encoding="'+TO_ENCODING+'"?>'+strm.DataString;
+    S := '<?xml version="1.0"';
+    if UseCharacterEncoding then
+       S := S + ' encoding="'+TO_ENCODING+'"';
+    S := S + ' ?>'+strm.DataString;
   finally
     strm.Free;
-// todo : fix memory leaks
+// todo : fix memory leaks / or not ???
     Result := TStringStream.Create(S);
   end;
 end;
