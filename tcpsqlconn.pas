@@ -158,6 +158,8 @@ begin
          ReceivedData.Position := 0;
          // copy new data
          ReceivedData.CopyFrom(ssResult,0);
+         // go to the beginning
+         ReceivedData.Position := 0;
        end;
 
     Result := true;
