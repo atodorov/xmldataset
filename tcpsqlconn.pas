@@ -147,7 +147,7 @@ begin
 
     FSocket.SendText(ssDataToSend.DataString);
     strResponse := FSocket.RecvText;
-    
+
     ssResult := TStringStream.Create(strResponse);
 
     if Assigned(ReceivedData) then
