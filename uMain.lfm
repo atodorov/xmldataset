@@ -7,9 +7,9 @@ object Form1: TForm1
   PixelsPerInch = 96
   HorzScrollBar.Page = 458
   VertScrollBar.Page = 374
-  Left = 245
+  Left = 173
   Height = 375
-  Top = 100
+  Top = 84
   Width = 459
   object dbGrid1: TdbGrid
     Align = alTop
@@ -48,7 +48,7 @@ object Form1: TForm1
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 1
-      Left = 142
+      Left = 94
       Height = 167
       Top = 1
       Width = 360
@@ -86,7 +86,7 @@ object Form1: TForm1
     end
     object Button5: TButton
       BorderSpacing.InnerBorder = 2
-      Caption = 'Save Smart Q'
+      Caption = 'Test Smart Q'
       OnClick = Button5Click
       TabOrder = 5
       Left = 6

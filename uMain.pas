@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, DBGrids,
-  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs, ExtCtrls, EditBtn;
+  DB, Buttons, StdCtrls, DBCtrls, ExtDlgs, EditBtn;
 
 type
 
@@ -42,7 +42,8 @@ var
 
 implementation
 
-uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, XMLQuery, SmartXMLQuery,
+uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, TCPSQLConn,
+     XMLQuery, SmartXMLQuery,
 //     DBCtrlGrid in 'dbcg/dbctrlgrid.pas',
      XMLRead, XMLWrite;
 
@@ -98,12 +99,35 @@ begin
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
-var sq : TSmartXMLQuery;
+var FQuery : TSmartXMLQuery;
+    FConn : TTCPSQLConnection;
 begin
-   sq := TSmartXMLQuery.Create(Self);
-   sq.XMLDocument := XMLDS.XMLDocument;
-   sq.SQLConnBeforeCommitDataset(nil,sq);
-   sq.Free;
+  try
+    FConn := TTCPSQLConnection.Create(Self);
+    FConn.ConnParams.Add(TCP_HOST+'='+'127.0.0.1');
+    FConn.ConnParams.Add(TCP_PORT+'='+'4444');
+    FConn.ConnParams.Add(TCP_TIMEOUT+'='+'30');
+
+    { create query }
+    FQuery := TSmartXMLQuery.Create(Self);
+    with FQuery do
+      begin
+        UseBase64 := false;
+        UseCharacterEncoding := false;
+
+        Connection := FConn;
+        SQL.Text := 'SELECT * FROM COUNTRY';
+      end;
+
+    { link data aware components }
+    dsMain.DataSet := FQuery;
+
+    { start transaction }
+    FQuery.ExecSQL(QUERY_SELECT);
+    FConn.StartTransaction;
+  finally
+//    FConn.Free;
+  end;
 end;
 
 procedure TForm1.DBImage1Click(Sender: TObject);
