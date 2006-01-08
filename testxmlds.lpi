@@ -7,7 +7,7 @@
       <MainUnit Value="0"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
-      <ActiveEditorIndexAtStart Value="2"/>
+      <ActiveEditorIndexAtStart Value="3"/>
     </General>
     <Units Count="40">
       <Unit0>
@@ -16,10 +16,10 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="TestXMLDS"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
       </Unit0>
       <Unit1>
-        <CursorPos X="19" Y="121"/>
+        <CursorPos X="43" Y="45"/>
         <EditorIndex Value="0"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
@@ -27,9 +27,9 @@
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="112"/>
+        <TopLine Value="37"/>
         <UnitName Value="uMain"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
       </Unit1>
       <Unit2>
         <CursorPos X="48" Y="117"/>
@@ -37,7 +37,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="117"/>
         <UnitName Value="uxmldsconsts"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit2>
       <Unit3>
         <CursorPos X="33" Y="913"/>
@@ -45,25 +45,27 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="913"/>
         <UnitName Value="customxmldataset"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit3>
       <Unit4>
-        <CursorPos X="3" Y="1"/>
-        <Filename Value="httpsqlconn.pas"/>
+        <CursorPos X="83" Y="221"/>
+        <EditorIndex Value="1"/>
+        <Filename Value="HTTPSQLConn.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1"/>
+        <Loaded Value="True"/>
+        <TopLine Value="206"/>
         <UnitName Value="httpsqlconn"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit4>
       <Unit5>
-        <CursorPos X="1" Y="169"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="1" Y="158"/>
+        <EditorIndex Value="3"/>
         <Filename Value="xmlquery.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="161"/>
+        <TopLine Value="152"/>
         <UnitName Value="xmlquery"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
       </Unit5>
       <Unit6>
         <CursorPos X="44" Y="567"/>
@@ -71,7 +73,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="567"/>
         <UnitName Value="gxbasedataset"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit6>
       <Unit7>
         <CursorPos X="31" Y="1"/>
@@ -79,7 +81,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="customsqlconn"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit7>
       <Unit8>
         <CursorPos X="15" Y="186"/>
@@ -237,7 +239,7 @@
         <IsPartOfProject Value="True"/>
         <TopLine Value="232"/>
         <UnitName Value="smartxmlquery"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
       </Unit31>
       <Unit32>
         <CursorPos X="31" Y="22"/>
@@ -252,14 +254,14 @@
         <UsageCount Value="10"/>
       </Unit33>
       <Unit34>
-        <CursorPos X="1" Y="151"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="1" Y="161"/>
+        <EditorIndex Value="2"/>
         <Filename Value="tcpsqlconn.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <TopLine Value="150"/>
         <UnitName Value="tcpsqlconn"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit34>
       <Unit35>
         <CursorPos X="11" Y="51"/>
@@ -289,7 +291,7 @@
       </Unit38>
       <Unit39>
         <CursorPos X="1" Y="758"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
         <Loaded Value="True"/>
         <TopLine Value="750"/>
@@ -320,124 +322,124 @@
     </RequiredPackages>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="162" Column="1" TopLine="154"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
+        <Caret Line="768" Column="1" TopLine="760"/>
       </Position1>
       <Position2>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="163" Column="1" TopLine="155"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
+        <Caret Line="757" Column="1" TopLine="749"/>
       </Position2>
       <Position3>
-        <Filename Value="xmlquery.pas"/>
-        <Caret Line="164" Column="1" TopLine="156"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
+        <Caret Line="758" Column="1" TopLine="750"/>
       </Position3>
       <Position4>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="165" Column="1" TopLine="157"/>
+        <Caret Line="168" Column="50" TopLine="161"/>
       </Position4>
       <Position5>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="166" Column="1" TopLine="158"/>
+        <Caret Line="163" Column="1" TopLine="161"/>
       </Position5>
       <Position6>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="167" Column="1" TopLine="159"/>
+        <Caret Line="164" Column="1" TopLine="156"/>
       </Position6>
       <Position7>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="168" Column="1" TopLine="160"/>
+        <Caret Line="165" Column="1" TopLine="157"/>
       </Position7>
       <Position8>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="166" Column="27" TopLine="155"/>
+        <Caret Line="166" Column="1" TopLine="158"/>
       </Position8>
       <Position9>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="163" Column="1" TopLine="155"/>
+        <Caret Line="168" Column="1" TopLine="160"/>
       </Position9>
       <Position10>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="165" Column="1" TopLine="157"/>
+        <Caret Line="169" Column="1" TopLine="161"/>
       </Position10>
       <Position11>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="166" Column="1" TopLine="158"/>
+        <Caret Line="170" Column="1" TopLine="162"/>
       </Position11>
       <Position12>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="167" Column="1" TopLine="159"/>
+        <Caret Line="172" Column="1" TopLine="164"/>
       </Position12>
       <Position13>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="164" Column="39" TopLine="160"/>
+        <Caret Line="174" Column="1" TopLine="166"/>
       </Position13>
       <Position14>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="161" Column="23" TopLine="155"/>
+        <Caret Line="163" Column="43" TopLine="157"/>
       </Position14>
       <Position15>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="164" Column="1" TopLine="156"/>
+        <Caret Line="162" Column="1" TopLine="155"/>
       </Position15>
       <Position16>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="168" Column="23" TopLine="157"/>
+        <Caret Line="164" Column="1" TopLine="156"/>
       </Position16>
       <Position17>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="166" Column="1" TopLine="158"/>
+        <Caret Line="165" Column="1" TopLine="157"/>
       </Position17>
       <Position18>
         <Filename Value="xmlquery.pas"/>
-        <Caret Line="167" Column="1" TopLine="159"/>
+        <Caret Line="166" Column="1" TopLine="158"/>
       </Position18>
       <Position19>
         <Filename Value="xmlquery.pas"/>
         <Caret Line="168" Column="1" TopLine="160"/>
       </Position19>
       <Position20>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="755" Column="1" TopLine="747"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="169" Column="1" TopLine="161"/>
       </Position20>
       <Position21>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="756" Column="1" TopLine="748"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="170" Column="1" TopLine="162"/>
       </Position21>
       <Position22>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="765" Column="1" TopLine="757"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="171" Column="1" TopLine="163"/>
       </Position22>
       <Position23>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="766" Column="1" TopLine="758"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="173" Column="1" TopLine="165"/>
       </Position23>
       <Position24>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="767" Column="1" TopLine="759"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="175" Column="1" TopLine="167"/>
       </Position24>
       <Position25>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="765" Column="1" TopLine="757"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="121" Column="19" TopLine="112"/>
       </Position25>
       <Position26>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="768" Column="1" TopLine="760"/>
+        <Filename Value="tcpsqlconn.pas"/>
+        <Caret Line="156" Column="76" TopLine="150"/>
       </Position26>
       <Position27>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="765" Column="1" TopLine="757"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="177" Column="14" TopLine="165"/>
       </Position27>
       <Position28>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="768" Column="1" TopLine="760"/>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="174" Column="1" TopLine="166"/>
       </Position28>
       <Position29>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="757" Column="1" TopLine="749"/>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="45" Column="43" TopLine="37"/>
       </Position29>
       <Position30>
-        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
-        <Caret Line="758" Column="1" TopLine="750"/>
+        <Filename Value="HTTPSQLConn.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -463,15 +465,11 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="3">
+    <BreakPoints Count="2">
       <Item2>
         <Source Value="smartxmlquery.pas"/>
         <Line Value="207"/>
       </Item2>
-      <Item3>
-        <Source Value="xmlquery.pas"/>
-        <Line Value="162"/>
-      </Item3>
     </BreakPoints>
     <Watches Count="3">
       <Item1>

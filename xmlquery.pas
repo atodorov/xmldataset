@@ -54,13 +54,9 @@ type
   
 implementation
 
-{$DEFINE DEBUGXML}
+//{$DEFINE DEBUGXML}
 
-uses uXMLDSConsts, XMLRead
-     {$IFDEF DEBUGXML}
-     , XMLWrite
-     {$ENDIF}
-     ;
+uses uXMLDSConsts, XMLRead, XMLWrite;
 
 (*******************************************************************************
 { TCustomXMLQuery }
@@ -159,7 +155,7 @@ begin
      if (QueryType = QUERY_SELECT) then // and get a new one
        begin
          Close;
-         ReadXMLFile(XMLDocument,FSQLConnection.ReceivedData);
+         ReadXMLFile(XMLDocument, FSQLConnection.ReceivedData);
          Open; // reopen dataset
        end;
   finally
