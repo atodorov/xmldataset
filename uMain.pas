@@ -18,7 +18,6 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
-    DateEdit1: TDateEdit;
     DBNavigator1: TDBNavigator;
     dsMain: TDatasource;
     dbGrid1: TdbGrid;
@@ -30,7 +29,6 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure DBImage1Click(Sender: TObject);
-    procedure DateEdit1Exit(Sender: TObject);
     procedure Form1Create(Sender: TObject);
     procedure Form1Destroy(Sender: TObject);
   private
@@ -120,11 +118,6 @@ begin
    finally
      Free;
    end;
-end;
-
-procedure TForm1.DateEdit1Exit(Sender: TObject);
-begin
-  XMLDS.FieldByName('Дата').AsDateTime := DateEdit1.Date;
 end;
 
 procedure TForm1.Form1Create(Sender: TObject);

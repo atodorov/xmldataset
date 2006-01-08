@@ -13,6 +13,7 @@ object Form1: TForm1
   Width = 459
   object dbGrid1: TdbGrid
     Align = alTop
+    BorderSpacing.OnChange = nil
     DataSource = dsMain
     FixedColor = clBtnFace
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
@@ -24,7 +25,6 @@ object Form1: TForm1
   end
   object GroupBox1: TGroupBox
     Align = alBottom
-    BorderSpacing.OnChange = nil
     Caption = 'GroupBox1'
     ClientHeight = 174
     ClientWidth = 455
@@ -34,7 +34,7 @@ object Form1: TForm1
     Top = 183
     Width = 459
     object Button1: TButton
-      BorderSpacing.OnChange = nil
+      BorderSpacing.InnerBorder = 2
       Caption = 'Load From File'
       OnClick = Button1Click
       TabOrder = 0
@@ -44,15 +44,17 @@ object Form1: TForm1
     end
     object Memo1: TMemo
       Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderSpacing.OnChange = nil
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 1
-      Left = 86
+      Left = 142
       Height = 167
+      Top = 1
       Width = 360
     end
     object Button2: TButton
-      BorderSpacing.OnChange = nil
+      BorderSpacing.InnerBorder = 2
       Caption = 'Save To File'
       OnClick = Button2Click
       TabOrder = 2
@@ -62,6 +64,8 @@ object Form1: TForm1
       Width = 75
     end
     object Button3: TButton
+      BorderSpacing.OnChange = nil
+      BorderSpacing.InnerBorder = 2
       Caption = 'Send To Url'
       OnClick = Button3Click
       TabOrder = 3
@@ -71,7 +75,7 @@ object Form1: TForm1
       Width = 75
     end
     object Button4: TButton
-      BorderSpacing.OnChange = nil
+      BorderSpacing.InnerBorder = 2
       Caption = 'Save Query'
       OnClick = Button4Click
       TabOrder = 4
@@ -81,7 +85,7 @@ object Form1: TForm1
       Width = 75
     end
     object Button5: TButton
-      BorderSpacing.OnChange = nil
+      BorderSpacing.InnerBorder = 2
       Caption = 'Save Smart Q'
       OnClick = Button5Click
       TabOrder = 5
@@ -89,47 +93,6 @@ object Form1: TForm1
       Height = 25
       Top = 129
       Width = 75
-    end
-    object DateEdit1: TDateEdit
-      CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
-      Date = 38669
-      ButtonWidth = 23
-      Color = clBtnFace
-      Glyph.Data = {
-        2F0200002F2A2058504D202A2F0A7374617469632063686172202A63616C656E
-        6461725B5D203D207B0A2F2A20636F6C756D6E7320726F777320636F6C6F7273
-        2063686172732D7065722D706978656C202A2F0A223134203132203137203122
-        2C0A2220206320626C61636B222C0A222E20632023383030303030222C0A2258
-        20632023303038303030222C0A226F20632023383038303030222C0A224F2063
-        206E617679222C0A222B20632023383030303830222C0A224020632023303038
-        303830222C0A222320632023383038303830222C0A2224206320234330433043
-        30222C0A2225206320726564222C0A2226206320677265656E222C0A222A2063
-        2079656C6C6F77222C0A223D206320626C7565222C0A222D2063206D6167656E
-        7461222C0A223B2063206379616E222C0A223A20632067726179313030222C0A
-        223E2063204E6F6E65222C0A2F2A20706978656C73202A2F0A223E3E20202020
-        2020202020203E3E222C0A223E3E3A24242424242424243A4F23222C0A223E3E
-        3A3A3A3A3A3A3A3A3A3A4F23222C0A223E3E3A3A203A3A202020203A4F23222C
-        0A223E3E3A20203A3A203A3A3A3A4F23222C0A223E3E3A3A203A3A202020243A
-        4F23222C0A223E3E3A3A203A3A3A3A3A203A4F23222C0A223E3E3A3A203A3A24
-        3A24203A4F23222C0A223E3E3A2020203A202020243A4F23222C0A223E3E3A3A
-        3A3A3A3A3A3A3A3A4F23222C0A223E3E20204F204F4F204F20204F23222C0A22
-        3E3E3E2323232323232323232323220A7D3B0A
-      }
-      NumGlyphs = 1
-      OnExit = DateEdit1Exit
-      ReadOnly = True
-      TabOrder = 6
-      Color = clBtnFace
-      OnExit = DateEdit1Exit
-      ReadOnly = True
-      TabOrder = 6
-      Text = '13.11.2005'
-      Left = 102
-      Height = 23
-      Top = 32
-      Width = 96
     end
   end
   object DBNavigator1: TDBNavigator
