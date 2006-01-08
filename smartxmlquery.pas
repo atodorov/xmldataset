@@ -48,7 +48,6 @@ type
       INSERT's, UPDATE's, DELETE's
     }
     procedure SetSQLConnection(const AValue: TCustomSQLConnection); override;
-  public
     procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TCustomXMLDataSet);
 
   protected
