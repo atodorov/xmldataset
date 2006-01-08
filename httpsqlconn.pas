@@ -205,8 +205,16 @@ begin
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
   Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
+  
   if Assigned(ReceivedData) then
-     ReceivedData.CopyFrom(FHttpClient.Document,0);
+     begin // N.B. ReceivedData must be from class that overrides the TStream.Size property
+       // clear old contents
+       ReceivedData.Size := 0;
+       // position in the beginning
+       ReceivedData.Position := 0;
+       // copy new data
+       ReceivedData.CopyFrom(FHttpClient.Document,0);
+     end;
 end;
 
 end.

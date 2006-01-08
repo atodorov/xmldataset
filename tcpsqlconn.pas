@@ -146,14 +146,19 @@ begin
     ssDataToSend.CopyFrom(DataToSend, 0);
 
     FSocket.SendText(ssDataToSend.DataString);
-//todo : do we have to wait until data is processed
-//    sleep(10);
     strResponse := FSocket.RecvText;
     
     ssResult := TStringStream.Create(strResponse);
-    
+
     if Assigned(ReceivedData) then
-       ReceivedData.CopyFrom(ssResult,0);
+       begin // N.B. ReceivedData must be from class that overrides the TStream.Size property
+         // clear old contents
+         ReceivedData.Size := 0;
+         // position in the beginning
+         ReceivedData.Position := 0;
+         // copy new data
+         ReceivedData.CopyFrom(ssResult,0);
+       end;
 
     Result := true;
   finally
