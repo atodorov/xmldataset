@@ -24,9 +24,9 @@
   <recorddata count="1">
     <row>
       <field name="ID" value="0" datatype="integer"/>
-      <field name="NAME" value="wfrr4+Dw6P8=" datatype="string"/>
+      <field name="NAME" value="Bulgaria" datatype="string"/>
       <field name="FLAG" value="" datatype="graphic"/>
-      <field name="NOTES" value="8uXx8i4NCjEyMw==" datatype="memo"/>
+      <field name="NOTES" value="this is a test" datatype="memo"/>
     </row>
   </recorddata>
   <deletedrecords count="0" />
