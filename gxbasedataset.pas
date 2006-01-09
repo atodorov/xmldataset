@@ -53,9 +53,6 @@ uses Classes, SysUtils, DB
   ;
   {$ENDIF}
 
-//todo : add all blob types that are supported to this set
-const BLOB_FIELDS = [ftMemo, ftGraphic];
-
 type
   PRecordInfo = ^TRecordInfo;
   TRecordInfo = record
@@ -258,7 +255,7 @@ var
   Stream: TMemoryStream;
 begin
   for Index := 0 to FieldCount - 1 do
-    if Fields[Index].DataType in BLOB_FIELDS then
+    if Fields[Index].IsBlob then
       begin
         Offset := GetFieldOffset(Fields[Index]);
         Stream := TMemoryStream.Create;
@@ -273,7 +270,7 @@ var
   FreeObject: TObject;
 begin
   for Index := 0 to FieldCount - 1 do
-    if Fields[Index].DataType in BLOB_FIELDS then
+    if Fields[Index].IsBlob then
       begin
         Offset := GetFieldOffset(Fields[Index]);
         Move((Buffer + Offset)^, Pointer(FreeObject), SizeOf(Pointer));
@@ -388,7 +385,7 @@ begin
       ftInteger, ftSmallInt, ftDate, ftTime  : Result := Result + SizeOf(Integer);
       ftFloat, ftCurrency, ftBCD, ftDateTime : Result := Result + SizeOf(Double);
       ftBoolean: Result := Result + sizeof(WordBool);
-      else if Fields[Index].DataType in BLOB_FIELDS then
+      else if Fields[Index].IsBlob then
               Result := Result + sizeof(Pointer);
     end;
 end;
@@ -488,7 +485,7 @@ begin
       ftInteger, ftSmallInt, ftDate, ftTime: inc(Result, sizeof(Integer));
       ftDateTime, ftFloat, ftBCD, ftCurrency: inc(Result, sizeof(Double));
       ftBoolean: inc(Result, sizeof(WordBool));
-      else if Fields[Index].DataType in BLOB_FIELDS then
+      else if Fields[Index].IsBlob then
               Result := Result + SizeOf(Pointer);
     end;
 end;
@@ -534,7 +531,7 @@ begin
 //            SetFieldValue(Fields[Index], TempBool);
           end;
         else
-          if Fields[Index].DataType in BLOB_FIELDS then
+          if Fields[Index].IsBlob then
              begin
                Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
                Stream.Position := 0;
@@ -571,7 +568,7 @@ begin
   DoBeforeGetFieldValue;
   for Index := 0 to FieldCount - 1 do
     begin
-      if not (Fields[Index].DataType in BLOB_FIELDS) then
+      if not Fields[Index].IsBlob then
         Value := GetFieldValue(Fields[Index]);
       Offset := GetFieldOffset(Fields[Index]);
       case Fields[Index].DataType of
@@ -603,7 +600,7 @@ begin
             Move(TempBool, (Buffer + Offset)^, SizeOf(TempBool));
           end;
         else
-          if Fields[Index].DataType in BLOB_FIELDS then
+          if Fields[Index].IsBlob then
              begin
                Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
                Stream.Size := 0;
