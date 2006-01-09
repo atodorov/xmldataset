@@ -199,9 +199,9 @@ end;
 function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
 var strStrm : TStringStream;
 begin
-  S.Position := 0;
-  strStrm := TStringStream.Create('');
   try
+    S.Position := 0;
+    strStrm := TStringStream.Create('');
     if UseBase64 then
        with TBase64EncodingStream.Create(strStrm) do
          try
