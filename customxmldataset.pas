@@ -1,6 +1,7 @@
 unit customxmldataset;
 
 {$mode objfpc}{$H+}
+{$I fpcdefines.inc}
 
 {*******************************************************************************
 
@@ -263,10 +264,20 @@ begin
 end;
 
 class function TCustomXMLDataSet.GetFieldTypeFromString(FieldType : String) : TFieldType;
-//todo : changed this using constant array in new DB.pp
+{$IFDEF FPC_VER_201+}
+var i : TFieldType;
+{$ENDIF}
 begin
    FieldType := AnsiUpperCase(FieldType);
    Result := ftUnknown;
+   {$IFDEF FPC_VER_201+}
+   for i := Low(TFieldType) to High(TFieldType) do
+     if FieldType = AnsiUpperCase(Fieldtypenames[i]) then
+        begin
+           Result := i;
+           break;
+        end;
+   {$ELSE}
         if (FieldType = 'UNKNOWN')     then Result := ftUnknown
    else if (FieldType = 'STRING')      then Result := ftString
    else if (FieldType = 'SMALLINT')    then Result := ftSmallint
@@ -306,11 +317,12 @@ begin
    else if (FieldType = 'GUID')        then Result := ftGuid
    else if (FieldType = 'TIMESTAMP')   then Result := ftTimeStamp
    else if (FieldType = 'FMTBCD')      then Result := ftFMTBcd;
+   {$ENDIF}
 end;
 
 class function TCustomXMLDataSet.GetStringFromFieldType(const FieldType : TFieldType) : String;
-//todo : change this using constant array in new DB.pp
 begin
+   {$IFDEF FPC_VER_200}
    case FieldType of
      ftUnknown     : Result := 'UNKNOWN';
      ftString      : Result := 'STRING';
@@ -352,6 +364,9 @@ begin
      ftFMTBcd      : Result := 'FMTBCD';
      else            Result := 'UNKNOWN';
    end;
+   {$ELSE}
+   Result := Fieldtypenames[FieldType];
+   {$ENDIF}
    Result := AnsiLowerCase(Result);
 end;
 

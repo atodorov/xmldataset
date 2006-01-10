@@ -1,12 +1,7 @@
 unit gxbasedataset;
 
 {$mode objfpc}{$H+}
-
-{$IF ((FPC_VERSION = 2) and (FPC_RELEASE = 0) and (FPC_PATCH = 1))}
-   {$DEFINE FPC_VER_201}
-   {$WARNINGS ON}
-{$ENDIF}
-
+{$I fpcdefines.inc}
 
 {*******************************************************************************
 
