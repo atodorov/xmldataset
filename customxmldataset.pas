@@ -150,6 +150,12 @@ type
     property TO_ENCODING   : String read FTO_ENCODING   write FTO_ENCODING;
   end;
 
+  { helper functions for Base64 encoding / decoding }
+  function  Helper_EncodeBase64FromString(const S : String) : String;
+  function  Helper_EncodeBase64FromStream(const S : TStream) : String;
+  function  Helper_DecodeBase64ToString(const S : String) : String;
+  procedure Helper_DecodeBase64ToStream(const S : String; Output : TStream);
+  
 implementation
 
 uses uXMLDSConsts, Variants, Base64, XMLWrite
@@ -165,102 +171,137 @@ begin
 end;
 {$ENDIF}
 
+{ helper functions for Base64 encoding / decoding }
+
+function Helper_EncodeBase64FromString(const S : String) : String;
+var S1, S2 : TStringStream;
+begin
+  try
+    Result := '';
+    S1 := TStringStream.Create(S);
+    S1.Position:=0;
+    S2 := TStringStream.Create('');
+    try
+      with TBase64EncodingStream.Create(S2) do
+        try
+          CopyFrom(S1, S1.Size);
+        finally
+          Free;
+        end;
+      Result := S2.DataString;
+    finally
+      S2.Free;
+    end;
+  finally
+    S1.Free;
+  end;
+end;
+
+function Helper_EncodeBase64FromStream(const S : TStream) : String;
+var strStrm : TStringStream;
+begin
+  try
+    S.Position := 0;
+    strStrm := TStringStream.Create('');
+    with TBase64EncodingStream.Create(strStrm) do
+      try
+        CopyFrom(S, S.Size);
+      finally
+        Free;
+      end;
+    Result := strStrm.DataString;
+  finally
+    S.Position := 0;
+    strStrm.Free;
+  end;
+end;
+
+function Helper_DecodeBase64ToString(const S : String) : String;
+var S1, S2 : TStringStream;
+    b64Decoder : TBase64DecodingStream;
+begin
+  try
+    Result := '';
+    S1 := TStringStream.Create(S);
+    S1.Position:=0;
+    S2 := TStringStream.Create('');
+    try
+      b64Decoder := TBase64DecodingStream.Create(S1);
+      S2.CopyFrom(b64Decoder, b64Decoder.Size);
+    finally
+      b64Decoder.Free;
+    end;
+    Result := S2.DataString;
+  finally
+    S2.Free;
+    S1.Free;
+  end;
+end;
+
+procedure Helper_DecodeBase64ToStream(const S : String; Output : TStream);
+var Strm : TStringStream;
+    b64Decoder : TBase64DecodingStream;
+begin
+  try
+    Strm := TStringStream.Create(S);
+    Strm.Position := 0;
+
+    b64Decoder := TBase64DecodingStream.Create(Strm);
+    Output.CopyFrom(b64Decoder, b64Decoder.Size);
+  finally
+    b64Decoder.Free;
+    Strm.Free;
+  end;
+end;
 
 (*******************************************************************************
 { TCustomXMLDataSet }
 *******************************************************************************)
 
 function TCustomXMLDataSet.EncodeBase64(const S : String) : String;
-var S1, S2 : TStringStream;
 begin
-  if UseBase64 then
-    begin
-      S1 := TStringStream.Create(S);
-      try
-        S1.Position:=0;
-        S2 := TStringStream.Create('');
-        try
-          with TBase64EncodingStream.Create(S2) do
-            try
-              CopyFrom(S1, S1.Size);
-            finally
-              Free;
-            end;
-          Result := S2.DataString;
-        finally
-          S2.Free;
-        end;
-      finally
-        S1.Free;
-      end;
-    end
-  else Result := S;
+  if UseBase64
+     then Result := Helper_EncodeBase64FromString(S)
+     else Result := S;
 end;
 
 function TCustomXMLDataSet.EncodeBase64(const S : TStream) : String;
 var strStrm : TStringStream;
 begin
-  try
-    S.Position := 0;
-    strStrm := TStringStream.Create('');
-    if UseBase64 then
-       with TBase64EncodingStream.Create(strStrm) do
-         try
-           CopyFrom(S, S.Size);
-         finally
-           Free;
-         end
-    else strStrm.CopyFrom(S, S.Size);
-    Result := strStrm.DataString;
-  finally
-    strStrm.Free;
-  end;
+  if UseBase64 then
+     Result := Helper_EncodeBase64FromStream(S)
+  else
+     try
+       strStrm := TStringStream.Create('');
+       S.Position := 0;
+       strStrm.CopyFrom(S, S.Size);
+       Result := strStrm.DataString;
+     finally
+       S.Position := 0;
+       strStrm.Free;
+     end;
 end;
 
 function TCustomXMLDataSet.DecodeBase64ToString(const S : String) : String;
-var S1, S2 : TStringStream;
-    b64Decoder : TBase64DecodingStream;
 begin
-  if UseBase64 then
-    begin
-      S1 := TStringStream.Create(S);
-      try
-        S1.Position:=0;
-        S2 := TStringStream.Create('');
-        try
-          b64Decoder := TBase64DecodingStream.Create(S1);
-          S2.CopyFrom(b64Decoder, b64Decoder.Size);
-        finally
-          b64Decoder.Free;
-        end;
-        Result := S2.DataString;
-      finally
-        S2.Free;
-        S1.Free;
-      end;
-    end
-  else Result := S;
+  if UseBase64
+     then Result := Helper_DecodeBase64ToString(S)
+     else Result := S;
 end;
 
 procedure TCustomXMLDataSet.DecodeBase64ToStream(const S : String; Output : TStream);
 var Strm : TStringStream;
-    b64Decoder : TBase64DecodingStream;
 begin
-  try
-     Strm := TStringStream.Create(S);
-     Strm.Position := 0;
-
-     if UseBase64 then
-       begin
-         b64Decoder := TBase64DecodingStream.Create(Strm);
-         Output.CopyFrom(b64Decoder, b64Decoder.Size);
-       end
-     else Output.CopyFrom(Strm, Strm.Size);
-  finally
-    if UseBase64 then
-       b64Decoder.Free;
-    Strm.Free;
-  end;
+  if UseBase64 then
+     Helper_DecodeBase64ToStream(S, Output)
+  else
+     try
+        Strm := TStringStream.Create(S);
+        Strm.Position := 0;
+        Output.CopyFrom(Strm, Strm.Size);
+     finally
+        Strm.Free;
+     end;
 end;
 
 class function TCustomXMLDataSet.GetFieldTypeFromString(FieldType : String) : TFieldType;
