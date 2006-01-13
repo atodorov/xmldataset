@@ -9,7 +9,7 @@
       <TargetFileExt Value=".exe"/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
-    <Units Count="41">
+    <Units Count="42">
       <Unit0>
         <CursorPos X="29" Y="1"/>
         <Filename Value="testxmlds.lpr"/>
@@ -19,7 +19,7 @@
         <UsageCount Value="148"/>
       </Unit0>
       <Unit1>
-        <CursorPos X="18" Y="3"/>
+        <CursorPos X="2" Y="57"/>
         <EditorIndex Value="0"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
@@ -27,7 +27,7 @@
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="1"/>
+        <TopLine Value="55"/>
         <UnitName Value="uMain"/>
         <UsageCount Value="39"/>
       </Unit1>
@@ -40,10 +40,12 @@
         <UsageCount Value="38"/>
       </Unit2>
       <Unit3>
-        <CursorPos X="23" Y="259"/>
+        <CursorPos X="10" Y="4"/>
+        <EditorIndex Value="1"/>
         <Filename Value="customxmldataset.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="259"/>
+        <Loaded Value="True"/>
+        <TopLine Value="1"/>
         <UnitName Value="customxmldataset"/>
         <UsageCount Value="38"/>
       </Unit3>
@@ -292,11 +294,19 @@
       <Unit40>
         <CursorPos X="36" Y="1"/>
         <Filename Value="fpcdefines.inc"/>
-        <IsPartOfProject Value="True"/>
         <TopLine Value="1"/>
         <UnitName Value="text"/>
         <UsageCount Value="22"/>
       </Unit40>
+      <Unit41>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="2"/>
+        <Filename Value="xmldsdefs.inc"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="20"/>
+      </Unit41>
     </Units>
     <PublishOptions>
       <Version Value="2"/>
@@ -320,7 +330,28 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="259" Column="23" TopLine="259"/>
+      </Position1>
+      <Position2>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="4" Column="2" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="7" Column="28" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="26" Column="15" TopLine="18"/>
+      </Position4>
+      <Position5>
+        <Filename Value="customxmldataset.pas"/>
+        <Caret Line="4" Column="10" TopLine="1"/>
+      </Position5>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="5"/>
