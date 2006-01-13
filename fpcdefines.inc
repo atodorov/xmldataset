@@ -10,7 +10,7 @@
 {$ENDIF}
 
 // fpc >= 2.0.1
-{$IF ((FPC_VERSION = 2) and (FPC_RELEASE = 0) and (FPC_PATCH >= 1))}
+{$IF ((FPC_VERSION >= 2) and (FPC_RELEASE >= 0) and (FPC_PATCH >= 1))}
    {$DEFINE FPC_VER_201+}
 {$ENDIF}
 
