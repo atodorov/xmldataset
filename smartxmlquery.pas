@@ -84,7 +84,7 @@ procedure TSmartXMLQuery.SetSQLConnection(const AValue: TCustomSQLConnection);
 begin
   inherited SetSQLConnection(AValue);
   if (Connection <> nil) then
-     Connection.BeforeCommitDataset := @Self.SQLConnBeforeCommitDataset;
+     Connection.BeforeCommitDataset := @SQLConnBeforeCommitDataset;
 end;
 
 procedure TSmartXMLQuery.SQLConnBeforeCommitDataset(Sender: TObject; Dataset: TCustomXMLDataSet);
@@ -130,16 +130,34 @@ begin
 
 // add nodes in correct order
     if (LInserted.Count > 0) then
-      for i := 0 to LInserted.Count - 1 do
-        LDoc.DocumentElement.AppendChild(TDOMElement(LInserted.Items[i]));
+      begin // v-- create node
+        LNode := LDoc.CreateElement(cInsert);
+
+        for i := 0 to LInserted.Count - 1 do
+          LNode.AppendChild(TDOMElement(LInserted.Items[i]));
+
+        LDoc.DocumentElement.AppendChild(LNode);
+      end;
 
     if (LModified.Count > 0) then
-      for i := 0 to LModified.Count - 1 do
-        LDoc.DocumentElement.AppendChild(TDOMElement(LModified.Items[i]));
+      begin // v-- create node
+        LNode := LDoc.CreateElement(cUpdate);
 
+        for i := 0 to LModified.Count - 1 do
+          LNode.AppendChild(TDOMElement(LModified.Items[i]));
+          
+        LDoc.DocumentElement.AppendChild(LNode);
+      end;
+      
     if (LDeleted.Count > 0) then
-      for i := 0 to LDeleted.Count - 1 do
-        LDoc.DocumentElement.AppendChild(TDOMElement(LDeleted.Items[i]));
+      begin // v-- create node
+        LNode := LDoc.CreateElement(cDelete);
+
+        for i := 0 to LDeleted.Count - 1 do
+          LNode.AppendChild(TDOMElement(LDeleted.Items[i]));
+          
+        LDoc.DocumentElement.AppendChild(LNode);
+      end;
       
     // assign new XML document
     XMLDocument := LDoc;
@@ -186,7 +204,7 @@ begin
    umWHERE_KEY_ONLY :
      begin // find primary key
        Result := ' ' + PrimaryKey + '='+ QuoteChar +
-                 DecodeBase64ToString(GetFieldNodeByName(ARow, Result).AttribStrings[cField_Value]) +
+                 DecodeBase64ToString(GetFieldNodeByName(ARow, PrimaryKey).AttribStrings[cField_OldValue]) +
                  QuoteChar;
      end
   end;
