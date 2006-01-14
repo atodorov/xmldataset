@@ -44,9 +44,6 @@ type
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
 // - change all Integer to Longword / Longint N.B. sign / range
-// - add 'oldvalue' = 'value' for primary key fields (to be able to handle SmartXML)
-
-  { TCustomXMLDataSet - dataset that works with XML instead a database }
 
   { TCustomXMLDataSet }
 
@@ -66,7 +63,7 @@ type
     FModifiedCount : Longint;
     FInternalID : Longint;
     function  GetXML: String;
-    function GetXMLStringStream: TStringStream;
+    function  GetXMLStringStream: TStringStream;
     procedure SetReadOnly(Value: Boolean);
     procedure SetXMLDoc(const AValue: TXMLDocument);
   protected
@@ -113,12 +110,14 @@ type
     function  nGetNextID : Longint;
     function  sGetNextID : String;
     procedure AssignInternalIDS;
+    { assign old_value="" to bo able to handle SmartXML }
+    procedure AssignOldValue(AFieldNode : TDOMElement);
     { set fields properties - e.g. visible, required, ... }
     procedure SetFieldsProperties;
     { search and indexing }
     function  FindRowIndexInSection(const ARow : TDOMElement; const ASection : String) : Longint;
     { helper functions }
-    function GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
+    function  GetFieldNodeByName(const AParent : TDOMElement; AFieldName : String) : TDOMElement;
   public
     { Base64 encodng / decoding routines }
     function  EncodeBase64(const S : String)  : String; overload;
@@ -569,27 +568,31 @@ begin
      raise Exception.Create('Invalid XML Document!');
 
   FieldDefs.Clear;
-  for i := 0 to FXMLDoc.DocumentElement.FindNode(cMetaData).FindNode(cFieldDefs).ChildNodes.Count - 1 do
-      begin   // Add fields
-        domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cMetadata).FindNode(cFieldDefs).ChildNodes.Item[i]);
-        // convert FieldName using specified encodings
-        FieldName := IconvConvert(FROM_ENCODING, TO_ENCODING, Trim(domNode.AttribStrings[cFieldDef_Name]));
-        ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]));
-        Required := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Required]) = cTrue;
-        // determine field size
-        FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.AttribStrings[cFieldDef_FieldSize]));
+  with FXMLDoc.DocumentElement.FindNode(cMetaData) do
+    if (FindNode(cFieldDefs) <> nil) then
+       with FindNode(cFieldDefs)do
+         if HasChildNodes then
+            for i := 0 to ChildNodes.Count - 1 do
+                begin   // Add fields
+                  domNode := TDOMElement(ChildNodes.Item[i]);
+                  // convert FieldName using specified encodings
+                  FieldName := IconvConvert(FROM_ENCODING, TO_ENCODING, Trim(domNode.AttribStrings[cFieldDef_Name]));
+                  ftFieldType := GetFieldTypeFromString(Trim(domNode.AttribStrings[cFieldDef_DataType]));
+                  Required := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Required]) = cTrue;
+                  // determine field size
+                  FieldSize := GetFieldSizeByType(ftFieldType,StrToInt(domNode.AttribStrings[cFieldDef_FieldSize]));
 
-        FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
-        // convert DisplayName using specified encodings
-        FieldDefs.Items[i].DisplayName := IconvConvert(FROM_ENCODING, TO_ENCODING, domNode.AttribStrings[cFieldDef_DisplayLabel]);
-      end;
+                  FieldDefs.Add(FieldName, ftFieldType, FieldSize, Required);
+                  // convert DisplayName using specified encodings
+                  FieldDefs.Items[i].DisplayName := IconvConvert(FROM_ENCODING, TO_ENCODING, domNode.AttribStrings[cFieldDef_DisplayLabel]);
+                end;
 end;
 
 function TCustomXMLDataSet.GetFieldValue(Field: TField): Variant;
 var FieldNode : TDOMElement;
     strValue : String;
 begin
-   FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
+   FieldNode := GetFieldNodeByName(FNode, Field.FieldName);
 {$IFDEF USEWIDESTRINGS}
    strValue := WideCharToString(@FieldNode.AttribStrings[cField_Value][1]);
 {$ELSE}
@@ -607,7 +610,7 @@ procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
 var FieldNode : TDOMElement;
     strEnc64 : String;
 begin
-   FieldNode := GetFieldNodeByName(FNode,Field.FieldName);
+   FieldNode := GetFieldNodeByName(FNode, Field.FieldName);
    strEnc64 := EncodeBase64(VarToStr(Value));
    // set old data if we are editing
    if (State = dsEdit) and
@@ -850,19 +853,16 @@ begin
        end;
 
 // add record to section
-    if (ASection = cDeletedRecords)
-      then LSection.AppendChild(ANode.CloneNode(true,ANode.OwnerDocument))
+    if (ASection = cDeletedRecords) // if it is not a new row then it should be deleted
+      then if ((StrToInt(ANode.AttribStrings[cRow_State]) and ROW_INSERTED) <> ROW_INSERTED)
+              then LSection.AppendChild(ANode.CloneNode(true, ANode.OwnerDocument))
+              else // it is inserted row. nothing to do with it. its in te buffer only
       else LSection.AppendChild(ANode);
 
 // increase section records count
     if (ASection = cDeletedRecords)
       then begin inc(FDeletedCount); LCount := FDeletedCount; end;
-(*
-      else if (ASection = cInsertedRecords)
-             then begin inc(FInsertedCount); LCount := FInsertedCount; end
-             else if (ASection = cModifiedRecords)
-                    then begin inc(FModifiedCount); LCount := FModifiedCount; end;
-*)
+
     LSection.AttribStrings[cCount] := IntToStr(LCount);
   finally
     LSection := nil; // clear reference
@@ -885,15 +885,31 @@ var i : Longint;
     domNode : TDOMElement;
 begin
   try
-    for i := 0 to FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Count - 1 do
-      begin
-        domNode := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData).ChildNodes.Item[i]);
-        domNode.AttribStrings[cRow_ID] := sGetNextID;
-        domNode.AttribStrings[cRow_State] := IntToStr(ROW_NOT_MODIFIED);
-      end;
+    with FXMLDoc.DocumentElement.FindNode(cRecordData) do
+       if HasChildNodes then
+         for i := 0 to ChildNodes.Count - 1 do
+           begin
+             domNode := TDOMElement(ChildNodes.Item[i]);
+             domNode.AttribStrings[cRow_ID] := sGetNextID;
+             domNode.AttribStrings[cRow_State] := IntToStr(ROW_NOT_MODIFIED);
+
+             AssignOldValue(domNode);
+           end;
   finally
     domNode := nil; // clear reference
   end;
+end;
+
+procedure TCustomXMLDataSet.AssignOldValue(AFieldNode: TDOMElement);
+var i : LongInt;
+    LChild : TDOMElement;
+begin
+  if AFieldNode.HasChildNodes then
+     for i := 0 to AFieldNode.ChildNodes.Count - 1 do
+       begin
+         LChild := TDOMElement(AFieldNode.ChildNodes.Item[i]);
+         LChild.AttribStrings[cField_OldValue] := LChild.AttribStrings[cField_Value];
+       end;
 end;
 
 procedure TCustomXMLDataSet.SetFieldsProperties;
