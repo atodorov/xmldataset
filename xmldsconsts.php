@@ -87,24 +87,6 @@
 /*|  |*/define('C_METADATA_INDEXDEFS',  'indexdefs');
 /*|  |*/define('C_METADATA_RECORDDATA', 'recorddata');
 /*|  |*/define('C_METADATA_CHANGES',    'changes');
-/*|  +---*/define('C_TABLE', 'table');
-/*|  |    [TABLE ATTRIBUTES] */
-/*|  |*/   define('C_TABLE_NAME',  'name');
-/*|  +--+*/define('C_CONSTRAINTS', 'constraints');
-/*|  |  +--+*/define('C_KEYS', 'keys');
-/*|  |  |  +---*/define('C_PRIMARYKEY', 'primary_key');
-/*|  |  |  |    [PRIMARY KEY ATTRIBUTES] */
-/*|  |  |  |*/   define('C_PRIMARYKEY_NAME',  'name');
-/*|  |  |  |*/   define('C_PRIMARYKEY_FIELD', 'field');
-/*|  |  |  +---*/define('C_FOREIGNKEY',       'foreign_key');
-/*|  |  |       [FOREIGN KEY ATTRIBUTES] */
-/*|  |  |*/      define('C_FOREIGNKEY_NAME',     'name');
-/*|  |  |*/      define('C_FOREIGNKEY_FIELD',    'field');
-/*|  |  |*/      define('C_FOREIGNKEY_REFTABLE', 'reftable');
-/*|  |  |*/      define('C_FOREIGNKEY_REFFIELD', 'reffield');
-/*|  |  |*/      define('C_FOREIGNKEY_ACTION',   'action');
-/*|  |  +---*/define('C_UNIQUES', 'uniques');
-/*|  |  +---*/define('C_CHECKS',  'checks');
 /*|  +--+*/define('C_UPDATEMODE', 'update_mode');
 /*|  |    [UPDATE_MODE ATTRIBUTES] */
 /*|  |*/   define('C_UPDATEMODE_VALUE', 'value');

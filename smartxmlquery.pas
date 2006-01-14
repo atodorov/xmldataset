@@ -39,14 +39,15 @@ type
   TSmartXMLQuery = class(TCustomXMLQuery)
   private
     FQuoteChar : Char;
+    FPrimaryKey : String;
+    FTableName : String;
     function GetUpdateMode: TUpdateMode;
   protected
     { Constructs sql statements that are saved into XMLDocument instead of standard
       datapacket.xml contents. Everything is sent over the connection with commit.
       SLQ is constructed when at a BeforeComit event handler.
       The statements are in the following order :
-      INSERT's, UPDATE's, DELETE's
-    }
+      INSERT's, UPDATE's, DELETE's }
     procedure SetSQLConnection(const AValue: TCustomSQLConnection); override;
     procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TCustomXMLDataSet);
 
@@ -62,6 +63,10 @@ type
     constructor Create(AOwner : TComponent); override;
     { Character used to quote field values. Default is single quote like Firebird }
     property QuoteChar : Char read FQuoteChar write FQuoteChar;
+    { name of primary key field used for insert / update / delete operations }
+    property PrimaryKey : String read FPrimaryKey write FPrimaryKey;
+    { name of database table. used with PrimaryKey. }
+    property TableName : String read FTableName write FTableName;
   end;
 
 implementation
@@ -89,7 +94,7 @@ begin
 end;
 
 procedure TSmartXMLQuery.ConstructSQLFromXML;
-var LNode : TDOMElement;
+var LNode, LChild : TDOMElement;
     LInserted, LModified, LDeleted : TList;
     LDoc  : TXMLDocument;
     i : LongWord;
@@ -105,24 +110,23 @@ begin
     LModified := TList.Create;
     LDeleted  := TList.Create;
 
-    if (XMLDocument.DocumentElement.FindNode(cRecordData)<> nil) then
-      for i := 0 to XMLDocument.DocumentElement.FindNode(cRecordData).ChildNodes.Count - 1 do
+    LNode := TDOMElement(XMLDocument.DocumentElement.FindNode(cRecordData));
+    if (LNode <> nil) and (LNode.HasChildNodes) then
+      for i := 0 to LNode.ChildNodes.Count - 1 do
         begin
-          LNode := TDOMElement(XMLDocument.DocumentElement.FindNode(cRecordData).ChildNodes.Item[i]);
-          case StrToInt(LNode.AttribStrings[cRow_State]) of
+          LChild := TDOMElement(LNode.ChildNodes.Item[i]);
+          case StrToInt(LChild.AttribStrings[cRow_State]) of
             ROW_INSERTED, ROW_INSERTED or ROW_MODIFIED :
-                LInserted.Add(CreateInsertFromNode(LNode, LDoc));
-            ROW_MODIFIED : LModified.Add(CreateUpdateFromNode(LNode, LDoc));
+                LInserted.Add(CreateInsertFromNode(LChild, LDoc));
+            ROW_MODIFIED : LModified.Add(CreateUpdateFromNode(LChild, LDoc));
           end;
         end;
 
     // handle deleted records
-    if (XMLDocument.DocumentElement.FindNode(cDeletedRecords) <> nil) then
-      for i := 0 to XMLDocument.DocumentElement.FindNode(cDeletedRecords).ChildNodes.Count - 1 do
-        LDeleted.Add(
-          CreateDeleteFromNode(
-            TDOMElement(XMLDocument.DocumentElement.FindNode(cDeletedRecords).ChildNodes.Item[i]),
-            LDoc));
+    LNode := TDOMElement(XMLDocument.DocumentElement.FindNode(cDeletedRecords));
+    if (LNode <> nil) and (LNode.HasChildNodes) then
+      for i := 0 to LNode.ChildNodes.Count - 1 do
+        LDeleted.Add(CreateDeleteFromNode(TDOMElement(LNode.ChildNodes.Item[i]), LDoc));
 
 // add nodes in correct order
     if (LInserted.Count > 0) then
@@ -181,9 +185,7 @@ begin
      end;
    umWHERE_KEY_ONLY :
      begin // find primary key
-       Result := XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cConstraints).FindNode(cKeys).
-                 FindNode(cPrimaryKey).Attributes.GetNamedItem(cPrimaryKey_Field).NodeValue;
-       Result := ' ' + Result + '='+ QuoteChar +
+       Result := ' ' + PrimaryKey + '='+ QuoteChar +
                  DecodeBase64ToString(GetFieldNodeByName(ARow, Result).AttribStrings[cField_Value]) +
                  QuoteChar;
      end
@@ -198,9 +200,7 @@ begin
   try
     Result := AOwner.CreateElement(cQuery);
     Result.AttribStrings[cQuery_Type] := QUERY_INSERT;
-    strSQL := 'INSERT INTO ' +
-      TDOMElement(ANode.OwnerDocument.DocumentElement.FindNode(cMetadata).FindNode(cTable)).AttribStrings[cTable_Name] +
-      ' (';
+    strSQL := 'INSERT INTO ' + TableName + ' (';
 
     strFields := '';
     strValues := '';
@@ -232,9 +232,7 @@ begin
   try
     Result := AOwner.CreateElement(cQuery);
     Result.AttribStrings[cQuery_Type] := QUERY_UPDATE;
-    strSQL := 'UPDATE ' +
-      TDOMElement(ANode.OwnerDocument.DocumentElement.FindNode(cMetadata).FindNode(cTable)).AttribStrings[cTable_Name] +
-      ' SET';
+    strSQL := 'UPDATE ' + TableName + ' SET';
 
     for i := 0 to ANode.ChildNodes.Count - 1 do
         strSQL := strSQL + ' ' +
@@ -261,9 +259,7 @@ begin
   try
     Result := AOwner.CreateElement(cQuery);
     Result.AttribStrings[cQuery_Type] := QUERY_DELETE;
-    strSQL := 'DELETE FROM ' +
-      TDOMElement(ANode.OwnerDocument.DocumentElement.FindNode(cMetadata).FindNode(cTable)).AttribStrings[cTable_Name] +
-      ' WHERE ';
+    strSQL := 'DELETE FROM ' + TableName + ' WHERE ';
     strSQL := strSQL + ConstructWhereClause(ANode);
 
     CData := AOwner.CreateCDATASection(strSQL);
@@ -277,6 +273,8 @@ constructor TSmartXMLQuery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FQuoteChar := '''';
+  FPrimaryKey := '';
+  FTableName := '';
 end;
 
 end.

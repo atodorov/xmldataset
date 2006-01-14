@@ -96,24 +96,6 @@ const
 {|  |}cMetadata_IndexDefs  = 'indexdefs';
 {|  |}cMetadata_RecordData = 'recorddata';
 {|  |}cMetadata_Changes    = 'changes';
-{|  +---}cTable = 'table';
-{|  |    [TABLE ATTRIBUTES] }
-{|  |}   cTable_Name = 'name';
-{|  +--+}cConstraints = 'constraints';
-{|  |  +--+}cKeys = 'keys';
-{|  |  |  +---}cPrimaryKey = 'primary_key';
-{|  |  |  |    [PRIMARY KEY ATTRIBUTES] }
-{|  |  |  |}   cPrimaryKey_Name  = 'name';
-{|  |  |  |}   cPrimaryKey_Field = 'field';
-{|  |  |  +---}cForeignKey = 'foreign_key';
-{|  |  |       [FOREIGN KEY ATTRIBUTES] }
-{|  |  |}      cForeignKey_Name     = 'name';
-{|  |  |}      cForeignKey_Field    = 'field';
-{|  |  |}      cForeignKey_RefTable = 'reftable';
-{|  |  |}      cForeignKey_RefField = 'reffield';
-{|  |  |}      cForeignKey_Action   = 'action';
-{|  |  +---}cUniques = 'uniques';
-{|  |  +---}cChecks  = 'checks';
 {|  +--+}cUpdateMode = 'update_mode';
 {|  |    [UPDATE_MODE ATTRIBUTES] }
 {|  |}   cUpdateMode_Value = 'value';
