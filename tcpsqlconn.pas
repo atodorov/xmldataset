@@ -22,8 +22,6 @@ unit tcpsqlconn;
  *****************************************************************************
 *******************************************************************************}
 
-//{$DEFINE DEBUGCONNECTION}
-
 interface
 
 uses Classes, SysUtils, CustomSQLConn, TCPBase;
@@ -43,12 +41,14 @@ type
     FPort : Word;
     FTimeOut : Integer;
     procedure DoSetConnectionParams;
+    //todo : still not working
+    function  CheckSocketConnected(S : LongInt) : Boolean;
   protected
     procedure DoConnect; override;
     procedure DoDisconnect; override;
     function  GetConnected: Boolean; override;
     function  TCPSendData: Boolean;
-    function Open : Boolean;  override;
+    function  Open : Boolean;  override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -58,10 +58,11 @@ type
 
 implementation
 
-{$IFDEF DEBUGCONNECTION}
-uses Dialogs;
+{$IFDEF WIN32}
+uses WinSock;
+{$ELSE}
+uses LibC;
 {$ENDIF}
-
 
 (*******************************************************************************
 { TTCPSQLConnection }
@@ -88,11 +89,41 @@ begin
      FTimeOut := StrToInt(ConnParams.ValueFromIndex[index]);
 end;
 
+function TTCPSQLConnection.CheckSocketConnected(S: LongInt): Boolean;
+{$IFDEF WIN32}
+var wSet : TFDSet;
+    TimeOut : TTimeVal;
+    Res : tOS_INT;
+begin
+   TimeOut.tv_sec := 0;
+   TimeOut.tv_usec := 10; // wait 10ms until select() returns
+   
+   FD_ZERO(wSet);
+   FD_SET(S, wSet);
+   
+   Res := WinSock.Select(0, nil, @wSet, nil, @TimeOut);
+
+   // S is writeable and no errors
+   Result := (Res = 1) and (WSAGetLastError = 0);
+end;
+{$ELSE}
+begin
+   Result := false;
+   raise Exception.Create('TTCPSQLConnection.CheckSocketConnected - not implemented');
+end;
+{$ENDIF}
+
 procedure TTCPSQLConnection.DoConnect;
 begin
   DoSetConnectionParams;
-  if not Assigned(FSocket) then
-     FSocket := TTextInetSocket.Create(FHost, FPort); // connection is made upon creation
+  if Assigned(FSocket) then
+     try
+       FSocket.Free;
+       FSocket := nil;
+     except
+       // do nothing. catch all exceptions here
+     end;
+  FSocket := TTextInetSocket.Create(FHost, FPort); // connection is made upon creation
 end;
 
 procedure TTCPSQLConnection.DoDisconnect;
@@ -106,8 +137,8 @@ begin
 end;
 
 function TTCPSQLConnection.GetConnected: Boolean;
-begin
-  Result := (FSocket <> nil) and Assigned(FSocket);
+begin // still have a valid socket handle
+  Result := (FSocket <> nil) and CheckSocketConnected(FSocket.Handle);
 end;
 
 constructor TTCPSQLConnection.Create(AOwner: TComponent);
