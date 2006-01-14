@@ -308,22 +308,38 @@ procedure TCustomSQLConnection.Commit;
 // the other side of the connection must supply the result XML file
 // XML for all datasets is sent step by step
 var i : Integer;
+    msTemp : TMemoryStream;
 begin
+  if not Connected then
+     SetConnected(true);
+
   if Assigned(FBeforeCommit) then
      FBeforeCommit(Self);
-     
-  for i := 0 to FDataSets.Count - 1 do
-    begin // send current xml
-      if Assigned(FBeforeCommitDataset) then
-         FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]));
-         
-      DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
-      Open;
-      TCustomXMLDataset(FDataSets.Items[i]).Close;
-      ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument,ReceivedData);
-      TCustomXMLDataset(FDataSets.Items[i]).Open; // reopen dataset after new data is present
-    end;
-  FInTransaction := false;
+  try
+    msTemp := TMemoryStream.Create;
+    ReceivedData := msTemp;
+    
+    for i := 0 to FDataSets.Count - 1 do
+      begin // send current xml
+        msTemp.Clear;
+        msTemp.Position := 0;
+      
+        // close dataset. xml can be changed if dataset is closed
+        TCustomXMLDataset(FDataSets.Items[i]).Close;
+
+        if Assigned(FBeforeCommitDataset) then
+           FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]));
+
+        DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
+        Open;
+        ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument, ReceivedData);
+        TCustomXMLDataset(FDataSets.Items[i]).Open; // reopen dataset after new data is present
+      end;
+  finally
+    msTemp.Clear;
+    msTemp.Free;
+    FInTransaction := false;
+  end;
 end;
 
 end.
