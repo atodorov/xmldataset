@@ -98,7 +98,7 @@ begin
      FSQLConnection.UnRegisterClient(Self);
   FSQLConnection := AValue;
   if Assigned(FSQLConnection) then
-     FSQLConnection.RegisterClient(Self,nil);
+     FSQLConnection.RegisterClient(Self, nil);
 end;
 
 procedure TCustomXMLQuery.ConstructQuery(const QueryType : String);
