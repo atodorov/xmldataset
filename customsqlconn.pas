@@ -265,6 +265,7 @@ end;
 
 procedure TCustomSQLConnection.StartTransaction;
 var i : Integer;
+    LNode : TDOMElement;
 begin
   if InTransaction then
      raise Exception.Create('Transaction is active!');
@@ -273,11 +274,14 @@ begin
      raise Exception.Create('Can not start transaction. Internal count differs!');
      
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement) then
+    if Assigned(TXMLDocument(FTransactXMLList.Items[i])) then
       with TXMLDocument(FTransactXMLList.Items[i]) do
         begin
-          RemoveChild(DocumentElement);
-          AppendChild(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement);
+          if Assigned(DocumentElement) then
+             RemoveChild(DocumentElement);
+          LNode := TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement;
+          // owner is the document kept in transaction list
+          AppendChild(LNode.CloneNode(true, TXMLDocument(FTransactXMLList.Items[i])));
         end;
 
   FInTransaction := true;
@@ -285,6 +289,7 @@ end;
 
 procedure TCustomSQLConnection.Rollback;
 var i : Integer;
+    LElem : TDOMElement;
 begin
   if (FTransactXMLList.Count <> FDataSets.Count) then
      raise Exception.Create('Can not rollback. Internal count differs!');
@@ -295,7 +300,9 @@ begin
          begin
            Close;
            XMLDocument.RemoveChild(XMLDocument.DocumentElement);
-           XMLDocument.AppendChild(TXMLDocument(FTransactXMLList.Items[i]).DocumentElement);
+           LElem := TXMLDocument(FTransactXMLList.Items[i]).DocumentElement;
+           // owner is the dataset document
+           XMLDocument.AppendChild(LElem.CloneNode(true, XMLDocument));
            Open; // reopen dataset
          end;
   FInTransaction := false;
