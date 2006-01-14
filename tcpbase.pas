@@ -53,31 +53,53 @@ begin
   SocketOptions := SocketOptions + [soKeepAlive];
 end;
 
-function TTextInetSocket.RecvText: String;
-var len, n_len : LongInt;
+function TTextInetSocket.RecvText : String;
+var len, n_len, r : LongInt;
 begin
+  r := 0;
   len := 0;
   n_len := 0;
   SetLength(Result, 0);
-  Read(n_len, SizeOf(n_len));
+
+  if (Read(n_len, SizeOf(n_len)) <> SizeOf(n_len)) and
+     (SocketError <> 0) then
+     raise Exception.Create('TTextInetSocket.RecvText - SOCKET ERROR '+IntToStr(SocketError));
+     
   len := NetToHost(n_len);
   if len > 0 then
      begin
        SetLength(Result, len);
-       if Read(Result[1], len) <> len then
-          raise Exception.Create('TTextSocketStream.RecvText - FAILED!');
+       repeat
+         r := r + Read(Result[1+r], len-r);
+         if (SocketError <> 0) then
+            raise Exception.Create('TTextInetSocket.RecvText - SOCKET ERROR '+IntToStr(SocketError));
+       until r >= len;
+       if r > len then
+          raise Exception.Create('TTextInetSocket.RecvText - more bytes read!');
      end;
 end;
 
 procedure TTextInetSocket.SendText(const AText: String);
-var len, n_len : LongInt;
+var len, n_len, w : LongInt;
 begin
+  w := 0;
   len := Length(AText);
   n_len := HostToNet(len);
-  Write(n_len, SizeOf(n_len));
+  
+  if (Write(n_len, SizeOf(n_len)) <> SizeOf(n_len)) and
+     (SocketError <> 0) then
+     raise Exception.Create('TTextInetSocket.SendText - SOCKET ERROR '+IntToStr(SocketError));
+
   if len > 0 then
-     if Write(AText[1], len) <> len then
-        raise Exception.Create('TTextSocketStream.SendText - FAILED!');
+     begin
+       repeat
+         w := w + Write(AText[1+w], len-w);
+         if (SocketError <> 0) then
+            raise Exception.Create('TTextInetSocket.SendText - SOCKET ERROR '+IntToStr(SocketError));
+       until w = len;
+       if w > len then
+          raise Exception.Create('TTextInetSocket.SendText - more bytes read!');
+     end;
 end;
 
 end.
