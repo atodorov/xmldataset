@@ -1,7 +1,7 @@
 unit gxbasedataset;
 
 {$mode objfpc}{$H+}
-{$I fpcdefines.inc}
+{$I xmldsdefs.inc}
 
 {*******************************************************************************
 
