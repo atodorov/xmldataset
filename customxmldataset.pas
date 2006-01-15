@@ -22,21 +22,10 @@ unit customxmldataset;
  *****************************************************************************
 *******************************************************************************}
 
-// a workaround widestrings. We use this because DOMString = WideString
-{$DEFINE USEWIDESTRINGS}
-
-//{$DEFINE DEBUGXML}
-
 interface
 
 uses
-  Classes, SysUtils, DB, DOM, gxBaseDataset
-  {$IFDEF DEBUGXML}
-    ,StdCtrls;
-    var Memo : TMemo;
-  {$ELSE}
-  ;
-  {$ENDIF}
+  Classes, SysUtils, DB, DOM, gxBaseDataset;
 
 type
 ////// TODO LIST
@@ -162,13 +151,6 @@ uses uXMLDSConsts, Variants, Base64, XMLWrite
      , LibC
      {$ENDIF}
      ;
-
-{$IFDEF DEBUGXML}
-procedure Log(const Msg : String);
-begin
-  Memo.Lines.Add(DateTimeToStr(Now)+' : '+Msg);
-end;
-{$ENDIF}
 
 { helper functions for Base64 encoding / decoding }
 
@@ -593,16 +575,13 @@ var FieldNode : TDOMElement;
     strValue : String;
 begin
    FieldNode := GetFieldNodeByName(FNode, Field.FieldName);
-{$IFDEF USEWIDESTRINGS}
+{$IFDEF USE_WIDESTRINGS}
    strValue := WideCharToString(@FieldNode.AttribStrings[cField_Value][1]);
 {$ELSE}
    strValue := FieldNode.AttribStrings[cField_Value];
 {$ENDIF}
 // get result using character encoding
    Result := IconvConvert(FROM_ENCODING, TO_ENCODING, DecodeBase64ToString(strValue));
-   
-   
-//   writeln('TCustomXMLDataSet.GetFieldValue --- ',Field.FieldName,' = ',Result);
 end;
 
 procedure TCustomXMLDataSet.SetFieldValue(Field: TField; Value: Variant);
