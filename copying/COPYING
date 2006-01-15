@@ -5,9 +5,10 @@ with the following modification:
 - object files and libraries linked into an application may be
   distributed without source code.
 
+This is the ModifiedLGPL used by Lazarus.  
+
 If you didn't receive a copy of the file COPYING.LGPL, contact:
       Free Software Foundation, Inc.,
       59 Temple Place - Suite 330
       Boston, MA 02111
       USA
-
