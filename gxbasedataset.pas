@@ -33,22 +33,44 @@ unit gxbasedataset;
 *******************************************************************************}
 
 // todo : TimeStampToMSecs / MSecsToTimeStamp doesn't work for date fields.
-// todo : add IFDEFS for different FPC versions
-
-
-//{$DEFINE DEBUGXML}
+// TimeStamp issues are due to differences between FPC and Delphi. check them out.
+// it is written in the mailing list about that.
 
 interface
 
-uses Classes, SysUtils, DB
-  {$IFDEF DEBUGXML}
-    ,StdCtrls;
-    var Memo : TMemo;
-  {$ELSE}
-  ;
-  {$ENDIF}
+uses Classes, SysUtils, DB;
+
+resourcestring
+  FT_NOT_SUPPORTED = 'Field type not supported';
+  
+const
+  (*** UNSUPPORTED FIELD TYPES ***)
+  UNSUPPORTED = [
+//  ftBlob, ftMemo, ftGraphic, // <--- BLOBS ARE NOT TESTED BUT ITS SUPPOSED TO WORK
+    ftFmtMemo, ftUnknown, ftWord, ftBytes, ftVarBytes, ftAutoInc,
+    ftParadoxOle, ftDBaseOle, ftTypedBinary, ftCursor, ftFixedChar,
+    ftWideString, ftADT, ftArray, ftReference,  ftDataSet, ftOraBlob,
+    ftOraClob, ftVariant, ftInterface, ftIDispatch, ftGuid, ftTimeStamp, ftFMTBcd];
+  (*****************************************************************************
+    To implement support for specific field type several thing must be done :
+    1) add ftXXX to GetDataSize - this returns how many bytes are used to
+       store a single value from the given data type. Most cases this is SizeOf(TypeXXX)
+    2) add ftXXX to GetFieldOffset - this returns the field offset in the buffer structure.
+       this is a sum from all fields preceding a particular field of type XXX
+    3) add ftXXX to BufferToRecord / RecordToBuffer - these two procedures interact with
+       the internal buffer system and the higher-level variant system.
+       N.B. since these procedures call GetFieldData / SetFieldData the actual data
+       must be fitted in a Variant.
+    4) add ftXXX to GetFieldData / SetFieldData - these functions interact with the
+       internal buffer system.
+    5) remove ftXXX from UNSUPPORTED set
+    
+    6) CustomXMLDataSet which inherits from this one must be told how to handle new data
+       and how it is represented in XML.
+  *****************************************************************************)
 
 type
+
   PRecordInfo = ^TRecordInfo;
   TRecordInfo = record
     RecordID: Pointer;
@@ -165,13 +187,6 @@ type
 implementation
 
 var OldTimeSeparator, OldDateSeparator : Char;
-
-{$IFDEF DEBUGXML}
-procedure Log(const Msg : String);
-begin
-  Memo.Lines.Add(DateTimeToStr(Now)+' : '+Msg);
-end;
-{$ENDIF}
 
 { TGXBaseDataset }
 
@@ -370,18 +385,20 @@ begin
 end;
 
 function TGXBaseDataset.GetDataSize: Integer;
-var
-  Index: Integer;
+var Index : Integer;
 begin
   Result := 0;
   for Index := 0 to FieldCount - 1 do
     case Fields[Index].DataType of
       ftString: Result := Result + Fields[Index].Size + 1; //Leave space for terminating null
       ftInteger, ftSmallInt, ftDate, ftTime  : Result := Result + SizeOf(Integer);
+      ftLargeInt : Result := Result + SizeOf(LargeInt);
       ftFloat, ftCurrency, ftBCD, ftDateTime : Result := Result + SizeOf(Double);
-      ftBoolean: Result := Result + sizeof(WordBool);
-      else if Fields[Index].IsBlob then
-              Result := Result + sizeof(Pointer);
+      ftBoolean: Result := Result + SizeOf(WordBool);
+      else if Fields[Index].IsBlob
+              then Result := Result + SizeOf(Pointer)
+              else if (Fields[Index].DataType in UNSUPPORTED) then
+                      raise Exception.Create('TGXBaseDataset.GetDataSize - '+FT_NOT_SUPPORTED);
     end;
 end;
 
@@ -469,19 +486,21 @@ begin
 end;
 
 function TGXBaseDataset.GetFieldOffset(Field: TField): Integer;
-var
-  Index, FPos: Integer;
+var Index, FPos : Integer;
 begin
   Result := 0;
   FPos := FBufferMap.Indexof(Field.FieldName);
   for Index := 0 to FPos - 1 do
-    case FieldbyName(FBufferMap[Index]).DataType of
-      ftString: inc(Result, FieldbyName(FBufferMap[Index]).Size + 1);
-      ftInteger, ftSmallInt, ftDate, ftTime: inc(Result, sizeof(Integer));
-      ftDateTime, ftFloat, ftBCD, ftCurrency: inc(Result, sizeof(Double));
-      ftBoolean: inc(Result, sizeof(WordBool));
-      else if Fields[Index].IsBlob then
-              Result := Result + SizeOf(Pointer);
+    case FieldByName(FBufferMap[Index]).DataType of
+      ftString : inc(Result, FieldbyName(FBufferMap[Index]).Size + 1);
+      ftInteger, ftSmallInt, ftDate, ftTime : inc(Result, SizeOf(Integer));
+      ftLargeInt : inc(Result, SizeOf(LargeInt));
+      ftDateTime, ftFloat, ftBCD, ftCurrency: inc(Result, SizeOf(Double));
+      ftBoolean: inc(Result, SizeOf(WordBool));
+      else if Fields[Index].IsBlob
+              then Result := Result + SizeOf(Pointer)
+              else if (FieldByName(FBufferMap[Index]).DataType in UNSUPPORTED) then
+                      raise Exception.Create('TGXBaseDataset.GetFieldOffset - '+FT_NOT_SUPPORTED);
     end;
 end;
 
@@ -489,6 +508,7 @@ procedure TGXBaseDataset.BufferToRecord(Buffer: PChar);
 var
   TempStr: string;
   TempInt: Integer;
+  TempLInt : LargeInt;
   TempDouble: Double;
   TempBool: WordBool;
   Offset: Integer;
@@ -506,12 +526,17 @@ begin
           end;
         ftInteger, ftSmallInt, ftDate, ftTime:
           begin
-            Move((Buffer + Offset)^, TempInt, sizeof(Integer));
+            Move((Buffer + Offset)^, TempInt, SizeOf(Integer));
             SetFieldValue(Fields[Index], TempInt);
+          end;
+        ftLargeInt :
+          begin
+            Move((Buffer + Offset)^, TempLInt, SizeOf(LargeInt));
+            SetFieldValue(Fields[Index], TempLInt);
           end;
         ftFloat, ftBCD, ftCurrency :
           begin
-            Move((Buffer + Offset)^, TempDouble, sizeof(Double));
+            Move((Buffer + Offset)^, TempDouble, SizeOf(Double));
             SetFieldValue(Fields[Index], TempDouble);
           end;
         ftDateTime :
@@ -525,13 +550,14 @@ begin
             SetFieldValue(Fields[Index], BoolToStr(TempBool));
 //            SetFieldValue(Fields[Index], TempBool);
           end;
-        else
-          if Fields[Index].IsBlob then
-             begin
-               Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
-               Stream.Position := 0;
-               SetBlobField(Fields[Index], Stream);
-             end;
+        else if Fields[Index].IsBlob then
+                begin
+                  Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
+                  Stream.Position := 0;
+                  SetBlobField(Fields[Index], Stream);
+                end
+             else if (Fields[Index].DataType in UNSUPPORTED) then
+                     raise Exception.Create('TGXBaseDataset.BufferToRecord - '+FT_NOT_SUPPORTED);
       end;
     end;
 end;
@@ -541,6 +567,7 @@ var
   Value: Variant;
   TempStr: string;
   TempInt: Integer;
+  TempLInt : LargeInt;
   TempDouble: Double;
   TempBool: WordBool;
   Offset: Integer;
@@ -564,7 +591,7 @@ begin
   for Index := 0 to FieldCount - 1 do
     begin
       if not Fields[Index].IsBlob then
-        Value := GetFieldValue(Fields[Index]);
+         Value := GetFieldValue(Fields[Index]);
       Offset := GetFieldOffset(Fields[Index]);
       case Fields[Index].DataType of
         ftString:
@@ -577,12 +604,21 @@ begin
         ftInteger, ftSmallInt, ftDate, ftTime:
           begin
             TempInt := Value;
-            Move(TempInt, (Buffer + Offset)^, sizeof(TempInt));
+            Move(TempInt, (Buffer + Offset)^, SizeOf(TempInt));
+          end;
+        ftLargeInt :
+          begin
+            {$IFDEF USE_STR_TO_INT64}
+            TempLInt := StrToInt64(Value);
+            {$ELSE}
+            TempLInt := Value;
+            {$ENDIF}
+            Move(TempLInt, (Buffer + Offset)^, SizeOf(TempLInt));
           end;
         ftFloat, ftBCD, ftCurrency:
           begin
             TempDouble := Value;
-            Move(TempDouble, (Buffer + Offset)^, sizeof(TempDouble));
+            Move(TempDouble, (Buffer + Offset)^, SizeOf(TempDouble));
           end;
         ftDateTime :
           begin  // convert Variant (string) to TDateTime and write it to buffer
@@ -594,14 +630,15 @@ begin
             TempBool := StrToBool(Value);
             Move(TempBool, (Buffer + Offset)^, SizeOf(TempBool));
           end;
-        else
-          if Fields[Index].IsBlob then
-             begin
-               Move((Buffer + Offset)^, Pointer(Stream), sizeof(Pointer));
-               Stream.Size := 0;
-               Stream.Position := 0;
-               GetBlobField(Fields[Index], Stream);
-             end;
+        else if Fields[Index].IsBlob then
+                begin
+                  Move((Buffer + Offset)^, Pointer(Stream), SizeOf(Pointer));
+                  Stream.Size := 0;
+                  Stream.Position := 0;
+                  GetBlobField(Fields[Index], Stream);
+                end
+             else if (Fields[Index].DataType in UNSUPPORTED) then
+                     raise Exception.Create('TGXBaseDataset.RecordToBuffer - '+FT_NOT_SUPPORTED);
       end;
     end;
   DoAfterGetFieldValue;
@@ -622,11 +659,9 @@ var
   TempBool: WordBool;
 begin
   Result := false;
-  if not FisOpen then
-    exit;
+  if not FisOpen then exit;
   RecBuffer := GetActiveRecordBuffer;
-  if RecBuffer = nil then
-    exit;
+  if RecBuffer = nil then exit;
   if Buffer = nil then
     begin
     //Dataset checks if field is null by passing a nil buffer
@@ -648,6 +683,7 @@ begin
       Offset := GetFieldOffset(Field);
       case Field.DataType of
         ftInteger, ftTime, ftDate: Move((RecBuffer + Offset)^, Integer(Buffer^), SizeOf(Integer));
+        ftLargeInt : Move((RecBuffer + Offset)^, LargeInt(Buffer^), SizeOf(LargeInt));
         ftBoolean:
           begin
             Move((RecBuffer + Offset)^, TempBool, SizeOf(WordBool));
@@ -663,8 +699,10 @@ begin
 //orig.            Data.DateTime := TimeStampToMSecs(TimeStamp);
             Data.DateTime := TempDouble;
             Move(Data, Buffer^, SizeOf(TDateTimeRec));
-          end;
-      end;
+          end
+        else if (not Field.IsBlob) and (Field.DataType in UNSUPPORTED) then
+                raise Exception.Create('TGXBaseDataset.GetFieldData - '+FT_NOT_SUPPORTED);
+      end; // case
     end;
   Result := True;
 end;
@@ -697,7 +735,8 @@ begin
     begin
       Offset := GetFieldOffset(Field);
       case Field.DataType of
-        ftInteger, ftDate, ftTime: Move(Integer(Buffer^), (RecBuffer + Offset)^, sizeof(Integer));
+        ftInteger, ftDate, ftTime: Move(Integer(Buffer^), (RecBuffer + Offset)^, SizeOf(Integer));
+        ftLargeInt : Move(LargeInt(Buffer^), (RecBuffer + Offset)^, SizeOf(LargeInt));
         ftBoolean:
           begin
             Move(WordBool(Buffer^), TempBool, sizeof(WordBool));
@@ -713,8 +752,10 @@ begin
             TempDouble := Data.DateTime;
             Move(TempDouble, (RecBuffer + Offset)^, SizeOf(TempDouble));
           end;
-        ftFloat, ftCurrency: Move(Double(Buffer^), (RecBuffer + Offset)^, sizeof(Double));
-      end;
+        ftFloat, ftCurrency: Move(Double(Buffer^), (RecBuffer + Offset)^, SizeOf(Double));
+        else if (not Field.IsBlob) and (Field.DataType in UNSUPPORTED) then
+                raise Exception.Create('TGXBaseDataset.SetFieldData - '+FT_NOT_SUPPORTED);
+      end; // case
     end;
   if not (State in [dsCalcFields, dsFilter, dsNewValue]) then
     DataEvent(deFieldChange, Ptrint(Field));
