@@ -22,18 +22,16 @@ unit httpsqlconn;
  *****************************************************************************
 *******************************************************************************}
 
-//{$DEFINE DEBUGCONNECTION}
-
 interface
 
 uses Classes, SysUtils, CustomSQLConn
-     {$IFDEF WIN32} //todo : change this to only HTTPClient
+//     {$IFDEF WIN32} //todo : change this to only HTTPClient
      ,HTTPSend in 'synapse/source/lib/httpsend.pas'
-     {$ELSE}
-       {$IFDEF LINUX}
-       ,HTTPClient
-       {$ENDIF}
-     {$ENDIF}
+//     {$ELSE}
+//       {$IFDEF LINUX}
+//       ,HTTPClient
+//       {$ENDIF}
+//     {$ENDIF}
      ;
 
 const
@@ -61,8 +59,9 @@ type
   { THTTPSQLConnection }
   THTTPSQLConnection = class(TCustomSQLConnection)
   private
-    FHttpClient : {$IFDEF WIN32} THTTPSend;   {$ENDIF}
-                  {$IFDEF LINUX} THTTPClient; {$ENDIF}
+    FHttpClient : THTTPSend;
+//                  {$IFDEF WIN32} THTTPSend;   {$ENDIF}
+//                  {$IFDEF LINUX} THTTPClient; {$ENDIF}
     FHttpURL   : String;
     FFieldName : String;
     FFileName  : String;
@@ -81,10 +80,6 @@ type
   end;
   
 implementation
-
-{$IFDEF DEBUGCONNECTION}
-uses Dialogs;
-{$ENDIF}
 
 
 (*******************************************************************************
@@ -160,12 +155,17 @@ end;
 constructor THTTPSQLConnection.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  FHttpClient := THTTPSend.Create;
+
+(*******************************************************************************
   {$IFDEF WIN32}
      FHttpClient := THTTPSend.Create;
   {$ENDIF}
   {$IFDEF LINUX}
      FHttpClient := THTTPClient.Create;
   {$ENDIF}
+*******************************************************************************)
   FHttpClient.Protocol := HTTP_PROTOCOL_1_1;
   FHttpURL   := '';
   FFileName  := '';
