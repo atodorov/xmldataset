@@ -84,7 +84,6 @@ type
     FStartCalculated: Integer;
     FBufferMap: TStringList;
     procedure FillBufferMap;
-    function  _GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
     function  RecordFilter: Boolean;
   protected   {My simplified methods to override}
 
@@ -365,19 +364,6 @@ begin
   until localAccept or (Result in [grEOF, grBOF]);
 end;
 
-function TGXBaseDataset._GetRecord(Buffer: PChar; GetMode: TGetMode; DoCheck: Boolean): TGetResult;
-begin
-  Result := Navigate(GetMode);
-  if (Result = grOk) then
-    begin
-      RecordToBuffer(Buffer);
-      ClearCalcFields(Buffer);
-      GetCalcFields(Buffer);
-    end
-  else if (Result = grError) and DoCheck then
-    DatabaseError('No Records');
-end;
-
 function TGXBaseDataset.GetRecordSize: Word;
 var tmp : Word;
 begin
@@ -620,7 +606,11 @@ begin
           end;
         ftFloat, ftBCD, ftCurrency:
           begin
+            {$IFDEF USE_STR_TO_FLOAT}
+            TempDouble := StrToFloat(Value);
+            {$ELSE}
             TempDouble := Value;
+            {$ENDIF}
             Move(TempDouble, (Buffer + Offset)^, SizeOf(TempDouble));
           end;
         ftDateTime :
