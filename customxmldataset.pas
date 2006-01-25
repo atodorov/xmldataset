@@ -29,6 +29,7 @@ uses
 
 type
 ////// TODO LIST
+// - validate / clear xml document from unnecessary nodes and comments
 // - add display format for Float and DateTime fields. all variantions (Date, Time, Float, Currency)
 // - when deleting, editing more than once, inserting, canceling => N.B. internal ID
 // - add some events to Dataset / Query
@@ -554,7 +555,8 @@ begin
     if (FindNode(cFieldDefs) <> nil) then
        with FindNode(cFieldDefs)do
          if HasChildNodes then
-            for i := 0 to ChildNodes.Count - 1 do
+            for i := 0 to ChildNodes.Count - 1 do // v-- prevent from other nodes
+              if (ChildNodes.Item[i].NodeName = cFieldDef) then
                 begin   // Add fields
                   domNode := TDOMElement(ChildNodes.Item[i]);
                   // convert FieldName using specified encodings
@@ -885,10 +887,11 @@ var i : LongInt;
 begin
   if AFieldNode.HasChildNodes then
      for i := 0 to AFieldNode.ChildNodes.Count - 1 do
-       begin
-         LChild := TDOMElement(AFieldNode.ChildNodes.Item[i]);
-         LChild.AttribStrings[cField_OldValue] := LChild.AttribStrings[cField_Value];
-       end;
+       if (AFieldNode.ChildNodes.Item[i].NodeName = cField) then
+           begin /// ^-- don't crash if there are comments in the xml
+             LChild := TDOMElement(AFieldNode.ChildNodes.Item[i]);
+             LChild.AttribStrings[cField_OldValue] := LChild.AttribStrings[cField_Value];
+           end;
 end;
 
 procedure TCustomXMLDataSet.SetFieldsProperties;
