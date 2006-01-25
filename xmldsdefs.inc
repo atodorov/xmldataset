@@ -42,3 +42,5 @@
 (* a hack for LargeInt := Variant ==> LargeInt := StrToInt64(Variant) *)
 (* EVarianterror ###(gdb unparsed remainder: s $0 out of bounds>)###) *)
 {$DEFINE USE_STR_TO_INT64}
+// the same reason
+{$DEFINE USE_STR_TO_FLOAT}
