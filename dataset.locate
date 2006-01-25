@@ -1,0 +1,102 @@
+function TCustomXMLDataSet.Locate(const KeyFields: Array of String; const KeyValues: Array of String; Options: TLocateOptions): boolean;
+// todo : make use of TLocateOptions
+// todo : make it compatible with TDataSet.Locate declaration
+var keyDim, valDim : Integer;
+    i, j, lKF, lKV, hKF : Integer;
+    RD, Row, F : TDOMElement;
+    Equal : Boolean;
+begin
+  Result := false;
+  
+  lKF := Low(KeyFields);
+  hKF := High(KeyFields);
+  keyDim := hKF - lKF;
+  
+  lKV := Low(KeyValues);
+  valDim := High(KeyValues) - lKV;
+  
+  if (keyDim <> valDim) then
+     raise Exception.Create('TCustomXMLDataSet.Locate - parameters count not equal!');
+
+  RD := TDOMElement(FXMLDoc.DocumentElement.FindNode(cRecordData));
+(*******************************************************************************
+  if RD.HasChildNodes then
+     for i := 0 to RD.ChildNodes.Count - 1 do
+       begin
+         Row := TDOMElement(RD.ChildNodes.Item[i]); // current record == <row>
+         Equal := true;
+         for j := lKF to hKF do
+           begin
+             F := GetFieldNodeByName(Row, KeyFields[j]);
+             if (F = nil) or (F.AttribStrings[cField_Value] <> EncodeBase64(KeyValues[j + lKV])) then
+               begin // not equal => try next record
+                 Equal := false;
+                 break;
+               end;
+           end;
+         if Equal then // all fields from this record are equal to KeyValues
+            begin // => found what we were looking for
+              Result := true;
+              FCurRec := i; // position dataset at the proper record. it's not positioned because we used the xml structure to get here.
+              break;
+            end;
+       end;
+*******************************************************************************)
+//  Self.First;
+  i := 0;
+  while (not Self.EOF) and (i < RD.ChildNodes.Count) do
+    begin
+      Row := TDOMElement(RD.ChildNodes.Item[i]); // current record == <row>
+      Equal := true;
+      for j := lKF to hKF do
+        begin
+          F := GetFieldNodeByName(Row, KeyFields[j]);
+          if (F = nil) or (F.AttribStrings[cField_Value] <> EncodeBase64(KeyValues[j + lKV])) then
+            begin // not equal => try next record
+              Equal := false;
+              break;
+            end;
+        end;
+
+      if Equal then // all fields from this record are equal to KeyValues
+         begin // => found what we were looking for
+           Result := true;
+           break;
+         end;
+
+      Self.Next;
+      inc(i);
+    end;
+end;
+
+
+
+procedure TForm1.Button6Click(Sender: TObject);
+var DS : TCustomXMLDataSet;
+begin
+  try
+     DS := TCustomXMLDataSet.Create(Self);
+     DS.UseBase64 := false;
+     DS.UseCharacterEncoding := true;
+     DS.FROM_ENCODING := 'UTF-8';
+     DS.TO_ENCODING   := 'CP1251';
+
+     ReadXMLFile(DS.XMLDocument, ExtractFilePath(Application.ExeName)+'locate.xml');
+     DS.Open;
+
+writeln('before locate');
+(******
+     if not DS.Locate(['object_id', 'prop_id'], ['789531', '2522'], []) then
+        writeln('NOT LOCATED')
+     else
+        begin
+          writeln('LOCATED AT - ', DS.FieldByName('value').AsString);
+          writeln('object_id = ', DS.FieldByName('object_id').AsString, '  prop_id = ', DS.FieldByName('prop_id').AsString);
+        end;
+*****)
+writeln('after locate');
+  finally
+     DS.Close;
+     DS.Free;
+  end;
+end;
