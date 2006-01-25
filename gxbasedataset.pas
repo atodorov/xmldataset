@@ -379,9 +379,12 @@ begin
 end;
 
 function TGXBaseDataset.GetRecordSize: Word;
+var tmp : Word;
 begin
-  Result := GetDataSize + sizeof(TRecordInfo) + CalcFieldsSize;
-  FStartCalculated := GetDataSize + sizeof(TRecordInfo);
+  tmp := GetDataSize + SizeOf(TRecordInfo);
+
+  Result := tmp + CalcFieldsSize;
+  FStartCalculated := tmp;
 end;
 
 function TGXBaseDataset.GetDataSize: Integer;
@@ -581,7 +584,7 @@ begin
       if GetBookMarkSize > 0 then
         begin
           if BookMark = nil then
-            GetMem(BookMark, GetBookMarkSize);
+             GetMem(BookMark, GetBookMarkSize);
           AllocateBookMark(RecordID, BookMark);
         end
       else
