@@ -44,3 +44,8 @@
 {$DEFINE USE_STR_TO_INT64}
 // the same reason
 {$DEFINE USE_STR_TO_FLOAT}
+
+// use synapse tcp / ip
+{$IFDEF WIN32}
+  {$DEFINE USE_SYNAPSE}
+{$ENDIF}

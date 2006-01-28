@@ -1,6 +1,7 @@
 unit httpsqlconn;
 
 {$mode objfpc}{$H+}
+{$I xmldsdefs.inc}
 
 {*******************************************************************************
 
@@ -24,44 +25,49 @@ unit httpsqlconn;
 
 interface
 
-uses Classes, SysUtils, CustomSQLConn
-//     {$IFDEF WIN32} //todo : change this to only HTTPClient
-     ,HTTPSend in 'synapse/source/lib/httpsend.pas'
-//     {$ELSE}
-//       {$IFDEF LINUX}
-//       ,HTTPClient
-//       {$ENDIF}
-//     {$ENDIF}
+uses Classes, SysUtils, CustomSQLConn,
+     {$IFDEF USE_SYNAPSE} //todo : change this to only HTTPClient
+     HTTPSend in 'synapse/source/lib/httpsend.pas'
+     {$ELSE}
+     HTTPClient, HTTPBase
+     {$ENDIF}
      ;
 
 const
-  HTTP_USER_AGENT = 'user-agent';
-  HTTP_URL = 'url';
-  HTTP_PROTOCOL = 'protocol'; // http protocol version 0.9, 1.0, 1.1 (default)
+
+  HTTP_PROTOCOL = 'protocol';
   HTTP_PROTOCOL_0_9 = '0.9';
   HTTP_PROTOCOL_1_0 = '1.0';
   HTTP_PROTOCOL_1_1 = '1.1';
-  HTTP_METHOD = 'method';     // allowed values are POST, GET
+  HTTP_METHOD = 'method';
   HTTP_METHOD_POST = 'POST';
   HTTP_METHOD_GET  = 'GET';
-  HTTP_COOKIES  = 'cookies';  // todo: is it needed ??? log in / out handling
-  HTTP_MIMETYPE = 'mimetype'; // todo: is it needed ???
   HTTP_POST_FILENAME  = 'filename';
   HTTP_POST_FIELDNAME = 'fieldname';
+  
+  {$IFDEF USE_SYNAPSE}
+  HTTP_URL = 'url';
+  HTTP_USER_AGENT = 'user-agent';
+  HTTP_COOKIES  = 'cookies';
+  HTTP_MIMETYPE = 'mimetype';
 
   PROXY_HOST = 'proxy_host';
   PROXY_PORT = 'proxy_port';
   PROXY_USER = 'proxy_user';
   PROXY_PASS = 'proxy_pass';
+  {$ELSE}
+  HTTP_URL = fieldLocation;
+  HTTP_USER_AGENT = fieldUserAgent;
+  HTTP_COOKIES  = fieldCookie;
+  HTTP_MIMETYPE = fieldContentType;
+  {$ENDIF}
 
 type
 
   { THTTPSQLConnection }
   THTTPSQLConnection = class(TCustomSQLConnection)
   private
-    FHttpClient : THTTPSend;
-//                  {$IFDEF WIN32} THTTPSend;   {$ENDIF}
-//                  {$IFDEF LINUX} THTTPClient; {$ENDIF}
+    FHttpClient : {$IFDEF USE_SYNAPSE} THTTPSend {$ELSE} THTTPClient {$ENDIF} ;
     FHttpURL   : String;
     FFieldName : String;
     FFileName  : String;
@@ -109,12 +115,24 @@ begin
     
 // HTTP_PROTOCOL
   index := ConnParams.IndexOfName(HTTP_PROTOCOL);
-  if (index > -1) then FHttpClient.Protocol := ConnParams.ValueFromIndex[index];
+  if (index > -1) then
+    {$IFDEF USE_SYNAPSE}
+    FHttpClient.Protocol := ConnParams.ValueFromIndex[index];
+    {$ELSE}
+    FHttpClient.HeaderToSend.HttpVersion := ConnParams.ValueFromIndex[index];
+    {$ENDIF}
 
 // USER AGENT
   index := ConnParams.IndexOfName(HTTP_USER_AGENT);
-  if (index > -1) then FHttpClient.UserAgent := ConnParams.ValueFromIndex[index];
+  if (index > -1) then
+    {$IFDEF USE_SYNAPSE}
+    FHttpClient.UserAgent := ConnParams.ValueFromIndex[index];
+    {$ELSE}
+    FHttpClient.HeaderToSend.UserAgent := ConnParams.ValueFromIndex[index];
+    {$ENDIF}
 
+
+  {$IFDEF USE_SYNAPSE}
 // PROXY_HOST
   index := ConnParams.IndexOfName(PROXY_HOST);
   if (index > -1) then FHttpClient.ProxyHost := ConnParams.ValueFromIndex[index];
@@ -130,6 +148,7 @@ begin
 // PROXY_PASS
   index := ConnParams.IndexOfName(PROXY_PASS);
   if (index > -1) then FHttpClient.ProxyPass := ConnParams.ValueFromIndex[index];
+  {$ENDIF}
 end;
 
 procedure THTTPSQLConnection.DoConnect;
@@ -156,17 +175,17 @@ constructor THTTPSQLConnection.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  {$IFDEF USE_SYNAPSE}
   FHttpClient := THTTPSend.Create;
+  {$ELSE}
+  FHttpClient := THTTPClient.Create(nil);
+  {$ENDIF}
 
-(*******************************************************************************
-  {$IFDEF WIN32}
-     FHttpClient := THTTPSend.Create;
-  {$ENDIF}
-  {$IFDEF LINUX}
-     FHttpClient := THTTPClient.Create;
-  {$ENDIF}
-*******************************************************************************)
+  {$IFDEF USE_SYNAPSE}
   FHttpClient.Protocol := HTTP_PROTOCOL_1_1;
+  {$ELSE}
+  FHttpClient.HeaderToSend.HttpVersion := HTTP_PROTOCOL_1_1;
+  {$ENDIF}
   FHttpURL   := '';
   FFileName  := '';
   FFieldName := '';
@@ -186,10 +205,8 @@ begin
 end;
 
 function THTTPSQLConnection.HttpPostFile: Boolean;
-const
-  CRLF = #$0D + #$0A;
-var
-  Bound, S : String;
+const CRLF = #$0D + #$0A;
+var Bound, S : String;
 begin
   DoSetConnectionParams;
   
@@ -198,13 +215,41 @@ begin
   S := S + 'content-disposition: form-data; name="' + FFieldName + '";';
   S := S + ' filename="' + FFileName +'"' + CRLF;
   S := S + 'Content-Type: Application/octet-string' + CRLF + CRLF;
+
+  {$IFDEF USE_SYNAPSE}
   FHttpClient.Document.Clear;
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.Document.CopyFrom(DataToSend, 0);
+  {$ELSE}
+  FHttpClient.StreamToSend.Position := 0; // try to clear contents
+  FHttpClient.StreamToSend.Size := 0;
+  FHttpClient.StreamToSend.Write(Pointer(S)^, Length(S));
+  FHttpClient.StreamToSend.CopyFrom(DataToSend, 0);
+  {$ENDIF}
+
   S := CRLF + '--' + Bound + '--' + CRLF;
+
+  {$IFDEF USE_SYNAPSE}
   FHttpClient.Document.Write(Pointer(S)^, Length(S));
   FHttpClient.MimeType := 'multipart/form-data, boundary=' + Bound;
+  {$ELSE}
+  FHttpClient.StreamToSend.Write(Pointer(S)^, Length(S));
+  FHttpClient.HeaderToSend.ContentType := 'multipart/form-data, boundary=' + Bound;
+  {$ENDIF}
+  
+  {$IFDEF USE_SYNAPSE}
   Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
+  {$ELSE}
+  // todo : check this out. not tested
+  FHttpClient.HeaderToSend.FieldNames[0]  := HTTP_METHOD;
+  FHttpClient.HeaderToSend.FieldValues[0] := HTTP_METHOD_POST;
+  
+  FHttpClient.HeaderToSend.FieldNames[1]  := HTTP_URL;
+  FHttpClient.HeaderToSend.FieldValues[1] := FHttpURL;
+  
+  FHttpClient.Send;
+  Result := true;
+  {$ENDIF}
   
   if Assigned(ReceivedData) then
      begin // N.B. ReceivedData must be from class that overrides the TStream.Size property
@@ -213,7 +258,11 @@ begin
        // position in the beginning
        ReceivedData.Position := 0;
        // copy new data
-       ReceivedData.CopyFrom(FHttpClient.Document,0);
+       {$IFDEF USE_SYNAPSE}
+       ReceivedData.CopyFrom(FHttpClient.Document, 0);
+       {$ELSE}
+       ReceivedData.CopyFrom(FHttpClient.ReceivedStream, 0);
+       {$ENDIF}
        // go to the beginning
        ReceivedData.Position := 0;
      end;
