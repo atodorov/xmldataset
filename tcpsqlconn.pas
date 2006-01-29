@@ -94,7 +94,9 @@ function TTCPSQLConnection.CheckSocketConnected(S: LongInt): Boolean;
 var wSet : TFDSet;
     TimeOut : TTimeVal;
     Res : tOS_INT;
+{$ENDIF}
 begin
+{$IFDEF WIN32}
    TimeOut.tv_sec := 0;
    TimeOut.tv_usec := 10; // wait 10ms until select() returns
    
@@ -105,13 +107,12 @@ begin
 
    // S is writeable and no errors
    Result := (Res = 1) and (WSAGetLastError = 0);
-end;
 {$ELSE}
-begin
    Result := false;
    raise Exception.Create('TTCPSQLConnection.CheckSocketConnected - not implemented');
-end;
 {$ENDIF}
+end;
+
 
 procedure TTCPSQLConnection.DoConnect;
 begin
