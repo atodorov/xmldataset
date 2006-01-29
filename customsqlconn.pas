@@ -49,6 +49,7 @@ type
     FOnLogin: TLoginEvent;
     FBeforeCommit : TBeforeCommitEvent;
     FBeforeCommitDataset : TBeforeCommitDatasetEvent;
+    FBeforeStartTransaction : TNotifyEvent;
   protected
     FInTransaction : Boolean; // transaction handling
     FTransactXMLList : TList; // used for internal cache of XML during transactions
@@ -89,7 +90,7 @@ type
     property OnLogin: TLoginEvent read FOnLogin write FOnLogin;
     property BeforeCommit : TBeforeCommitEvent read FBeforeCommit write FBeforeCommit;
     property BeforeCommitDataset : TBeforeCommitDatasetEvent read FBeforeCommitDataset write FBeforeCommitDataset;
-  published
+    property BeforeStartTransaction : TNotifyEvent read FBeforeStartTransaction write FBeforeStartTransaction;
     property ConnParams : TStrings read FConnParams write FConnParams;
   end;
 
@@ -272,6 +273,9 @@ begin
      
   if (FTransactXMLList.Count <> FDataSets.Count) then
      raise Exception.Create('Can not start transaction. Internal count differs!');
+     
+  if Assigned(FBeforeStartTransaction) then
+     FBeforeStartTransaction(Self);
      
   for i := 0 to FTransactXMLList.Count - 1 do
     if Assigned(TXMLDocument(FTransactXMLList.Items[i])) then
