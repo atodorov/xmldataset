@@ -335,14 +335,13 @@ begin
         msTemp.Clear;
         msTemp.Position := 0;
       
-        // close dataset. xml can be changed if dataset is closed
-        TCustomXMLDataset(FDataSets.Items[i]).Close;
-
         if Assigned(FBeforeCommitDataset) then
            FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]));
 
         DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
-        Open;
+        Open; // open connection
+        with TCustomXMLDataset(FDataSets.Items[i]) do
+          if Active then Close; // close dataset
         ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument, ReceivedData);
         TCustomXMLDataset(FDataSets.Items[i]).Open; // reopen dataset after new data is present
       end;
