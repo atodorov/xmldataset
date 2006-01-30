@@ -53,6 +53,7 @@ type
 
   protected
     procedure ConstructSQLFromXML; virtual;
+    // todo : better handling of ProviderFlags
     function ConstructWhereClause(const ARow :TDOMElement) : String;
     function CreateInsertFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
     function CreateUpdateFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
@@ -160,6 +161,8 @@ begin
       end;
       
     // assign new XML document
+    if Active then
+       Close; // close active dataset, to be able to assign new xml document
     XMLDocument := LDoc;
     
   finally
@@ -172,6 +175,7 @@ begin
 end;
 
 function TSmartXMLQuery.ConstructWhereClause(const ARow :TDOMElement) : String;
+//todo : check provider flags Where_All, Where_Changed, Where_KeyOnly ???
 var i : LongWord;
 begin
   Result := '';
@@ -213,6 +217,7 @@ end;
 function TSmartXMLQuery.CreateInsertFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
 var CData : TDOMCDATASection;
     strSQL, strFields, strValues : String;
+    strFieldName : String;
     i : LongWord;
 begin
   try
@@ -222,10 +227,14 @@ begin
 
     strFields := '';
     strValues := '';
-    
+
     for i := 0 to ANode.ChildNodes.Count - 1 do
       begin
-        strFields := strFields + ' ' + TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name] + ',';
+        strFieldName := TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name];
+        if (FindField(strFieldName) = nil) or (FieldByName(strFieldName).ProviderFlags = []) then
+           continue;
+           
+        strFields := strFields + ' ' + strFieldName + ',';
         strValues := strValues + ' ' + QuoteChar +
            DecodeBase64ToString(TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value]) +
            QuoteChar + ',';
@@ -244,7 +253,7 @@ end;
 
 function TSmartXMLQuery.CreateUpdateFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
 var CData : TDOMCDATASection;
-    strSQL : String;
+    strSQL, strFieldName : String;
     i : LongWord;
 begin
   try
@@ -253,11 +262,15 @@ begin
     strSQL := 'UPDATE ' + TableName + ' SET';
 
     for i := 0 to ANode.ChildNodes.Count - 1 do
-        strSQL := strSQL + ' ' +
-           TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name] + '=' +
-           QuoteChar +
+      begin
+        strFieldName := TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Name];
+        if (FieldByName(strFieldName).ProviderFlags = []) then
+           continue;
+           
+        strSQL := strSQL + ' ' + strFieldName + '=' + QuoteChar +
            DecodeBase64ToString(TDOMElement(ANode.ChildNodes.Item[i]).AttribStrings[cField_Value]) +
            QuoteChar + ',';
+      end;
 
     // strip trailing ,
     strSQL := Copy(strSQL,1,Length(strSQL)-1) + ' WHERE';
