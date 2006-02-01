@@ -36,7 +36,7 @@ type
     sql_xml packets for every record in the dataset. Use this to save overhead
     at the other side of the connection (e.g. cgi script at a web server).
   }
-  TSmartXMLQuery = class(TCustomXMLQuery)
+  TSmartXMLQuery = class(TXMLQuery)
   private
     FQuoteChar : Char;
     FPrimaryKey : String;

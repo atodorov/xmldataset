@@ -24,7 +24,7 @@ unit xmlquery;
 interface
 
 uses Classes, SysUtils, DOM,
-     CustomXMLDataset, CustomSQLConn;
+     XMLDataset, CustomSQLConn;
 
 type
 
@@ -32,7 +32,7 @@ type
   
   { adds sql states execution to the dataset and uses a connection }
 
-  TXMLQuery = class(TCustomXMLDataSet)
+  TXMLQuery = class(TXMLDataSet)
   private
     FSQL : TStrings;
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection

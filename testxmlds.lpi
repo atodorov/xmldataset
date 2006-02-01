@@ -7,9 +7,9 @@
       <MainUnit Value="0"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
-      <ActiveEditorIndexAtStart Value="2"/>
+      <ActiveEditorIndexAtStart Value="6"/>
     </General>
-    <Units Count="43">
+    <Units Count="44">
       <Unit0>
         <CursorPos X="29" Y="1"/>
         <Filename Value="testxmlds.lpr"/>
@@ -19,7 +19,7 @@
         <UsageCount Value="150"/>
       </Unit0>
       <Unit1>
-        <CursorPos X="2" Y="57"/>
+        <CursorPos X="25" Y="45"/>
         <EditorIndex Value="0"/>
         <Filename Value="uMain.pas"/>
         <ComponentName Value="Form1"/>
@@ -27,7 +27,7 @@
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
         <ResourceFilename Value="uMain.lrs"/>
-        <TopLine Value="55"/>
+        <TopLine Value="37"/>
         <UnitName Value="uMain"/>
         <UsageCount Value="41"/>
       </Unit1>
@@ -47,20 +47,22 @@
         <UsageCount Value="40"/>
       </Unit3>
       <Unit4>
-        <CursorPos X="8" Y="206"/>
-        <Filename Value="httpsqlconn.pas"/>
+        <CursorPos X="14" Y="4"/>
+        <EditorIndex Value="5"/>
+        <Filename Value="HTTPSQLConn.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="206"/>
+        <Loaded Value="True"/>
+        <TopLine Value="1"/>
         <UnitName Value="httpsqlconn"/>
         <UsageCount Value="40"/>
       </Unit4>
       <Unit5>
-        <CursorPos X="30" Y="35"/>
+        <CursorPos X="22" Y="35"/>
         <EditorIndex Value="2"/>
-        <Filename Value="XMLQuery.pas"/>
+        <Filename Value="xmlquery.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="25"/>
+        <TopLine Value="27"/>
         <UnitName Value="xmlquery"/>
         <UsageCount Value="41"/>
       </Unit5>
@@ -119,11 +121,11 @@
         <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
-        <CursorPos X="18" Y="133"/>
-        <EditorIndex Value="3"/>
+        <CursorPos X="18" Y="328"/>
+        <EditorIndex Value="7"/>
         <Filename Value="customsqlconn.pas"/>
         <Loaded Value="True"/>
-        <TopLine Value="125"/>
+        <TopLine Value="320"/>
         <UnitName Value="customsqlconn"/>
         <UsageCount Value="13"/>
       </Unit14>
@@ -233,12 +235,12 @@
         <UsageCount Value="11"/>
       </Unit30>
       <Unit31>
-        <CursorPos X="25" Y="31"/>
+        <CursorPos X="31" Y="31"/>
         <EditorIndex Value="1"/>
         <Filename Value="smartxmlquery.pas"/>
         <IsPartOfProject Value="True"/>
         <Loaded Value="True"/>
-        <TopLine Value="25"/>
+        <TopLine Value="21"/>
         <UnitName Value="smartxmlquery"/>
         <UsageCount Value="34"/>
       </Unit31>
@@ -255,10 +257,12 @@
         <UsageCount Value="10"/>
       </Unit33>
       <Unit34>
-        <CursorPos X="8" Y="150"/>
-        <Filename Value="tcpsqlconn.pas"/>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="4"/>
+        <Filename Value="TCPSQLConn.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="150"/>
+        <Loaded Value="True"/>
+        <TopLine Value="25"/>
         <UnitName Value="tcpsqlconn"/>
         <UsageCount Value="27"/>
       </Unit34>
@@ -302,10 +306,12 @@
         <UsageCount Value="22"/>
       </Unit40>
       <Unit41>
-        <CursorPos X="36" Y="2"/>
+        <CursorPos X="33" Y="44"/>
+        <EditorIndex Value="6"/>
         <Filename Value="xmldsdefs.inc"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1"/>
+        <Loaded Value="True"/>
+        <TopLine Value="36"/>
         <UsageCount Value="22"/>
       </Unit41>
       <Unit42>
@@ -315,6 +321,16 @@
         <UnitName Value="DOM"/>
         <UsageCount Value="10"/>
       </Unit42>
+      <Unit43>
+        <CursorPos X="1" Y="1"/>
+        <EditorIndex Value="3"/>
+        <Filename Value="XMLDataset.pas"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="1"/>
+        <UnitName Value="xmldataset"/>
+        <UsageCount Value="20"/>
+      </Unit43>
     </Units>
     <PublishOptions>
       <Version Value="2"/>
@@ -338,7 +354,88 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="27" Column="13" TopLine="25"/>
+      </Position1>
+      <Position2>
+        <Filename Value="xmlquery.pas"/>
+        <Caret Line="35" Column="38" TopLine="27"/>
+      </Position2>
+      <Position3>
+        <Filename Value="customsqlconn.pas"/>
+        <Caret Line="133" Column="18" TopLine="125"/>
+      </Position3>
+      <Position4>
+        <Filename Value="customsqlconn.pas"/>
+        <Caret Line="190" Column="17" TopLine="182"/>
+      </Position4>
+      <Position5>
+        <Filename Value="customsqlconn.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="customsqlconn.pas"/>
+        <Caret Line="179" Column="49" TopLine="171"/>
+      </Position6>
+      <Position7>
+        <Filename Value="customsqlconn.pas"/>
+        <Caret Line="180" Column="19" TopLine="172"/>
+      </Position7>
+      <Position8>
+        <Filename Value="smartxmlquery.pas"/>
+        <Caret Line="31" Column="25" TopLine="25"/>
+      </Position8>
+      <Position9>
+        <Filename Value="smartxmlquery.pas"/>
+        <Caret Line="39" Column="41" TopLine="31"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="57" Column="2" TopLine="55"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="89" Column="11" TopLine="81"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="51" Column="26" TopLine="41"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="45" Column="20" TopLine="37"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="50" Column="14" TopLine="46"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="151" Column="12" TopLine="143"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="149" Column="3" TopLine="143"/>
+      </Position16>
+      <Position17>
+        <Filename Value="uMain.pas"/>
+        <Caret Line="45" Column="25" TopLine="37"/>
+      </Position17>
+      <Position18>
+        <Filename Value="TCPSQLConn.pas"/>
+        <Caret Line="150" Column="8" TopLine="150"/>
+      </Position18>
+      <Position19>
+        <Filename Value="HTTPSQLConn.pas"/>
+        <Caret Line="206" Column="8" TopLine="206"/>
+      </Position19>
+      <Position20>
+        <Filename Value="HTTPSQLConn.pas"/>
+        <Caret Line="4" Column="14" TopLine="1"/>
+      </Position20>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="5"/>

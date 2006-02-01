@@ -42,13 +42,12 @@ var
 
 implementation
 
-uses uXMLDSConsts, CustomXMLDataset, HTTPSQLConn, TCPSQLConn,
+uses uXMLDSConsts, XMLDataset, HTTPSQLConn, TCPSQLConn,
      XMLQuery, SmartXMLQuery,
-//     DBCtrlGrid in 'dbcg/dbctrlgrid.pas',
      XMLRead, XMLWrite;
 
 
-var XMLDS : TCustomXMLDataSet;
+var XMLDS : TXMLDataSet;
     
 { TForm1 }
 
@@ -86,9 +85,9 @@ begin
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
-var XQ : TCustomXMLQuery;
+var XQ : TXMLQuery;
 begin
-   xq := TCustomXMLQuery.Create(Self);
+   xq := TXMLQuery.Create(Self);
    xq.SQL.Text := 'SELECT * FROM COUNTRY';
    xq.ExecSQL(QUERY_SELECT);
    
@@ -147,9 +146,9 @@ end;
 procedure TForm1.Form1Create(Sender: TObject);
 begin
 {$IFDEF DEBUGXML}
-  CustomXMLDataSet.Memo := Memo1;
+  XMLDataSet.Memo := Memo1;
 {$ENDIF}
-  XMLDS := TCustomXMLDataSet.Create(Self);
+  XMLDS := TXMLDataSet.Create(Self);
   XMLDS.UseBase64 := false;
   dsMain.DataSet := XMLDS;
 end;

@@ -130,7 +130,7 @@ begin
 //todo : FClients and FDataSets are the same
   FClients.Add(Client);
   FConnectEvents.Add(TMethod(Event).Code);
-  if (Client is TCustomXMLQuery) then
+  if (Client is TXMLQuery) then
     begin
       FDataSets.Add(Client);
       FTransactXMLList.Add(TXMLDocument.Create);
@@ -176,8 +176,8 @@ begin
 // todo : fix this deConnectChanged
 // A client must re-connect and get new XML ?????
 (*
-      if TObject(FClients.Items[i]) is TCustomXMLQuery then
-         TCustomXMLQuery(FClients.Items[i]).DataEvent(deConnectChange, Ptrint(Connecting));
+      if TObject(FClients.Items[i]) is TXMLQuery then
+         TXMLQuery(FClients.Items[i]).DataEvent(deConnectChange, Ptrint(Connecting));
 *)
     end;
 end;
@@ -187,7 +187,7 @@ var Index: Integer;
     P : Pointer;
 begin
 //todo : FClients and FDataSets are the same
-  if (Client is TCustomXMLQuery) then
+  if (Client is TXMLQuery) then
     begin
      Index := FDataSets.IndexOf(Client);
 //todo: check deleting of internal XML documents
@@ -265,7 +265,7 @@ begin
         begin
           if Assigned(DocumentElement) then
              RemoveChild(DocumentElement);
-          LNode := TCustomXMLQuery(FDataSets.Items[i]).XMLDocument.DocumentElement;
+          LNode := TXMLQuery(FDataSets.Items[i]).XMLDocument.DocumentElement;
           // owner is the document kept in transaction list
           AppendChild(LNode.CloneNode(true, TXMLDocument(FTransactXMLList.Items[i])));
         end;
@@ -281,7 +281,7 @@ begin
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    with TCustomXMLQuery(FDataSets.Items[i]) do
+    with TXMLQuery(FDataSets.Items[i]) do
       if Assigned(XMLDocument.DocumentElement) then
          begin
            Close;
@@ -318,14 +318,14 @@ begin
         msTemp.Position := 0;
       
         if Assigned(FBeforeCommitDataset) then
-           FBeforeCommitDataset(Self, TCustomXMLQuery(FDataSets.Items[i]));
+           FBeforeCommitDataset(Self, TXMLQuery(FDataSets.Items[i]));
 
-        DataToSend := TCustomXMLQuery(FDataSets.Items[i]).XMLStringStream;
+        DataToSend := TXMLQuery(FDataSets.Items[i]).XMLStringStream;
         Open; // open connection
-        with TCustomXMLQuery(FDataSets.Items[i]) do
+        with TXMLQuery(FDataSets.Items[i]) do
           if Active then Close; // close dataset
-        ReadXMLFile(TCustomXMLQuery(FDataSets.Items[i]).XMLDocument, ReceivedData);
-        TCustomXMLQuery(FDataSets.Items[i]).Open; // reopen dataset after new data is present
+        ReadXMLFile(TXMLQuery(FDataSets.Items[i]).XMLDocument, ReceivedData);
+        TXMLQuery(FDataSets.Items[i]).Open; // reopen dataset after new data is present
       end;
   finally
     msTemp.Clear;
