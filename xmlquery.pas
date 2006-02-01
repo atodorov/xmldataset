@@ -28,11 +28,11 @@ uses Classes, SysUtils, DOM,
 
 type
 
-  { TCustomXMLQuery - adds sql states execution to the dataset and uses a connection }
+  { TXMLQuery }
+  
+  { adds sql states execution to the dataset and uses a connection }
 
-  { TCustomXMLQuery }
-
-  TCustomXMLQuery = class(TCustomXMLDataSet)
+  TXMLQuery = class(TCustomXMLDataSet)
   private
     FSQL : TStrings;
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
@@ -59,10 +59,10 @@ implementation
 uses uXMLDSConsts, XMLRead, XMLWrite;
 
 (*******************************************************************************
-{ TCustomXMLQuery }
+{ TXMLQuery }
 *******************************************************************************)
 
-procedure TCustomXMLQuery.SetSQL(const AValue: TStrings);
+procedure TXMLQuery.SetSQL(const AValue: TStrings);
 begin
   Close;
   SQL.BeginUpdate;
@@ -73,7 +73,7 @@ begin
   end;
 end;
 
-function TCustomXMLQuery.GetSQLXMLStringStream: TStringStream;
+function TXMLQuery.GetSQLXMLStringStream: TStringStream;
 var strm : TStringStream;
     S : String;
 begin
@@ -91,7 +91,7 @@ begin
   end;
 end;
 
-procedure TCustomXMLQuery.SetSQLConnection(const AValue: TCustomSQLConnection);
+procedure TXMLQuery.SetSQLConnection(const AValue: TCustomSQLConnection);
 begin
   CheckInactive;
   if Assigned(FSQLConnection) then
@@ -101,7 +101,7 @@ begin
      FSQLConnection.RegisterClient(Self, nil);
 end;
 
-procedure TCustomXMLQuery.ConstructQuery(const QueryType : String);
+procedure TXMLQuery.ConstructQuery(const QueryType : String);
 var LNode : TDOMElement;
     CDATA : TDOMCDATASection;
 begin
@@ -126,14 +126,14 @@ begin
   end;
 end;
 
-constructor TCustomXMLQuery.Create(AOwner: TComponent);
+constructor TXMLQuery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FSQL := TStringList.Create;
   FSQLXML := TXMLDocument.Create;
 end;
 
-destructor TCustomXMLQuery.Destroy;
+destructor TXMLQuery.Destroy;
 begin
   SetSQLConnection(nil);
   FSQL.Free;
@@ -141,7 +141,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TCustomXMLQuery.ExecSQL(const QueryType : String);
+procedure TXMLQuery.ExecSQL(const QueryType : String);
 var ssResult : TStringStream;
 begin
   ConstructQuery(QueryType);
@@ -153,7 +153,7 @@ begin
      ssResult := TStringStream.Create('');
      FSQLConnection.ReceivedData := ssResult;
      if not FSQLConnection.Open then
-        raise Exception.Create('TCustomXMLQuery.ExecSQL - connection failed!');
+        raise Exception.Create('TXMLQuery.ExecSQL - connection failed!');
 
      if (QueryType = QUERY_SELECT) then // and get a new one
        begin

@@ -27,8 +27,8 @@ interface
 // - how to handle BLOB fields
 // - should QuotedStr be used for string / all field values
 
-uses Classes, SysUtils, DOM,
-     XMLQuery, CustomXMLDataset, CustomSQLConn, uXMLDSConsts;
+uses Classes, SysUtils, DOM, DB,
+     uXMLDSConsts, XMLQuery, CustomSQLConn;
 type
 
   {
@@ -49,7 +49,7 @@ type
       The statements are in the following order :
       INSERT's, UPDATE's, DELETE's }
     procedure SetSQLConnection(const AValue: TCustomSQLConnection); override;
-    procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TCustomXMLDataSet);
+    procedure SQLConnBeforeCommitDataset(Sender : TObject; Dataset : TDataSet);
 
   protected
     procedure ConstructSQLFromXML; virtual;
@@ -88,7 +88,7 @@ begin
      Connection.BeforeCommitDataset := @SQLConnBeforeCommitDataset;
 end;
 
-procedure TSmartXMLQuery.SQLConnBeforeCommitDataset(Sender: TObject; Dataset: TCustomXMLDataSet);
+procedure TSmartXMLQuery.SQLConnBeforeCommitDataset(Sender: TObject; Dataset: TDataSet);
 begin
   if (Dataset is TSmartXMLQuery) then
      TSmartXMLQuery(Dataset).ConstructSQLFromXML;

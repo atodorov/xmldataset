@@ -23,15 +23,14 @@ unit customsqlconn;
 
 interface
 
-uses Classes, SysUtils, 
-     CustomXMLDataset;
+uses Classes, SysUtils, DB;
 
 type
 
   TLoginEvent = procedure(Sender: TObject; Username, Password: string) of object;
   TConnectChangeEvent = procedure(Sender: TObject; Connecting: Boolean) of object;
   TBeforeCommitEvent = procedure(Sender : TObject) of object;
-  TBeforeCommitDatasetEvent = procedure(Sender : TObject; Dataset : TCustomXMLDataSet) of object;
+  TBeforeCommitDatasetEvent = procedure(Sender : TObject; Dataset : TDataSet) of object;
 
   { TCustomSQLConnection - connection and transaction handling }
   TCustomSQLConnection = class(TComponent)
@@ -53,13 +52,13 @@ type
   protected
     FInTransaction : Boolean; // transaction handling
     FTransactXMLList : TList; // used for internal cache of XML during transactions
-    procedure DoConnect; virtual;             // descendants must override this
-    procedure DoDisconnect; virtual;          // descendants must override this
-    function  GetConnected: Boolean; virtual; // descendants must override this
-    function  GetDataSet(Index: Integer): TCustomXMLDataSet; virtual;
-    function  GetDataSetCount: Integer; virtual;
+    procedure DoConnect; virtual; abstract;             // descendants must override this
+    procedure DoDisconnect; virtual; abstract;          // descendants must override this
+    function  GetConnected: Boolean; virtual; abstract; // descendants must override this
+    function  GetDataSet(Index: Integer): TDataSet;
+    function  GetDataSetCount: Integer;
     procedure Loaded; override;
-    procedure SetConnected(Value: Boolean); virtual;
+    procedure SetConnected(Value: Boolean);
     procedure SendConnectEvent(Connecting: Boolean);
     property  StreamedConnected: Boolean read FStreamedConnected write FStreamedConnected;
   public
@@ -80,7 +79,7 @@ type
     property  InTransaction : Boolean read FInTransaction;
     {--------------------------------------------------------------------------}
     property Connected: Boolean read GetConnected write SetConnected default False;
-    property DataSets[Index: Integer]: TCustomXMLDataSet read GetDataSet;
+    property DataSets[Index: Integer]: TDataSet read GetDataSet;
     property DataSetCount: Integer read GetDataSetCount;
     property LoginPrompt: Boolean read FLoginPrompt write FLoginPrompt default False;
     property AfterConnect: TNotifyEvent read FAfterConnect write FAfterConnect;
@@ -96,30 +95,15 @@ type
 
 implementation
 
-uses DOM, XMLRead;
+uses DOM, XMLRead, XMLQuery;
 
 (*******************************************************************************
 { TCustomSQLConnection }
 *******************************************************************************)
 
-procedure TCustomSQLConnection.DoConnect;
+function TCustomSQLConnection.GetDataSet(Index: Integer): TDataSet;
 begin
-  raise Exception.Create('TCustomSQLConnection.DoConnect - not implemented');
-end;
-
-procedure TCustomSQLConnection.DoDisconnect;
-begin
-  raise Exception.Create('TCustomSQLConnection.DoDisconnect - not implemented');
-end;
-
-function TCustomSQLConnection.GetConnected: Boolean;
-begin
-  Result := False;
-end;
-
-function TCustomSQLConnection.GetDataSet(Index: Integer): TCustomXMLDataSet;
-begin
-  Result := TCustomXMLDataSet(FDataSets.Items[Index]);
+  Result := TDataSet(FDataSets.Items[Index]);
 end;
 
 function TCustomSQLConnection.GetDataSetCount: Integer;
@@ -143,11 +127,10 @@ end;
 
 procedure TCustomSQLConnection.RegisterClient(Client: TObject; Event: TConnectChangeEvent);
 begin
-//todo : fix - possible registration of non TCustomXMLDataset clients
-// FClients and FDataSets are the same
+//todo : FClients and FDataSets are the same
   FClients.Add(Client);
   FConnectEvents.Add(TMethod(Event).Code);
-  if (Client is TCustomXMLDataSet) then
+  if (Client is TCustomXMLQuery) then
     begin
       FDataSets.Add(Client);
       FTransactXMLList.Add(TXMLDocument.Create);
@@ -193,8 +176,8 @@ begin
 // todo : fix this deConnectChanged
 // A client must re-connect and get new XML ?????
 (*
-      if TObject(FClients.Items[i]) is TCustomXMLDataSet then
-         TCustomXMLDataSet(FClients.Items[i]).DataEvent(deConnectChange, Ptrint(Connecting));
+      if TObject(FClients.Items[i]) is TCustomXMLQuery then
+         TCustomXMLQuery(FClients.Items[i]).DataEvent(deConnectChange, Ptrint(Connecting));
 *)
     end;
 end;
@@ -203,9 +186,8 @@ procedure TCustomSQLConnection.UnRegisterClient(Client: TObject);
 var Index: Integer;
     P : Pointer;
 begin
-//todo : fix - possible unregistration of non TCustomXMLDataset clients
-// FClients and FDataSets are the same
-  if (Client is TCustomXMLDataSet) then
+//todo : FClients and FDataSets are the same
+  if (Client is TCustomXMLQuery) then
     begin
      Index := FDataSets.IndexOf(Client);
 //todo: check deleting of internal XML documents
@@ -283,7 +265,7 @@ begin
         begin
           if Assigned(DocumentElement) then
              RemoveChild(DocumentElement);
-          LNode := TCustomXMLDataset(FDataSets.Items[i]).XMLDocument.DocumentElement;
+          LNode := TCustomXMLQuery(FDataSets.Items[i]).XMLDocument.DocumentElement;
           // owner is the document kept in transaction list
           AppendChild(LNode.CloneNode(true, TXMLDocument(FTransactXMLList.Items[i])));
         end;
@@ -299,7 +281,7 @@ begin
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    with TCustomXMLDataset(FDataSets.Items[i]) do
+    with TCustomXMLQuery(FDataSets.Items[i]) do
       if Assigned(XMLDocument.DocumentElement) then
          begin
            Close;
@@ -336,14 +318,14 @@ begin
         msTemp.Position := 0;
       
         if Assigned(FBeforeCommitDataset) then
-           FBeforeCommitDataset(Self, TCustomXMLDataset(FDataSets.Items[i]));
+           FBeforeCommitDataset(Self, TCustomXMLQuery(FDataSets.Items[i]));
 
-        DataToSend := TCustomXMLDataset(FDataSets.Items[i]).XMLStringStream;
+        DataToSend := TCustomXMLQuery(FDataSets.Items[i]).XMLStringStream;
         Open; // open connection
-        with TCustomXMLDataset(FDataSets.Items[i]) do
+        with TCustomXMLQuery(FDataSets.Items[i]) do
           if Active then Close; // close dataset
-        ReadXMLFile(TCustomXMLDataset(FDataSets.Items[i]).XMLDocument, ReceivedData);
-        TCustomXMLDataset(FDataSets.Items[i]).Open; // reopen dataset after new data is present
+        ReadXMLFile(TCustomXMLQuery(FDataSets.Items[i]).XMLDocument, ReceivedData);
+        TCustomXMLQuery(FDataSets.Items[i]).Open; // reopen dataset after new data is present
       end;
   finally
     msTemp.Clear;
