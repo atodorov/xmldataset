@@ -260,15 +260,18 @@ begin
      FBeforeStartTransaction(Self);
      
   for i := 0 to FTransactXMLList.Count - 1 do
-    if Assigned(TXMLDocument(FTransactXMLList.Items[i])) then
-      with TXMLDocument(FTransactXMLList.Items[i]) do
-        begin
-          if Assigned(DocumentElement) then
-             RemoveChild(DocumentElement);
-          LNode := TXMLQuery(FDataSets.Items[i]).XMLDocument.DocumentElement;
-          // owner is the document kept in transaction list
-          AppendChild(LNode.CloneNode(true, TXMLDocument(FTransactXMLList.Items[i])));
-        end;
+    if not TXMLQuery(FDataSets.Items[i]).BewareOfTransactions
+       then continue // query will not use transactions
+       else // if query doesn't use transactions then FTransactXMLList.Items[i] is empty xml document
+         if Assigned(TXMLDocument(FTransactXMLList.Items[i])) then
+           with TXMLDocument(FTransactXMLList.Items[i]) do
+             begin
+               if Assigned(DocumentElement) then
+                  RemoveChild(DocumentElement);
+               LNode := TXMLQuery(FDataSets.Items[i]).XMLDocument.DocumentElement;
+               // owner is the document kept in transaction list
+               AppendChild(LNode.CloneNode(true, TXMLDocument(FTransactXMLList.Items[i])));
+             end;
 
   FInTransaction := true;
 end;
@@ -281,16 +284,19 @@ begin
      raise Exception.Create('Can not rollback. Internal count differs!');
 
   for i := 0 to FTransactXMLList.Count - 1 do
-    with TXMLQuery(FDataSets.Items[i]) do
-      if Assigned(XMLDocument.DocumentElement) then
-         begin
-           Close;
-           XMLDocument.RemoveChild(XMLDocument.DocumentElement);
-           LElem := TXMLDocument(FTransactXMLList.Items[i]).DocumentElement;
-           // owner is the dataset document
-           XMLDocument.AppendChild(LElem.CloneNode(true, XMLDocument));
-           Open; // reopen dataset
-         end;
+   if not TXMLQuery(FDataSets.Items[i]).BewareOfTransactions
+      then continue // query will not use transactions
+      else
+        with TXMLQuery(FDataSets.Items[i]) do
+          if Assigned(XMLDocument.DocumentElement) then
+             begin
+               Close;
+               XMLDocument.RemoveChild(XMLDocument.DocumentElement);
+               LElem := TXMLDocument(FTransactXMLList.Items[i]).DocumentElement;
+               // owner is the dataset document
+               XMLDocument.AppendChild(LElem.CloneNode(true, XMLDocument));
+               Open; // reopen dataset
+             end;
   FInTransaction := false;
 end;
 
@@ -313,13 +319,17 @@ begin
     ReceivedData := msTemp;
     
     for i := 0 to FDataSets.Count - 1 do
-      begin // send current xml
+      begin
+        if not TXMLQuery(FDataSets.Items[i]).BewareOfTransactions then
+           continue; // query will not use transactions
+           
         msTemp.Clear;
         msTemp.Position := 0;
       
         if Assigned(FBeforeCommitDataset) then
            FBeforeCommitDataset(Self, TXMLQuery(FDataSets.Items[i]));
 
+        // send current xml
         DataToSend := TXMLQuery(FDataSets.Items[i]).XMLStringStream;
         Open; // open connection
         with TXMLQuery(FDataSets.Items[i]) do

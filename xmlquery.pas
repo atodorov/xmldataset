@@ -37,6 +37,8 @@ type
     FSQL : TStrings;
     FSQLXML : TXMLDocument; // XML document used to pass sql statements to connection
     FSQLConnection : TCustomSQLConnection; // a connection to retreive XML / execute SQL
+    // wheather or not this query takes part in transactions. FSQLConnection may be assigned
+    FBewareOfTransactions : Boolean; // and be used only for transportation media without transaction handling
     function GetSQLXMLStringStream: TStringStream;
     procedure SetSQL(const AValue: TStrings);
   protected
@@ -50,6 +52,7 @@ type
     property SQL : TStrings read FSQL write SetSQL;
     property SQLXMLStringStream : TStringStream read GetSQLXMLStringStream;
     property Connection : TCustomSQLConnection read FSQLConnection write SetSQLConnection;
+    property BewareOfTransactions : Boolean read FBewareOfTransactions write FBewareOfTransactions default true;
   end;
   
 implementation
@@ -131,6 +134,7 @@ begin
   inherited Create(AOwner);
   FSQL := TStringList.Create;
   FSQLXML := TXMLDocument.Create;
+  FBewareOfTransactions := true;
 end;
 
 destructor TXMLQuery.Destroy;
