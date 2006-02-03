@@ -77,6 +77,10 @@ type
     Bookmark: Pointer;
     BookMarkFlag: TBookmarkFlag;
   end;
+  
+  {$IFDEF USE_OBJECT_IDS}
+     {$i idobjecth.inc}
+  {$ENDIF}
 
   TGXBaseDataset = class(TDataset)
   private
@@ -106,14 +110,16 @@ type
     procedure DoAfterGetFieldValue; virtual; abstract;
     procedure DoBeforeSetFieldValue(Inserting: Boolean); virtual; abstract;
     procedure DoAfterSetFieldValue(Inserting: Boolean); virtual; abstract;
+
     //Handle buffer ID
     function  AllocateRecordID: Pointer; virtual; abstract;
     procedure DisposeRecordID(Value: Pointer); virtual; abstract;
     procedure GotoRecordID(Value: Pointer); virtual; abstract;
     //BookMark functions
-    function  GetBookMarkSize: Integer; virtual;
+    function  GetBookMarkSize: Integer; virtual; abstract;
     procedure DoGotoBookmark(ABookmark: Pointer); virtual; abstract;
     procedure AllocateBookMark(RecordID: Pointer; ABookmark: Pointer); virtual; abstract;
+
     //Navigation methods
     procedure DoFirst; virtual; abstract;
     procedure DoLast; virtual; abstract;
@@ -187,6 +193,11 @@ implementation
 
 var OldTimeSeparator, OldDateSeparator : Char;
 
+
+{$IFDEF USE_OBJECT_IDS}
+   {$i idobject.inc}
+{$ENDIF}
+  
 { TGXBaseDataset }
 
 {$IFDEF FPC_VER_201}
@@ -752,11 +763,6 @@ begin
     end;
   if not (State in [dsCalcFields, dsFilter, dsNewValue]) then
     DataEvent(deFieldChange, Ptrint(Field));
-end;
-
-function TGXBaseDataset.GetBookMarkSize: Integer;
-begin
-  Result := 0;
 end;
 
 procedure TGXBaseDataset.GetBookmarkData(Buffer: PChar; Data: Pointer);

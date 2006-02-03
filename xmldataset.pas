@@ -673,32 +673,57 @@ end;
 
 function TXMLDataSet.AllocateRecordID: Pointer;
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  Result := TIDObject.Create(FCurRec);
+  {$ELSE}
   Result := Pointer(FCurRec);
+  {$ENDIF}
 end;
 
 procedure TXMLDataSet.DisposeRecordID(Value: Pointer);
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  TIDObject(Value).Free;
+  Value := nil;
+  {$ELSE}
   //Do nothing, no need to dispose since pointer is just an integer
+  {$ENDIF}
 end;
 
 procedure TXMLDataSet.GotoRecordID(Value: Pointer);
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  FCurRec := TIDObject(Value).ID;
+  {$ELSE}
   FCurRec := Integer(Value);
+  {$ENDIF}
 end;
 
 function TXMLDataSet.GetBookMarkSize: Integer;
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  Result := SizeOf(TIDObject);
+  {$ELSE}
   Result := SizeOf(Integer);
+  {$ENDIF}
 end;
 
 procedure TXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  ABookmark := TIDObject.Create( TIDObject(RecordID).ID );
+  {$ELSE}
   PInteger(ABookmark)^:=Integer(RecordID);
+  {$ENDIF}
 end;
 
 procedure TXMLDataSet.DoGotoBookmark(ABookmark: Pointer);
 begin
+  {$IFDEF USE_OBJECT_IDS}
+  GotoRecordID(ABookmark);
+  {$ELSE}
   GotoRecordID(Pointer(PInteger(ABookmark)^));
+  {$ENDIF}
 end;
 
 procedure TXMLDataSet.DoBeforeGetFieldValue;
