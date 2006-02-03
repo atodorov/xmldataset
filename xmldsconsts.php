@@ -114,7 +114,6 @@
 /*|          [FIELD ATTRIBUTES] */
 /*|*/         define('C_FIELD_NAME',     'name');
 /*|*/         define('C_FIELD_VALUE',    'value');
-/*|*/         define('C_FIELD_DATATYPE', 'datatype');
 /*|*/         define('C_FIELD_OLDVALUE', 'oldvalue');
 /*+--+*/define('C_DELETEDRECORDS', 'deletedrecords');
 /*|  +--- count <row>'s ... */

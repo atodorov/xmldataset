@@ -123,7 +123,6 @@ const
 {|          [FIELD ATTRIBUTES] }
 {|}         cField_Name     = 'name';
 {|}         cField_Value    = 'value';
-{|}         cField_DataType = 'datatype';
 {|}         cField_OldValue = 'oldvalue';
 {+--+}cDeletedRecords = 'deletedrecords';
 {|  +--- count <row>'s ... }

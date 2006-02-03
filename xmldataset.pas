@@ -810,7 +810,6 @@ begin
          LField := FXMLDoc.CreateElement(cField); // create <field>
          LField.AttribStrings[cField_Name] := FieldDefs.Items[i].Name;
          LField.AttribStrings[cField_Value] := '';
-         LField.AttribStrings[cField_DataType] := GetStringFromFieldType(FieldDefs.Items[i].DataType);
          Result.AppendChild(LField); // append <field> to <row>
        end; // for
   finally
