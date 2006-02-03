@@ -295,11 +295,9 @@
         <UsageCount Value="22"/>
       </Unit40>
       <Unit41>
-        <CursorPos X="9" Y="51"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="21" Y="36"/>
         <Filename Value="xmldsdefs.inc"/>
         <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
         <TopLine Value="36"/>
         <UsageCount Value="33"/>
       </Unit41>
