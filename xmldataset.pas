@@ -116,7 +116,7 @@ type
     procedure DecodeBase64ToStream(const S : String; Output : TStream);
     { character encoding }
     function IconvConvert(const FromCode, ToCode, AInput : String) : String;
-    { helper functions }
+    { helper functions. useful for constructing xml }
     class function GetFieldTypeFromString(FieldType : String) : TFieldType;
     class function GetStringFromFieldType(const FieldType : TFieldType) : String;
     class function GetFieldSizeByType(const FieldType : TFieldType; const Size : Integer = 0) : Integer;
