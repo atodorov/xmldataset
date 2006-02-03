@@ -19,10 +19,16 @@
 
 constructor TIDObject.Create;
 begin
+  inherited Create;
   FID := -1;
+  
+//  writeln('Self = ', Integer(Self));
 end;
 
-constructor TIDObject.Create(AID : Integer);
+constructor TIDObject.Create(AID : TIDType);
 begin
+  Create;
   FID := AID;
+
+  writeln('Self = ', Integer(Self), ' ID = ', AID);
 end;

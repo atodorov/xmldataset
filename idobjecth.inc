@@ -17,12 +17,14 @@
  *****************************************************************************
 *******************************************************************************}
 
+  TIDType = LongInt;
+
   TIDObject = class(TObject)
   private
-     FID : Integer;
+     FID : TIDType;
   public
      constructor Create;
-     constructor Create(AID : Integer);
+     constructor Create(AID : TIDType);
      
-     property ID : Integer read FID;
+     property ID : TIDType read FID write FID;
   end;

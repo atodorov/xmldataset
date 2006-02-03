@@ -43,7 +43,7 @@ type
     FUseBase64 : Boolean;
     FFROM_ENCODING : String;
     FTO_ENCODING   : String;
-    FCurRec: Integer;
+    FCurRec: LongInt;
     FReadOnly: Boolean;
     FXMLDoc : TXMLDocument;
     FNode : TDOMElement;
@@ -693,7 +693,11 @@ end;
 procedure TXMLDataSet.GotoRecordID(Value: Pointer);
 begin
   {$IFDEF USE_OBJECT_IDS}
+  writeln('TXMLDataSet.GotoRecordID - Value = ', Integer(Value));
+  
   FCurRec := TIDObject(Value).ID;
+  
+//  writeln('TXMLDataSet.GotoRecordID - FCurRec = ', FCurRec);
   {$ELSE}
   FCurRec := Integer(Value);
   {$ENDIF}
@@ -711,9 +715,9 @@ end;
 procedure TXMLDataSet.AllocateBookMark(RecordID: Pointer; ABookmark: Pointer);
 begin
   {$IFDEF USE_OBJECT_IDS}
-  ABookmark := TIDObject.Create( TIDObject(RecordID).ID );
+  ABookmark := RecordID;
   {$ELSE}
-  PInteger(ABookmark)^:=Integer(RecordID);
+  PInteger(ABookmark)^ := Integer(RecordID);
   {$ENDIF}
 end;
 
