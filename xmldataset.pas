@@ -473,7 +473,7 @@ begin
     strm := TStringStream.Create('');
     WriteXML(XMLDocument.DocumentElement, strm);
     Result := '<?xml version="1.0"';
-    if UseCharacterEncoding then
+    if UseCharacterEncoding and (TO_ENCODING <> '') then
        Result := Result + ' encoding="'+TO_ENCODING+'"';
     Result := Result + ' ?>'+strm.DataString;
   finally
