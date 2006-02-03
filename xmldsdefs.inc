@@ -49,9 +49,3 @@
 {$IFDEF WIN32}
   {$DEFINE USE_SYNAPSE}
 {$ENDIF}
-
-// use objects to store ids.
-// On Linux PInteger(Pointer)^ := Integer(Pointer) and related type casting with ids doesn't work
-// it results in 'Invalid Pointer Operation'
-// and what about Int64 ids stored in 4B Pointer ?????
-{$DEFINE USE_OBJECT_IDS}

@@ -77,10 +77,6 @@ type
     Bookmark: Pointer;
     BookMarkFlag: TBookmarkFlag;
   end;
-  
-  {$IFDEF USE_OBJECT_IDS}
-     {$i idobjecth.inc}
-  {$ENDIF}
 
   TGXBaseDataset = class(TDataset)
   private
@@ -194,10 +190,6 @@ implementation
 var OldTimeSeparator, OldDateSeparator : Char;
 
 
-{$IFDEF USE_OBJECT_IDS}
-   {$i idobject.inc}
-{$ENDIF}
-  
 { TGXBaseDataset }
 
 {$IFDEF FPC_VER_201}
@@ -245,7 +237,7 @@ begin
 end;
 
 function TGXBaseDataset.AllocRecordBuffer: PChar;
-begin    writeln('AllocRecordBuffer - GetDataSize = ', GetDataSize);
+begin
   GetMem(Result, GetRecordSize);
   FillChar(Result^, GetRecordSize, 0);
   AllocateBlobPointers(Result);
@@ -263,11 +255,7 @@ begin
   DisposeRecordID(PRecordInfo(Buffer + GetDataSize)^.RecordID);
   if PRecordInfo(Buffer + GetDataSize)^.BookMark <> nil then
     begin
-      {$IFDEF USE_OBJECT_IDS}
-      PRecordInfo(Buffer + GetDataSize)^.BookMark := nil; // todo : remove
-      {$ELSE}
       FreeMem(PRecordInfo(Buffer + GetDataSize)^.BookMark);
-      {$ENDIF}
       PRecordInfo(Buffer + GetDataSize)^.BookMark := nil;
     end;
 end;
@@ -481,7 +469,6 @@ end;
 
 procedure TGXBaseDataset.InternalSetToRecord(Buffer: PChar);
 begin
-writeln('InternalSetToRecord - Buffer = ', Integer(Buffer), ' RecordID = ', Integer(PRecordInfo(Buffer + GetDataSize)^.RecordID));
   GotoRecordID(PRecordInfo(Buffer + GetDataSize)^.RecordID);
 end;
 
@@ -583,13 +570,10 @@ begin
     begin
       BookmarkFlag := bfCurrent;
       RecordID := AllocateRecordID;
-writeln('RecordToBuffer - Buffer = ', Integer(Buffer), ' RecordID = ', Integer(RecordID), ' DataSize = ', GetDataSize);
       if GetBookMarkSize > 0 then
         begin
-          {$IFNDEF USE_OBJECT_IDS}
           if BookMark = nil then
              GetMem(BookMark, GetBookMarkSize);
-          {$ENDIF}
           AllocateBookMark(RecordID, BookMark);
         end
       else
@@ -776,10 +760,8 @@ end;
 procedure TGXBaseDataset.GetBookmarkData(Buffer: PChar; Data: Pointer);
 begin
   if BookMarkSize > 0 then
-//     AllocateBookMark(PRecordInfo(Buffer + GetDataSize)^.RecordID, Data);
-     Data := PRecordInfo(Buffer + GetDataSize)^.Bookmark;
-     
-writeln('GetBookmarkData - Data = ', Integer(Data));
+     AllocateBookMark(PRecordInfo(Buffer + GetDataSize)^.RecordID, Data);
+//     Data := PRecordInfo(Buffer + GetDataSize)^.Bookmark;
 end;
 
 function TGXBaseDataset.GetBookmarkFlag(Buffer: PChar): TBookmarkFlag;
@@ -789,14 +771,9 @@ end;
 
 procedure TGXBaseDataset.SetBookmarkData(Buffer: PChar; Data: Pointer);
 begin
-  {$IFDEF USE_OBJECT_IDS}
-  PRecordInfo(Buffer + GetDataSize)^.BookMark := Data;
-writeln('SetBookmarkData - Data = ', Integer(Data));
-  {$ELSE}
   if PRecordInfo(Buffer + GetDataSize)^.BookMark = nil then
      GetMem(PRecordInfo(Buffer + GetDataSize)^.BookMark, GetBookMarkSize);
   Move(PRecordInfo(Buffer + GetDataSize)^.BookMark^, Data, GetBookMarkSize);
-  {$ENDIF}
 end;
 
 procedure TGXBaseDataset.SetBookmarkFlag(Buffer: PChar; Value: TBookmarkFlag);
@@ -806,8 +783,6 @@ end;
 
 procedure TGXBaseDataset.InternalGotoBookmark(ABookmark: Pointer);
 begin
-writeln('InternalGotoBookmark - ABookmark = ', Integer(ABookmark));
-
   DoGotoBookMark(ABookMark);
 end;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <PathDelim Value="/"/>
+    <PathDelim Value="\"/>
     <Version Value="5"/>
     <General>
       <MainUnit Value="0"/>
@@ -9,9 +9,373 @@
       <TargetFileExt Value=".exe"/>
       <ActiveEditorIndexAtStart Value="1"/>
     </General>
-    <LazDoc Paths=""/>
+    <Units Count="52">
+      <Unit0>
+        <CursorPos X="20" Y="1"/>
+        <Filename Value="testxmlds.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="1"/>
+        <UnitName Value="TestXMLDS"/>
+        <UsageCount Value="161"/>
+      </Unit0>
+      <Unit1>
+        <CursorPos X="32" Y="84"/>
+        <Filename Value="uMain.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <IsPartOfProject Value="True"/>
+        <ResourceFilename Value="uMain.lrs"/>
+        <TopLine Value="54"/>
+        <UnitName Value="uMain"/>
+        <UsageCount Value="52"/>
+      </Unit1>
+      <Unit2>
+        <CursorPos X="19" Y="101"/>
+        <Filename Value="uXMLDSConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="101"/>
+        <UnitName Value="uxmldsconsts"/>
+        <UsageCount Value="51"/>
+      </Unit2>
+      <Unit3>
+        <CursorPos X="23" Y="1"/>
+        <Filename Value="CustomXMLDataset.pas"/>
+        <TopLine Value="1"/>
+        <UnitName Value="xmldataset"/>
+        <UsageCount Value="40"/>
+      </Unit3>
+      <Unit4>
+        <CursorPos X="14" Y="4"/>
+        <Filename Value="HTTPSQLConn.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="1"/>
+        <UnitName Value="httpsqlconn"/>
+        <UsageCount Value="51"/>
+      </Unit4>
+      <Unit5>
+        <CursorPos X="22" Y="35"/>
+        <Filename Value="xmlquery.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="27"/>
+        <UnitName Value="xmlquery"/>
+        <UsageCount Value="52"/>
+      </Unit5>
+      <Unit6>
+        <CursorPos X="1" Y="786"/>
+        <EditorIndex Value="1"/>
+        <Filename Value="gxbasedataset.pas"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="778"/>
+        <UnitName Value="gxbasedataset"/>
+        <UsageCount Value="51"/>
+      </Unit6>
+      <Unit7>
+        <CursorPos X="31" Y="1"/>
+        <Filename Value="customslqconn.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="1"/>
+        <UnitName Value="customsqlconn"/>
+        <UsageCount Value="51"/>
+      </Unit7>
+      <Unit8>
+        <CursorPos X="15" Y="186"/>
+        <Filename Value="c:\lazarus\fpcsrc\rtl\objpas\sysutils\sysutilh.inc"/>
+        <TopLine Value="186"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <CursorPos X="26" Y="1726"/>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\dataset.inc"/>
+        <TopLine Value="1726"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <CursorPos X="17" Y="1676"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\db\db.pp"/>
+        <TopLine Value="1673"/>
+        <UnitName Value="db"/>
+        <UsageCount Value="11"/>
+      </Unit10>
+      <Unit11>
+        <CursorPos X="31" Y="546"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\db\dataset.inc"/>
+        <TopLine Value="546"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <CursorPos X="14" Y="686"/>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\fields.inc"/>
+        <TopLine Value="686"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <CursorPos X="16" Y="1052"/>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\db\db.pp"/>
+        <TopLine Value="1052"/>
+        <UnitName Value="db"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <CursorPos X="18" Y="328"/>
+        <Filename Value="customsqlconn.pas"/>
+        <TopLine Value="301"/>
+        <UnitName Value="customsqlconn"/>
+        <UsageCount Value="13"/>
+      </Unit14>
+      <Unit15>
+        <CursorPos X="18" Y="37"/>
+        <Filename Value="C:\lazarus\lcl\DBCtrls.pp"/>
+        <TopLine Value="37"/>
+        <UnitName Value="DbCtrls"/>
+        <UsageCount Value="11"/>
+      </Unit15>
+      <Unit16>
+        <CursorPos X="48" Y="211"/>
+        <Filename Value="C:\lazarus\lcl\include\dbmemo.inc"/>
+        <TopLine Value="211"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <CursorPos X="34" Y="76"/>
+        <Filename Value="C:\lazarus\lcl\include\dbimage.inc"/>
+        <TopLine Value="76"/>
+        <UsageCount Value="10"/>
+      </Unit17>
+      <Unit18>
+        <CursorPos X="40" Y="730"/>
+        <Filename Value="C:\lazarus\lcl\Graphics.pp"/>
+        <TopLine Value="730"/>
+        <UnitName Value="Graphics"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <CursorPos X="17" Y="543"/>
+        <Filename Value="C:\lazarus\lcl\include\picture.inc"/>
+        <TopLine Value="543"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <CursorPos X="19" Y="193"/>
+        <Filename Value="c:\lazarus\fpcsrc\rtl\objpas\classes\classesh.inc"/>
+        <TopLine Value="193"/>
+        <UsageCount Value="11"/>
+      </Unit20>
+      <Unit21>
+        <CursorPos X="47" Y="62"/>
+        <Filename Value="c:\lazarus\fpcsrc\rtl\objpas\classes\persist.inc"/>
+        <TopLine Value="61"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <CursorPos X="52" Y="64"/>
+        <Filename Value="C:\lazarus\lcl\include\customimage.inc"/>
+        <TopLine Value="64"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <CursorPos X="57" Y="56"/>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\classes\persist.inc"/>
+        <TopLine Value="56"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <CursorPos X="32" Y="363"/>
+        <Filename Value="C:\lazarus\lcl\DBGrids.pas"/>
+        <TopLine Value="363"/>
+        <UnitName Value="DBGrids"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <CursorPos X="21" Y="1256"/>
+        <Filename Value="dbcg\dbctrlgrid.pas"/>
+        <TopLine Value="1255"/>
+        <UnitName Value="dbctrlgrid"/>
+        <UsageCount Value="11"/>
+      </Unit25>
+      <Unit26>
+        <CursorPos X="6" Y="2173"/>
+        <Filename Value="C:\lazarus\lcl\StdCtrls.pp"/>
+        <TopLine Value="2173"/>
+        <UnitName Value="StdCtrls"/>
+        <UsageCount Value="11"/>
+      </Unit26>
+      <Unit27>
+        <CursorPos X="18" Y="262"/>
+        <Filename Value="C:\lazarus\lcl\LMessages.pp"/>
+        <TopLine Value="254"/>
+        <UnitName Value="LMessages"/>
+        <UsageCount Value="11"/>
+      </Unit27>
+      <Unit28>
+        <CursorPos X="37" Y="37"/>
+        <Filename Value="C:\lazarus\lcl\Controls.pp"/>
+        <TopLine Value="37"/>
+        <UnitName Value="Controls"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <CursorPos X="14" Y="31"/>
+        <Filename Value="C:\lazarus\lcl\ExtCtrls.pp"/>
+        <TopLine Value="31"/>
+        <UnitName Value="ExtCtrls"/>
+        <UsageCount Value="11"/>
+      </Unit29>
+      <Unit30>
+        <CursorPos X="24" Y="328"/>
+        <Filename Value="C:\lazarus\lcl\LCLType.pp"/>
+        <TopLine Value="328"/>
+        <UnitName Value="LCLType"/>
+        <UsageCount Value="11"/>
+      </Unit30>
+      <Unit31>
+        <CursorPos X="31" Y="31"/>
+        <Filename Value="smartxmlquery.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="21"/>
+        <UnitName Value="smartxmlquery"/>
+        <UsageCount Value="45"/>
+      </Unit31>
+      <Unit32>
+        <CursorPos X="31" Y="22"/>
+        <Filename Value="C:\lazarus\fpcsrc\fcl\classes\lists.inc"/>
+        <TopLine Value="22"/>
+        <UsageCount Value="10"/>
+      </Unit32>
+      <Unit33>
+        <CursorPos X="17" Y="361"/>
+        <Filename Value="c:\lazarus\fpcsrc\rtl\objpas\classes\lists.inc"/>
+        <TopLine Value="361"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <CursorPos X="1" Y="1"/>
+        <Filename Value="TCPSQLConn.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="25"/>
+        <UnitName Value="tcpsqlconn"/>
+        <UsageCount Value="38"/>
+      </Unit34>
+      <Unit35>
+        <CursorPos X="11" Y="51"/>
+        <Filename Value="tcpbase.pas"/>
+        <TopLine Value="50"/>
+        <UnitName Value="tcpbase"/>
+        <UsageCount Value="11"/>
+      </Unit35>
+      <Unit36>
+        <CursorPos X="51" Y="34"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\inc\ssockets.pp"/>
+        <TopLine Value="28"/>
+        <UnitName Value="ssockets"/>
+        <UsageCount Value="10"/>
+      </Unit36>
+      <Unit37>
+        <CursorPos X="53" Y="2391"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\db\fields.inc"/>
+        <TopLine Value="2391"/>
+        <UsageCount Value="10"/>
+      </Unit37>
+      <Unit38>
+        <CursorPos X="42" Y="92"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\inc\astrings.inc"/>
+        <TopLine Value="92"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <CursorPos X="15" Y="750"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\rtl\objpas\classes\stringl.inc"/>
+        <TopLine Value="750"/>
+        <UsageCount Value="10"/>
+      </Unit39>
+      <Unit40>
+        <CursorPos X="36" Y="1"/>
+        <Filename Value="fpcdefines.inc"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="22"/>
+      </Unit40>
+      <Unit41>
+        <CursorPos X="9" Y="51"/>
+        <EditorIndex Value="2"/>
+        <Filename Value="xmldsdefs.inc"/>
+        <IsPartOfProject Value="True"/>
+        <Loaded Value="True"/>
+        <TopLine Value="36"/>
+        <UsageCount Value="33"/>
+      </Unit41>
+      <Unit42>
+        <CursorPos X="16" Y="270"/>
+        <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\xml\dom.pp"/>
+        <TopLine Value="270"/>
+        <UnitName Value="DOM"/>
+        <UsageCount Value="10"/>
+      </Unit42>
+      <Unit43>
+        <CursorPos X="1" Y="1"/>
+        <Filename Value="XMLDataset.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="1"/>
+        <UnitName Value="xmldataset"/>
+        <UsageCount Value="31"/>
+      </Unit43>
+      <Unit44>
+        <CursorPos X="1" Y="695"/>
+        <EditorIndex Value="0"/>
+        <Filename Value="xmldataset.pas"/>
+        <Loaded Value="True"/>
+        <TopLine Value="693"/>
+        <UnitName Value="xmldataset"/>
+        <UsageCount Value="15"/>
+      </Unit44>
+      <Unit45>
+        <CursorPos X="20" Y="20"/>
+        <Filename Value="idobjecth.inc"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit45>
+      <Unit46>
+        <CursorPos X="10" Y="19"/>
+        <Filename Value="idobject.inc"/>
+        <TopLine Value="19"/>
+        <UsageCount Value="12"/>
+      </Unit46>
+      <Unit47>
+        <CursorPos X="11" Y="412"/>
+        <Filename Value="\usr\share\fpcsrc\rtl\inc\systemh.inc"/>
+        <TopLine Value="387"/>
+        <UsageCount Value="10"/>
+      </Unit47>
+      <Unit48>
+        <CursorPos X="18" Y="274"/>
+        <Filename Value="\usr\lib\fpc\2.0.2\fpc-src\fcl\xml\dom.pp"/>
+        <TopLine Value="250"/>
+        <UnitName Value="DOM"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <CursorPos X="28" Y="1016"/>
+        <Filename Value="\usr\lib\fpc\2.0.2\fpc-src\fcl\db\db.pp"/>
+        <TopLine Value="991"/>
+        <UnitName Value="db"/>
+        <UsageCount Value="10"/>
+      </Unit49>
+      <Unit50>
+        <CursorPos X="35" Y="1822"/>
+        <Filename Value="\usr\lib\fpc\2.0.2\fpc-src\fcl\db\dataset.inc"/>
+        <TopLine Value="1822"/>
+        <UsageCount Value="10"/>
+      </Unit50>
+      <Unit51>
+        <CursorPos X="34" Y="11"/>
+        <Filename Value="\usr\lib\fpc\2.0.2\fpc-src\rtl\objpas\objpas.pp"/>
+        <TopLine Value="1"/>
+        <UnitName Value="objpas"/>
+        <UsageCount Value="10"/>
+      </Unit51>
+    </Units>
     <PublishOptions>
       <Version Value="2"/>
+      <DestinationDirectory Value="$(TestDir)\publishedproject\"/>
       <IgnoreBinaries Value="False"/>
       <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
       <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
@@ -19,7 +383,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+        <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
     <RequiredPackages Count="2">
@@ -31,431 +395,83 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="52">
-      <Unit0>
-        <Filename Value="testxmlds.lpr"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="TestXMLDS"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="161"/>
-      </Unit0>
-      <Unit1>
-        <Filename Value="uMain.pas"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <IsPartOfProject Value="True"/>
-        <ResourceFilename Value="uMain.lrs"/>
-        <UnitName Value="uMain"/>
-        <CursorPos X="32" Y="84"/>
-        <TopLine Value="54"/>
-        <UsageCount Value="52"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="uXMLDSConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="uxmldsconsts"/>
-        <CursorPos X="19" Y="101"/>
-        <TopLine Value="101"/>
-        <UsageCount Value="51"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="CustomXMLDataset.pas"/>
-        <UnitName Value="xmldataset"/>
-        <CursorPos X="23" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="40"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="HTTPSQLConn.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="httpsqlconn"/>
-        <CursorPos X="14" Y="4"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="51"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="xmlquery.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="xmlquery"/>
-        <CursorPos X="22" Y="35"/>
-        <TopLine Value="27"/>
-        <UsageCount Value="52"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="gxbasedataset.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="gxbasedataset"/>
-        <CursorPos X="3" Y="394"/>
-        <TopLine Value="391"/>
-        <EditorIndex Value="1"/>
-        <UsageCount Value="51"/>
-        <Loaded Value="True"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="customslqconn.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="customsqlconn"/>
-        <CursorPos X="31" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="51"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="c:/lazarus/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
-        <CursorPos X="15" Y="186"/>
-        <TopLine Value="186"/>
-        <UsageCount Value="10"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="C:/lazarus/fpcsrc/fcl/db/dataset.inc"/>
-        <CursorPos X="26" Y="1726"/>
-        <TopLine Value="1726"/>
-        <UsageCount Value="10"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/fcl/db/db.pp"/>
-        <UnitName Value="db"/>
-        <CursorPos X="17" Y="1676"/>
-        <TopLine Value="1673"/>
-        <UsageCount Value="11"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/fcl/db/dataset.inc"/>
-        <CursorPos X="31" Y="546"/>
-        <TopLine Value="546"/>
-        <UsageCount Value="10"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="C:/lazarus/fpcsrc/fcl/db/fields.inc"/>
-        <CursorPos X="14" Y="686"/>
-        <TopLine Value="686"/>
-        <UsageCount Value="10"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="C:/lazarus/fpcsrc/fcl/db/db.pp"/>
-        <UnitName Value="db"/>
-        <CursorPos X="16" Y="1052"/>
-        <TopLine Value="1052"/>
-        <UsageCount Value="10"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="customsqlconn.pas"/>
-        <UnitName Value="customsqlconn"/>
-        <CursorPos X="18" Y="328"/>
-        <TopLine Value="301"/>
-        <UsageCount Value="13"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="C:/lazarus/lcl/DBCtrls.pp"/>
-        <UnitName Value="DbCtrls"/>
-        <CursorPos X="18" Y="37"/>
-        <TopLine Value="37"/>
-        <UsageCount Value="11"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="C:/lazarus/lcl/include/dbmemo.inc"/>
-        <CursorPos X="48" Y="211"/>
-        <TopLine Value="211"/>
-        <UsageCount Value="10"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="C:/lazarus/lcl/include/dbimage.inc"/>
-        <CursorPos X="34" Y="76"/>
-        <TopLine Value="76"/>
-        <UsageCount Value="10"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="C:/lazarus/lcl/Graphics.pp"/>
-        <UnitName Value="Graphics"/>
-        <CursorPos X="40" Y="730"/>
-        <TopLine Value="730"/>
-        <UsageCount Value="10"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="C:/lazarus/lcl/include/picture.inc"/>
-        <CursorPos X="17" Y="543"/>
-        <TopLine Value="543"/>
-        <UsageCount Value="10"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="c:/lazarus/fpcsrc/rtl/objpas/classes/classesh.inc"/>
-        <CursorPos X="19" Y="193"/>
-        <TopLine Value="193"/>
-        <UsageCount Value="11"/>
-      </Unit20>
-      <Unit21>
-        <Filename Value="c:/lazarus/fpcsrc/rtl/objpas/classes/persist.inc"/>
-        <CursorPos X="47" Y="62"/>
-        <TopLine Value="61"/>
-        <UsageCount Value="10"/>
-      </Unit21>
-      <Unit22>
-        <Filename Value="C:/lazarus/lcl/include/customimage.inc"/>
-        <CursorPos X="52" Y="64"/>
-        <TopLine Value="64"/>
-        <UsageCount Value="10"/>
-      </Unit22>
-      <Unit23>
-        <Filename Value="C:/lazarus/fpcsrc/fcl/classes/persist.inc"/>
-        <CursorPos X="57" Y="56"/>
-        <TopLine Value="56"/>
-        <UsageCount Value="10"/>
-      </Unit23>
-      <Unit24>
-        <Filename Value="C:/lazarus/lcl/DBGrids.pas"/>
-        <UnitName Value="DBGrids"/>
-        <CursorPos X="32" Y="363"/>
-        <TopLine Value="363"/>
-        <UsageCount Value="10"/>
-      </Unit24>
-      <Unit25>
-        <Filename Value="dbcg/dbctrlgrid.pas"/>
-        <UnitName Value="dbctrlgrid"/>
-        <CursorPos X="21" Y="1256"/>
-        <TopLine Value="1255"/>
-        <UsageCount Value="11"/>
-      </Unit25>
-      <Unit26>
-        <Filename Value="C:/lazarus/lcl/StdCtrls.pp"/>
-        <UnitName Value="StdCtrls"/>
-        <CursorPos X="6" Y="2173"/>
-        <TopLine Value="2173"/>
-        <UsageCount Value="11"/>
-      </Unit26>
-      <Unit27>
-        <Filename Value="C:/lazarus/lcl/LMessages.pp"/>
-        <UnitName Value="LMessages"/>
-        <CursorPos X="18" Y="262"/>
-        <TopLine Value="254"/>
-        <UsageCount Value="11"/>
-      </Unit27>
-      <Unit28>
-        <Filename Value="C:/lazarus/lcl/Controls.pp"/>
-        <UnitName Value="Controls"/>
-        <CursorPos X="37" Y="37"/>
-        <TopLine Value="37"/>
-        <UsageCount Value="10"/>
-      </Unit28>
-      <Unit29>
-        <Filename Value="C:/lazarus/lcl/ExtCtrls.pp"/>
-        <UnitName Value="ExtCtrls"/>
-        <CursorPos X="14" Y="31"/>
-        <TopLine Value="31"/>
-        <UsageCount Value="11"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="C:/lazarus/lcl/LCLType.pp"/>
-        <UnitName Value="LCLType"/>
-        <CursorPos X="24" Y="328"/>
-        <TopLine Value="328"/>
-        <UsageCount Value="11"/>
-      </Unit30>
-      <Unit31>
-        <Filename Value="smartxmlquery.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="smartxmlquery"/>
-        <CursorPos X="31" Y="31"/>
-        <TopLine Value="21"/>
-        <UsageCount Value="45"/>
-      </Unit31>
-      <Unit32>
-        <Filename Value="C:/lazarus/fpcsrc/fcl/classes/lists.inc"/>
-        <CursorPos X="31" Y="22"/>
-        <TopLine Value="22"/>
-        <UsageCount Value="10"/>
-      </Unit32>
-      <Unit33>
-        <Filename Value="c:/lazarus/fpcsrc/rtl/objpas/classes/lists.inc"/>
-        <CursorPos X="17" Y="361"/>
-        <TopLine Value="361"/>
-        <UsageCount Value="10"/>
-      </Unit33>
-      <Unit34>
-        <Filename Value="TCPSQLConn.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tcpsqlconn"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="25"/>
-        <UsageCount Value="38"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="tcpbase.pas"/>
-        <UnitName Value="tcpbase"/>
-        <CursorPos X="11" Y="51"/>
-        <TopLine Value="50"/>
-        <UsageCount Value="11"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/fcl/inc/ssockets.pp"/>
-        <UnitName Value="ssockets"/>
-        <CursorPos X="51" Y="34"/>
-        <TopLine Value="28"/>
-        <UsageCount Value="10"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/fcl/db/fields.inc"/>
-        <CursorPos X="53" Y="2391"/>
-        <TopLine Value="2391"/>
-        <UsageCount Value="10"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/rtl/inc/astrings.inc"/>
-        <CursorPos X="42" Y="92"/>
-        <TopLine Value="92"/>
-        <UsageCount Value="10"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/rtl/objpas/classes/stringl.inc"/>
-        <CursorPos X="15" Y="750"/>
-        <TopLine Value="750"/>
-        <UsageCount Value="10"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="fpcdefines.inc"/>
-        <CursorPos X="36" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="22"/>
-      </Unit40>
-      <Unit41>
-        <Filename Value="xmldsdefs.inc"/>
-        <IsPartOfProject Value="True"/>
-        <CursorPos X="48" Y="32"/>
-        <TopLine Value="10"/>
-        <UsageCount Value="33"/>
-      </Unit41>
-      <Unit42>
-        <Filename Value="D:/lazarus_0_9_10/fpcsrc/fcl/xml/dom.pp"/>
-        <UnitName Value="DOM"/>
-        <CursorPos X="16" Y="270"/>
-        <TopLine Value="270"/>
-        <UsageCount Value="10"/>
-      </Unit42>
-      <Unit43>
-        <Filename Value="XMLDataset.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="xmldataset"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="31"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="xmldataset.pas"/>
-        <UnitName Value="xmldataset"/>
-        <CursorPos X="1" Y="547"/>
-        <TopLine Value="539"/>
-        <EditorIndex Value="0"/>
-        <UsageCount Value="15"/>
-        <Loaded Value="True"/>
-      </Unit44>
-      <Unit45>
-        <Filename Value="idobjecth.inc"/>
-        <CursorPos X="20" Y="20"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="10"/>
-      </Unit45>
-      <Unit46>
-        <Filename Value="idobject.inc"/>
-        <CursorPos X="45" Y="23"/>
-        <TopLine Value="1"/>
-        <EditorIndex Value="2"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
-      </Unit46>
-      <Unit47>
-        <Filename Value="/usr/share/fpcsrc/rtl/inc/systemh.inc"/>
-        <CursorPos X="11" Y="412"/>
-        <TopLine Value="387"/>
-        <UsageCount Value="10"/>
-      </Unit47>
-      <Unit48>
-        <Filename Value="/usr/lib/fpc/2.0.2/fpc-src/fcl/xml/dom.pp"/>
-        <UnitName Value="DOM"/>
-        <CursorPos X="18" Y="274"/>
-        <TopLine Value="250"/>
-        <UsageCount Value="10"/>
-      </Unit48>
-      <Unit49>
-        <Filename Value="/usr/lib/fpc/2.0.2/fpc-src/fcl/db/db.pp"/>
-        <UnitName Value="db"/>
-        <CursorPos X="28" Y="1016"/>
-        <TopLine Value="991"/>
-        <UsageCount Value="10"/>
-      </Unit49>
-      <Unit50>
-        <Filename Value="/usr/lib/fpc/2.0.2/fpc-src/fcl/db/dataset.inc"/>
-        <CursorPos X="35" Y="1822"/>
-        <TopLine Value="1822"/>
-        <UsageCount Value="10"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="/usr/lib/fpc/2.0.2/fpc-src/rtl/objpas/objpas.pp"/>
-        <UnitName Value="objpas"/>
-        <CursorPos X="34" Y="11"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="10"/>
-      </Unit51>
-    </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="395" Column="27" TopLine="368"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="547" Column="1" TopLine="539"/>
       </Position1>
       <Position2>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="395" Column="31" TopLine="368"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="28" Column="38" TopLine="19"/>
       </Position2>
       <Position3>
         <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Caret Line="4" Column="12" TopLine="13"/>
       </Position3>
       <Position4>
         <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="229" Column="31" TopLine="204"/>
+        <Caret Line="80" Column="1" TopLine="73"/>
       </Position4>
       <Position5>
         <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="281" Column="31" TopLine="256"/>
+        <Caret Line="193" Column="1" TopLine="185"/>
       </Position5>
       <Position6>
         <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="296" Column="31" TopLine="271"/>
+        <Caret Line="259" Column="1" TopLine="250"/>
       </Position6>
       <Position7>
         <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="395" Column="31" TopLine="370"/>
+        <Caret Line="578" Column="1" TopLine="569"/>
       </Position7>
       <Position8>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="523" Column="31" TopLine="498"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="28" Column="38" TopLine="19"/>
       </Position8>
       <Position9>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="599" Column="26" TopLine="574"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="677" Column="1" TopLine="668"/>
       </Position9>
       <Position10>
         <Filename Value="xmldataset.pas"/>
-        <Caret Line="718" Column="1" TopLine="715"/>
+        <Caret Line="681" Column="6" TopLine="673"/>
       </Position10>
       <Position11>
         <Filename Value="xmldataset.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Caret Line="687" Column="1" TopLine="683"/>
       </Position11>
       <Position12>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="582" Column="34" TopLine="574"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="692" Column="1" TopLine="683"/>
       </Position12>
       <Position13>
-        <Filename Value="gxbasedataset.pas"/>
-        <Caret Line="136" Column="15" TopLine="111"/>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="697" Column="1" TopLine="688"/>
       </Position13>
+      <Position14>
+        <Filename Value="gxbasedataset.pas"/>
+        <Caret Line="780" Column="1" TopLine="769"/>
+      </Position14>
+      <Position15>
+        <Filename Value="gxbasedataset.pas"/>
+        <Caret Line="240" Column="6" TopLine="232"/>
+      </Position15>
+      <Position16>
+        <Filename Value="gxbasedataset.pas"/>
+        <Caret Line="472" Column="1" TopLine="464"/>
+      </Position16>
+      <Position17>
+        <Filename Value="gxbasedataset.pas"/>
+        <Caret Line="764" Column="3" TopLine="759"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="5"/>
+    <PathDelim Value="\"/>
     <SearchPaths>
-      <UnitOutputDirectory Value="./bin"/>
-      <LCLWidgetType Value="gtk2"/>
-      <SrcPath Value="$(LazarusDir)/lcl/;$(LazarusDir)/lcl/interfaces/$(LCLWidgetType)/"/>
+      <UnitOutputDirectory Value=".\bin"/>
+      <SrcPath Value="$(LazarusDir)\lcl\;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)\"/>
     </SearchPaths>
     <CodeGeneration>
       <Generate Value="Faster"/>
@@ -472,27 +488,11 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="6">
+    <BreakPoints Count="2">
       <Item2>
         <Source Value="smartxmlquery.pas"/>
         <Line Value="207"/>
       </Item2>
-      <Item3>
-        <Source Value="gxbasedataset.pas"/>
-        <Line Value="584"/>
-      </Item3>
-      <Item4>
-        <Source Value="gxbasedataset.pas"/>
-        <Line Value="592"/>
-      </Item4>
-      <Item5>
-        <Source Value="gxbasedataset.pas"/>
-        <Line Value="394"/>
-      </Item5>
-      <Item6>
-        <Source Value="gxbasedataset.pas"/>
-        <Line Value="397"/>
-      </Item6>
     </BreakPoints>
     <Watches Count="6">
       <Item1>
