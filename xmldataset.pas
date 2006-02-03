@@ -906,6 +906,9 @@ begin
           begin
             Fields[i].ReadOnly := AnsiLowerCase(domNode.AttribStrings[cFieldDef_ReadOnly]) = cTrue;
             Fields[i].Visible  := AnsiLowerCase(domNode.AttribStrings[cFieldDef_Visible]) <> cFalse;
+            if (domNode.AttribStrings[cFieldDef_ProviderFlags] <> '') then
+               Fields[i].ProviderFlags := TProviderFlags(StrToInt(domNode.AttribStrings[cFieldDef_ProviderFlags]));
+
             // set display format if we need it otherwise ignore
             if Fields[i] is TNumericField
                then TNumericField(Fields[i]).DisplayFormat := domNode.AttribStrings[cFieldDef_DisplayFormat]

@@ -92,6 +92,7 @@
 /*|  |*/      define('C_FIELDDEF_FIELDKIND',     'fieldkind');
 /*|  |*/      define('C_FIELDDEF_DATATYPE',      'datatype');
 /*|  |*/      define('C_FIELDDEF_FIELDSIZE',     'fieldsize');
+/*|  |*/      define('C_FIELDDEF_PROVIDERFLAGS', 'providerflags');
 /*|  |*/      define('C_FIELDDEF_DISPLAYLABEL',  'displaylabel');
 /*|  |*/      define('C_FIELDDEF_DISPLAYWIDTH',  'displaywidth');
 /*|  |*/      define('C_FIELDDEF_DISPLAYFORMAT', 'displayformat');

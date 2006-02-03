@@ -102,6 +102,7 @@ const
 {|  |}      cFieldDef_FieldKind     = 'fieldkind';
 {|  |}      cFieldDef_DataType      = 'datatype';
 {|  |}      cFieldDef_FieldSize     = 'fieldsize';
+{|  |}      cFieldDef_ProviderFlags = 'providerflags';
 {|  |}      cFieldDef_DisplayLabel  = 'displaylabel';
 {|  |}      cFieldDef_DisplayWidth  = 'displaywidth';
 {|  |}      cFieldDef_DisplayFormat = 'displayformat';

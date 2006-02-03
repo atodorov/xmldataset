@@ -7,7 +7,7 @@
       <MainUnit Value="0"/>
       <IconPath Value="./"/>
       <TargetFileExt Value=".exe"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <Units Count="52">
       <Unit0>
@@ -30,10 +30,10 @@
         <UsageCount Value="53"/>
       </Unit1>
       <Unit2>
-        <CursorPos X="19" Y="101"/>
+        <CursorPos X="13" Y="97"/>
         <Filename Value="uXMLDSConsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="101"/>
+        <TopLine Value="97"/>
         <UnitName Value="uxmldsconsts"/>
         <UsageCount Value="52"/>
       </Unit2>
@@ -61,11 +61,9 @@
         <UsageCount Value="53"/>
       </Unit5>
       <Unit6>
-        <CursorPos X="1" Y="786"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="12" Y="778"/>
         <Filename Value="gxbasedataset.pas"/>
         <IsPartOfProject Value="True"/>
-        <Loaded Value="True"/>
         <TopLine Value="778"/>
         <UnitName Value="gxbasedataset"/>
         <UsageCount Value="52"/>
@@ -91,9 +89,9 @@
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
-        <CursorPos X="17" Y="1676"/>
+        <CursorPos X="9" Y="344"/>
         <Filename Value="D:\lazarus_0_9_10\fpcsrc\fcl\db\db.pp"/>
-        <TopLine Value="1673"/>
+        <TopLine Value="344"/>
         <UnitName Value="db"/>
         <UsageCount Value="11"/>
       </Unit10>
@@ -317,11 +315,11 @@
         <UsageCount Value="32"/>
       </Unit43>
       <Unit44>
-        <CursorPos X="1" Y="695"/>
+        <CursorPos X="15" Y="909"/>
         <EditorIndex Value="0"/>
         <Filename Value="xmldataset.pas"/>
         <Loaded Value="True"/>
-        <TopLine Value="693"/>
+        <TopLine Value="897"/>
         <UnitName Value="xmldataset"/>
         <UsageCount Value="15"/>
       </Unit44>
@@ -393,7 +391,36 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="7" HistoryIndex="6">
+      <Position1>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="695" Column="1" TopLine="693"/>
+      </Position1>
+      <Position2>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="28" Column="22" TopLine="19"/>
+      </Position2>
+      <Position3>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="150" Column="11" TopLine="145"/>
+      </Position3>
+      <Position4>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="572" Column="1" TopLine="557"/>
+      </Position4>
+      <Position5>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="501" Column="17" TopLine="492"/>
+      </Position6>
+      <Position7>
+        <Filename Value="xmldataset.pas"/>
+        <Caret Line="909" Column="29" TopLine="897"/>
+      </Position7>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="5"/>
