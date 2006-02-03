@@ -41,7 +41,7 @@ type
     FQuoteChar : Char;
     FPrimaryKey : String;
     FTableName : String;
-    function GetUpdateMode: TUpdateMode;
+    FUpdateMode : TUpdateMode;
   protected
     { Constructs sql statements that are saved into XMLDocument instead of standard
       datapacket.xml contents. Everything is sent over the connection with commit.
@@ -58,8 +58,6 @@ type
     function CreateInsertFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
     function CreateUpdateFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
     function CreateDeleteFromNode(const ANode : TDOMElement; AOwner : TXMLDocument) : TDOMElement;
-
-    property UpdateMode : TUpdateMode read GetUpdateMode;
   public
     constructor Create(AOwner : TComponent); override;
     { Character used to quote field values. Default is single quote like Firebird }
@@ -68,18 +66,13 @@ type
     property PrimaryKey : String read FPrimaryKey write FPrimaryKey;
     { name of database table. used with PrimaryKey. }
     property TableName : String read FTableName write FTableName;
+    
+    property UpdateMode : TUpdateMode read FUpdateMode write FUpdateMode;
   end;
 
 implementation
 
 { TSmartXMLQuery }
-
-function TSmartXMLQuery.GetUpdateMode: TUpdateMode;
-begin
-  Result := TUpdateMode(StrToInt(
-            XMLDocument.DocumentElement.FindNode(cMetadata).FindNode(cUpdateMode).
-            Attributes.GetNamedItem(cUpdateMode_Value).NodeValue));
-end;
 
 procedure TSmartXMLQuery.SetSQLConnection(const AValue: TCustomSQLConnection);
 begin
@@ -181,7 +174,7 @@ begin
   Result := '';
 
   case UpdateMode of
-   umWHERE_ALL      :
+   upWhereAll      :
      begin
        Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
                  '='+ QuoteChar +
@@ -193,7 +186,7 @@ begin
                    DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Value]) +
                    QuoteChar +')';
      end;
-   umWHERE_CHANGED  :
+   upWhereChanged  :
      begin
        Result := ' (' + TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_Name] +
                  '='+ QuoteChar +
@@ -205,7 +198,7 @@ begin
                    DecodeBase64ToString(TDOMElement(ARow.ChildNodes.Item[0]).AttribStrings[cField_OldValue]) +
                    QuoteChar + ')';
      end;
-   umWHERE_KEY_ONLY :
+   upWhereKeyOnly :
      begin // find primary key
        Result := ' ' + PrimaryKey + '='+ QuoteChar +
                  DecodeBase64ToString(GetFieldNodeByName(ARow, PrimaryKey).AttribStrings[cField_OldValue]) +
@@ -306,6 +299,7 @@ begin
   FQuoteChar := '''';
   FPrimaryKey := '';
   FTableName := '';
+  FUpdateMode := upWhereKeyOnly;
 end;
 
 end.

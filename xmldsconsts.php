@@ -41,11 +41,6 @@
   define('FK_DATA', 'data');
   define('FK_CALCULATED', 'calculated');
 
-// update mode constants
-  define('UM_WHERE_ALL',      0);
-  define('UM_WHERE_CHANGED',  1);
-  define('UM_WHERE_KEY_ONLY', 2);
-
 // query type constants
   define('QUERY_INSERT', 'insert');
   define('QUERY_DELETE', 'delete');

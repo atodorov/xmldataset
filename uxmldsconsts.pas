@@ -43,10 +43,6 @@ const
   FK_DATA = 'data';
   FK_CALCULATED = 'calculated';
 
-// update mode constants
-type
-  TUpdateMode = (umWHERE_ALL, umWHERE_CHANGED, umWHERE_KEY_ONLY);
-
 const
 // query type constants
   QUERY_INSERT = 'insert';
