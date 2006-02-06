@@ -553,7 +553,7 @@ begin
   FieldDefs.Clear;
   with FXMLDoc.DocumentElement.FindNode(cMetaData) do
     if (FindNode(cFieldDefs) <> nil) then
-       with FindNode(cFieldDefs)do
+       with FindNode(cFieldDefs) do
          if HasChildNodes then
             for i := 0 to ChildNodes.Count - 1 do // v-- prevent from other nodes
               if (ChildNodes.Item[i].NodeName = cFieldDef) then
