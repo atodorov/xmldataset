@@ -29,8 +29,6 @@ uses
 
 type
 
-  { TTextSocketStream }
-
   { TTextInetSocket }
 
   TTextInetSocket = class(TInetSocket)
@@ -45,7 +43,7 @@ implementation
 
 uses Sockets;
 
-{ TTextSocketStream }
+{ TTextInetSocket }
 
 constructor TTextInetSocket.Create(AHandle: Longint);
 begin
