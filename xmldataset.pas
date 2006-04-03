@@ -148,7 +148,7 @@ type
 implementation
 
 uses uXMLDSConsts, Variants, Base64, XMLWrite
-     {$IFNDEF WINDOWS}
+     {$IFNDEF WIN32}
      , LibC
      {$ENDIF}
      ;
@@ -967,14 +967,14 @@ end;
 
 
 function TXMLDataSet.IconvConvert(const FromCode, ToCode, AInput : String) : String;
-{$IFNDEF WINDOWS}
+{$IFNDEF WIN32}
 var id : iconv_t;
     ib, ob : PChar;
     ix, ox, cc : size_t;
 {$ENDIF}
 begin
   Result := AInput;
-  {$IFNDEF WINDOWS}
+  {$IFNDEF WIN32}
     if UseCharacterEncoding and (FROM_ENCODING <> '') and (TO_ENCODING <> '') then
        try
          id := iconv_open(PChar(ToCode),PChar(FromCode));
