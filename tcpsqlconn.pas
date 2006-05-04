@@ -52,8 +52,6 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    //todo : remove if not needed
-//    property Cookies : TStringList // http connection cookies - session management
   end;
 
 implementation
