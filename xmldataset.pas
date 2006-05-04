@@ -287,13 +287,13 @@ begin
 end;
 
 class function TXMLDataSet.GetFieldTypeFromString(FieldType : String) : TFieldType;
-{$IFDEF FPC_VER_201+}
+{$IFDEF FPC_VER_201_PLUS}
 var i : TFieldType;
 {$ENDIF}
 begin
    FieldType := AnsiUpperCase(FieldType);
    Result := ftUnknown;
-   {$IFDEF FPC_VER_201+}
+   {$IFDEF FPC_VER_201_PLUS}
    for i := Low(TFieldType) to High(TFieldType) do
      if FieldType = AnsiUpperCase(Fieldtypenames[i]) then
         begin
