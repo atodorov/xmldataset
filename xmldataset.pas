@@ -344,7 +344,7 @@ end;
 
 class function TXMLDataSet.GetStringFromFieldType(const FieldType : TFieldType) : String;
 begin
-   {$IFDEF FPC_VER_200}
+   {$IFDEF VER2_0_0}
    case FieldType of
      ftUnknown     : Result := 'UNKNOWN';
      ftString      : Result := 'STRING';

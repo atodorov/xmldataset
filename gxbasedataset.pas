@@ -86,10 +86,10 @@ type
     procedure FillBufferMap;
     function  RecordFilter: Boolean;
   protected   {My simplified methods to override}
-
-// todo : clean up this dirty hack
-    {$IFDEF FPC_VER_201}
+    {$IFDEF VER2_0_1}
     {$WARNING This is a dirty hack! Be careful. NOT tested!}
+    (* TDataset.TempBuffer is not present in FPC 2.0.1. It is present in older and newer releases *)
+    (* It is implemented by TGXBaseDataSet for compatibility *)
     function TempBuffer: PChar;
     {$ENDIF}
 
@@ -192,7 +192,7 @@ var OldTimeSeparator, OldDateSeparator : Char;
 
 { TGXBaseDataset }
 
-{$IFDEF FPC_VER_201}
+{$IFDEF VER2_0_1}
 function TGXBaseDataset.TempBuffer : PChar;
 begin
   Result := ActiveBuffer;
