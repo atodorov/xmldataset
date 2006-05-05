@@ -34,17 +34,16 @@ type
  
   TTextSocketStream = class(TSocketStream)
   public
-    function  RecvText : String;
-    procedure SendText(const AText : String);
+    function  RecvText : String; virtual;
+    procedure SendText(const AText : String); virtual;
   end;
 
   { TTextInetSocket }
 
   TTextInetSocket = class(TTextSocketStream)
-  private
+  protected
     FHost : String;
     FPort : Word;
-  protected
     procedure DoConnect(ASocket : longint); virtual;
   public
     constructor Create(ASocket : longint); override; overload;
