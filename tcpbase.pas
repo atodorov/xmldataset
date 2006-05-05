@@ -41,9 +41,10 @@ type
   { TTextInetSocket }
 
   TTextInetSocket = class(TTextSocketStream)
-  protected
+  private
     FHost : String;
     FPort : Word;
+  protected
     procedure DoConnect(ASocket : longint); virtual;
   public
     constructor Create(ASocket : longint); override; overload;
