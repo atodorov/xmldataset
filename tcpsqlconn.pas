@@ -24,7 +24,8 @@ unit tcpsqlconn;
 
 interface
 
-uses Classes, SysUtils, CustomSQLConn, TCPBase;
+uses Classes, SysUtils,
+     CustomSQLConn, TCPBase;
 
 const
   TCP_HOST = 'host';
@@ -59,7 +60,7 @@ implementation
 {$IFDEF WIN32}
 uses WinSock;
 {$ELSE}
-uses LibC;
+uses BaseUnix;
 {$ENDIF}
 
 (*******************************************************************************
@@ -88,26 +89,31 @@ begin
 end;
 
 function TTCPSQLConnection.CheckSocketConnected(S: LongInt): Boolean;
+var TimeOut : TTimeVal;
+    wSet : TFDSet;
 {$IFDEF WIN32}
-var wSet : TFDSet;
-    TimeOut : TTimeVal;
     Res : tOS_INT;
+{$ELSE}
+    Res : Integer;
 {$ENDIF}
 begin
-{$IFDEF WIN32}
    TimeOut.tv_sec := 0;
    TimeOut.tv_usec := 10; // wait 10ms until select() returns
-   
+
+{$IFDEF WIN32}
    FD_ZERO(wSet);
    FD_SET(S, wSet);
    
    Res := WinSock.Select(0, nil, @wSet, nil, @TimeOut);
-
    // S is writeable and no errors
    Result := (Res = 1) and (WSAGetLastError = 0);
 {$ELSE}
-   Result := false;
-   raise Exception.Create('TTCPSQLConnection.CheckSocketConnected - not implemented');
+   fpFD_ZERO(wSet);
+   fpFD_SET(S, wSet);
+   
+   Res := FPSelect(0, nil, @wSet, nil, @TimeOut);
+   // S is writeable and no errors
+   Result := (Res = 1) and (Errno = 0);
 {$ENDIF}
 end;
 

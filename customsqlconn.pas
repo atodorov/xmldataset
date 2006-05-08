@@ -302,15 +302,14 @@ end;
 
 procedure TCustomSQLConnection.Commit;
 //todo : fix time out / connection errors
-
-// todo : N.B. COMMIT always returns a valid XML file
+//todo : N.B. COMMIT always returns a valid XML file
 // the other side of the connection must supply the result XML file
 // XML for all datasets is sent step by step
 var i : Integer;
     msTemp : TMemoryStream;
 begin
-  if not Connected then
-     SetConnected(true);
+//  if not Connected then
+//     SetConnected(true);
 
   if Assigned(FBeforeCommit) then
      FBeforeCommit(Self);
