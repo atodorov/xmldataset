@@ -84,12 +84,12 @@ end;
 
 function FreeLibrary(Module: HMODULE): LongBool;
 begin
-  Result := dynlibs.UnloadLibrary(pointer(Module));
+  Result := dynlibs.UnloadLibrary(Module);
 end;
 
 function GetProcAddress(Module: HMODULE; Proc: PChar): Pointer;
 begin
-  Result := dynlibs.GetProcedureAddress(pointer(Module), Proc);
+  Result := dynlibs.GetProcedureAddress(Module, Proc);
 end;
 
 function GetModuleFileName(Module: HMODULE; Buffer: PChar; BufLen: Integer): Integer;
