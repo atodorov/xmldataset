@@ -62,7 +62,7 @@ sub C_DOCUMENT () { return "document"; }
 
 #<?xml version="1.0" ?>
 # <document type="datapacket">
-# [DOCUMENT DATAPACKET ATTRIBUTES] 
+# [DOCUMENT DATAPACKET ATTRIBUTES]
   sub C_DATAPACKET_VERSION     () { return "version"; }
   sub C_DATAPACKET_DESTINATION () { return "destination"; }
   sub C_DATAPACKET_DAY   () { return "day"; }
@@ -73,22 +73,22 @@ sub C_DOCUMENT () { return "document"; }
   sub C_DATAPACKET_SEC   () { return "sec"; }
   sub C_DATAPACKET_MSEC  () { return "msec"; }
      sub C_PRODUCER () { return "producer"; }
-#          [PRODUCER ATTRIBUTES] 
+#          [PRODUCER ATTRIBUTES]
            sub C_PRODUCER_NAME () { return "name"; }
            sub C_PRODUCER_URL  () { return "url"; }
            sub C_PRODUCER_DESCRIPTION () { return "description"; }
      sub C_METADATA () { return "metadata"; }
-#          [METADATA ATTRIBUTES] 
+#          [METADATA ATTRIBUTES]
            sub C_METADATA_FIELDDEFS  () { return "fielddefs"; }
            sub C_METADATA_INDEXDEFS  () { return "indexdefs"; }
            sub C_METADATA_RECORDDATA () { return "recorddata"; }
            sub C_METADATA_CHANGES    () { return "changes"; }
         sub C_UPDATEMODE () { return "update_mode"; }
-#             [UPDATE_MODE ATTRIBUTES] 
+#             [UPDATE_MODE ATTRIBUTES]
               sub C_UPDATEMODE_VALUE () { return "value"; }
         sub C_FIELDDEFS () { return "fielddefs"; }
            sub C_FIELDDEF () { return "fielddef"; }
-#                [FIELDDEF ATTRIBUTES] 
+#                [FIELDDEF ATTRIBUTES]
                  sub C_FIELDDEF_NAME () { return "name"; }
                  sub C_FIELDDEF_FIELDKIND () { return "fieldkind"; }
                  sub C_FIELDDEF_DATATYPE () { return "datatype"; }
@@ -104,11 +104,11 @@ sub C_DOCUMENT () { return "document"; }
         sub C_INDEXDEFS () { return "indexdefs"; }
      sub C_RECORDDATA () { return "recorddata"; }
         sub C_ROW () { return "row"; }
-#             [ROW ATTRIBUTES] 
+#             [ROW ATTRIBUTES]
               sub C_ROW_ID () { return "id"; }
               sub C_ROW_STATE () { return "state"; }
            sub C_FIELD () { return "field"; }
-#                [FIELD ATTRIBUTES] 
+#                [FIELD ATTRIBUTES]
                  sub C_FIELD_NAME  () { return "name"; }
                  sub C_FIELD_VALUE () { return "value"; }
                  sub C_FIELD_OLDVALUE () { return "oldvalue"; }
@@ -118,7 +118,7 @@ sub C_DOCUMENT () { return "document"; }
 # sql xml constants
 # <document type="sql_xml">
   sub C_QUERY () { return "query"; }
-#       [QUERY ATTRIBUTES] 
+#       [QUERY ATTRIBUTES]
         sub C_QUERY_TYPE () { return "type"; }
 #
 
@@ -128,5 +128,11 @@ sub C_DOCUMENT () { return "document"; }
   sub C_UPDATE () { return "update"; }
   sub C_DELETE () { return "delete"; }
 #
+
+### Pascal representation of TProviderFlag
+sub pfInUpdate() { return 0; }
+sub pfInWhere () { return 1; }
+sub pfInKey   () { return 2; }
+sub pfHidden  () { return 3; }
 
 1;

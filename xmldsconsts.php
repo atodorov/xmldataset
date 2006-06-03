@@ -129,4 +129,10 @@
 /*|*/define('C_DELETE', 'delete');
 /*.*/
 
+// Pascal representation of TProviderFlag
+define ('pfInUpdate', 0);
+define ('pfInWhere' , 1);
+define ('pfInKey'   , 2);
+define ('pfHidden'  , 3);
+
 ?>
