@@ -110,7 +110,7 @@ begin
 // HTTP_POST_FIELDNAME
   index := ConnParams.IndexOfName(HTTP_POST_FIELDNAME);
   if (index > -1)
-    then FFileName := ConnParams.ValueFromIndex[index]
+    then FFieldName := ConnParams.ValueFromIndex[index]
     else raise Exception.Create('Required parameter '+HTTP_POST_FIELDNAME+' is missing!');
     
 // HTTP_PROTOCOL
@@ -184,7 +184,9 @@ begin
   {$IFDEF USE_SYNAPSE}
   FHttpClient.Protocol := HTTP_PROTOCOL_1_1;
   {$ELSE}
+  FHttpClient.HeaderToSend := THttpHeader.Create;
   FHttpClient.HeaderToSend.HttpVersion := HTTP_PROTOCOL_1_1;
+  FHttpClient.StreamToSend := TMemoryStream.Create;
   {$ENDIF}
   FHttpURL   := '';
   FFileName  := '';
@@ -193,6 +195,14 @@ end;
 
 destructor THTTPSQLConnection.Destroy;
 begin
+  {$IFNDEF USE_SYNAPSE}
+  if Assigned(FHttpClient.StreamToSend) then
+     FHttpClient.StreamToSend.Free;
+
+  if Assigned(FHttpClient.HeaderToSend) then
+     FHttpClient.HeaderToSend.Free;
+  {$ENDIF}
+     
   FHttpClient.Free;
   inherited Destroy;
 end;
@@ -212,9 +222,9 @@ begin
   
   Bound := IntToHex(Random(MaxInt), 8) + '_HTTPSQLConnection_Boundary';
   S := '--' + Bound + CRLF;
-  S := S + 'content-disposition: form-data; name="' + FFieldName + '";';
+  S := S + 'Content-disposition: form-data; name="' + FFieldName + '";';
   S := S + ' filename="' + FFileName +'"' + CRLF;
-  S := S + 'Content-Type: Application/octet-string' + CRLF + CRLF;
+  S := S + 'Content-Type: text/xml' + CRLF + CRLF;
 
   {$IFDEF USE_SYNAPSE}
   FHttpClient.Document.Clear;
@@ -240,12 +250,8 @@ begin
   {$IFDEF USE_SYNAPSE}
   Result := FHttpClient.HTTPMethod(HTTP_METHOD_POST, FHttpURL);
   {$ELSE}
-  // todo : check this out. not tested
-  FHttpClient.HeaderToSend.FieldNames[0]  := HTTP_METHOD;
-  FHttpClient.HeaderToSend.FieldValues[0] := HTTP_METHOD_POST;
-  
-  FHttpClient.HeaderToSend.FieldNames[1]  := HTTP_URL;
-  FHttpClient.HeaderToSend.FieldValues[1] := FHttpURL;
+  FHttpClient.HeaderToSend.SetFieldByName(HTTP_METHOD, HTTP_METHOD_POST);
+  FHttpClient.HeaderToSend.SetFieldByName(HTTP_URL, FHttpURL);
   
   FHttpClient.Send;
   Result := true;

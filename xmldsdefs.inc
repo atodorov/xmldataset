@@ -41,6 +41,6 @@
 {$DEFINE USE_STR_TO_FLOAT}
 
 // use synapse tcp / ip
-{$IFDEF WIN32}
+//{$IFDEF WIN32}
   {$DEFINE USE_SYNAPSE}
-{$ENDIF}
+//{$ENDIF}
